@@ -10,17 +10,19 @@
 class SceneGraph;
 class SceneNode;
 
-typedef std::shared_ptr<const SceneNode> NodeRef;
+typedef std::shared_ptr<SceneNode> NodeRef;
 
 class SceneNode {
 private:
+   const std::string name;
+
+protected:
    glm::vec3 position;
    glm::quat rotation;
    glm::vec3 scale;
    bool visible;
-   std::string name;
    SceneGraph *graph;
-   std::list<SceneNode> children;
+   std::list<NodeRef> children;
 
 public:
    SceneNode(SceneGraph *graph, const std::string &name);
@@ -28,8 +30,12 @@ public:
    std::string getName() const {
       return name;
    }
-   virtual void draw();
-   virtual void tick();
+   std::list<NodeRef> getChildren() {
+      return children;
+   }
+   NodeRef findNodeByName(const std::string &name);
+   virtual void draw() = 0;
+   virtual void tick() = 0;
 };
 
 #endif

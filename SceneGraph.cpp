@@ -2,7 +2,7 @@
 #include "FancyAssert.h"
 
 SceneGraph::SceneGraph()
-   : rootNode(this, "root") {
+   : rootNode(nullptr) {
 }
 
 SceneGraph::~SceneGraph() {
@@ -14,9 +14,31 @@ void SceneGraph::draw() {
 
    //glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
 
-   rootNode.draw();
+   if (rootNode != nullptr) {
+      rootNode->draw();
+   }
 }
 
 void SceneGraph::tick() {
-   rootNode.tick();
+   if (rootNode != nullptr) {
+      rootNode->tick();
+   }
+}
+
+NodeRef SceneGraph::findNodeByName(const std::string &name) {
+   if (rootNode == nullptr) {
+      return NodeRef(nullptr);
+   }
+
+   NodeRef node(nullptr);
+   std::list<NodeRef> rootList = rootNode->getChildren();
+   for (std::list<NodeRef>::const_iterator iterator = rootList.begin(), end = rootList.end();
+        iterator != end; ++iterator) {
+      node = (*iterator)->findNodeByName(name);
+      if (node) {
+         return node;
+      }
+   }
+
+   return node;
 }

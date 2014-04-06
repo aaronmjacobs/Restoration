@@ -10,7 +10,7 @@
 class SceneGraph {
 private:
    Camera camera;
-   SceneNode rootNode;
+   NodeRef rootNode;
    std::map<std::string, NodeRef> nodeMap;
 
 public:
@@ -18,6 +18,7 @@ public:
    ~SceneGraph();
    void draw();
    void tick();
+   NodeRef findNodeByName(const std::string &name);
 };
 
 #endif

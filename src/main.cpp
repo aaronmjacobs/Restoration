@@ -180,43 +180,15 @@ int main(int argc, char *argv[]) {
    GLint uMaterialEmission = program->addUniform("uMaterial.emission");
    GLint uMaterialShininess = program->addUniform("uMaterial.shininess");
 
-   float vertices[] = {
-      0.0f,  0.5f, 0.0f, // Vertex 1 (X, Y)
-      0.5f, -0.5f, 0.0f, // Vertex 2 (X, Y)
-      -0.5f, -0.5f, 0.0f  // Vertex 3 (X, Y)
-   };
-   GLuint vbo;
-   glGenBuffers(1, &vbo); // Generate 1 buffer
-   glBindBuffer(GL_ARRAY_BUFFER, vbo);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-   float normals[] = {
-      0.0f, 0.0f, 1.0f,
-      0.0f, 0.0f, 1.0f,
-      0.0f, 0.0f, 1.0f
-   };
-   GLuint nbo;
-   glGenBuffers(1, &nbo); // Generate 1 buffer
-   glBindBuffer(GL_ARRAY_BUFFER, nbo);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), normals, GL_STATIC_DRAW);
-
    Light light = getLight();
    Material material = getMaterial();
 
    ///////////////////////////////////////////////////
 
    SceneGraph sceneGraph;
-   ModelSceneNodeRef model = ModelSceneNode::fromFile(&sceneGraph, "test", "assets/cello_and_stand.obj", program);
-
-   GLuint vao;
-   glGenVertexArrays(1, &vao);
-   glBindVertexArray(vao);
+   sceneGraph.setRoot(ModelSceneNode::fromFile(&sceneGraph, "test", "assets/woosh.obj", program));
 
    while (!glfwWindowShouldClose(window)) {
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-      ////////////////////////////////////////////////
-
       // Num lights
       glUniform1i(uNumLights, 1);
 
@@ -237,33 +209,14 @@ int main(int argc, char *argv[]) {
       glUniform3fv(uMaterialEmission, 1, glm::value_ptr(material.emission));
       glUniform1f(uMaterialShininess, material.shininess);
 
-      modelMatrix = glm::rotate(modelMatrix, 1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+      modelMatrix = glm::rotate(modelMatrix, 0.01f, glm::vec3(1.0f, 0.3f, 0.2f));
       glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
       glUniformMatrix4fv(uModelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));
       glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
       glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(projection));
       glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
-      /*glEnableVertexAttribArray(aPosition);
-      glBindBuffer(GL_ARRAY_BUFFER, vbo);
-      glVertexAttribPointer(aPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-      glEnableVertexAttribArray(aNormal);
-      glBindBuffer(GL_ARRAY_BUFFER, nbo);
-      glVertexAttribPointer(aNormal, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-      glDrawArrays(GL_TRIANGLES, 0, 3);
-
-      glDisableVertexAttribArray(aPosition);
-      glDisableVertexAttribArray(aNormal);*/
-
-      glBindVertexArray(0);
-      glBindBuffer(GL_ARRAY_BUFFER, 0);
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-      model->draw();
-
-      ////////////////////////////////////////////////
+      sceneGraph.draw();
 
       glfwSwapBuffers(window);
       glfwPollEvents();

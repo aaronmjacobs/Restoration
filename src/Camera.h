@@ -20,6 +20,9 @@ public:
    void walk(float amount);
    void strafe(float amount);
    void rotate(float phi, float theta);
+   glm::vec3 getPosition() {
+      return position;
+   }
    glm::vec3 getFront() {
       return front;
    }

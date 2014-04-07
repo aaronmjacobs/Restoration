@@ -18,7 +18,7 @@ const aiScene* loadScene(Assimp::Importer *importer, const std::string &fileName
    ifile.close();
 
    const aiScene* scene =
-      importer->ReadFile(fileName, aiProcess_GenNormals |
+      importer->ReadFile(fileName, aiProcess_GenSmoothNormals |
                                    aiProcess_Triangulate);
    ASSERT(scene, "Unable to import scene: %s", fileName.c_str());
 

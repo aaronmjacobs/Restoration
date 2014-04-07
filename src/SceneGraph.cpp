@@ -12,6 +12,9 @@ SceneGraph::~SceneGraph() {
 void SceneGraph::draw() {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+   // Camera position
+   //glUniform3fv(uCameraPos, 1, glm::value_ptr(camera.getPosition()));
+
    //glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
 
    if (rootNode != nullptr) {

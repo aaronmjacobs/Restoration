@@ -93,8 +93,8 @@ static void focusCallback(GLFWwindow* window, GLint focused) {
       program->disable();
       delete program;
 
-      Shader vertShader(GL_VERTEX_SHADER, "phong_vert.glsl");
-      Shader fragShader(GL_FRAGMENT_SHADER, "phong_frag.glsl");
+      Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
+      Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
 
       program = new ShaderProgram();
       program->attach(vertShader);
@@ -133,8 +133,8 @@ int main(int argc, char *argv[]) {
    // Prepare projection
    windowSizeCallback(window, width, height);
 
-   Shader vertShader(GL_VERTEX_SHADER, "phong_vert.glsl");
-   Shader fragShader(GL_FRAGMENT_SHADER, "phong_frag.glsl");
+   Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
+   Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
 
    program = new ShaderProgram();
    program->attach(vertShader);

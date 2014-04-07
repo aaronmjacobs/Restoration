@@ -5,9 +5,13 @@
 #include "GLIncludes.h"
 
 #include "Camera.h"
+#include "Loader.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "Utils.h"
+
+#include "SceneGraph.h"
+#include "ModelSceneNode.h"
 
 // GLM
 #include <glm/glm.hpp>
@@ -34,7 +38,7 @@ static Camera camera;
 static Light getLight() {
    Light light;
 
-   light.position = glm::vec3(0.0f, 0.5f, 0.5f);
+   light.position = glm::vec3(0.0f, 1.0f, 1.0f);
    light.color = glm::vec3(0.7f, 0.3f, 0.3f);
    light.constFalloff = 0.1f;
    light.linearFalloff = 0.005f;
@@ -93,8 +97,8 @@ static void focusCallback(GLFWwindow* window, GLint focused) {
       program->disable();
       delete program;
 
-      Shader vertShader(GL_VERTEX_SHADER, "phong_vert.glsl");
-      Shader fragShader(GL_FRAGMENT_SHADER, "phong_frag.glsl");
+      Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
+      Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
 
       program = new ShaderProgram();
       program->attach(vertShader);
@@ -122,7 +126,7 @@ int main(int argc, char *argv[]) {
    //glfwWindowHint(GLFW_SAMPLES, 16);
 
    const int width = 1280, height = 720;
-   window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
+   window = glfwCreateWindow(width, height, "Restoration", NULL, NULL);
    ASSERT(window, "Unable to create GLFW window");
 
    glfwMakeContextCurrent(window);
@@ -133,8 +137,8 @@ int main(int argc, char *argv[]) {
    // Prepare projection
    windowSizeCallback(window, width, height);
 
-   Shader vertShader(GL_VERTEX_SHADER, "phong_vert.glsl");
-   Shader fragShader(GL_FRAGMENT_SHADER, "phong_frag.glsl");
+   Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
+   Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
 
    program = new ShaderProgram();
    program->attach(vertShader);
@@ -143,6 +147,11 @@ int main(int argc, char *argv[]) {
    program->use();
 
    glClearColor(0.0, 0.0, 0.0, 0.0);
+
+   // Depth Buffer Setup
+  glClearDepth(1.0f);
+  glDepthFunc(GL_LEQUAL);
+  glEnable(GL_DEPTH_TEST);
 
    ///////////////////////////////////////////////////
 
@@ -193,14 +202,17 @@ int main(int argc, char *argv[]) {
    glBindBuffer(GL_ARRAY_BUFFER, nbo);
    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), normals, GL_STATIC_DRAW);
 
-   GLuint vao;
-   glGenVertexArrays(1, &vao);
-   glBindVertexArray(vao);
-
    Light light = getLight();
    Material material = getMaterial();
 
    ///////////////////////////////////////////////////
+
+   SceneGraph sceneGraph;
+   ModelSceneNodeRef model = ModelSceneNode::fromFile(&sceneGraph, "test", "assets/cello_and_stand.obj", program);
+
+   GLuint vao;
+   glGenVertexArrays(1, &vao);
+   glBindVertexArray(vao);
 
    while (!glfwWindowShouldClose(window)) {
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -234,7 +246,7 @@ int main(int argc, char *argv[]) {
       glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(projection));
       glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
-      glEnableVertexAttribArray(aPosition);
+      /*glEnableVertexAttribArray(aPosition);
       glBindBuffer(GL_ARRAY_BUFFER, vbo);
       glVertexAttribPointer(aPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -245,7 +257,13 @@ int main(int argc, char *argv[]) {
       glDrawArrays(GL_TRIANGLES, 0, 3);
 
       glDisableVertexAttribArray(aPosition);
-      glDisableVertexAttribArray(aNormal);
+      glDisableVertexAttribArray(aNormal);*/
+
+      glBindVertexArray(0);
+      glBindBuffer(GL_ARRAY_BUFFER, 0);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+      model->draw();
 
       ////////////////////////////////////////////////
 

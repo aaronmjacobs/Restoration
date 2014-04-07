@@ -2,7 +2,7 @@
 *.slo
 *.lo
 *.o
-*.obj
+# Model file - *.obj
 build/*
 
 # Compiled Dynamic libraries

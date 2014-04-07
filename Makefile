@@ -4,13 +4,17 @@ LINK_FLAGS = -lassimp
 SRC_DIR = src
 BUILD_DIR = build
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-   LINK_FLAGS += -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
-endif
-ifeq ($(UNAME_S),Linux)
-   COMPILE_FLAGS += `pkg-config --cflags glfw3`
-   LINK_FLAGS += `pkg-config --libs glfw3`
+ifeq ($(OS),Windows_NT)
+   LINK_FLAGS += -lglfw3 -lopengl32
+else
+   UNAME_S := $(shell uname -s)
+   ifeq ($(UNAME_S),Darwin)
+      LINK_FLAGS += -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+   endif
+   ifeq ($(UNAME_S),Linux)
+      COMPILE_FLAGS += `pkg-config --cflags glfw3`
+      LINK_FLAGS += `pkg-config --libs glfw3`
+   endif
 endif
 
 EXECUTABLE = Restoration

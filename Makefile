@@ -5,6 +5,7 @@ SRC_DIR = src
 BUILD_DIR = build
 
 ifeq ($(OS),Windows_NT)
+   COMPILE_FLAGS += -DGL_GLEXT_PROTOTYPES
    LINK_FLAGS += -lglfw3 -lopengl32
 else
    UNAME_S := $(shell uname -s)

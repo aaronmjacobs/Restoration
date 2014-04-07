@@ -1,10 +1,10 @@
 #ifndef SCENE_NODE_H
 #define SCENE_NODE_H
 
-#include <glm/glm.hpp>
-#include <glm/gtx/quaternion.hpp>
+#include "GLMIncludes.h"
 
 #include <list>
+#include <memory>
 #include <string>
 
 class SceneGraph;

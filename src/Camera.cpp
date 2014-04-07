@@ -1,8 +1,5 @@
 #include "Camera.h"
 
-#include <glm/gtc/constants.hpp>
-#include <glm/gtx/transform.hpp>
-
 Camera::Camera() {
    position = glm::vec3(0.0f);
    phi = 0.0f;

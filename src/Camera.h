@@ -3,7 +3,7 @@
 
 #include "GLIncludes.h"
 
-#include <glm/glm.hpp>
+#include "GLMIncludes.h"
 
 class Camera {
 private:

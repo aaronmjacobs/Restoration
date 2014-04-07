@@ -3,6 +3,12 @@ COMPILE_FLAGS = -std=c++11
 LINK_FLAGS = -lassimp
 SRC_DIR = src
 BUILD_DIR = build
+EXECUTABLE = Restoration
+
+SOURCES = $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/**/*.cpp)
+OBJECTS = $(subst $(SRC_DIR),$(BUILD_DIR),$(SOURCES:.cpp=.o))
+BUILD_FOLDERS = $(subst $(SRC_DIR),$(BUILD_DIR), $(shell find src -type d))
+BUILD = $(BUILD_OBJECTS) $(EXECUTABLE)
 
 ifeq ($(OS),Windows_NT)
    COMPILE_FLAGS += -DGL_GLEXT_PROTOTYPES
@@ -18,15 +24,6 @@ else
    endif
 endif
 
-EXECUTABLE = Restoration
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/**/*.cpp)
-OBJECTS = $(SOURCES:.cpp=.o)
-BUILD_OBJECTS = $(subst $(SRC_DIR),$(BUILD_DIR),$(OBJECTS))
-
-BUILD_FOLDERS = $(subst $(SRC_DIR),$(BUILD_DIR), $(shell find src -type d))
-
-BUILD = $(SOURCES) $(EXECUTABLE)
-
 all: build_folders
 all: $(BUILD)
 
@@ -38,9 +35,9 @@ build_folders:
 	mkdir -p $(BUILD_FOLDERS)
 
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LINK_FLAGS) $(BUILD_OBJECTS) -o $@
+	$(CC) $(LINK_FLAGS) $(OBJECTS) -o $@
 
-.cpp.o:
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) -c $< -o $(subst $(SRC_DIR),$(BUILD_DIR),$@) $(COMPILE_FLAGS)
 
 clean:

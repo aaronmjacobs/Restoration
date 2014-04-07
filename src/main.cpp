@@ -225,7 +225,7 @@ int main(int argc, char *argv[]) {
       glUniform3fv(uMaterialEmission, 1, glm::value_ptr(material.emission));
       glUniform1f(uMaterialShininess, material.shininess);
 
-      modelMatrix = glm::rotate(modelMatrix, 1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+      modelMatrix = glm::rotate(modelMatrix, 0.03f, glm::vec3(1.0f, 0.0f, 0.0f));
       glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
       glUniformMatrix4fv(uModelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));
       glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));

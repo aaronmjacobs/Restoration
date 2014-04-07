@@ -1,6 +1,6 @@
 CC = g++
 COMPILE_FLAGS = -std=c++11
-LINK_FLAGS =
+LINK_FLAGS = -lassimp
 SRC_DIR = src
 BUILD_DIR = build
 

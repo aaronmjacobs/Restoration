@@ -24,6 +24,7 @@ public:
    void link();
    void use();
    void disable();
+   void loadFields(const std::string &fileName);
    GLint addAttribute(AttributeType type, const std::string &name);
    GLint addUniform(const std::string &name);
    GLint getAttribute(const std::string &name);

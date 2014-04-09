@@ -142,6 +142,7 @@ int main(int argc, char *argv[]) {
    program->attach(vertShader);
    program->attach(fragShader);
    program->link();
+   program->loadFields("herp.derp");
    program->use();
 
    glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -155,30 +156,30 @@ int main(int argc, char *argv[]) {
 
    glm::mat4 modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -1.0f));
 
-   GLint uModelMatrix = program->addUniform("uModelMatrix");
-   GLint uViewMatrix = program->addUniform("uViewMatrix");
-   GLint uProjMatrix = program->addUniform("uProjMatrix");
-   GLint uNormalMatrix = program->addUniform("uNormalMatrix");
+   GLint uModelMatrix = program->getUniform("uModelMatrix");
+   GLint uViewMatrix = program->getUniform("uViewMatrix");
+   GLint uProjMatrix = program->getUniform("uProjMatrix");
+   GLint uNormalMatrix = program->getUniform("uNormalMatrix");
 
-   GLint aPosition = program->addAttribute(POSITION, "aPosition");
-   GLint aNormal = program->addAttribute(NORMAL, "aNormal");
+   GLint aPosition = program->getAttribute("aPosition");
+   GLint aNormal = program->getAttribute("aNormal");
 
-   GLint uNumLights = program->addUniform("uNumLights");
-   GLint uCameraPos = program->addUniform("uCameraPos");
+   GLint uNumLights = program->getUniform("uNumLights");
+   GLint uCameraPos = program->getUniform("uCameraPos");
 
    // Light
-   GLint uLightPos = program->addUniform("uLights[0].position");
-   GLint uLightColor = program->addUniform("uLights[0].color");
-   GLint uLightConst = program->addUniform("uLights[0].constFalloff");
-   GLint uLightLinear = program->addUniform("uLights[0].linearFalloff");
-   GLint uLightSquare = program->addUniform("uLights[0].squareFalloff");
+   GLint uLightPos = program->getUniform("uLights[0].position");
+   GLint uLightColor = program->getUniform("uLights[0].color");
+   GLint uLightConst = program->getUniform("uLights[0].constFalloff");
+   GLint uLightLinear = program->getUniform("uLights[0].linearFalloff");
+   GLint uLightSquare = program->getUniform("uLights[0].squareFalloff");
    
    // Material
-   GLint uMaterialAmbient = program->addUniform("uMaterial.ambient");
-   GLint uMaterialDiffuse = program->addUniform("uMaterial.diffuse");
-   GLint uMaterialSpecular = program->addUniform("uMaterial.specular");
-   GLint uMaterialEmission = program->addUniform("uMaterial.emission");
-   GLint uMaterialShininess = program->addUniform("uMaterial.shininess");
+   GLint uMaterialAmbient = program->getUniform("uMaterial.ambient");
+   GLint uMaterialDiffuse = program->getUniform("uMaterial.diffuse");
+   GLint uMaterialSpecular = program->getUniform("uMaterial.specular");
+   GLint uMaterialEmission = program->getUniform("uMaterial.emission");
+   GLint uMaterialShininess = program->getUniform("uMaterial.shininess");
 
    Light light = getLight();
    Material material = getMaterial();
@@ -186,7 +187,7 @@ int main(int argc, char *argv[]) {
    ///////////////////////////////////////////////////
 
    SceneGraph sceneGraph;
-   sceneGraph.setRoot(ModelSceneNode::fromFile(&sceneGraph, "test", "assets/woosh.obj", program));
+   sceneGraph.setRoot(ModelSceneNode::fromFile(&sceneGraph, "test", "assets/cello_and_stand.obj", program));
 
    while (!glfwWindowShouldClose(window)) {
       // Num lights

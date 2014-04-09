@@ -223,7 +223,7 @@ int main(int argc, char *argv[]) {
       accumulator += frameTime;
       while (accumulator >= dt) {
          // Do tick()
-         modelMatrix = glm::rotate(modelMatrix, 0.03f, glm::vec3(1.0f, 0.0f, 0.0f));
+         modelMatrix = glm::rotate(modelMatrix, (float)dt, glm::vec3(1.0f, 0.0f, 0.0f));
          //t += dt;
          accumulator -= dt;
       }

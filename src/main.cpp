@@ -112,12 +112,14 @@ int main(int argc, char *argv[]) {
    glfwSetErrorCallback(errorCallback);
    ASSERT(glfwInit(), "Unable to init glfw");
 
+#ifdef __APPLE__
    // Set hints to use OpenGL 3.3
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
    //glfwWindowHint(GLFW_SAMPLES, 16);
+#endif
 
    const int width = 1280, height = 720;
    window = glfwCreateWindow(width, height, "Simple example", NULL, NULL);
@@ -130,6 +132,10 @@ int main(int argc, char *argv[]) {
 
    // Prepare projection
    windowSizeCallback(window, width, height);
+
+#ifdef _WIN32
+   ASSERT(glewInit() == GLEW_OK, "Unable to init glew");
+#endif
 
    Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
    Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");

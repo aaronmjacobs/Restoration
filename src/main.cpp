@@ -141,6 +141,9 @@ int main(int argc, char *argv[]) {
    ASSERT(glewInit() == GLEW_OK, "Unable to init glew");
 #endif
 
+   // Enable vsync
+   glfwSwapInterval(1);
+
    Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
    Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
 
@@ -195,7 +198,25 @@ int main(int argc, char *argv[]) {
    SceneGraph sceneGraph;
    sceneGraph.setRoot(ModelSceneNode::fromFile(&sceneGraph, "test", "assets/cello_and_stand.obj", program));
 
+   double lastTime = glfwGetTime();
+   double accumulator = 0.0;
+   //double t = 0.0;
+   const double dt = 1.0 / 60.0;
+
    while (!glfwWindowShouldClose(window)) {
+      double now = glfwGetTime();
+      // Cap the frame time to .25 seconds to prevent spiraling
+      double frameTime = glm::min(now - lastTime, 0.25);
+      lastTime = now;
+
+      accumulator += frameTime;
+      while (accumulator >= dt) {
+         // Do tick()
+         modelMatrix = glm::rotate(modelMatrix, 0.03f, glm::vec3(1.0f, 0.0f, 0.0f));
+         //t += dt;
+         accumulator -= dt;
+      }
+      
       // Num lights
       glUniform1i(uNumLights, 1);
 
@@ -216,7 +237,6 @@ int main(int argc, char *argv[]) {
       glUniform3fv(uMaterialEmission, 1, glm::value_ptr(material.emission));
       glUniform1f(uMaterialShininess, material.shininess);
 
-      modelMatrix = glm::rotate(modelMatrix, 0.01f, glm::vec3(1.0f, 0.3f, 0.2f));
       glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
       glUniformMatrix4fv(uModelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));
       glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));

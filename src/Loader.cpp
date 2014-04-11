@@ -1,7 +1,7 @@
 #include "Loader.h"
 
 #include "FancyAssert.h"
-#include "ModelSceneNode.h"
+#include "GeometryNode.h"
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
 

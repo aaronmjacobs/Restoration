@@ -3,6 +3,8 @@
 
 #include "GLMIncludes.h"
 
+#include "MatrixStack.h"
+
 #include <list>
 #include <memory>
 #include <string>
@@ -21,11 +23,12 @@ protected:
    glm::quat rotation;
    glm::vec3 scale;
    bool visible;
-   SceneGraph *graph;
+   SceneGraph *scene;
+   NodeRef parent;
    std::list<NodeRef> children;
 
 public:
-   SceneNode(SceneGraph *graph, const std::string &name);
+   SceneNode(SceneGraph *scene, const std::string &name);
    virtual ~SceneNode();
    std::string getName() const {
       return name;
@@ -33,9 +36,12 @@ public:
    std::list<NodeRef> getChildren() {
       return children;
    }
+   void addChild(NodeRef node) {
+      children.push_back(node);
+   }
    NodeRef findNodeByName(const std::string &name);
-   virtual void draw() = 0;
-   virtual void tick() = 0;
+   virtual void tick(const double dt) = 0;
+   virtual void draw(MatrixStack *matrixStack) = 0;
 };
 
 #endif

@@ -5,13 +5,17 @@
 #include "GLIncludes.h"
 
 #include "Camera.h"
+#include "Mesh.h"
+#include "Model.h"
 #include "Loader.h"
+#include "PhongMaterial.h"
+#include "Renderer.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "Utils.h"
 
 #include "SceneGraph.h"
-#include "ModelSceneNode.h"
+#include "GeometryNode.h"
 
 // GLM
 #include "GLMIncludes.h"
@@ -26,11 +30,6 @@ typedef struct {
    float constFalloff, linearFalloff, squareFalloff;
 } Light;
 
-typedef struct {
-   glm::vec3 ambient, diffuse, specular, emission;
-   float shininess;
-} Material;
-
 static Camera camera;
 
 static Light getLight() {
@@ -43,20 +42,6 @@ static Light getLight() {
    light.squareFalloff = 0.001f;
 
    return light;
-}
-
-static Material getMaterial() {
-   Material material;
-
-   glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
-
-   material.ambient = baseColor * 0.2f;
-   material.diffuse = baseColor * 0.4f;
-   material.specular = glm::vec3(0.4f);
-   material.emission = baseColor * 0.0f;
-   material.shininess = 200.0f;
-
-   return material;
 }
 
 namespace Game {
@@ -88,17 +73,16 @@ static void keyCallback(GLFWwindow* window, int key, int scancode, int action, i
    }
 }
 
-static ShaderProgram *program = NULL;
+static ShaderProgramRef program = NULL;
 
 static void focusCallback(GLFWwindow* window, GLint focused) {
    if (focused && program) {
       program->disable();
-      delete program;
 
       Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
       Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
 
-      program = new ShaderProgram();
+      program = ShaderProgramRef(new ShaderProgram());
       program->attach(vertShader);
       program->attach(fragShader);
       program->link();
@@ -147,7 +131,7 @@ int main(int argc, char *argv[]) {
    Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
    Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
 
-   program = new ShaderProgram();
+   program = ShaderProgramRef(new ShaderProgram());
    program->attach(vertShader);
    program->attach(fragShader);
    program->link();
@@ -170,9 +154,6 @@ int main(int argc, char *argv[]) {
    GLint uProjMatrix = program->getUniform("uProjMatrix");
    GLint uNormalMatrix = program->getUniform("uNormalMatrix");
 
-   GLint aPosition = program->getAttribute("aPosition");
-   GLint aNormal = program->getAttribute("aNormal");
-
    GLint uNumLights = program->getUniform("uNumLights");
    GLint uCameraPos = program->getUniform("uCameraPos");
 
@@ -182,25 +163,25 @@ int main(int argc, char *argv[]) {
    GLint uLightConst = program->getUniform("uLights[0].constFalloff");
    GLint uLightLinear = program->getUniform("uLights[0].linearFalloff");
    GLint uLightSquare = program->getUniform("uLights[0].squareFalloff");
-   
-   // Material
-   GLint uMaterialAmbient = program->getUniform("uMaterial.ambient");
-   GLint uMaterialDiffuse = program->getUniform("uMaterial.diffuse");
-   GLint uMaterialSpecular = program->getUniform("uMaterial.specular");
-   GLint uMaterialEmission = program->getUniform("uMaterial.emission");
-   GLint uMaterialShininess = program->getUniform("uMaterial.shininess");
 
    Light light = getLight();
-   Material material = getMaterial();
 
    ///////////////////////////////////////////////////
 
+   Renderer renderer;
    SceneGraph sceneGraph;
-   sceneGraph.setRoot(ModelSceneNode::fromFile(&sceneGraph, "test", "assets/cello_and_stand.obj", program));
+
+   MeshRef celloMesh = MeshRef(new Mesh("assets/cello_and_stand.obj"));
+   glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
+   MaterialRef phongMaterial = MaterialRef(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
+   ModelRef celloModel = ModelRef(new Model(phongMaterial, celloMesh));
+
+   sceneGraph.addChild(NodeRef(new GeometryNode(&sceneGraph, "cello", celloModel)));
+   NodeRef cello = sceneGraph.findNodeByName("cello");
+   ASSERT(cello, "Unable to fetch cello");
 
    double lastTime = glfwGetTime();
    double accumulator = 0.0;
-   //double t = 0.0;
    const double dt = 1.0 / 60.0;
 
    while (!glfwWindowShouldClose(window)) {
@@ -211,9 +192,8 @@ int main(int argc, char *argv[]) {
 
       accumulator += frameTime;
       while (accumulator >= dt) {
-         // Do tick()
          modelMatrix = glm::rotate(modelMatrix, 0.03f, glm::vec3(1.0f, 0.0f, 0.0f));
-         //t += dt;
+         sceneGraph.tick(dt);
          accumulator -= dt;
       }
       
@@ -230,20 +210,13 @@ int main(int argc, char *argv[]) {
       glUniform1f(uLightLinear, light.linearFalloff);
       glUniform1f(uLightSquare, light.squareFalloff);
 
-      // Material
-      glUniform3fv(uMaterialAmbient, 1, glm::value_ptr(material.ambient));
-      glUniform3fv(uMaterialDiffuse, 1, glm::value_ptr(material.diffuse));
-      glUniform3fv(uMaterialSpecular, 1, glm::value_ptr(material.specular));
-      glUniform3fv(uMaterialEmission, 1, glm::value_ptr(material.emission));
-      glUniform1f(uMaterialShininess, material.shininess);
-
       glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
       glUniformMatrix4fv(uModelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));
       glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
       glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(projection));
       glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
-      sceneGraph.draw();
+      renderer.render(&sceneGraph);
 
       glfwSwapBuffers(window);
       glfwPollEvents();

@@ -4,8 +4,12 @@
 #include "GLIncludes.h"
 
 #include <map>
+#include <memory>
 
 class Shader;
+class ShaderProgram;
+
+typedef std::shared_ptr<ShaderProgram> ShaderProgramRef;
 
 enum AttributeType { POSITION, NORMAL, TEXTURE };
 

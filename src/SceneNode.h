@@ -20,7 +20,7 @@ private:
 
 protected:
    glm::vec3 position;
-   glm::quat rotation;
+   glm::quat orientation;
    glm::vec3 scale;
    bool visible;
    SceneGraph *scene;
@@ -40,7 +40,9 @@ public:
       children.push_back(node);
    }
    NodeRef findNodeByName(const std::string &name);
-   void translate(glm::vec3 trans);
+   void translateBy(glm::vec3 trans);
+   void rotateBy(glm::quat rot);
+   void scaleBy(glm::vec3 scale);
    virtual void tick(const double dt) = 0;
    virtual void draw(MatrixStack *modelMatrixStack) = 0;
 };

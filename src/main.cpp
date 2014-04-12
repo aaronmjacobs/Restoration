@@ -1,21 +1,21 @@
+#include "Camera.h"
+#include "GeometryNode.h"
+#include "Loader.h"
+#include "Mesh.h"
+#include "Model.h"
+#include "PhongMaterial.h"
+#include "Renderer.h"
+#include "SceneGraph.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
+#include "TransformNode.h"
+#include "Utils.h"
+
 // Fancy assertions
 #include "FancyAssert.h"
 
 // OpenGL / GLFW
 #include "GLIncludes.h"
-
-#include "Camera.h"
-#include "Mesh.h"
-#include "Model.h"
-#include "Loader.h"
-#include "PhongMaterial.h"
-#include "Renderer.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
-#include "Utils.h"
-
-#include "SceneGraph.h"
-#include "GeometryNode.h"
 
 // GLM
 #include "GLMIncludes.h"
@@ -88,10 +88,18 @@ void test() {
    ModelRef celloModel = ModelRef(new Model(phongMaterial, celloMesh));
 
    NodeRef celloNode(new GeometryNode(&sceneGraph, "cello", celloModel));
-   celloNode->translate(glm::vec3(0.0f, 0.0f, -2.0f));
+   celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
    sceneGraph.addChild(celloNode);
-   NodeRef cello = sceneGraph.findNodeByName("cello");
-   ASSERT(cello, "Unable to fetch cello");
+
+   NodeRef transformNode(new TransformNode(&sceneGraph, "move"));
+   transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
+   celloNode->addChild(transformNode);
+
+   glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
+   MaterialRef phongMaterial2 = MaterialRef(new PhongMaterial(program, baseColor2 * 0.2f, baseColor2 * 0.4f, glm::vec3(0.4f), baseColor2 * 0.0f, 50.0f));
+   ModelRef celloModel2 = ModelRef(new Model(phongMaterial2, celloMesh));
+   NodeRef celloNode2(new GeometryNode(&sceneGraph, "cello2", celloModel2));
+   transformNode->addChild(celloNode2);
 }
 
 }; // namespace

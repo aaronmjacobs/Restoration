@@ -29,6 +29,14 @@ NodeRef SceneNode::findNodeByName(const std::string &name) {
    return node;
 }
 
-void SceneNode::translate(glm::vec3 trans) {
+void SceneNode::translateBy(glm::vec3 trans) {
    position += trans;
+}
+
+void SceneNode::rotateBy(glm::quat rot) {
+   orientation *= rot;
+}
+
+void SceneNode::scaleBy(glm::vec3 scale) {
+   this->scale *= scale;
 }

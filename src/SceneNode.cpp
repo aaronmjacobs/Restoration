@@ -14,12 +14,12 @@ SceneNode::~SceneNode() {
 }
 
 NodeRef SceneNode::findNodeByName(const std::string &name) {
-   if (this->name == name) {
-      return NodeRef(this);
-   }
-
    NodeRef node(nullptr);
    for (NodeRef child : children) {
+      if (child->getName() == name) {
+         return child;
+      }
+
       node = child->findNodeByName(name);
       if (node) {
          return node;

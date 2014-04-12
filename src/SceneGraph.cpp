@@ -17,6 +17,10 @@ NodeRef SceneGraph::findNodeByName(const std::string &name) {
    NodeRef node(nullptr);
 
    for (NodeRef child : children) {
+      if (child->getName() == name) {
+         return child;
+      }
+
       node = child->findNodeByName(name);
       if (node) {
          return node;

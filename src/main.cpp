@@ -25,38 +25,42 @@
 #include <iostream>
 #include <string>
 
-namespace Game {
+namespace {
 
-static void testGlError(const char *message) {
+const int WIDTH = 1280, HEIGHT = 720;
+const float FOV = 90.0f;
+
+SceneGraph sceneGraph;
+Renderer renderer(WIDTH, HEIGHT, FOV);
+
+void testGlError(const char *message) {
    GLenum error = glGetError();
    ASSERT(error == GL_FALSE, "%s: %d", message, error);
 }
 
-} // namespace game
-
-static void errorCallback(int error, const char* description) {
+void errorCallback(int error, const char* description) {
    ASSERT(false, "Error %d: %s", error, description);
 }
 
-static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
    if (action == GLFW_PRESS) {
       if (key == GLFW_KEY_ESCAPE) {
          glfwSetWindowShouldClose(window, GL_TRUE);
       } else if (key == GLFW_KEY_W) {
-      //   camera.fly(0.1f);
+         sceneGraph.getCamera()->fly(0.1f);
       } else if (key == GLFW_KEY_S) {
-      //   camera.fly(-0.1f);
+         sceneGraph.getCamera()->fly(-0.1f);
       } else if (key == GLFW_KEY_A) {
-      //   camera.strafe(-0.1f);
+         sceneGraph.getCamera()->strafe(-0.1f);
       } else if (key == GLFW_KEY_D) {
-      //   camera.strafe(0.1f);
+         sceneGraph.getCamera()->strafe(0.1f);
       }
    }
 }
 
-static ShaderProgramRef program = NULL;
+ShaderProgramRef program = NULL;
 
-static void focusCallback(GLFWwindow* window, GLint focused) {
+void focusCallback(GLFWwindow* window, GLint focused) {
    if (focused && program) {
       program->disable();
 
@@ -71,9 +75,36 @@ static void focusCallback(GLFWwindow* window, GLint focused) {
    }
 }
 
-static void windowSizeCallback(GLFWwindow* window, int width, int height) {
-   // TODO renderer.onWindowSizeChange()
+void windowSizeCallback(GLFWwindow* window, int width, int height) {
+   renderer.onWindowSizeChange(width, height);
 }
+
+void test() {
+   Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
+   Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
+
+   program = ShaderProgramRef(new ShaderProgram());
+   program->attach(vertShader);
+   program->attach(fragShader);
+   program->link();
+   program->loadFields("herp.derp");
+   program->use();
+
+   renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.2f), 0.1f, 0.005f, 0.001f)));
+   renderer.addShaderProgram(program);
+   MeshRef celloMesh = MeshRef(new Mesh("assets/cello_and_stand.obj"));
+   glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
+   MaterialRef phongMaterial = MaterialRef(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
+   ModelRef celloModel = ModelRef(new Model(phongMaterial, celloMesh));
+
+   NodeRef celloNode(new GeometryNode(&sceneGraph, "cello", celloModel));
+   celloNode->translate(glm::vec3(0.0f, 0.0f, -2.0f));
+   sceneGraph.addChild(celloNode);
+   NodeRef cello = sceneGraph.findNodeByName("cello");
+   ASSERT(cello, "Unable to fetch cello");
+}
+
+}; // namespace
 
 int main(int argc, char *argv[]) {
    GLFWwindow* window;
@@ -89,17 +120,13 @@ int main(int argc, char *argv[]) {
    //glfwWindowHint(GLFW_SAMPLES, 16);
 #endif
 
-   const int width = 1280, height = 720;
-   window = glfwCreateWindow(width, height, "Restoration", NULL, NULL);
+   window = glfwCreateWindow(WIDTH, HEIGHT, "Restoration", NULL, NULL);
    ASSERT(window, "Unable to create GLFW window");
 
    glfwMakeContextCurrent(window);
    glfwSetWindowSizeCallback(window, windowSizeCallback);
    glfwSetWindowFocusCallback(window, focusCallback);
    glfwSetKeyCallback(window, keyCallback);
-
-   // Prepare projection
-   windowSizeCallback(window, width, height);
 
 #ifdef _WIN32
    ASSERT(glewInit() == GLEW_OK, "Unable to init glew");
@@ -108,30 +135,9 @@ int main(int argc, char *argv[]) {
    // Enable vsync
    glfwSwapInterval(1);
 
-   Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
-   Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
-
-   program = ShaderProgramRef(new ShaderProgram());
-   program->attach(vertShader);
-   program->attach(fragShader);
-   program->link();
-   program->loadFields("herp.derp");
-   program->use();
-
-   Renderer renderer(width, height, 90.0f);
    renderer.prepare();
-   SceneGraph sceneGraph;
 
-   renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.2f), 0.1f, 0.005f, 0.001f)));
-   renderer.addShaderProgram(program);
-   MeshRef celloMesh = MeshRef(new Mesh("assets/cello_and_stand.obj"));
-   glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
-   MaterialRef phongMaterial = MaterialRef(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
-   ModelRef celloModel = ModelRef(new Model(phongMaterial, celloMesh));
-
-   NodeRef celloNode(new GeometryNode(&sceneGraph, "cello", celloModel));
-   celloNode->translate(glm::vec3(0.0f, 0.0f, -2.0f));
-   sceneGraph.addChild(celloNode);
+   test();
    NodeRef cello = sceneGraph.findNodeByName("cello");
    ASSERT(cello, "Unable to fetch cello");
 

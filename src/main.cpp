@@ -77,8 +77,27 @@ void test() {
    program->attach(fragShader);
    program->compileShaders();
    program->link();
-   program->loadFields("herp.derp");
    program->use();
+
+   // TODO Load fields via some sort of file
+   program->addUniform("uModelMatrix");
+   program->addUniform("uViewMatrix");
+   program->addUniform("uProjMatrix");
+   program->addUniform("uNormalMatrix");
+   program->addAttribute(POSITION, "aPosition");
+   program->addAttribute(NORMAL, "aNormal");
+   program->addUniform("uNumLights");
+   program->addUniform("uCameraPos");
+   program->addUniform("uLights[0].position");
+   program->addUniform("uLights[0].color");
+   program->addUniform("uLights[0].constFalloff");
+   program->addUniform("uLights[0].linearFalloff");
+   program->addUniform("uLights[0].squareFalloff");
+   program->addUniform("uMaterial.ambient");
+   program->addUniform("uMaterial.diffuse");
+   program->addUniform("uMaterial.specular");
+   program->addUniform("uMaterial.emission");
+   program->addUniform("uMaterial.shininess");
 
    renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.2f), 0.1f, 0.005f, 0.001f)));
    renderer.addShaderProgram(program);

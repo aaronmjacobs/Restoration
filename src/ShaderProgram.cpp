@@ -41,34 +41,6 @@ void ShaderProgram::disable() {
    glUseProgram(0);
 }
 
-void ShaderProgram::loadFields(const std::string &fileName) {
-   // TODO Load fields via JSON
-   GLint uModelMatrix = addUniform("uModelMatrix");
-   GLint uViewMatrix = addUniform("uViewMatrix");
-   GLint uProjMatrix = addUniform("uProjMatrix");
-   GLint uNormalMatrix = addUniform("uNormalMatrix");
-
-   GLint aPosition = addAttribute(POSITION, "aPosition");
-   GLint aNormal = addAttribute(NORMAL, "aNormal");
-
-   GLint uNumLights = addUniform("uNumLights");
-   GLint uCameraPos = addUniform("uCameraPos");
-
-   // Light
-   GLint uLightPos = addUniform("uLights[0].position");
-   GLint uLightColor = addUniform("uLights[0].color");
-   GLint uLightConst = addUniform("uLights[0].constFalloff");
-   GLint uLightLinear = addUniform("uLights[0].linearFalloff");
-   GLint uLightSquare = addUniform("uLights[0].squareFalloff");
-   
-   // Material
-   GLint uMaterialAmbient = addUniform("uMaterial.ambient");
-   GLint uMaterialDiffuse = addUniform("uMaterial.diffuse");
-   GLint uMaterialSpecular = addUniform("uMaterial.specular");
-   GLint uMaterialEmission = addUniform("uMaterial.emission");
-   GLint uMaterialShininess = addUniform("uMaterial.shininess");
-}
-
 GLint ShaderProgram::addAttribute(AttributeType type, const std::string &name) {
    attributeMap[name] = type;
    return type;

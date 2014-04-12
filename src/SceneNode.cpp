@@ -28,3 +28,7 @@ NodeRef SceneNode::findNodeByName(const std::string &name) {
 
    return node;
 }
+
+void SceneNode::translate(glm::vec3 trans) {
+   position += trans;
+}

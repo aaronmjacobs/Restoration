@@ -40,6 +40,7 @@ public:
       children.push_back(node);
    }
    NodeRef findNodeByName(const std::string &name);
+   void translate(glm::vec3 trans);
    virtual void tick(const double dt) = 0;
    virtual void draw(MatrixStack *modelMatrixStack) = 0;
 };

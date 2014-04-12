@@ -19,6 +19,9 @@ public:
    Model(MaterialRef material, MeshRef mesh);
    ~Model();
    void draw();
+   MaterialRef getMaterial() {
+      return material;
+   }
 };
 
 #endif

@@ -25,8 +25,6 @@
 #include <iostream>
 #include <string>
 
-static Camera camera;
-
 namespace Game {
 
 static void testGlError(const char *message) {
@@ -45,13 +43,13 @@ static void keyCallback(GLFWwindow* window, int key, int scancode, int action, i
       if (key == GLFW_KEY_ESCAPE) {
          glfwSetWindowShouldClose(window, GL_TRUE);
       } else if (key == GLFW_KEY_W) {
-         camera.fly(0.1f);
+      //   camera.fly(0.1f);
       } else if (key == GLFW_KEY_S) {
-         camera.fly(-0.1f);
+      //   camera.fly(-0.1f);
       } else if (key == GLFW_KEY_A) {
-         camera.strafe(-0.1f);
+      //   camera.strafe(-0.1f);
       } else if (key == GLFW_KEY_D) {
-         camera.strafe(0.1f);
+      //   camera.strafe(0.1f);
       }
    }
 }
@@ -73,9 +71,8 @@ static void focusCallback(GLFWwindow* window, GLint focused) {
    }
 }
 
-static glm::mat4 projection;
 static void windowSizeCallback(GLFWwindow* window, int width, int height) {
-   projection = glm::perspective(90.0f, (float)width / height, 0.1f, 100.f);
+   // TODO renderer.onWindowSizeChange()
 }
 
 int main(int argc, char *argv[]) {
@@ -121,27 +118,8 @@ int main(int argc, char *argv[]) {
    program->loadFields("herp.derp");
    program->use();
 
-   glClearColor(0.0, 0.0, 0.0, 0.0);
-
-   // Depth Buffer Setup
-  glClearDepth(1.0f);
-  glDepthFunc(GL_LEQUAL);
-  glEnable(GL_DEPTH_TEST);
-
-   ///////////////////////////////////////////////////
-
-   glm::mat4 modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -1.0f));
-
-   GLint uModelMatrix = program->getUniform("uModelMatrix");
-   GLint uViewMatrix = program->getUniform("uViewMatrix");
-   GLint uProjMatrix = program->getUniform("uProjMatrix");
-   GLint uNormalMatrix = program->getUniform("uNormalMatrix");
-
-   GLint uCameraPos = program->getUniform("uCameraPos");
-
-   ///////////////////////////////////////////////////
-
-   Renderer renderer;
+   Renderer renderer(width, height, 90.0f);
+   renderer.prepare();
    SceneGraph sceneGraph;
 
    renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.2f), 0.1f, 0.005f, 0.001f)));
@@ -151,7 +129,9 @@ int main(int argc, char *argv[]) {
    MaterialRef phongMaterial = MaterialRef(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
    ModelRef celloModel = ModelRef(new Model(phongMaterial, celloMesh));
 
-   sceneGraph.addChild(NodeRef(new GeometryNode(&sceneGraph, "cello", celloModel)));
+   NodeRef celloNode(new GeometryNode(&sceneGraph, "cello", celloModel));
+   celloNode->translate(glm::vec3(0.0f, 0.0f, -2.0f));
+   sceneGraph.addChild(celloNode);
    NodeRef cello = sceneGraph.findNodeByName("cello");
    ASSERT(cello, "Unable to fetch cello");
 
@@ -160,30 +140,25 @@ int main(int argc, char *argv[]) {
    const double dt = 1.0 / 60.0;
 
    while (!glfwWindowShouldClose(window)) {
+      // Calculate the frame time
       double now = glfwGetTime();
-      // Cap the frame time to .25 seconds to prevent spiraling
-      double frameTime = glm::min(now - lastTime, 0.25);
+      double frameTime = glm::min(now - lastTime, 0.25); // Cap the frame time to .25 seconds to prevent spiraling
       lastTime = now;
 
+      // Update the scene
       accumulator += frameTime;
       while (accumulator >= dt) {
-         modelMatrix = glm::rotate(modelMatrix, 0.03f, glm::vec3(1.0f, 0.0f, 0.0f));
          sceneGraph.tick(dt);
          accumulator -= dt;
       }
 
-      // Camera position
-      glUniform3fv(uCameraPos, 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 1.0f)));
-
-      glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
-      glUniformMatrix4fv(uModelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
-      glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(projection));
-      glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
-
+      // Render the scene
       renderer.render(&sceneGraph);
 
+      // Display the rendered scene
       glfwSwapBuffers(window);
+
+      // Poll for events
       glfwPollEvents();
    }
 

@@ -10,16 +10,16 @@ GeometryNode::GeometryNode(SceneGraph *scene, const std::string &name, ModelRef 
 
 }
 
-void GeometryNode::draw(MatrixStack *matrixStack) {
-   matrixStack->push();
+void GeometryNode::draw(MatrixStack *modelMatrixStack) {
+   modelMatrixStack->push();
 
    model->draw();
 
    for (NodeRef child : children) {
-      child->draw(matrixStack);
+      child->draw(modelMatrixStack);
    }
 
-   matrixStack->pop();
+   modelMatrixStack->pop();
 }
 
 void GeometryNode::tick(const double dt) {

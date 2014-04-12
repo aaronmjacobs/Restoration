@@ -25,24 +25,7 @@
 #include <iostream>
 #include <string>
 
-typedef struct {
-   glm::vec3 position, color;
-   float constFalloff, linearFalloff, squareFalloff;
-} Light;
-
 static Camera camera;
-
-static Light getLight() {
-   Light light;
-
-   light.position = glm::vec3(0.0f, 1.0f, 1.0f);
-   light.color = glm::vec3(0.7f, 0.3f, 0.3f);
-   light.constFalloff = 0.1f;
-   light.linearFalloff = 0.005f;
-   light.squareFalloff = 0.001f;
-
-   return light;
-}
 
 namespace Game {
 
@@ -154,23 +137,15 @@ int main(int argc, char *argv[]) {
    GLint uProjMatrix = program->getUniform("uProjMatrix");
    GLint uNormalMatrix = program->getUniform("uNormalMatrix");
 
-   GLint uNumLights = program->getUniform("uNumLights");
    GLint uCameraPos = program->getUniform("uCameraPos");
-
-   // Light
-   GLint uLightPos = program->getUniform("uLights[0].position");
-   GLint uLightColor = program->getUniform("uLights[0].color");
-   GLint uLightConst = program->getUniform("uLights[0].constFalloff");
-   GLint uLightLinear = program->getUniform("uLights[0].linearFalloff");
-   GLint uLightSquare = program->getUniform("uLights[0].squareFalloff");
-
-   Light light = getLight();
 
    ///////////////////////////////////////////////////
 
    Renderer renderer;
    SceneGraph sceneGraph;
 
+   renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.2f), 0.1f, 0.005f, 0.001f)));
+   renderer.addShaderProgram(program);
    MeshRef celloMesh = MeshRef(new Mesh("assets/cello_and_stand.obj"));
    glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
    MaterialRef phongMaterial = MaterialRef(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
@@ -196,19 +171,9 @@ int main(int argc, char *argv[]) {
          sceneGraph.tick(dt);
          accumulator -= dt;
       }
-      
-      // Num lights
-      glUniform1i(uNumLights, 1);
 
       // Camera position
       glUniform3fv(uCameraPos, 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 1.0f)));
-
-      // Light
-      glUniform3fv(uLightPos, 1, glm::value_ptr(light.position));
-      glUniform3fv(uLightColor, 1, glm::value_ptr(light.color));
-      glUniform1f(uLightConst, light.constFalloff);
-      glUniform1f(uLightLinear, light.linearFalloff);
-      glUniform1f(uLightSquare, light.squareFalloff);
 
       glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
       glUniformMatrix4fv(uModelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));

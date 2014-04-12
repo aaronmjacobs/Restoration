@@ -20,6 +20,9 @@ public:
    const std::list<NodeRef>& getChildren() {
       return children;
    }
+   Camera* getCamera() {
+      return &camera;
+   }
    void tick(const double dt);
    NodeRef findNodeByName(const std::string &name);
 };

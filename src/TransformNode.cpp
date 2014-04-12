@@ -13,10 +13,10 @@ void TransformNode::tick(const double dt) {
    
 }
 
-void TransformNode::draw(MatrixStack *matrixStack) {
-   matrixStack->push();
+void TransformNode::draw(MatrixStack *modelMatrixStack) {
+   modelMatrixStack->push();
 
    // TODO Do transforms
 
-   matrixStack->pop();
+   modelMatrixStack->pop();
 }

@@ -18,7 +18,7 @@ private:
 
 public:
    GeometryNode(SceneGraph *scene, const std::string &name, ModelRef model);
-   virtual void draw(MatrixStack *matrixStack);
+   virtual void draw(MatrixStack *modelMatrixStack);
    virtual void tick(const double dt);
 };
 

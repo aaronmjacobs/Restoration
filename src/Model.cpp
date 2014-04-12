@@ -6,6 +6,8 @@ Model::Model(MaterialRef material, MeshRef mesh) {
    this->material = material;
    this->mesh = mesh;
 
+   material->getShaderProgram()->use();
+
    // Prepare the vertex array object
    glGenVertexArrays(1, &vao);
    glBindVertexArray(vao);
@@ -29,6 +31,7 @@ Model::Model(MaterialRef material, MeshRef mesh) {
    glBindVertexArray(0);
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+   material->getShaderProgram()->disable();
 }
 
 Model::~Model() {

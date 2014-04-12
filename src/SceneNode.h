@@ -41,7 +41,7 @@ public:
    }
    NodeRef findNodeByName(const std::string &name);
    virtual void tick(const double dt) = 0;
-   virtual void draw(MatrixStack *matrixStack) = 0;
+   virtual void draw(MatrixStack *modelMatrixStack) = 0;
 };
 
 #endif

@@ -9,5 +9,6 @@ Material::~Material() {
 }
 
 void Material::apply() {
+   shaderProgram->use();
    // TODO glUniform calls
 }

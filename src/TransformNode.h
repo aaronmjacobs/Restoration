@@ -8,7 +8,7 @@ public:
    TransformNode(SceneGraph *scene, const std::string &name);
    ~TransformNode();
    void tick(const double dt);
-   void draw(MatrixStack *matrixStack);
+   void draw(MatrixStack *modelMatrixStack);
 };
 
 #endif

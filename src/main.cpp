@@ -107,6 +107,7 @@ void test() {
 }; // namespace
 
 int main(int argc, char *argv[]) {
+   // Initialize GLFW
    GLFWwindow* window;
    glfwSetErrorCallback(errorCallback);
    ASSERT(glfwInit(), "Unable to init glfw");
@@ -117,34 +118,40 @@ int main(int argc, char *argv[]) {
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-   //glfwWindowHint(GLFW_SAMPLES, 16);
 #endif
 
+   // Enable anti-aliasing
+   //glfwWindowHint(GLFW_SAMPLES, 16);
+
+   // Create the window
    window = glfwCreateWindow(WIDTH, HEIGHT, "Restoration", NULL, NULL);
    ASSERT(window, "Unable to create GLFW window");
 
+   // Set the OpenGL context, and window callbacks
    glfwMakeContextCurrent(window);
    glfwSetWindowSizeCallback(window, windowSizeCallback);
    glfwSetWindowFocusCallback(window, focusCallback);
    glfwSetKeyCallback(window, keyCallback);
 
 #ifdef _WIN32
+   // Initialize GLEW
    ASSERT(glewInit() == GLEW_OK, "Unable to init glew");
 #endif
 
    // Enable vsync
    glfwSwapInterval(1);
 
+   // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
 
    test();
-   NodeRef cello = sceneGraph.findNodeByName("cello");
-   ASSERT(cello, "Unable to fetch cello");
 
+   // Timing values
    double lastTime = glfwGetTime();
    double accumulator = 0.0;
    const double dt = 1.0 / 60.0;
 
+   // Game loop
    while (!glfwWindowShouldClose(window)) {
       // Calculate the frame time
       double now = glfwGetTime();
@@ -168,7 +175,10 @@ int main(int argc, char *argv[]) {
       glfwPollEvents();
    }
 
+   // Clean up GLFW
    glfwDestroyWindow(window);
    glfwTerminate();
+
+   // Done!
    exit(EXIT_SUCCESS);
 }

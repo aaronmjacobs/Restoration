@@ -82,10 +82,10 @@ void test() {
 
    renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.2f), 0.1f, 0.005f, 0.001f)));
    renderer.addShaderProgram(program);
-   MeshRef celloMesh = MeshRef(new Mesh("assets/cello_and_stand.obj"));
+   MeshRef celloMesh(new Mesh("assets/cello_and_stand.obj"));
    glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
-   MaterialRef phongMaterial = MaterialRef(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
-   ModelRef celloModel = ModelRef(new Model(phongMaterial, celloMesh));
+   MaterialRef phongMaterial(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
+   ModelRef celloModel(new Model(phongMaterial, celloMesh));
 
    NodeRef celloNode(new GeometryNode(&sceneGraph, "cello", celloModel));
    celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
@@ -93,11 +93,12 @@ void test() {
 
    NodeRef transformNode(new TransformNode(&sceneGraph, "move"));
    transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
+   transformNode->rotateBy(glm::angleAxis(-1.57f, glm::vec3(1.0f, 0.0f, 0.0f)));
    celloNode->addChild(transformNode);
 
    glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
-   MaterialRef phongMaterial2 = MaterialRef(new PhongMaterial(program, baseColor2 * 0.2f, baseColor2 * 0.4f, glm::vec3(0.4f), baseColor2 * 0.0f, 50.0f));
-   ModelRef celloModel2 = ModelRef(new Model(phongMaterial2, celloMesh));
+   MaterialRef phongMaterial2(new PhongMaterial(program, baseColor2 * 0.2f, baseColor2 * 0.4f, glm::vec3(0.4f), baseColor2 * 0.0f, 50.0f));
+   ModelRef celloModel2(new Model(phongMaterial2, celloMesh));
    NodeRef celloNode2(new GeometryNode(&sceneGraph, "cello2", celloModel2));
    transformNode->addChild(celloNode2);
 }

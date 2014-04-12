@@ -44,5 +44,5 @@ void GeometryNode::draw(MatrixStack *modelMatrixStack) {
 }
 
 void GeometryNode::tick(const double dt) {
-
+   SceneNode::tick(dt);
 }

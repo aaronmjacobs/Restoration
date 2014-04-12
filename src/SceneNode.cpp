@@ -5,7 +5,6 @@
 
 SceneNode::SceneNode(SceneGraph *scene, const std::string &name)
    : scene(scene), name(name) {
-   this->visible = true;
    this->scale = glm::vec3(1.0f);
 }
 
@@ -39,4 +38,11 @@ void SceneNode::rotateBy(glm::quat rot) {
 
 void SceneNode::scaleBy(glm::vec3 scale) {
    this->scale *= scale;
+}
+
+void SceneNode::tick(const double dt) {
+   // Tick each child
+   for (NodeRef child : children) {
+      child->tick(dt);
+   }
 }

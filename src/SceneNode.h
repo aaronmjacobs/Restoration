@@ -22,7 +22,6 @@ protected:
    glm::vec3 position;
    glm::quat orientation;
    glm::vec3 scale;
-   bool visible;
    SceneGraph *scene;
    NodeRef parent;
    std::list<NodeRef> children;
@@ -43,7 +42,7 @@ public:
    void translateBy(glm::vec3 trans);
    void rotateBy(glm::quat rot);
    void scaleBy(glm::vec3 scale);
-   virtual void tick(const double dt) = 0;
+   virtual void tick(const double dt);
    virtual void draw(MatrixStack *modelMatrixStack) = 0;
 };
 

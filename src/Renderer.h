@@ -23,6 +23,7 @@ public:
    ~Renderer();
    void prepare();
    void onWindowSizeChange(int width, int height);
+   void onWindowFocusGained();
    void addLight(LightRef light);
    void addShaderProgram(ShaderProgramRef shaderProgram);
    void render(SceneGraph *scene);

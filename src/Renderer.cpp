@@ -23,6 +23,13 @@ void Renderer::onWindowSizeChange(int width, int height) {
    projectionMatrix = glm::perspective(fov, (float)width / height, 0.1f, 100.f);
 }
 
+void Renderer::onWindowFocusGained() {
+   for (ShaderProgramRef program : shaderPrograms) {
+      program->compileShaders();
+      program->link();
+   }
+}
+
 void Renderer::addLight(LightRef light) {
    lights.push_back(light);
 }

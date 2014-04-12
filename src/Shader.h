@@ -3,17 +3,22 @@
 
 #include "GLIncludes.h"
 
+#include <memory>
 #include <string>
+
+class Shader;
+typedef std::shared_ptr<Shader> ShaderRef;
 
 class Shader {
 private:
    GLuint id;
    GLenum type;
-   void compile(const std::string &source);
+   std::string fileName;
 
 public:
    Shader(const GLenum type, const std::string &fileName);
    ~Shader();
+   void compile();
    GLint getID() const;
 };
 

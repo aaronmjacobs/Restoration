@@ -2,11 +2,12 @@
 #define SHADER_PROG_H
 
 #include "GLIncludes.h"
+#include "Shader.h"
 
+#include <list>
 #include <map>
 #include <memory>
 
-class Shader;
 class ShaderProgram;
 
 typedef std::shared_ptr<ShaderProgram> ShaderProgramRef;
@@ -16,15 +17,16 @@ enum AttributeType { POSITION, NORMAL, TEXTURE };
 class ShaderProgram {
 private:
    GLuint id;
-   GLuint shaderCount;
 
+   std::list<ShaderRef> shaders;
    std::map<std::string, GLint> attributeMap;
    std::map<std::string, GLint> uniformMap;
 
 public:
    ShaderProgram();
    ~ShaderProgram();
-   void attach(const Shader &shader);
+   void attach(ShaderRef shader);
+   void compileShaders();
    void link();
    void use();
    void disable();

@@ -6,16 +6,15 @@
 Shader::Shader(const GLenum type, const std::string &fileName) {
    this->id = glCreateShader(type);
    this->type = type;
-
-   std::string source = Utils::readFromFile(fileName.c_str());
-   compile(source);
+   this->fileName = fileName;
 }
 
 Shader::~Shader() {
-
+   glDeleteShader(id);
 }
 
-void Shader::compile(const std::string &source) {
+void Shader::compile() {
+   std::string source = Utils::readFromFile(fileName.c_str());
    const char *sourceData = source.c_str();
 
    glShaderSource(id, 1, &sourceData, NULL);

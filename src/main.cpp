@@ -58,20 +58,9 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
    }
 }
 
-ShaderProgramRef program = NULL;
-
 void focusCallback(GLFWwindow* window, GLint focused) {
-   if (focused && program) {
-      program->disable();
-
-      Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
-      Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
-
-      program = ShaderProgramRef(new ShaderProgram());
-      program->attach(vertShader);
-      program->attach(fragShader);
-      program->link();
-      program->use();
+   if (focused) {
+      renderer.onWindowFocusGained();
    }
 }
 
@@ -80,12 +69,13 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void test() {
-   Shader vertShader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl");
-   Shader fragShader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl");
+   ShaderRef vertShader(new Shader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
+   ShaderRef fragShader(new Shader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
 
-   program = ShaderProgramRef(new ShaderProgram());
+   ShaderProgramRef program = ShaderProgramRef(new ShaderProgram());
    program->attach(vertShader);
    program->attach(fragShader);
+   program->compileShaders();
    program->link();
    program->loadFields("herp.derp");
    program->use();

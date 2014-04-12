@@ -11,9 +11,16 @@ private:
    Camera camera;
    std::list<NodeRef> children;
 
+   bool forward, backward, left, right;
+   bool leftMouse;
+   double mouseX, mouseY;
+
 public:
    SceneGraph();
    ~SceneGraph();
+   void onKeyEvent(int key, int action);
+   void onMouseEvent(int button, int action);
+   void onMouseMotionEvent(double xPos, double yPos);
    void addChild(NodeRef node) {
       children.push_back(node);
    }

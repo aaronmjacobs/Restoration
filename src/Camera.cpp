@@ -13,9 +13,9 @@ Camera::~Camera() {
 }
 
 void Camera::updateFront() {
-   front = glm::normalize(glm::vec3(cos(phi) * cos(theta),
-                                    sin(phi),
-                                    cos(phi) * cos(90.0f - theta)));
+   front = glm::normalize(glm::vec3(glm::cos(phi) * glm::cos(theta),
+                                    glm::sin(phi),
+                                    glm::cos(phi) * glm::cos(glm::half_pi<float>() - theta)));
 }
 
 void Camera::translate(glm::vec3 trans) {

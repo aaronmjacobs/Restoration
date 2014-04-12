@@ -28,7 +28,7 @@
 namespace {
 
 const int WIDTH = 1280, HEIGHT = 720;
-const float FOV = 90.0f;
+const float FOV = glm::radians(80.0f);
 
 SceneGraph sceneGraph;
 Renderer renderer(WIDTH, HEIGHT, FOV);
@@ -43,19 +43,19 @@ void errorCallback(int error, const char* description) {
 }
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-   if (action == GLFW_PRESS) {
-      if (key == GLFW_KEY_ESCAPE) {
-         glfwSetWindowShouldClose(window, GL_TRUE);
-      } else if (key == GLFW_KEY_W) {
-         sceneGraph.getCamera()->fly(0.1f);
-      } else if (key == GLFW_KEY_S) {
-         sceneGraph.getCamera()->fly(-0.1f);
-      } else if (key == GLFW_KEY_A) {
-         sceneGraph.getCamera()->strafe(-0.1f);
-      } else if (key == GLFW_KEY_D) {
-         sceneGraph.getCamera()->strafe(0.1f);
-      }
+   if (action == GLFW_PRESS && key == GLFW_KEY_ESCAPE) {
+      glfwSetWindowShouldClose(window, GL_TRUE);
    }
+
+   sceneGraph.onKeyEvent(key, action);
+}
+
+void mouseClickCallback(GLFWwindow *window, int button, int action, int mods) {
+   sceneGraph.onMouseEvent(button, action);
+}
+
+void mouseMotionCallback(GLFWwindow *window, double xPos, double yPos) {
+   sceneGraph.onMouseMotionEvent(xPos, yPos);
 }
 
 void focusCallback(GLFWwindow* window, GLint focused) {
@@ -131,6 +131,8 @@ int main(int argc, char *argv[]) {
    glfwSetWindowSizeCallback(window, windowSizeCallback);
    glfwSetWindowFocusCallback(window, focusCallback);
    glfwSetKeyCallback(window, keyCallback);
+   glfwSetMouseButtonCallback(window, mouseClickCallback);
+   glfwSetCursorPosCallback(window, mouseMotionCallback);
 
 #ifdef _WIN32
    // Initialize GLEW

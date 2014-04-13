@@ -1,9 +1,9 @@
 #ifndef PHONG_MATERIAL_H
 #define PHONG_MATERIAL_H
 
-#include "Material.h"
+#include "engine/Material.h"
 
-#include "GLMIncludes.h"
+#include "engine/GLMIncludes.h"
 
 class PhongMaterial : public Material {
 private:

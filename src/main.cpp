@@ -3,13 +3,14 @@
 #include "engine/Loader.h"
 #include "engine/Mesh.h"
 #include "engine/Model.h"
-#include "engine/PhongMaterial.h"
 #include "engine/Renderer.h"
 #include "engine/SceneGraph.h"
 #include "engine/Shader.h"
 #include "engine/ShaderProgram.h"
 #include "engine/TransformNode.h"
 #include "engine/Utils.h"
+
+#include "PhongMaterial.h"
 
 // Fancy assertions
 #include "engine/FancyAssert.h"

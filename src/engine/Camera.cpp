@@ -18,29 +18,33 @@ void Camera::updateFront() {
                                     glm::cos(phi) * glm::cos(glm::half_pi<float>() - theta)));
 }
 
-void Camera::translate(glm::vec3 trans) {
+void Camera::translateBy(glm::vec3 trans) {
    position += trans;
 }
 
 void Camera::fly(float amount) {
-   translate(front * amount);
+   translateBy(front * amount);
 }
 
 void Camera::walk(float amount) {
+   // Remove the vertical component of the front vector
    glm::vec3 forward = front;
    forward.y = 0.0f;
    forward = glm::normalize(forward);
 
-   translate(forward * amount);
+   translateBy(forward * amount);
 }
 
 void Camera::strafe(float amount) {
+   // Remove the vertival component of the front vector
   glm::vec3 forward = front;
   forward.y = 0.0f;
   forward = glm::normalize(forward);
+
+  // Cross the forward vector to get the right vector
   glm::vec3 right = glm::cross(forward, glm::vec3(0.0, 1.0, 0.0));
-  
-  translate(right * amount);
+
+  translateBy(right * amount);
 }
 
 void Camera::rotate(float phi, float theta) {

@@ -1,24 +1,24 @@
-#include "Camera.h"
-#include "GeometryNode.h"
-#include "Loader.h"
-#include "Mesh.h"
-#include "Model.h"
-#include "PhongMaterial.h"
-#include "Renderer.h"
-#include "SceneGraph.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
-#include "TransformNode.h"
-#include "Utils.h"
+#include "engine/Camera.h"
+#include "engine/GeometryNode.h"
+#include "engine/Loader.h"
+#include "engine/Mesh.h"
+#include "engine/Model.h"
+#include "engine/PhongMaterial.h"
+#include "engine/Renderer.h"
+#include "engine/SceneGraph.h"
+#include "engine/Shader.h"
+#include "engine/ShaderProgram.h"
+#include "engine/TransformNode.h"
+#include "engine/Utils.h"
 
 // Fancy assertions
-#include "FancyAssert.h"
+#include "engine/FancyAssert.h"
 
 // OpenGL / GLFW
-#include "GLIncludes.h"
+#include "engine/GLIncludes.h"
 
 // GLM
-#include "GLMIncludes.h"
+#include "engine/GLMIncludes.h"
 
 // STL
 #include <cerrno>
@@ -77,7 +77,6 @@ void test() {
    program->attach(fragShader);
    program->compileShaders();
    program->link();
-   program->use();
 
    // TODO Load fields via some sort of file
    program->addUniform("uModelMatrix");

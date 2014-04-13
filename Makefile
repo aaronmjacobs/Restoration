@@ -12,7 +12,7 @@ BUILD_DIR = build_debug
 EXECUTABLE = Restoration_debug
 endif
 
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/**/*.cpp)
+SOURCES = $(shell find $(SRC_DIR) -name '*.cpp')
 OBJECTS = $(subst $(SRC_DIR),$(BUILD_DIR),$(SOURCES:.cpp=.o))
 BUILD_FOLDERS = $(subst $(SRC_DIR),$(BUILD_DIR), $(shell find src -type d))
 BUILD = $(OBJECTS) $(EXECUTABLE)

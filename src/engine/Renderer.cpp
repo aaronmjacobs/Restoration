@@ -7,10 +7,10 @@ Renderer::Renderer(int width, int height, float fov) {
 }
 
 Renderer::~Renderer() {
-
 }
 
 void Renderer::prepare() {
+   // Set the clear (background) color.
    glClearColor(0.0, 0.0, 0.0, 0.0);
 
    // Depth Buffer Setup
@@ -20,10 +20,13 @@ void Renderer::prepare() {
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
+   // Update the projection to match the new window size.
    projectionMatrix = glm::perspective(fov, (float)width / height, 0.1f, 100.f);
 }
 
 void Renderer::onWindowFocusGained() {
+   // Recompile all shaders (to allow for live updating).
+   // TODO Only recompile where needed? Check file mod time?
    for (ShaderProgramRef program : shaderPrograms) {
       program->compileShaders();
       program->link();
@@ -39,6 +42,7 @@ void Renderer::addShaderProgram(ShaderProgramRef shaderProgram) {
 }
 
 void Renderer::render(SceneGraph *scene) {
+   // Clear the render buffer
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    // Set up view matrix
@@ -75,6 +79,7 @@ void Renderer::render(SceneGraph *scene) {
       }
    }
 
+   // Render each item in the scene
    for (NodeRef node : scene->getChildren()) {
       node->draw(&modelMatrixStack);
    }

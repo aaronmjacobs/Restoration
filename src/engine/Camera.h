@@ -5,7 +5,7 @@
 #include "GLMIncludes.h"
 
 /**
- * Class that represents a camera in the game world.
+ * A camera in the scene.
  */
 class Camera {
 private:
@@ -39,7 +39,7 @@ public:
    /**
     * Does cleanup (currently nothing!).
     */
-   ~Camera();
+   virtual ~Camera();
 
    /**
     * Translates the camera by the given vector.

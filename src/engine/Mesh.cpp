@@ -1,7 +1,6 @@
-#include "Mesh.h"
-
 #include "FancyAssert.h"
 #include "Loader.h"
+#include "Mesh.h"
 
 Mesh::Mesh(const std::string &fileName) {
    // Load the mesh from the file

@@ -99,15 +99,16 @@ void test() {
    program->addUniform("uMaterial.emission");
    program->addUniform("uMaterial.shininess");
 
-   renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.2f), 0.1f, 0.005f, 0.001f)));
+   renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f)));
    renderer.addShaderProgram(program);
    MeshRef celloMesh(new Mesh("assets/cello_and_stand.obj"));
    glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
-   MaterialRef phongMaterial(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 200.0f));
+   MaterialRef phongMaterial(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
    ModelRef celloModel(new Model(phongMaterial, celloMesh));
 
    NodeRef celloNode(new GeometryNode(&sceneGraph, "cello", celloModel));
    celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
+   celloNode->rotateBy(glm::angleAxis(-0.25f, glm::vec3(1.0f, 0.0f, 0.0f)));
    sceneGraph.addChild(celloNode);
 
    NodeRef transformNode(new TransformNode(&sceneGraph, "move"));
@@ -116,13 +117,13 @@ void test() {
    celloNode->addChild(transformNode);
 
    glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
-   MaterialRef phongMaterial2(new PhongMaterial(program, baseColor2 * 0.2f, baseColor2 * 0.4f, glm::vec3(0.4f), baseColor2 * 0.0f, 50.0f));
+   MaterialRef phongMaterial2(new PhongMaterial(program, baseColor2 * 0.1f, baseColor2 * 0.2f, baseColor2 * 0.6f, baseColor2 * 0.0f, 20.0f));
    ModelRef celloModel2(new Model(phongMaterial2, celloMesh));
    NodeRef celloNode2(new GeometryNode(&sceneGraph, "cello2", celloModel2));
    transformNode->addChild(celloNode2);
 }
 
-}; // namespace
+} // namespace
 
 int main(int argc, char *argv[]) {
    // Initialize GLFW

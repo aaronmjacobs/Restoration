@@ -1,10 +1,7 @@
+#include "FancyAssert.h"
 #include "Utils.h"
 
-// Fancy assertions
-#include "FancyAssert.h"
-
-#include <cerrno>
-#include <iostream>
+#include <fstream>
 
 namespace Utils {
 

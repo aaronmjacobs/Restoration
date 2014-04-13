@@ -1,18 +1,21 @@
-#include "GeometryNode.h"
 #include "FancyAssert.h"
+#include "GeometryNode.h"
 #include "Loader.h"
 #include "SceneGraph.h"
 
-#include <assimp/Importer.hpp>      // C++ importer interface
+#include <assimp/Importer.hpp>
 
 GeometryNode::GeometryNode(SceneGraph *scene, const std::string &name, ModelRef model)
    : SceneNode(scene, name), model(model) {
+}
 
+GeometryNode::~GeometryNode() {
 }
 
 void GeometryNode::draw(MatrixStack *modelMatrixStack) {
    modelMatrixStack->push();
 
+   // Set the shader program, and grab the matrix uniforms
    ShaderProgramRef shaderProgram = model->getMaterial()->getShaderProgram();
    shaderProgram->use();
    GLint uModelMatrix = shaderProgram->getUniform("uModelMatrix");
@@ -44,5 +47,6 @@ void GeometryNode::draw(MatrixStack *modelMatrixStack) {
 }
 
 void GeometryNode::tick(const double dt) {
+   // Call parent class
    SceneNode::tick(dt);
 }

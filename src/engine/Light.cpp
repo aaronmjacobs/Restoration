@@ -1,6 +1,5 @@
-#include "Light.h"
-
 #include "FancyAssert.h"
+#include "Light.h"
 
 #include <sstream>
 
@@ -13,12 +12,13 @@ Light::Light(glm::vec3 position, glm::vec3 color, float constFalloff, float line
 }
 
 Light::~Light() {
-   
 }
 
 void Light::draw(ShaderProgramRef program, const unsigned int lightIndex) {
+   // Make sure we're not trying to draw more lights than the shader can support
    ASSERT(lightIndex < MAX_LIGHTS, "Light index (%u) >= MAX_LIGHTS (%u)", lightIndex, MAX_LIGHTS);
 
+   // Set the uniforms for the light index
    std::stringstream ss;
    ss << "uLights[" << lightIndex << "].";
    std::string lightName = ss.str();

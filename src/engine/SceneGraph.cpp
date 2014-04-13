@@ -1,5 +1,5 @@
-#include "SceneGraph.h"
 #include "FancyAssert.h"
+#include "SceneGraph.h"
 
 SceneGraph::SceneGraph() {
 }
@@ -8,6 +8,7 @@ SceneGraph::~SceneGraph() {
 }
 
 void SceneGraph::onKeyEvent(int key, int action) {
+   // Set camera motion state
    if (action == GLFW_PRESS) {
       if (key == GLFW_KEY_W) {
          forward = true;
@@ -38,6 +39,7 @@ void SceneGraph::onMouseEvent(int button, int action) {
 }
 
 void SceneGraph::onMouseMotionEvent(double xPos, double yPos) {
+   // Update camera orientation
    const static float MOUSE_SCALE = 0.005f;
    if (leftMouse) {
       float dPhi = -(yPos - mouseY) * MOUSE_SCALE;
@@ -47,6 +49,10 @@ void SceneGraph::onMouseMotionEvent(double xPos, double yPos) {
 
    mouseX = xPos;
    mouseY = yPos;
+}
+
+void SceneGraph::addChild(NodeRef node) {
+   children.push_back(node);
 }
 
 void SceneGraph::tick(const double dt) {
@@ -74,10 +80,12 @@ NodeRef SceneGraph::findNodeByName(const std::string &name) {
    NodeRef node(nullptr);
 
    for (NodeRef child : children) {
+      // If a direct child matches, return it.
       if (child->getName() == name) {
          return child;
       }
 
+      // If the child does not match, recursively check its children.
       node = child->findNodeByName(name);
       if (node) {
          return node;

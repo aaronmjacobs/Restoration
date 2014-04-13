@@ -1,8 +1,11 @@
-#include "MatrixStack.h"
 #include "FancyAssert.h"
+#include "MatrixStack.h"
 
 MatrixStack::MatrixStack() {
    currentMatrix = glm::mat4(1.0f);
+}
+
+MatrixStack::~MatrixStack() {
 }
 
 void MatrixStack::push() {

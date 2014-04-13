@@ -1,7 +1,6 @@
 #include "FancyAssert.h"
-
-#include "ShaderProgram.h"
 #include "Shader.h"
+#include "ShaderProgram.h"
 
 ShaderProgram::ShaderProgram() {
    id = glCreateProgram();
@@ -17,6 +16,7 @@ void ShaderProgram::attach(ShaderRef shader) {
 }
 
 void ShaderProgram::compileShaders() {
+   // Compile each attached shader
    for (ShaderRef shader : shaders) {
       shader->compile();
    }
@@ -56,13 +56,17 @@ GLint ShaderProgram::addUniform(const std::string &name) {
 }
 
 GLint ShaderProgram::getAttribute(const std::string &name) {
+   // Make sure the attribute exists in the map
    std::map<std::string, GLint>::iterator it = attributeMap.find(name);
    ASSERT(it != attributeMap.end(), "Unable to find attribute: %s", name.c_str());
+
    return attributeMap[name];
 }
 
 GLint ShaderProgram::getUniform(const std::string &name) {
+   // Make sure the uniform exists in the map.
    std::map<std::string, GLint>::iterator it = uniformMap.find(name);
    ASSERT(it != uniformMap.end(), "Unable to find uniform: %s", name.c_str());
+
    return uniformMap[name];
 }

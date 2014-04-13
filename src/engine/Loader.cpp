@@ -1,12 +1,10 @@
-#include "Loader.h"
-
 #include "FancyAssert.h"
 #include "GeometryNode.h"
+#include "Loader.h"
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
 
-#include <assimp/postprocess.h>     // Post processing flags
-
+#include <assimp/postprocess.h>
 #include <fstream>
 
 namespace Loader {

@@ -1,11 +1,15 @@
+#include "FancyAssert.h"
 #include "Model.h"
 
 #include <iostream>
 
 Model::Model(MaterialRef material, MeshRef mesh) {
+   ASSERT(material, "Null material");
+   ASSERT(mesh, "Null mesh");
    this->material = material;
    this->mesh = mesh;
 
+   // Use the material's shader program
    material->getShaderProgram()->use();
 
    // Prepare the vertex array object

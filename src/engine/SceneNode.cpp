@@ -1,5 +1,5 @@
-#include "SceneNode.h"
 #include "SceneGraph.h"
+#include "SceneNode.h"
 
 #include <memory>
 
@@ -9,16 +9,17 @@ SceneNode::SceneNode(SceneGraph *scene, const std::string &name)
 }
 
 SceneNode::~SceneNode() {
-
 }
 
 NodeRef SceneNode::findNodeByName(const std::string &name) {
    NodeRef node(nullptr);
    for (NodeRef child : children) {
+      // If a direct child matches, return it.
       if (child->getName() == name) {
          return child;
       }
 
+      // If the child does not match, recursively check its children.
       node = child->findNodeByName(name);
       if (node) {
          return node;

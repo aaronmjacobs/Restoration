@@ -2,11 +2,9 @@
 
 TransformNode::TransformNode(SceneGraph *scene, const std::string &name) 
    : SceneNode(scene, name) {
-
 }
 
 TransformNode::~TransformNode() {
-   
 }
 
 void TransformNode::tick(const double dt) {

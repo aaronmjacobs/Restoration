@@ -22,6 +22,7 @@ PhongMaterial::~PhongMaterial() {
 }
 
 void PhongMaterial::apply() {
+   shaderProgram->use();
    glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
    glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));
    glUniform3fv(uSpecular, 1, glm::value_ptr(specular));

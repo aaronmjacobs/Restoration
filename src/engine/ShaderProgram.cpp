@@ -1,24 +1,29 @@
 #include "FancyAssert.h"
-
-#include "ShaderProgram.h"
 #include "Shader.h"
+#include "ShaderProgram.h"
 
 ShaderProgram::ShaderProgram() {
    id = glCreateProgram();
-   shaderCount = 0;
 }
 
 ShaderProgram::~ShaderProgram() {
    glDeleteProgram(id);
 }
 
-void ShaderProgram::attach(const Shader &shader) {
-   glAttachShader(id, shader.getID());
-   ++shaderCount;
+void ShaderProgram::attach(ShaderRef shader) {
+   glAttachShader(id, shader->getID());
+   shaders.push_back(shader);
+}
+
+void ShaderProgram::compileShaders() {
+   // Compile each attached shader
+   for (ShaderRef shader : shaders) {
+      shader->compile();
+   }
 }
 
 void ShaderProgram::link() {
-   ASSERT(shaderCount >= 2, "Need at least two shaders to link: %d", shaderCount);
+   ASSERT(shaders.size() >= 2, "Need at least two shaders to link: %lu", shaders.size());
 
    glLinkProgram(id);
 
@@ -51,13 +56,17 @@ GLint ShaderProgram::addUniform(const std::string &name) {
 }
 
 GLint ShaderProgram::getAttribute(const std::string &name) {
+   // Make sure the attribute exists in the map
    std::map<std::string, GLint>::iterator it = attributeMap.find(name);
    ASSERT(it != attributeMap.end(), "Unable to find attribute: %s", name.c_str());
+
    return attributeMap[name];
 }
 
 GLint ShaderProgram::getUniform(const std::string &name) {
+   // Make sure the uniform exists in the map.
    std::map<std::string, GLint>::iterator it = uniformMap.find(name);
    ASSERT(it != uniformMap.end(), "Unable to find uniform: %s", name.c_str());
+
    return uniformMap[name];
 }

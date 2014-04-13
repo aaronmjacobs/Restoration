@@ -21,3 +21,4 @@ build/*
 *.out
 *.app
 Restoration
+Restoration_debug

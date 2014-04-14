@@ -1,14 +1,21 @@
 CC = g++
 COMPILE_FLAGS = -std=c++11
-LINK_FLAGS =
+LINK_FLAGS = -lassimp
 SRC_DIR = src
 BUILD_DIR = build
 EXECUTABLE = Restoration
 
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/**/*.cpp)
+ifdef DEBUG
+LINK_FLAGS += -g
+COMPILE_FLAGS += -g
+BUILD_DIR = build_debug
+EXECUTABLE = Restoration_debug
+endif
+
+SOURCES = $(shell find $(SRC_DIR) -name '*.cpp')
 OBJECTS = $(subst $(SRC_DIR),$(BUILD_DIR),$(SOURCES:.cpp=.o))
 BUILD_FOLDERS = $(subst $(SRC_DIR),$(BUILD_DIR), $(shell find src -type d))
-BUILD = $(BUILD_OBJECTS) $(EXECUTABLE)
+BUILD = $(OBJECTS) $(EXECUTABLE)
 
 ifeq ($(OS),Windows_NT)
    COMPILE_FLAGS += -DGL_GLEXT_PROTOTYPES
@@ -27,10 +34,6 @@ endif
 all: build_folders
 all: $(BUILD)
 
-debug: LINK_FLAGS += -g
-debug: COMPILE_FLAGS += -g
-debug: all
-
 build_folders:
 	mkdir -p $(BUILD_FOLDERS)
 
@@ -41,5 +44,5 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) -c $< -o $(subst $(SRC_DIR),$(BUILD_DIR),$@) $(COMPILE_FLAGS)
 
 clean:
-	find . -name '*.o' -type f -delete
+	cd $(BUILD_DIR) && find . -name '*.o' -type f -delete
 	rm $(EXECUTABLE)

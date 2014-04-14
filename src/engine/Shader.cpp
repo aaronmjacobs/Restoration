@@ -1,23 +1,23 @@
-#include "Shader.h"
-
 #include "FancyAssert.h"
+#include "Shader.h"
 #include "Utils.h"
 
 Shader::Shader(const GLenum type, const std::string &fileName) {
    this->id = glCreateShader(type);
    this->type = type;
-
-   std::string source = Utils::readFromFile(fileName.c_str());
-   compile(source);
+   this->fileName = fileName;
 }
 
 Shader::~Shader() {
-
+   glDeleteShader(id);
 }
 
-void Shader::compile(const std::string &source) {
+void Shader::compile() {
+   // Load the shader source from the file
+   std::string source = Utils::readFromFile(fileName.c_str());
    const char *sourceData = source.c_str();
 
+   // Set and compile the source
    glShaderSource(id, 1, &sourceData, NULL);
    glCompileShader(id);
 
@@ -50,8 +50,4 @@ void Shader::compile(const std::string &source) {
    }
 
    ASSERT(false, "Compile failure in %s shader:\n%s\n", strShaderType, strInfoLog);
-}
-
-GLint Shader::getID() const {
-   return id;
 }

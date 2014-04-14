@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Utility / helper functions.
+ */
 namespace Utils {
 
 /**

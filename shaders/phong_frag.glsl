@@ -1,5 +1,7 @@
 #version 330
 
+#define MAX_LIGHTS 10
+
 struct Light {
   vec3 position, color;
   float constFalloff, linearFalloff, squareFalloff;
@@ -10,7 +12,7 @@ struct Material {
   float shininess;
 };
 
-uniform Light uLights[10];
+uniform Light uLights[MAX_LIGHTS];
 uniform int uNumLights;
 uniform Material uMaterial;
 uniform vec3 uCameraPos;

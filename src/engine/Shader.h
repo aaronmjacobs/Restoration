@@ -49,7 +49,7 @@ public:
    /**
     * Gets the shader's handle.
     */
-   GLint getID() const {
+   GLuint getID() const {
       return id;
    }
 };

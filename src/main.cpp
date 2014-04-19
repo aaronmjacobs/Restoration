@@ -25,7 +25,7 @@
 // GLM
 #include "engine/GLMIncludes.h"
 
-#include <jsoncpp/json.h>
+#include "engine/lib/json/json.h"
 
 // STL
 #include <cerrno>

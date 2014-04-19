@@ -5,7 +5,7 @@
 #include "GLMIncludes.h"
 #include "Serializable.h"
 
-#include <jsoncpp/json.h>
+#include "lib/json/json.h"
 #include <memory>
 
 class Camera;

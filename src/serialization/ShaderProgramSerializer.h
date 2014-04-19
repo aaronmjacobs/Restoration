@@ -3,7 +3,7 @@
 
 #include "../engine/ShaderProgram.h"
 
-#include <jsoncpp/json.h>
+#include "../engine/lib/json/json.h"
 #include <string>
 
 namespace ShaderProgramSerializer {

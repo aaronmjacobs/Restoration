@@ -39,6 +39,11 @@ private:
 
 public:
    /**
+    * Path to the folder that serialized (JSON) files will be stored in.
+    */
+   static const std::string JSON_FOLDER_PATH;
+
+   /**
     * Constructs a shader program.
     */
    ShaderProgram(const std::string &jsonFileName);
@@ -100,7 +105,7 @@ public:
    GLint getUniform(const std::string &name);
 
    virtual std::string getJsonFolderName() const {
-      return "data/shaderprogram/";
+      return JSON_FOLDER_PATH;
    }
 };
 

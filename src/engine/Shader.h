@@ -33,6 +33,11 @@ private:
 
 public:
    /**
+    * Path to the folder that serialized (JSON) files will be stored in.
+    */
+   static const std::string JSON_FOLDER_PATH;
+
+   /**
     * Constructs the shader with the given type and source file.
     */
    Shader(const std::string &jsonFileName, const GLenum type, const std::string &fileName);
@@ -67,7 +72,7 @@ public:
    };
 
    virtual std::string getJsonFolderName() const {
-      return "data/shader/";
+      return JSON_FOLDER_PATH;
    }
 };
 

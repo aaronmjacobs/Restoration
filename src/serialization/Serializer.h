@@ -5,6 +5,7 @@
 #include "../engine/Serializable.h"
 
 #include "CameraSerializer.h"
+#include "LightSerializer.h"
 #include "MeshSerializer.h"
 #include "ShaderProgramSerializer.h"
 #include "ShaderSerializer.h"

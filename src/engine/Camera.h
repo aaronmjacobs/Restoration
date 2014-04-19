@@ -39,6 +39,11 @@ private:
 
 public:
    /**
+    * Path to the folder that serialized (JSON) files will be stored in.
+    */
+   static const std::string JSON_FOLDER_PATH;
+
+   /**
     * Creates a camera on the origin, facing down the z axis.
     */
    Camera(const std::string &jsonFileName);
@@ -107,7 +112,7 @@ public:
    glm::mat4 getViewMatrix();
 
    virtual std::string getJsonFolderName() const {
-      return "data/camera/";
+      return JSON_FOLDER_PATH;
    }
 };
 

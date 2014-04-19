@@ -34,6 +34,11 @@ private:
 
 public:
    /**
+    * Path to the folder that serialized (JSON) files will be stored in.
+    */
+   static const std::string JSON_FOLDER_PATH;
+
+   /**
     * Constructs a mesh from the model file with the given file name, allocating
     * the required GL buffers.
     */
@@ -78,7 +83,7 @@ public:
    }
 
    virtual std::string getJsonFolderName() const {
-      return "data/mesh/";
+      return JSON_FOLDER_PATH;
    }
 };
 

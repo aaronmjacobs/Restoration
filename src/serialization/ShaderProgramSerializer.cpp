@@ -7,7 +7,7 @@
 namespace ShaderProgramSerializer {
 
 ShaderProgramRef load(const std::string &jsonFileName) {
-   Json::Value root = IOUtils::readJsonFile(jsonFileName);
+   Json::Value root = IOUtils::readJsonFile(ShaderProgram::JSON_FOLDER_PATH + jsonFileName);
 
    ShaderProgramRef shaderProgram(std::make_shared<ShaderProgram>(jsonFileName));
 

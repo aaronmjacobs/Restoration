@@ -38,7 +38,7 @@ namespace {
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
-Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("data/camera/camera1.json"));
+Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
 Renderer renderer(WIDTH, HEIGHT, FOV);
 FirstPersonCameraController cameraController(scene.getCamera());
 
@@ -115,12 +115,16 @@ void test() {
 
    Serializer::save(*program);*/
 
-   ShaderProgramRef program = ShaderProgramSerializer::load("data/shaderprogram/phong.json");
+   ShaderProgramRef program = ShaderProgramSerializer::load("phong.json");
+   LightRef light = LightSerializer::load("light1.json");
 
-   scene.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f)));
+   //LightRef light(new Light("light1.json", glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f));
+   scene.addLight(light);
    scene.addShaderProgram(program); // TODO Automatic somehow?
 
-   MeshRef celloMesh = MeshSerializer::load("data/mesh/cello.json");
+   Serializer::save(*light);
+
+   MeshRef celloMesh = MeshSerializer::load("cello.json");
 
    glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
    MaterialRef phongMaterial(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));

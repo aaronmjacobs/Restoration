@@ -1,4 +1,4 @@
 {
-   "fileName" : "shaders/phong_frag_n.glsl",
+   "fileName" : "data/shader/raw/phong_frag_n.glsl",
    "type" : "fragment"
 }

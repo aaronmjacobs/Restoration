@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+const std::string Camera::JSON_FOLDER_PATH = "data/camera/";
+
 Camera::Camera(const std::string &jsonFileName)
    : Serializable(jsonFileName) {
    position = glm::vec3(0.0f);

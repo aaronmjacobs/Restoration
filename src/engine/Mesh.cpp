@@ -2,6 +2,8 @@
 #include "Loader.h"
 #include "Mesh.h"
 
+const std::string Mesh::JSON_FOLDER_PATH = "data/mesh/";
+
 Mesh::Mesh(const std::string &jsonFileName, const std::string &fileName)
    : Serializable(jsonFileName), fileName(fileName) {
    // Load the mesh from the file

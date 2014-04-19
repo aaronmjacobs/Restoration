@@ -7,7 +7,7 @@
 namespace CameraSerializer {
 
 CameraRef load(const std::string &fileName) {
-   Json::Value root = IOUtils::readJsonFile(fileName);
+   Json::Value root = IOUtils::readJsonFile(Camera::JSON_FOLDER_PATH + fileName);
 
    Serializer::check(root, "phi", "Camera");
    Json::Value posValue = root["position"];

@@ -2,8 +2,8 @@
 #define CAMERA_SERIALIZER_H
 
 #include "../engine/Camera.h"
-
 #include "../engine/lib/json/json.h"
+
 #include <string>
 
 namespace CameraSerializer {

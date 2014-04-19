@@ -3,20 +3,20 @@
 
 #include "GLMIncludes.h"
 #include "MatrixStack.h"
+#include "TickListener.h"
 
 #include <list>
 #include <memory>
 #include <string>
 
-class SceneGraph;
+class Scene;
 class SceneNode;
-
 typedef std::shared_ptr<SceneNode> NodeRef;
 
 /**
  * A node in the scene.
  */
-class SceneNode {
+class SceneNode : public TickListener {
 private:
    /**
     * A unique name for the node.
@@ -40,9 +40,9 @@ protected:
    glm::vec3 scale;
 
    /**
-    * The scene graph that the node is in.
+    * The scene that the node is in.
     */
-   SceneGraph *scene;
+   Scene *scene;
 
    /**
     * The parent of this node (may be null).
@@ -58,7 +58,7 @@ public:
    /**
     * Constructs a node for the given scene with the given name.
     */
-   SceneNode(SceneGraph *scene, const std::string &name);
+   SceneNode(Scene *scene, const std::string &name);
 
    /**
     * Does cleanup.
@@ -68,7 +68,7 @@ public:
    /**
     * Gets the name of the node.
     */
-   std::string getName() const {
+   const std::string& getName() const {
       return name;
    }
 
@@ -82,9 +82,12 @@ public:
    /**
     * Adds a child node to the node.
     */
-   void addChild(NodeRef node) {
-      children.push_back(node);
-   }
+   void addChild(NodeRef node);
+
+   /**
+    * Removes a child node from the node.
+    */
+   void removeChild(NodeRef node);
 
    /**
     * Searches the tree for the node with the given name. If no node is found,
@@ -110,7 +113,7 @@ public:
    /**
     * Steps |dt| seconds through time.
     */
-   virtual void tick(const double dt);
+   virtual void tick(const float dt);
 
    /**
     * Draws the node (and all children) with the given model matrix stack.

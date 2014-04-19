@@ -25,7 +25,7 @@ public:
    /**
     * Constructs a geometry node for the given scene with the given name (unique) and model.
     */
-   GeometryNode(SceneGraph *scene, const std::string &name, ModelRef model);
+   GeometryNode(Scene *scene, const std::string &name, ModelRef model);
 
    /**
     * Does cleanup (currently nothing!).
@@ -40,7 +40,7 @@ public:
    /**
     * Steps |dt| seconds through time.
     */
-   virtual void tick(const double dt);
+   virtual void tick(const float dt);
 };
 
 #endif

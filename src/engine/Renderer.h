@@ -3,6 +3,7 @@
 
 #include "Light.h"
 #include "MatrixStack.h"
+#include "Scene.h"
 #include "ShaderProgram.h"
 
 #include <list>
@@ -34,20 +35,6 @@ private:
     */
    float fov;
 
-   /**
-    * All lights to draw for a scene.
-    *
-    * TODO Move to SceneGraph?
-    */
-   std::list<LightRef> lights;
-
-   /**
-    * All shader programs in use in a scene.
-    *
-    * TODO Move to SceneGraph?
-    */
-   std::list<ShaderProgramRef> shaderPrograms;
-
 public:
    /**
     * Constructs a renderer for a window with the given width and height, and
@@ -71,24 +58,9 @@ public:
    void onWindowSizeChange(int width, int height);
 
    /**
-    * Handles window focus events.
-    */
-   void onWindowFocusGained();
-
-   /**
-    * Adds a light to the renderer.
-    */
-   void addLight(LightRef light);
-
-   /**
-    * Adds a shader program to the renderer.
-    */
-   void addShaderProgram(ShaderProgramRef shaderProgram);
-
-   /**
     * Renders the given scene.
     */
-   void render(SceneGraph *scene);
+   void render(Scene *scene);
 };
 
 #endif

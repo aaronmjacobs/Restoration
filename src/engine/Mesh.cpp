@@ -2,7 +2,8 @@
 #include "Loader.h"
 #include "Mesh.h"
 
-Mesh::Mesh(const std::string &fileName) {
+Mesh::Mesh(const std::string &fileName)
+   : fileName(fileName) {
    // Load the mesh from the file
    Assimp::Importer importer;
    const aiScene* scene = Loader::loadScene(&importer, fileName);
@@ -51,4 +52,16 @@ Mesh::~Mesh() {
    glDeleteBuffers(1, &vbo);
    glDeleteBuffers(1, &nbo);
    glDeleteBuffers(1, &ibo);
+}
+
+MeshRef Mesh::fromJson(const Json::Value &value) {
+   std::string fileName = value["fileName"].asString();
+
+   return MeshRef(new Mesh(fileName));
+}
+
+Json::Value Mesh::toJson() {
+   Json::Value root;
+   root["fileName"] = fileName;
+   return root;
 }

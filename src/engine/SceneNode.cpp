@@ -3,12 +3,20 @@
 
 #include <memory>
 
-SceneNode::SceneNode(SceneGraph *scene, const std::string &name)
+SceneNode::SceneNode(Scene *scene, const std::string &name)
    : scene(scene), name(name) {
    this->scale = glm::vec3(1.0f);
 }
 
 SceneNode::~SceneNode() {
+}
+
+void SceneNode::addChild(NodeRef node) {
+   children.push_back(node);
+}
+
+void SceneNode::removeChild(NodeRef node) {
+   children.remove(node);
 }
 
 NodeRef SceneNode::findNodeByName(const std::string &name) {
@@ -41,7 +49,7 @@ void SceneNode::scaleBy(glm::vec3 scale) {
    this->scale *= scale;
 }
 
-void SceneNode::tick(const double dt) {
+void SceneNode::tick(const float dt) {
    // Tick each child
    for (NodeRef child : children) {
       child->tick(dt);

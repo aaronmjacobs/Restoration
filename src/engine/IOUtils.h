@@ -13,24 +13,39 @@ namespace IOUtils {
 /**
  * Reads the entire contents of the text file with the given name.
  */
-std::string readFromFile(const char *filename);
+std::string readFromFile(const std::string& fileName);
 
-void writeToFile(const std::string &filename, const std::string &data);
+/**
+ * Writes the contents of the given text to the file with the given name.
+ */
+void writeToFile(const std::string &fileName, const std::string &data);
 
-Json::Value readJsonFile(const std::string &filename);
+/**
+ * Reads the file with the given name, and parses its contents into JSON.
+ */
+Json::Value readJsonFile(const std::string &fileName);
 
-void writeJsonFile(const Json::Value &value, const std::string &filename);
+/**
+ * Writes the given JSON value to the file with the given name.
+ */
+void writeJsonFile(const Json::Value &value, const std::string &fileName);
 
+/**
+ * Loads an element of the given type from the provided JSON file.
+ */
 template <class T>
-std::shared_ptr<T> load(const std::string &filename) {
-   return T::fromJson(readJsonFile("assets/cello.mesh"));
+std::shared_ptr<T> load(const std::string &fileName) {
+   return T::fromJson(readJsonFile(fileName));
 }
 
+/**
+ * Saves an element of the given type to the provided JSON file.
+ */
 template <class T>
-void save(std::shared_ptr<T> data, const std::string &filename) {
-   writeJsonFile(data->toJson(), filename);
+void save(std::shared_ptr<T> data, const std::string &fileName) {
+   writeJsonFile(data->toJson(), fileName);
 }
 
-} // namespace Utils
+} // namespace IOUtils
 
 #endif

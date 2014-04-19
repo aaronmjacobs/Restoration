@@ -23,7 +23,7 @@ ifeq ($(OS),Windows_NT)
 else
    UNAME_S := $(shell uname -s)
    ifeq ($(UNAME_S),Darwin)
-      LINK_FLAGS += -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+      LINK_FLAGS += -lglfw3 -ljson_linux-gcc-4.2.1_libmt -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
    endif
    ifeq ($(UNAME_S),Linux)
       COMPILE_FLAGS += `pkg-config --cflags glfw3`

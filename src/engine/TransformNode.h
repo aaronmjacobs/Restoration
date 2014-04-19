@@ -11,7 +11,7 @@ public:
    /**
     * Constructs a transformation node for the given scene with the given name.
     */
-   TransformNode(SceneGraph *scene, const std::string &name);
+   TransformNode(Scene *scene, const std::string &name);
 
    /**
     * Does cleanup.
@@ -21,7 +21,7 @@ public:
    /**
     * Steps |dt| seconds through time.
     */
-   virtual void tick(const double dt);
+   virtual void tick(const float dt);
 
    /**
     * Applies the transformations to the model matrix stack, and draws all

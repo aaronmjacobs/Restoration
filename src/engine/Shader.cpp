@@ -1,11 +1,10 @@
 #include "FancyAssert.h"
 #include "Shader.h"
-#include "Utils.h"
+#include "IOUtils.h"
 
-Shader::Shader(const GLenum type, const std::string &fileName) {
+Shader::Shader(const GLenum type, const std::string &fileName)
+   : type(type), fileName(fileName) {
    this->id = glCreateShader(type);
-   this->type = type;
-   this->fileName = fileName;
 }
 
 Shader::~Shader() {
@@ -14,7 +13,7 @@ Shader::~Shader() {
 
 void Shader::compile() {
    // Load the shader source from the file
-   std::string source = Utils::readFromFile(fileName.c_str());
+   std::string source = IOUtils::readFromFile(fileName);
    const char *sourceData = source.c_str();
 
    // Set and compile the source

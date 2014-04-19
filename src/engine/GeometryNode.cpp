@@ -5,7 +5,7 @@
 
 #include <assimp/Importer.hpp>
 
-GeometryNode::GeometryNode(SceneGraph *scene, const std::string &name, ModelRef model)
+GeometryNode::GeometryNode(Scene *scene, const std::string &name, ModelRef model)
    : SceneNode(scene, name), model(model) {
 }
 
@@ -46,7 +46,7 @@ void GeometryNode::draw(MatrixStack *modelMatrixStack) {
    modelMatrixStack->pop();
 }
 
-void GeometryNode::tick(const double dt) {
+void GeometryNode::tick(const float dt) {
    // Call parent class
    SceneNode::tick(dt);
 }

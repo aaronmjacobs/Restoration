@@ -55,5 +55,5 @@ void main() {
   
   finalColor += uMaterial.emission;
 
-  outColor = vec4(finalColor.r, finalColor.g, finalColor.b, 1);
+  outColor = vec4(finalColor.rgb, 1);
 }

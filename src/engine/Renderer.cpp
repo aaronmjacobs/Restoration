@@ -1,8 +1,8 @@
 #include "Renderer.h"
 #include "SceneGraph.h"
 
-Renderer::Renderer(int width, int height, float fov) {
-   this->fov = fov;
+Renderer::Renderer(int width, int height, float fov)
+   : fov(fov) {
    onWindowSizeChange(width, height);
 }
 
@@ -24,35 +24,18 @@ void Renderer::onWindowSizeChange(int width, int height) {
    projectionMatrix = glm::perspective(fov, (float)width / height, 0.1f, 100.f);
 }
 
-void Renderer::onWindowFocusGained() {
-   // Recompile all shaders (to allow for live updating).
-   // TODO Only recompile where needed? Check file mod time?
-   for (ShaderProgramRef program : shaderPrograms) {
-      program->compileShaders();
-      program->link();
-   }
-}
-
-void Renderer::addLight(LightRef light) {
-   lights.push_back(light);
-}
-
-void Renderer::addShaderProgram(ShaderProgramRef shaderProgram) {
-   shaderPrograms.push_back(shaderProgram);
-}
-
-void Renderer::render(SceneGraph *scene) {
+void Renderer::render(Scene *scene) {
    // Clear the render buffer
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   // Set up view matrix
+   // Grab the view matrix
    viewMatrix = scene->getCamera()->getViewMatrix();
 
-   // Set up lights for each shader
-   const unsigned int numLights = lights.size();
+   // Set up the matrices and lights
+   const unsigned int numLights = scene->getLights().size();
    glm::vec3 cameraPos = scene->getCamera()->getPosition();
    unsigned int lightIndex;
-   for (ShaderProgramRef shaderProgram : shaderPrograms) {
+   for (ShaderProgramRef shaderProgram : scene->getShaderPrograms()) {
       shaderProgram->use();
 
       // Projection matrix
@@ -73,14 +56,14 @@ void Renderer::render(SceneGraph *scene) {
 
       // Lights
       lightIndex = 0;
-      for (LightRef light : lights) {
+      for (LightRef light : scene->getLights()) {
          light->draw(shaderProgram, lightIndex);
          ++lightIndex;
       }
    }
 
    // Render each item in the scene
-   for (NodeRef node : scene->getChildren()) {
+   for (NodeRef node : scene->getSceneGraph()->getChildren()) {
       node->draw(&modelMatrixStack);
    }
 }

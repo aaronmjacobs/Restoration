@@ -2,7 +2,7 @@
 
 const float FirstPersonCameraController::MOUSE_SCALE = 0.005f;
 
-FirstPersonCameraController::FirstPersonCameraController(Camera *camera)
+FirstPersonCameraController::FirstPersonCameraController(CameraRef camera)
    : camera(camera) {
 }
 

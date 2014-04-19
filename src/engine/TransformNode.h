@@ -9,9 +9,9 @@
 class TransformNode : public SceneNode {
 public:
    /**
-    * Constructs a transformation node for the given scene with the given name.
+    * Constructs a transformation node with the given name.
     */
-   TransformNode(Scene *scene, const std::string &name);
+   TransformNode(const std::string &name);
 
    /**
     * Does cleanup.

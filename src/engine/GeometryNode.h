@@ -25,12 +25,22 @@ public:
    /**
     * Constructs a geometry node for the given scene with the given name (unique) and model.
     */
-   GeometryNode(Scene *scene, const std::string &name, ModelRef model);
+   GeometryNode(const std::string &name, ModelRef model);
 
    /**
     * Does cleanup (currently nothing!).
     */
    virtual ~GeometryNode();
+
+   /**
+    * Generates a mesh from JSON.
+    */
+   static GeometryNodeRef fromJson(const Json::Value &root);
+
+   /**
+    * Generates JSON from a mesh.
+    */
+   virtual Json::Value toJson();
 
    /**
     * Draws the geometry in the scene.

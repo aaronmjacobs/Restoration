@@ -4,7 +4,7 @@
 #include "GLIncludes.h"
 
 #include <assimp/Importer.hpp>
-#include <jsoncpp/json.h> 
+#include <jsoncpp/json.h>
 #include <memory>
 #include <string>
 
@@ -16,70 +16,64 @@ typedef std::shared_ptr<Mesh> MeshRef;
  */
 class Mesh {
 private:
-  /**
-   * Vertex, normal, and index buffer objects.
-   */
-  GLuint vbo, nbo, ibo;
+   /**
+    * Vertex, normal, and index buffer objects.
+    */
+   GLuint vbo, nbo, ibo;
 
-  /**
-   * The number of vertex indices.
-   */
-  unsigned int numIndices;
+   /**
+    * The number of vertex indices.
+    */
+   unsigned int numIndices;
 
-  /**
-   * Name of the file the mesh data exists in.
-   */
-  std::string fileName;
+   /**
+    * Name of the file the mesh data exists in.
+    */
+   std::string fileName;
 
 public:
-  /**
-   * Constructs a mesh from the model file with the given file name, allocating
-   * the required GL buffers.
-   */
-  Mesh(const std::string &fileName);
+   /**
+    * Constructs a mesh from the model file with the given file name, allocating
+    * the required GL buffers.
+    */
+   Mesh(const std::string &fileName);
 
-  /**
-   * Deallocates the GL buffers.
-   */
-  virtual ~Mesh();
+   /**
+    * Deallocates the GL buffers.
+    */
+   virtual ~Mesh();
 
-  /**
-   * Generates a mesh from JSON.
-   */
-  static MeshRef fromJson(const Json::Value &value);
+   std::string getFileName() const {
+      return fileName;
+   }
 
-  /**
-   * Generates JSON from a mesh.
-   */
-  virtual Json::Value toJson();
-
-  /**
-   * Gets the vertex buffer object handle.
-   */
-  GLuint getVBO() {
+   /**
+    * Gets the vertex buffer object handle.
+    */
+   GLuint getVBO() {
      return vbo;
-  }
+   }
 
-  /**
-   * Gets the normal buffer object handle.
-   */
-  GLuint getNBO() {
+   /**
+    * Gets the normal buffer object handle.
+    */
+   GLuint getNBO() {
      return nbo;
-  }
+   }
 
-  /**
-   * Gets the index buffer object handle.
-   */
-  GLuint getIBO() {
+   /**
+    * Gets the index buffer object handle.
+    */
+   GLuint getIBO() {
      return ibo;
-  }
+   }
 
-  /**
-   * Gets the number of vertex indices.
-   */
-  unsigned int getNumIndices() {
+   /**
+    * Gets the number of vertex indices.
+    */
+   unsigned int getNumIndices() const {
      return numIndices;
-  }
+   }
 };
 
 #endif

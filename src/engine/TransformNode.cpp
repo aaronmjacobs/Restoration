@@ -1,7 +1,7 @@
 #include "TransformNode.h"
 
-TransformNode::TransformNode(Scene *scene, const std::string &name) 
-   : SceneNode(scene, name) {
+TransformNode::TransformNode(const std::string &name) 
+   : SceneNode(name) {
 }
 
 TransformNode::~TransformNode() {

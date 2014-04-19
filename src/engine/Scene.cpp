@@ -1,7 +1,7 @@
 #include "Scene.h"
 
-Scene::Scene(SceneGraphRef sceneGraph)
-   : sceneGraph(sceneGraph) {
+Scene::Scene(SceneGraphRef sceneGraph, CameraRef camera)
+   : sceneGraph(sceneGraph), camera(camera) {
 }
 
 Scene::~Scene() {

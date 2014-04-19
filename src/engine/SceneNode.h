@@ -17,13 +17,12 @@ typedef std::shared_ptr<SceneNode> NodeRef;
  * A node in the scene.
  */
 class SceneNode : public TickListener {
-private:
-   /**
+protected:
+    /**
     * A unique name for the node.
     */
    const std::string name;
 
-protected:
    /**
     * The position of the node.
     */
@@ -40,11 +39,6 @@ protected:
    glm::vec3 scale;
 
    /**
-    * The scene that the node is in.
-    */
-   Scene *scene;
-
-   /**
     * The parent of this node (may be null).
     */
    NodeRef parent;
@@ -56,14 +50,28 @@ protected:
 
 public:
    /**
-    * Constructs a node for the given scene with the given name.
+    * Constructs a node with the given name.
     */
-   SceneNode(Scene *scene, const std::string &name);
+   SceneNode(const std::string &name);
 
    /**
     * Does cleanup.
     */
    virtual ~SceneNode();
+
+   /**
+    * Gets the parent node of this node (may be null).
+    */
+   NodeRef getParent() {
+      return parent;
+   }
+
+   /**
+    * Sets the parent node of this node.
+    */
+   void setParent(NodeRef parent) {
+      this->parent = parent;
+   }
 
    /**
     * Gets the name of the node.

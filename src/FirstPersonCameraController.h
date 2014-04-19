@@ -12,13 +12,13 @@
 class FirstPersonCameraController : public InputListener, public TickListener {
 private:
    const static float MOUSE_SCALE;
-   Camera *camera;
+   CameraRef camera;
    bool forward, backward, left, right;
    bool leftMouse;
    double mouseX, mouseY;
 
 public:
-   FirstPersonCameraController(Camera *camera);
+   FirstPersonCameraController(CameraRef camera);
    virtual ~FirstPersonCameraController();
 
    /**

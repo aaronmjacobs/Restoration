@@ -24,7 +24,7 @@ private:
    /**
     * The camera to view the scene through.
     */
-   Camera camera;
+   CameraRef camera;
 
    /**
     * All lights in the scene.
@@ -50,7 +50,7 @@ public:
    /**
     * Creates a scene with the given scene graph.
     */
-   Scene(SceneGraphRef sceneGraph);
+   Scene(SceneGraphRef sceneGraph, CameraRef camera);
 
    /**
     * Does cleanup.
@@ -67,8 +67,8 @@ public:
    /**
     * Gets the scene's camera.
     */
-   Camera* getCamera() {
-      return &camera;
+   CameraRef getCamera() {
+      return camera;
    }
 
    /**

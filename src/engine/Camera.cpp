@@ -8,7 +8,27 @@ Camera::Camera() {
    updateFront();
 }
 
+Camera::Camera(glm::vec3 position, float phi, float theta)
+   : position(position), phi(phi), theta(theta) {
+   updateFront();
+}
+
 Camera::~Camera() {
+}
+
+Json::Value Camera::serialize() const {
+   Json::Value root;
+
+   Json::Value posValue;
+   posValue["x"] = position.x;
+   posValue["y"] = position.y;
+   posValue["z"] = position.z;
+   root["position"] = posValue;
+
+   root["phi"] = phi;
+   root["theta"] = theta;
+
+   return root;
 }
 
 void Camera::updateFront() {
@@ -36,14 +56,14 @@ void Camera::walk(float amount) {
 
 void Camera::strafe(float amount) {
    // Remove the vertival component of the front vector
-  glm::vec3 forward = front;
-  forward.y = 0.0f;
-  forward = glm::normalize(forward);
+   glm::vec3 forward = front;
+   forward.y = 0.0f;
+   forward = glm::normalize(forward);
 
-  // Cross the forward vector to get the right vector
-  glm::vec3 right = glm::cross(forward, glm::vec3(0.0, 1.0, 0.0));
+   // Cross the forward vector to get the right vector
+   glm::vec3 right = glm::cross(forward, glm::vec3(0.0, 1.0, 0.0));
 
-  translateBy(right * amount);
+   translateBy(right * amount);
 }
 
 void Camera::rotate(float phi, float theta) {

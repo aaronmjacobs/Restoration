@@ -5,11 +5,27 @@
 
 #include <assimp/Importer.hpp>
 
-GeometryNode::GeometryNode(Scene *scene, const std::string &name, ModelRef model)
-   : SceneNode(scene, name), model(model) {
+GeometryNode::GeometryNode(const std::string &name, ModelRef model)
+   : SceneNode(name), model(model) {
 }
 
 GeometryNode::~GeometryNode() {
+}
+
+GeometryNodeRef GeometryNode::fromJson(const Json::Value &root) {
+   std::string name = root["name"].asString();
+   std::string modelName = root["model"].asString();
+
+   return GeometryNodeRef(new GeometryNode(name, ModelRef()));
+}
+
+Json::Value GeometryNode::toJson() {
+   Json::Value root;
+
+   root["name"] = name;
+   root["model"] = "derp";
+
+   return root;
 }
 
 void GeometryNode::draw(MatrixStack *modelMatrixStack) {

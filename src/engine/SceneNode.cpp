@@ -3,8 +3,8 @@
 
 #include <memory>
 
-SceneNode::SceneNode(Scene *scene, const std::string &name)
-   : scene(scene), name(name) {
+SceneNode::SceneNode(const std::string &name)
+   : name(name) {
    this->scale = glm::vec3(1.0f);
 }
 

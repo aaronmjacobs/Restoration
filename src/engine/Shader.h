@@ -52,6 +52,10 @@ public:
    GLuint getID() const {
       return id;
    }
+
+   std::string getFileName() const {
+      return fileName;
+   }
 };
 
 #endif

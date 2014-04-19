@@ -3,11 +3,18 @@
 
 #include "GLIncludes.h"
 #include "GLMIncludes.h"
+#include "Serializable.h"
+
+#include <jsoncpp/json.h>
+#include <memory>
+
+class Camera;
+typedef std::shared_ptr<Camera> CameraRef;
 
 /**
  * A camera in the scene.
  */
-class Camera {
+class Camera : public Serializable {
 private:
    /**
     * Vertical look bounds to prevent camera from lining up with 'up' vector
@@ -32,14 +39,24 @@ private:
 
 public:
    /**
-    * Creates a camera on origin, facing down the z axis.
+    * Creates a camera on the origin, facing down the z axis.
     */
    Camera();
+
+   /**
+    * Creates a camera at the given position with the given rotations.
+    */
+   Camera(glm::vec3 position, float phi, float theta);
 
    /**
     * Does cleanup (currently nothing!).
     */
    virtual ~Camera();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    /**
     * Translates the camera by the given vector.
@@ -72,14 +89,14 @@ public:
    /**
     * Gets the current position of the camera.
     */
-   glm::vec3 getPosition() {
+   glm::vec3 getPosition() const {
       return position;
    }
 
    /**
     * Gets the current front-facing vector of the camera.
     */
-   glm::vec3 getFront() {
+   glm::vec3 getFront() const {
       return front;
    }
 

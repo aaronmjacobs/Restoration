@@ -53,15 +53,3 @@ Mesh::~Mesh() {
    glDeleteBuffers(1, &nbo);
    glDeleteBuffers(1, &ibo);
 }
-
-MeshRef Mesh::fromJson(const Json::Value &value) {
-   std::string fileName = value["fileName"].asString();
-
-   return MeshRef(new Mesh(fileName));
-}
-
-Json::Value Mesh::toJson() {
-   Json::Value root;
-   root["fileName"] = fileName;
-   return root;
-}

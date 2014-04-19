@@ -2,6 +2,7 @@
 #define SHADER_PROG_H
 
 #include "GLIncludes.h"
+#include "Serializable.h"
 #include "Shader.h"
 
 #include <list>
@@ -12,14 +13,9 @@ class ShaderProgram;
 typedef std::shared_ptr<ShaderProgram> ShaderProgramRef;
 
 /**
- * All available types of shader attributes.
- */
-enum AttributeType { POSITION, NORMAL, TEXTURE };
-
-/**
  * A shader program, composed of at least two shaders.
  */
-class ShaderProgram {
+class ShaderProgram : public Serializable{
 private:
    /**
     * The shader program's handle.
@@ -45,12 +41,17 @@ public:
    /**
     * Constructs a shader program.
     */
-   ShaderProgram();
+   ShaderProgram(const std::string &jsonFileName);
 
    /**
     * Deallocates the GL shader program.
     */
    virtual ~ShaderProgram();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    /**
     * Attaches the given shader to the program.
@@ -78,9 +79,9 @@ public:
    void disable();
 
    /**
-    * Adds the attribute with the given type and name to the attribute map.
+    * Adds the attribute with the given name to the attribute map.
     */
-   GLint addAttribute(AttributeType type, const std::string &name);
+   GLint addAttribute(const std::string &name);
 
    /**
     * Adds the uniform with the given name to the uniform map.
@@ -97,6 +98,10 @@ public:
     * Gets the location of the uniform with the given name from the uniform map.
     */
    GLint getUniform(const std::string &name);
+
+   virtual std::string getJsonFolderName() const {
+      return "data/shaderprogram/";
+   }
 };
 
 #endif

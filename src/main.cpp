@@ -81,10 +81,13 @@ void test() {
    scene.addInputListener(&cameraController);
    scene.addTickListener(&cameraController);
 
-   ShaderRef vertShader(new Shader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
-   ShaderRef fragShader(new Shader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
+   /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
+   ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
 
-   ShaderProgramRef program = ShaderProgramRef(new ShaderProgram());
+   Serializer::save(*vertShader);
+   Serializer::save(*fragShader);
+
+   ShaderProgramRef program = ShaderProgramRef(new ShaderProgram("phong.json"));
    program->attach(vertShader);
    program->attach(fragShader);
    program->compileShaders();
@@ -95,8 +98,8 @@ void test() {
    program->addUniform("uViewMatrix");
    program->addUniform("uProjMatrix");
    program->addUniform("uNormalMatrix");
-   program->addAttribute(POSITION, "aPosition");
-   program->addAttribute(NORMAL, "aNormal");
+   program->addAttribute("aPosition");
+   program->addAttribute("aNormal");
    program->addUniform("uNumLights");
    program->addUniform("uCameraPos");
    program->addUniform("uLights[0].position");
@@ -109,6 +112,10 @@ void test() {
    program->addUniform("uMaterial.specular");
    program->addUniform("uMaterial.emission");
    program->addUniform("uMaterial.shininess");
+
+   Serializer::save(*program);*/
+
+   ShaderProgramRef program = ShaderProgramSerializer::load("data/shaderprogram/phong.json");
 
    scene.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f)));
    scene.addShaderProgram(program); // TODO Automatic somehow?

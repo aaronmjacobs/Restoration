@@ -1,0 +1,22 @@
+{
+   "attributes" : [ "aNormal", "aPosition" ],
+   "shaders" : [ "data/shader/phong_vert.json", "data/shader/phong_frag_n.json" ],
+   "uniforms" : [
+      "uCameraPos",
+      "uLights[0].color",
+      "uLights[0].constFalloff",
+      "uLights[0].linearFalloff",
+      "uLights[0].position",
+      "uLights[0].squareFalloff",
+      "uMaterial.ambient",
+      "uMaterial.diffuse",
+      "uMaterial.emission",
+      "uMaterial.shininess",
+      "uMaterial.specular",
+      "uModelMatrix",
+      "uNormalMatrix",
+      "uNumLights",
+      "uProjMatrix",
+      "uViewMatrix"
+   ]
+}

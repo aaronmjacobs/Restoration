@@ -2,6 +2,7 @@
 #define MESH_H
 
 #include "GLIncludes.h"
+#include "Serializable.h"
 
 #include <assimp/Importer.hpp>
 #include <jsoncpp/json.h>
@@ -14,7 +15,7 @@ typedef std::shared_ptr<Mesh> MeshRef;
 /**
  * Mesh built of vertices and normals.
  */
-class Mesh {
+class Mesh : public Serializable {
 private:
    /**
     * Vertex, normal, and index buffer objects.
@@ -36,16 +37,17 @@ public:
     * Constructs a mesh from the model file with the given file name, allocating
     * the required GL buffers.
     */
-   Mesh(const std::string &fileName);
+   Mesh(const std::string &jsonFileName, const std::string &fileName);
 
    /**
     * Deallocates the GL buffers.
     */
    virtual ~Mesh();
 
-   std::string getFileName() const {
-      return fileName;
-   }
+    /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    /**
     * Gets the vertex buffer object handle.
@@ -73,6 +75,10 @@ public:
     */
    unsigned int getNumIndices() const {
      return numIndices;
+   }
+
+   virtual std::string getJsonFolderName() const {
+      return "data/mesh/";
    }
 };
 

@@ -2,13 +2,31 @@
 #include "Shader.h"
 #include "IOUtils.h"
 
-Shader::Shader(const GLenum type, const std::string &fileName)
-   : type(type), fileName(fileName) {
+Shader::Shader(const std::string &jsonFileName, const GLenum type, const std::string &fileName)
+   : Serializable(jsonFileName), type(type), fileName(fileName) {
    this->id = glCreateShader(type);
 }
 
 Shader::~Shader() {
    glDeleteShader(id);
+}
+
+Json::Value Shader::serialize() const {
+   Json::Value root;
+
+   std::string typeName;
+   if (type == GL_VERTEX_SHADER) {
+      typeName = "vertex";
+   } else if (type == GL_FRAGMENT_SHADER) {
+      typeName = "fragment";
+   } else if (type == GL_GEOMETRY_SHADER) {
+      typeName = "geometry";
+   }
+   root["type"] = typeName;
+
+   root["fileName"] = fileName;
+
+   return root;
 }
 
 void Shader::compile() {

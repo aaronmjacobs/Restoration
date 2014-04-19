@@ -2,6 +2,7 @@
 #define SHADER_H
 
 #include "GLIncludes.h"
+#include "Serializable.h"
 
 #include <memory>
 #include <string>
@@ -12,7 +13,7 @@ typedef std::shared_ptr<Shader> ShaderRef;
 /**
  * A GLSL shader (vertex / fragment / geometry).
  */
-class Shader {
+class Shader : public Serializable {
 private:
    /**
     * The shader's handle.
@@ -34,7 +35,7 @@ public:
    /**
     * Constructs the shader with the given type and source file.
     */
-   Shader(const GLenum type, const std::string &fileName);
+   Shader(const std::string &jsonFileName, const GLenum type, const std::string &fileName);
 
    /**
     * Deallocates the GL shader.
@@ -47,14 +48,26 @@ public:
    void compile();
 
    /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
+
+   /**
     * Gets the shader's handle.
     */
    GLuint getID() const {
       return id;
    }
 
+   /**
+    * Gets the file name of the shader.
+    */
    std::string getFileName() const {
       return fileName;
+   };
+
+   virtual std::string getJsonFolderName() const {
+      return "data/shader/";
    }
 };
 

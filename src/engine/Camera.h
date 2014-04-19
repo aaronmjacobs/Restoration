@@ -41,12 +41,12 @@ public:
    /**
     * Creates a camera on the origin, facing down the z axis.
     */
-   Camera();
+   Camera(const std::string &jsonFileName);
 
    /**
     * Creates a camera at the given position with the given rotations.
     */
-   Camera(glm::vec3 position, float phi, float theta);
+   Camera(const std::string &jsonFileName, glm::vec3 position, float phi, float theta);
 
    /**
     * Does cleanup (currently nothing!).
@@ -105,6 +105,10 @@ public:
     * camera.
     */
    glm::mat4 getViewMatrix();
+
+   virtual std::string getJsonFolderName() const {
+      return "data/camera/";
+   }
 };
 
 #endif

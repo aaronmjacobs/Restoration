@@ -6,7 +6,9 @@
 
 namespace CameraSerializer {
 
-CameraRef deserialize(const Json::Value &root) {
+CameraRef load(const std::string &fileName) {
+   Json::Value root = IOUtils::readJsonFile(fileName);
+
    Serializer::check(root, "phi", "Camera");
    Json::Value posValue = root["position"];
 
@@ -23,11 +25,7 @@ CameraRef deserialize(const Json::Value &root) {
    float phi = root["phi"].asFloat();
    float theta = root["theta"].asFloat();
 
-   return CameraRef(std::make_shared<Camera>(position, phi, theta));
-}
-
-CameraRef load(const std::string &fileName) {
-   return deserialize(IOUtils::readJsonFile(fileName));
+   return CameraRef(std::make_shared<Camera>(fileName, position, phi, theta));
 }
 
 } // namespace CameraSerializer

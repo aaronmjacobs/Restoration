@@ -6,10 +6,12 @@
 
 #include "CameraSerializer.h"
 #include "MeshSerializer.h"
+#include "ShaderProgramSerializer.h"
+#include "ShaderSerializer.h"
 
 namespace Serializer {
 
-void save(const Serializable &serializable, const std::string &fileName);
+void save(const Serializable &serializable);
 
 void check(const Json::Value &value, const char *key, const char *type);
 

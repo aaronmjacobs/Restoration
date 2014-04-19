@@ -1,6 +1,7 @@
 #include "Camera.h"
 
-Camera::Camera() {
+Camera::Camera(const std::string &jsonFileName)
+   : Serializable(jsonFileName) {
    position = glm::vec3(0.0f);
    phi = 0.0f;
    theta = -glm::half_pi<float>();
@@ -8,8 +9,8 @@ Camera::Camera() {
    updateFront();
 }
 
-Camera::Camera(glm::vec3 position, float phi, float theta)
-   : position(position), phi(phi), theta(theta) {
+Camera::Camera(const std::string &jsonFileName, glm::vec3 position, float phi, float theta)
+   : Serializable(jsonFileName), position(position), phi(phi), theta(theta) {
    updateFront();
 }
 

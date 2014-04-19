@@ -2,12 +2,40 @@
 #include "Shader.h"
 #include "ShaderProgram.h"
 
-ShaderProgram::ShaderProgram() {
+ShaderProgram::ShaderProgram(const std::string &jsonFileName)
+ : Serializable(jsonFileName) {
    id = glCreateProgram();
 }
 
 ShaderProgram::~ShaderProgram() {
    glDeleteProgram(id);
+}
+
+Json::Value ShaderProgram::serialize() const {
+   Json::Value root;
+
+   // Save the file name of each shader
+   Json::Value shadersVal;
+   for (ShaderRef shader : shaders) {
+      shadersVal.append(shader->getFullJsonPath());
+   }
+   root["shaders"] = shadersVal;
+
+   // Save the name of each attribute
+   Json::Value attribsVal;
+   for (std::pair<const std::string, GLint> attribute : attributeMap) {
+      attribsVal.append(attribute.first);
+   }
+   root["attributes"] = attribsVal;
+
+   // Save the name of each uniform
+   Json::Value uniformsVal;
+   for (std::pair<const std::string, GLint> uniform : uniformMap) {
+      uniformsVal.append(uniform.first);
+   }
+   root["uniforms"] = uniformsVal;
+
+   return root;
 }
 
 void ShaderProgram::attach(ShaderRef shader) {
@@ -41,9 +69,13 @@ void ShaderProgram::disable() {
    glUseProgram(0);
 }
 
-GLint ShaderProgram::addAttribute(AttributeType type, const std::string &name) {
-   attributeMap[name] = type;
-   return type;
+GLint ShaderProgram::addAttribute(const std::string &name) {
+   const char *nameStr = name.c_str();
+   GLint location = glGetAttribLocation(id, nameStr);
+   ASSERT(location != -1, "Unable to get attribute location: %s", nameStr);
+
+   attributeMap[name] = location;
+   return location;
 }
 
 GLint ShaderProgram::addUniform(const std::string &name) {

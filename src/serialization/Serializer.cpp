@@ -1,9 +1,13 @@
 #include "Serializer.h"
 #include "../engine/IOUtils.h"
 
+#include <iostream>
+
 namespace Serializer {
 
-void save(const Serializable &serializable, const std::string &fileName) {
+void save(const Serializable &serializable) {
+   std::string fileName = serializable.getFullJsonPath();
+   std::cout << "Writing to: " << fileName << std::endl;
    IOUtils::writeJsonFile(serializable.serialize(), fileName);
 }
 

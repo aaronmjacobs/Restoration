@@ -8,9 +8,7 @@
 
 namespace CameraSerializer {
 
-CameraRef deserialize(const Json::Value &root);
-
-CameraRef load(const std::string &fileName);
+CameraRef load(const std::string &jsonFileName);
 
 } // namespace CameraSerializer
 

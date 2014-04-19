@@ -3,7 +3,7 @@
 
 #include "../engine/Mesh.h"
 
-#include <jsoncpp/json.h>
+#include "../engine/lib/json/json.h"
 #include <string>
 
 namespace MeshSerializer {

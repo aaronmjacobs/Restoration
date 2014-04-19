@@ -1,7 +1,7 @@
 #ifndef SERIALIZABLE_H
 #define SERIALIZABLE_H
 
-#include <jsoncpp/json.h>
+#include "lib/json/json.h"
 #include <memory>
 #include <string>
 

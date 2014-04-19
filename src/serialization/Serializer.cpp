@@ -12,7 +12,7 @@ void save(const Serializable &serializable) {
 }
 
 void check(const Json::Value &value, const char *key, const char *type) {
-   ASSERT(value[key], "Missing key during deserialization of %s: %s", type, key);
+   //ASSERT(value[key], "Missing key during deserialization of %s: %s", type, key);
 }
 
 } // namespace Serializer

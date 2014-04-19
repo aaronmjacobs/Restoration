@@ -1,7 +1,7 @@
 #include "FancyAssert.h"
 #include "IOUtils.h"
 
-#include <jsoncpp/json.h>
+#include "lib/json/json.h"
 #include <fstream>
 
 namespace IOUtils {

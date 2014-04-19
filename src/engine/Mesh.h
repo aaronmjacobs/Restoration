@@ -5,7 +5,7 @@
 #include "Serializable.h"
 
 #include <assimp/Importer.hpp>
-#include <jsoncpp/json.h>
+#include "lib/json/json.h"
 #include <memory>
 #include <string>
 

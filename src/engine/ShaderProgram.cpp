@@ -19,7 +19,7 @@ Json::Value ShaderProgram::serialize() const {
    // Save the file name of each shader
    Json::Value shadersVal;
    for (ShaderRef shader : shaders) {
-      shadersVal.append(shader->getFullJsonPath());
+      shadersVal.append(shader->getJsonFileName());
    }
    root["shaders"] = shadersVal;
 

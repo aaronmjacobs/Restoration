@@ -2,23 +2,57 @@
 
 #include <string>
 
-PhongMaterial::PhongMaterial(ShaderProgramRef shaderProgram, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 emission, float shininess)
-   : Material(shaderProgram) {
-   this->ambient = ambient;
-   this->diffuse = diffuse;
-   this->specular = specular;
-   this->emission = emission;
-   this->shininess = shininess;
+PhongMaterial::PhongMaterial(const std::string &jsonFileName, ShaderProgramRef shaderProgram, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 emission, float shininess)
+   : Material(jsonFileName, shaderProgram), ambient(ambient), diffuse(diffuse), specular(specular), emission(emission), shininess(shininess) {
 
-   uAmbient = shaderProgram->addUniform("uMaterial.ambient");
-   uDiffuse = shaderProgram->addUniform("uMaterial.diffuse");
-   uSpecular = shaderProgram->addUniform("uMaterial.specular");
-   uEmission = shaderProgram->addUniform("uMaterial.emission");
-   uShininess = shaderProgram->addUniform("uMaterial.shininess");
+   uAmbient = shaderProgram->getUniform("uMaterial.ambient");
+   uDiffuse = shaderProgram->getUniform("uMaterial.diffuse");
+   uSpecular = shaderProgram->getUniform("uMaterial.specular");
+   uEmission = shaderProgram->getUniform("uMaterial.emission");
+   uShininess = shaderProgram->getUniform("uMaterial.shininess");
 }
 
 PhongMaterial::~PhongMaterial() {
+}
 
+Json::Value PhongMaterial::serialize() const {
+   Json::Value root;
+
+   // Shader program
+   root["shaderProgram"] = shaderProgram->getJsonFileName();
+
+   // Ambient color
+   Json::Value ambientValue;
+   ambientValue["r"] = ambient.r;
+   ambientValue["g"] = ambient.g;
+   ambientValue["b"] = ambient.b;
+   root["ambient"] = ambientValue;
+
+   // Diffuse color
+   Json::Value diffuseValue;
+   diffuseValue["r"] = diffuse.r;
+   diffuseValue["g"] = diffuse.g;
+   diffuseValue["b"] = diffuse.b;
+   root["diffuse"] = diffuseValue;
+
+   // Specular color
+   Json::Value specularValue;
+   specularValue["r"] = specular.r;
+   specularValue["g"] = specular.g;
+   specularValue["b"] = specular.b;
+   root["specular"] = specularValue;
+
+   // Emission color
+   Json::Value emissionValue;
+   emissionValue["r"] = emission.r;
+   emissionValue["g"] = emission.g;
+   emissionValue["b"] = emission.b;
+   root["emission"] = emissionValue;
+
+   // Shininess
+   root["shininess"] = shininess;
+
+   return root;
 }
 
 void PhongMaterial::apply() {

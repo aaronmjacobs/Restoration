@@ -1,4 +1,4 @@
-#version 330
+#version 120
 
 #define MAX_LIGHTS 10
 
@@ -17,10 +17,8 @@ uniform int uNumLights;
 uniform Material uMaterial;
 uniform vec3 uCameraPos;
 
-in vec3 vWorldPosition;
-in vec3 vNormal;
-
-out vec4 outColor;
+varying vec3 vWorldPosition;
+varying vec3 vNormal;
 
 void main() {
   vec3 lNormal = normalize(vNormal);
@@ -55,5 +53,5 @@ void main() {
   
   finalColor += uMaterial.emission;
 
-  outColor = vec4(finalColor.rgb, 1);
+  gl_FragColor = vec4(finalColor.rgb, 1);
 }

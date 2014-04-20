@@ -19,12 +19,7 @@ public:
    /**
    * Steps |dt| seconds through time.
    */
-   virtual void tick(const double dt);
-
-   /**
-   * Change material of model to whichever one you're using.
-   */
-   virtual void changeMaterial(MaterialRef material);
+   virtual void tick(const double dt) = 0;
 
 protected:
    /**
@@ -35,7 +30,7 @@ protected:
    /**
    * Move the physical object in a certain direction.
    */
-   virtual void move(glm::vec3 dir);
+   virtual void move(glm::vec3 dir) = 0;
 };
 
 #endif

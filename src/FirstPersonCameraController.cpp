@@ -1,6 +1,7 @@
 #include "FirstPersonCameraController.h"
 
 const float FirstPersonCameraController::MOUSE_SCALE = 0.005f;
+const float FirstPersonCameraController::MOVEMENT_SCALE = 10.0f;
 
 FirstPersonCameraController::FirstPersonCameraController(CameraRef camera)
    : camera(camera) {
@@ -53,17 +54,19 @@ void FirstPersonCameraController::onMouseMotionEvent(double xPos, double yPos) {
 }
 
 void FirstPersonCameraController::tick(const float dt) {
+   float movementSpeed = dt * MOVEMENT_SCALE;
+
    // Camera motion
    if (forward) {
-      camera->fly(dt);
+      camera->fly(movementSpeed);
    }
    if (backward) {
-      camera->fly(-dt);
+      camera->fly(-movementSpeed);
    }
    if (right) {
-      camera->strafe(dt);
+      camera->strafe(movementSpeed);
    }
    if (left) {
-      camera->strafe(-dt);
+      camera->strafe(-movementSpeed);
    }
 }

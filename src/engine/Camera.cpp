@@ -1,5 +1,6 @@
 #include "Camera.h"
 
+const std::string Camera::CLASS_NAME = "Camera";
 const std::string Camera::JSON_FOLDER_PATH = "data/camera/";
 
 Camera::Camera(const std::string &jsonFileName)
@@ -21,6 +22,9 @@ Camera::~Camera() {
 
 Json::Value Camera::serialize() const {
    Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
 
    Json::Value posValue;
    posValue["x"] = position.x;

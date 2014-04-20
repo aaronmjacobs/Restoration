@@ -121,14 +121,15 @@ void test() {
    //LightRef light(new Light("light1.json", glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f));
    scene.addLight(light);
 
-   Serializer::save(*light);
+   //Serializer::save(*light);
 
-   MeshRef celloMesh = MeshSerializer::load("cello.json");
+   //MeshRef celloMesh = MeshSerializer::load("cello.json");
 
    //glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
    //MaterialRef phongMaterial(new PhongMaterial("phong1.json", program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
-   MaterialRef phongMaterial = PhongMaterialSerializer::load("phong1.json");
-   ModelRef celloModel(new Model(phongMaterial, celloMesh));
+   //MaterialRef phongMaterial = PhongMaterialSerializer::load("phong1.json");
+   //ModelRef celloModel(new Model("cello.json", phongMaterial, celloMesh));
+   ModelRef celloModel = ModelSerializer::load("cello.json");
 
    NodeRef celloNode(new GeometryNode("cello", celloModel));
    celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
@@ -142,17 +143,18 @@ void test() {
 
    //glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
    //MaterialRef phongMaterial2(new PhongMaterial("phong2.json", program, baseColor2 * 0.1f, baseColor2 * 0.2f, baseColor2 * 0.6f, baseColor2 * 0.0f, 20.0f));
-   MaterialRef phongMaterial2 = PhongMaterialSerializer::load("phong2.json");
+   //MaterialRef phongMaterial2 = PhongMaterialSerializer::load("phong2.json");
 
-   ModelRef celloModel2(new Model(phongMaterial2, celloMesh));
+   //ModelRef celloModel2(new Model("cello2.json", phongMaterial2, celloMesh));
+   ModelRef celloModel2 = ModelSerializer::load("cello2.json");
    NodeRef celloNode2(new GeometryNode("cello2", celloModel2));
    transformNode->addChild(celloNode2);
 
-   scene.addShaderProgram(phongMaterial->getShaderProgram()); // TODO Automatic somehow?
-   scene.addShaderProgram(phongMaterial2->getShaderProgram()); // TODO Automatic somehow?
+   scene.addShaderProgram(celloModel->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
+   scene.addShaderProgram(celloModel2->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
 
-   //Serializer::save(*phongMaterial);
-   //Serializer::save(*phongMaterial2);
+   //Serializer::save(*celloModel);
+   //Serializer::save(*celloModel2);
 }
 
 } // namespace

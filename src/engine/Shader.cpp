@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "IOUtils.h"
 
+const std::string Shader::CLASS_NAME = "Shader";
 const std::string Shader::JSON_FOLDER_PATH = "data/shader/";
 
 Shader::Shader(const std::string &jsonFileName, const GLenum type, const std::string &fileName)
@@ -15,6 +16,9 @@ Shader::~Shader() {
 
 Json::Value Shader::serialize() const {
    Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
 
    std::string typeName;
    if (type == GL_VERTEX_SHADER) {

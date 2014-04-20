@@ -2,6 +2,8 @@
 
 #include <string>
 
+const std::string PhongMaterial::CLASS_NAME = "PhongMaterial";
+
 PhongMaterial::PhongMaterial(const std::string &jsonFileName, ShaderProgramRef shaderProgram, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 emission, float shininess)
    : Material(jsonFileName, shaderProgram), ambient(ambient), diffuse(diffuse), specular(specular), emission(emission), shininess(shininess) {
 
@@ -17,6 +19,9 @@ PhongMaterial::~PhongMaterial() {
 
 Json::Value PhongMaterial::serialize() const {
    Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
 
    // Shader program
    root["shaderProgram"] = shaderProgram->getJsonFileName();

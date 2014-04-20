@@ -21,6 +21,11 @@ protected:
 
 public:
    /**
+    * Name of the class (used in deserialization to determine types).
+    */
+   static const std::string CLASS_NAME;
+
+   /**
     * Path to the folder that serialized (JSON) files will be stored in.
     */
    static const std::string JSON_FOLDER_PATH;

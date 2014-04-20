@@ -1,9 +1,11 @@
 #include "FancyAssert.h"
 #include "Model.h"
 
-#include <iostream>
+const std::string Model::CLASS_NAME = "Model";
+const std::string Model::JSON_FOLDER_PATH = "data/model/";
 
-Model::Model(MaterialRef material, MeshRef mesh) {
+Model::Model(const std::string &jsonFileName, MaterialRef material, MeshRef mesh)
+   : Serializable(jsonFileName) {
    ASSERT(material, "Null material");
    ASSERT(mesh, "Null mesh");
    this->material = material;
@@ -40,6 +42,18 @@ Model::Model(MaterialRef material, MeshRef mesh) {
 
 Model::~Model() {
    glDeleteVertexArrays(1, &vao);
+}
+
+Json::Value Model::serialize() const {
+   Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
+
+   root["material"] = material->getJsonFileName();
+   root["mesh"] = mesh->getJsonFileName();
+
+   return root;
 }
 
 void Model::draw() {

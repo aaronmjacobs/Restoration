@@ -1,4 +1,5 @@
 {
+   "@class" : "PhongMaterial",
    "ambient" : {
       "b" : 0.2000000029802322,
       "g" : 0.0,

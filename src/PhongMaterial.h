@@ -16,6 +16,11 @@ private:
    GLint uAmbient, uDiffuse, uSpecular, uEmission, uShininess;
 
 public:
+   /**
+    * Name of the class (used in deserialization to determine types).
+    */
+   static const std::string CLASS_NAME;
+
    PhongMaterial(const std::string &jsonFileName, ShaderProgramRef shaderProgram, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 emission, float shininess);
    virtual ~PhongMaterial();
 

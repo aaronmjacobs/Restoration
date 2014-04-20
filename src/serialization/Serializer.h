@@ -7,6 +7,8 @@
 #include "CameraSerializer.h"
 #include "LightSerializer.h"
 #include "MeshSerializer.h"
+#include "ModelSerializer.h"
+#include "MaterialSerializer.h"
 #include "PhongMaterialSerializer.h"
 #include "ShaderProgramSerializer.h"
 #include "ShaderSerializer.h"

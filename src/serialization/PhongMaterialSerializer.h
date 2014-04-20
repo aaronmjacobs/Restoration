@@ -1,5 +1,5 @@
-#ifndef MATERIAL_SERIALIZER_H
-#define MATERIAL_SERIALIZER_H
+#ifndef PHONG_MATERIAL_SERIALIZER_H
+#define PHONG_MATERIAL_SERIALIZER_H
 
 #include "../PhongMaterial.h"
 #include "../engine/lib/json/json.h"

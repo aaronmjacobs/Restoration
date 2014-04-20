@@ -3,6 +3,7 @@
 
 #include <sstream>
 
+const std::string Light::CLASS_NAME = "Light";
 const std::string Light::JSON_FOLDER_PATH = "data/light/";
 
 Light::Light(const std::string &jsonFileName, glm::vec3 position, glm::vec3 color, float constFalloff, float linearFalloff, float squareFalloff)
@@ -19,6 +20,9 @@ Light::~Light() {
 
 Json::Value Light::serialize() const {
    Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
 
    Json::Value posValue;
    posValue["x"] = position.x;

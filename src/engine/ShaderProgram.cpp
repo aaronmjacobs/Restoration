@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "ShaderProgram.h"
 
+const std::string ShaderProgram::CLASS_NAME = "ShaderProgram";
 const std::string ShaderProgram::JSON_FOLDER_PATH = "data/shaderprogram/";
 
 ShaderProgram::ShaderProgram(const std::string &jsonFileName)
@@ -15,6 +16,9 @@ ShaderProgram::~ShaderProgram() {
 
 Json::Value ShaderProgram::serialize() const {
    Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
 
    // Save the file name of each shader
    Json::Value shadersVal;

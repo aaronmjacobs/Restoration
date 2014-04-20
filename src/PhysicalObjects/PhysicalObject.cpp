@@ -1,8 +1,10 @@
-virtual bool checkCollision(PhysicalObjectRef physObj) {
+#include "PhysicalObject.h"
+
+bool PhysicalObject::checkCollision(PhysicalObjectRef physObj) {
    //check if objects are on screen via clipping and culling
-   if (this.xMax < physObj.xMin || this.xMin > physObj.xMax)
-      return 0;
-   if (this.yMax < physObj.yMin || this.yMin > physObj.yMax)
-      return 0;
-   return 1;
+   if (this->xMax < physObj->xMin || this->xMin > physObj->xMax)
+      return false;
+   if (this->yMax < physObj->yMin || this->yMin > physObj->yMax)
+      return false;
+   return true;
 }

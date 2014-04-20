@@ -43,6 +43,13 @@ public:
    virtual Json::Value serialize() const;
 
    /**
+    * Gets the model of the geometry.
+    */
+   ModelRef getModel() {
+      return model;
+   }
+
+   /**
     * Draws the geometry in the scene.
     */
    virtual void draw(MatrixStack *modelMatrixStack);

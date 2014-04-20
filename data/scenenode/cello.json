@@ -4,8 +4,8 @@
       {
          "@class" : "GeometryNode",
          "children" : null,
-         "model" : "simplePlatform1.json",
-         "name" : "cello3",
+         "model" : "horizontalPlatform.json",
+         "name" : "horiz1",
          "orientation" : {
             "w" : 1.0,
             "x" : 0.0,

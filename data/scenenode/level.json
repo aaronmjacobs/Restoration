@@ -1,0 +1,66 @@
+{
+   "@class" : "TransformNode",
+   "name" : "root",
+   "orientation" : {
+      "w" : 1.0,
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0
+   },
+   "position" : {
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0
+   },
+   "scale" : {
+      "x" : 1.0,
+      "y" : 1.0,
+      "z" : 1.0
+   },
+   "children" : [
+      {
+         "@class" : "GeometryNode",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horiz1",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      {
+         "@class" : "GeometryNode",
+         "children" : null,
+         "model" : "enemymelee.json",
+         "name" : "enemy1",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      }
+   ]
+}

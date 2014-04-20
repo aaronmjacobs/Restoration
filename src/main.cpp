@@ -150,7 +150,7 @@ void test() {
    //NodeRef celloNode2(std::make_shared<GeometryNode>("cello2.json", "cello2", celloModel2));
    //transformNode->addChild(celloNode2);
 
-   NodeRef celloNode = NodeSerializer::load("cello.json", &scene);
+   NodeRef celloNode = NodeSerializer::load("level.json", &scene);
    scene.getSceneGraph()->addChild(celloNode);
 
    //scene.addShaderProgram(celloModel->getMaterial()->getShaderProgram()); // TODO Automatic somehow?

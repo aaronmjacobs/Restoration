@@ -120,27 +120,16 @@ void test() {
    scene.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f)));
    scene.addShaderProgram(program); // TODO Automatic somehow?
 
-   MeshRef celloMesh = MeshSerializer::load("data/mesh/cello.json");
+   MeshRef celloMesh = MeshSerializer::load("data/mesh/enemymelee.json");
 
-   glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
+   glm::vec3 baseColor(0.5f, 0.0f, 1.0f);
    MaterialRef phongMaterial(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
    ModelRef celloModel(new Model(phongMaterial, celloMesh));
 
    NodeRef celloNode(new GeometryNode("cello", celloModel));
    celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
-   celloNode->rotateBy(glm::angleAxis(-0.25f, glm::vec3(1.0f, 0.0f, 0.0f)));
+   celloNode->scaleBy(glm::vec3(.10));
    scene.getSceneGraph()->addChild(celloNode);
-
-   NodeRef transformNode(new TransformNode("move"));
-   transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
-   transformNode->rotateBy(glm::angleAxis(-1.57f, glm::vec3(1.0f, 0.0f, 0.0f)));
-   celloNode->addChild(transformNode);
-
-   glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
-   MaterialRef phongMaterial2(new PhongMaterial(program, baseColor2 * 0.1f, baseColor2 * 0.2f, baseColor2 * 0.6f, baseColor2 * 0.0f, 20.0f));
-   ModelRef celloModel2(new Model(phongMaterial2, celloMesh));
-   NodeRef celloNode2(new GeometryNode("cello2", celloModel2));
-   transformNode->addChild(celloNode2);
 }
 
 } // namespace

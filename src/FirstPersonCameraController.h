@@ -12,6 +12,7 @@
 class FirstPersonCameraController : public InputListener, public TickListener {
 private:
    const static float MOUSE_SCALE;
+   const static float MOVEMENT_SCALE;
    CameraRef camera;
    bool forward, backward, left, right;
    bool leftMouse;

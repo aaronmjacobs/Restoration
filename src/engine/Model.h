@@ -69,6 +69,13 @@ public:
       return material;
    }
 
+   /**
+    * Sets the model's material.
+    */
+   void setMaterial(MaterialRef material) {
+      this->material = material;
+   }
+
    virtual std::string getJsonFolderName() const {
       return JSON_FOLDER_PATH;
    }

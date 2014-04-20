@@ -2,6 +2,28 @@
    "@class" : "GeometryNode",
    "children" : [
       {
+         "@class" : "GeometryNode",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horiz1",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      {
          "@class" : "TransformNode",
          "children" : [
             {
@@ -47,28 +69,6 @@
                   "y" : 3.0,
                   "z" : 3.0
                }
-            },
-            {
-               "@class" : "GeometryNode",
-               "children" : null,
-               "model" : "cello.json",
-               "name" : "cello3",
-               "orientation" : {
-                  "w" : 1.0,
-                  "x" : 0.0,
-                  "y" : 0.0,
-                  "z" : 0.0
-               },
-               "position" : {
-                  "x" : 5.0,
-                  "y" : 0.0,
-                  "z" : 0.0
-               },
-               "scale" : {
-                  "x" : 3.0,
-                  "y" : 3.0,
-                  "z" : 3.0
-               }
             }
          ],
          "name" : "move",
@@ -93,15 +93,15 @@
    "model" : "cello.json",
    "name" : "cello",
    "orientation" : {
-      "w" : 0.9921976923942566,
-      "x" : -0.1246747300028801,
+      "w" : 1.0,
+      "x" : 0.0,
       "y" : 0.0,
       "z" : 0.0
    },
    "position" : {
       "x" : 0.0,
       "y" : 0.0,
-      "z" : -2.0
+      "z" : 0.0
    },
    "scale" : {
       "x" : 1.0,

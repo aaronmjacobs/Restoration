@@ -1,20 +1,35 @@
 #include "FancyAssert.h"
 #include "Model.h"
 
-#include <iostream>
+const std::string Model::CLASS_NAME = "Model";
+const std::string Model::JSON_FOLDER_PATH = "data/model/";
 
-Model::Model(MaterialRef material, MeshRef mesh) {
+Model::Model(const std::string &jsonFileName, MaterialRef material, MeshRef mesh)
+   : Serializable(jsonFileName) {
    ASSERT(material, "Null material");
    ASSERT(mesh, "Null mesh");
    this->material = material;
    this->mesh = mesh;
+}
 
-   // Use the material's shader program
-   material->getShaderProgram()->use();
+Model::~Model() {
+}
 
-   // Prepare the vertex array object
-   glGenVertexArrays(1, &vao);
-   glBindVertexArray(vao);
+Json::Value Model::serialize() const {
+   Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
+
+   root["material"] = material->getJsonFileName();
+   root["mesh"] = mesh->getJsonFileName();
+
+   return root;
+}
+
+void Model::draw() {
+   // Apply the material properties (and enable the shader)
+   material->apply();
 
    // Prepare the vertex buffer object
    glBindBuffer(GL_ARRAY_BUFFER, mesh->getVBO());
@@ -31,21 +46,11 @@ Model::Model(MaterialRef material, MeshRef mesh) {
    // Prepare the index buffer object
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIBO());
 
+   // Draw
+   glDrawElements(GL_TRIANGLES, mesh->getNumIndices(), GL_UNSIGNED_INT, 0);
+
    // Unbind
-   glBindVertexArray(0);
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-   material->getShaderProgram()->disable();
-}
-
-Model::~Model() {
-   glDeleteVertexArrays(1, &vao);
-}
-
-void Model::draw() {
-   material->apply();
-
-   glBindVertexArray(vao);
-   glDrawElements(GL_TRIANGLES, mesh->getNumIndices(), GL_UNSIGNED_INT, 0);
-   glBindVertexArray(0);
+   material->getShaderProgram()->disable(); // TODO Make call to material?
 }

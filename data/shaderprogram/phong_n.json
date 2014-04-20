@@ -1,6 +1,6 @@
 {
    "attributes" : [ "aNormal", "aPosition" ],
-   "shaders" : [ "phong_vert.json", "phong_frag.json" ],
+   "shaders" : [ "phong_vert.json", "phong_frag_n.json" ],
    "uniforms" : [
       "uCameraPos",
       "uLights[0].color",

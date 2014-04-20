@@ -7,7 +7,7 @@
 namespace ShaderSerializer {
 
 ShaderRef load(const std::string &jsonFileName) {
-   Json::Value root = IOUtils::readJsonFile(jsonFileName);
+   Json::Value root = IOUtils::readJsonFile(Shader::JSON_FOLDER_PATH + jsonFileName);
 
    Serializer::check(root, "type", "Shader");
    Serializer::check(root, "fileName", "Shader");

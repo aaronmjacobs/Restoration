@@ -3,6 +3,7 @@
 
 #include "GLMIncludes.h"
 #include "MatrixStack.h"
+#include "Serializable.h"
 #include "TickListener.h"
 
 #include <list>
@@ -16,7 +17,7 @@ typedef std::shared_ptr<SceneNode> NodeRef;
 /**
  * A node in the scene.
  */
-class SceneNode : public TickListener {
+class SceneNode : public Serializable, public TickListener {
 protected:
     /**
     * A unique name for the node.
@@ -50,14 +51,29 @@ protected:
 
 public:
    /**
+    * Name of the class (used in deserialization to determine types).
+    */
+   static const std::string CLASS_NAME;
+
+   /**
+    * Path to the folder that serialized (JSON) files will be stored in.
+    */
+   static const std::string JSON_FOLDER_PATH;
+
+   /**
     * Constructs a node with the given name.
     */
-   SceneNode(const std::string &name);
+   SceneNode(const std::string &jsonFileName, const std::string &name);
 
    /**
     * Does cleanup.
     */
    virtual ~SceneNode();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    /**
     * Gets the parent node of this node (may be null).
@@ -127,6 +143,10 @@ public:
     * Draws the node (and all children) with the given model matrix stack.
     */
    virtual void draw(MatrixStack *modelMatrixStack) = 0;
+
+   virtual std::string getJsonFolderName() const {
+      return JSON_FOLDER_PATH;
+   }
 };
 
 #endif

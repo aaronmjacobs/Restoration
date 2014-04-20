@@ -1,6 +1,10 @@
 #include "FancyAssert.h"
+#include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+
+const std::string ShaderProgram::CLASS_NAME = "ShaderProgram";
+const std::string ShaderProgram::JSON_FOLDER_PATH = "data/shaderprogram/";
 
 ShaderProgram::ShaderProgram(const std::string &jsonFileName)
  : Serializable(jsonFileName) {
@@ -14,10 +18,13 @@ ShaderProgram::~ShaderProgram() {
 Json::Value ShaderProgram::serialize() const {
    Json::Value root;
 
+   // Class name
+   root["@class"] = CLASS_NAME;
+
    // Save the file name of each shader
    Json::Value shadersVal;
    for (ShaderRef shader : shaders) {
-      shadersVal.append(shader->getFullJsonPath());
+      shadersVal.append(shader->getJsonFileName());
    }
    root["shaders"] = shadersVal;
 

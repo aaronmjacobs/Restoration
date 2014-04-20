@@ -1,10 +1,21 @@
 #include "TransformNode.h"
 
-TransformNode::TransformNode(const std::string &name) 
-   : SceneNode(name) {
+const std::string TransformNode::CLASS_NAME = "TransformNode";
+
+TransformNode::TransformNode(const std::string &jsonFileName, const std::string &name) 
+   : SceneNode(jsonFileName, name) {
 }
 
 TransformNode::~TransformNode() {
+}
+
+Json::Value TransformNode::serialize() const {
+   Json::Value root = SceneNode::serialize();
+
+   // Class name
+   root["@class"] = CLASS_NAME;
+
+   return root;
 }
 
 void TransformNode::tick(const float dt) {

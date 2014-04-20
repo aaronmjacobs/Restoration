@@ -5,7 +5,14 @@
 #include "../engine/Serializable.h"
 
 #include "CameraSerializer.h"
+#include "LightSerializer.h"
 #include "MeshSerializer.h"
+#include "ModelSerializer.h"
+#include "NodeSerializer.h"
+#include "GeometryNodeSerializer.h"
+#include "TransformNodeSerializer.h"
+#include "MaterialSerializer.h"
+#include "PhongMaterialSerializer.h"
 #include "ShaderProgramSerializer.h"
 #include "ShaderSerializer.h"
 

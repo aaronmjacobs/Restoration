@@ -2,6 +2,9 @@
 #include "Loader.h"
 #include "Mesh.h"
 
+const std::string Mesh::CLASS_NAME = "Mesh";
+const std::string Mesh::JSON_FOLDER_PATH = "data/mesh/";
+
 Mesh::Mesh(const std::string &jsonFileName, const std::string &fileName)
    : Serializable(jsonFileName), fileName(fileName) {
    // Load the mesh from the file
@@ -56,6 +59,9 @@ Mesh::~Mesh() {
 
 Json::Value Mesh::serialize() const {
    Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
 
    root["fileName"] = fileName;
 

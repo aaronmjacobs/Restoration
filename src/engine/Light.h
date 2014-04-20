@@ -2,6 +2,7 @@
 #define LIGHT_H
 
 #include "GLMIncludes.h"
+#include "Serializable.h"
 #include "ShaderProgram.h"
 
 #include <memory>
@@ -12,7 +13,7 @@ typedef std::shared_ptr<Light> LightRef;
 /**
  * A light in the scene.
  */
-class Light {
+class Light : public Serializable {
 private:
    /**
     * Maximum number of lights allowed per draw call (as set in shader).
@@ -36,9 +37,19 @@ private:
 
 public:
    /**
+    * Name of the class (used in deserialization to determine types).
+    */
+   static const std::string CLASS_NAME;
+
+   /**
+    * Path to the folder that serialized (JSON) files will be stored in.
+    */
+   static const std::string JSON_FOLDER_PATH;
+
+   /**
     * Constructs a light at the given position, with the given color and falloff values.
     */
-   Light(glm::vec3 position, glm::vec3 color, float constFalloff, float linearFalloff, float squareFalloff);
+   Light(const std::string &jsonFileName, glm::vec3 position, glm::vec3 color, float constFalloff, float linearFalloff, float squareFalloff);
    
    /**
     * Does cleanup (currnetly nothing!).
@@ -46,9 +57,18 @@ public:
    virtual ~Light();
 
    /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
+
+   /**
     * Draws the light for the given shader and index.
     */
    void draw(ShaderProgramRef program, const unsigned int lightIndex);
+
+   virtual std::string getJsonFolderName() const {
+      return JSON_FOLDER_PATH;
+   }
 };
 
 #endif

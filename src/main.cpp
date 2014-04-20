@@ -38,7 +38,7 @@ namespace {
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
-Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("data/camera/camera1.json"));
+Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
 Renderer renderer(WIDTH, HEIGHT, FOV);
 FirstPersonCameraController cameraController(scene.getCamera());
 
@@ -115,21 +115,50 @@ void test() {
 
    Serializer::save(*program);*/
 
-   ShaderProgramRef program = ShaderProgramSerializer::load("data/shaderprogram/phong.json");
+   //ShaderProgramRef program = ShaderProgramSerializer::load("phong.json");
+   LightRef light = LightSerializer::load("light1.json");
 
-   scene.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f)));
-   scene.addShaderProgram(program); // TODO Automatic somehow?
+   //LightRef light(new Light("light1.json", glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f));
+   scene.addLight(light);
 
-   MeshRef celloMesh = MeshSerializer::load("data/mesh/enemymelee.json");
+   //Serializer::save(*light);
 
-   glm::vec3 baseColor(0.5f, 0.0f, 1.0f);
-   MaterialRef phongMaterial(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
-   ModelRef celloModel(new Model(phongMaterial, celloMesh));
+   //MeshRef celloMesh = MeshSerializer::load("cello.json");
 
-   NodeRef celloNode(new GeometryNode("cello", celloModel));
-   celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
-   celloNode->scaleBy(glm::vec3(.10));
+   //glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
+   //MaterialRef phongMaterial(new PhongMaterial("phong1.json", program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
+   //MaterialRef phongMaterial = PhongMaterialSerializer::load("phong1.json");
+   //ModelRef celloModel(new Model("cello.json", phongMaterial, celloMesh));
+   //ModelRef celloModel = ModelSerializer::load("cello.json");
+
+   //NodeRef celloNode(std::make_shared<GeometryNode>("cello.json", "cello", celloModel));
+   //celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
+   //celloNode->rotateBy(glm::angleAxis(-0.25f, glm::vec3(1.0f, 0.0f, 0.0f)));
+   //scene.getSceneGraph()->addChild(celloNode);
+
+   //NodeRef transformNode(std::make_shared<TransformNode>("trans0.json", "move"));
+   //transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
+   //transformNode->rotateBy(glm::angleAxis(-1.57f, glm::vec3(1.0f, 0.0f, 0.0f)));
+   //celloNode->addChild(transformNode);
+
+   //glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
+   //MaterialRef phongMaterial2(new PhongMaterial("phong2.json", program, baseColor2 * 0.1f, baseColor2 * 0.2f, baseColor2 * 0.6f, baseColor2 * 0.0f, 20.0f));
+   //MaterialRef phongMaterial2 = PhongMaterialSerializer::load("phong2.json");
+
+   //ModelRef celloModel2(new Model("cello2.json", phongMaterial2, celloMesh));
+   //ModelRef celloModel2 = ModelSerializer::load("cello2.json");
+   //NodeRef celloNode2(std::make_shared<GeometryNode>("cello2.json", "cello2", celloModel2));
+   //transformNode->addChild(celloNode2);
+
+   NodeRef celloNode = NodeSerializer::load("cello.json", &scene);
    scene.getSceneGraph()->addChild(celloNode);
+
+   //scene.addShaderProgram(celloModel->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
+   //scene.addShaderProgram(celloModel2->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
+
+   //Serializer::save(*celloNode);
+   //Serializer::save(*celloModel);
+   //Serializer::save(*celloModel2);
 }
 
 } // namespace
@@ -140,13 +169,13 @@ int main(int argc, char *argv[]) {
    glfwSetErrorCallback(errorCallback);
    ASSERT(glfwInit(), "Unable to init glfw");
 
-#ifdef __APPLE__
+/*#ifdef __APPLE__
    // Set hints to use OpenGL 3.3
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
+#endif*/
 
    // Enable anti-aliasing
    glfwWindowHint(GLFW_SAMPLES, 4);
@@ -174,7 +203,9 @@ int main(int argc, char *argv[]) {
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
 
+   double start = glfwGetTime();
    test();
+   std::cout << "Loading time: " << (glfwGetTime() - start) << " seconds." << std::endl;
 
    // Timing values
    double lastTime = glfwGetTime();

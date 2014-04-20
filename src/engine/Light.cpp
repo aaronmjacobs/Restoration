@@ -3,7 +3,11 @@
 
 #include <sstream>
 
-Light::Light(glm::vec3 position, glm::vec3 color, float constFalloff, float linearFalloff, float squareFalloff) {
+const std::string Light::CLASS_NAME = "Light";
+const std::string Light::JSON_FOLDER_PATH = "data/light/";
+
+Light::Light(const std::string &jsonFileName, glm::vec3 position, glm::vec3 color, float constFalloff, float linearFalloff, float squareFalloff)
+   : Serializable(jsonFileName) {
    this->position = position;
    this->color = color;
    this->constFalloff = constFalloff;
@@ -12,6 +16,31 @@ Light::Light(glm::vec3 position, glm::vec3 color, float constFalloff, float line
 }
 
 Light::~Light() {
+}
+
+Json::Value Light::serialize() const {
+   Json::Value root;
+
+   // Class name
+   root["@class"] = CLASS_NAME;
+
+   Json::Value posValue;
+   posValue["x"] = position.x;
+   posValue["y"] = position.y;
+   posValue["z"] = position.z;
+   root["position"] = posValue;
+
+   Json::Value colorValue;
+   colorValue["r"] = color.r;
+   colorValue["g"] = color.g;
+   colorValue["b"] = color.b;
+   root["color"] = colorValue;
+
+   root["constFalloff"] = constFalloff;
+   root["linearFalloff"] = linearFalloff;
+   root["squareFalloff"] = squareFalloff;
+
+   return root;
 }
 
 void Light::draw(ShaderProgramRef program, const unsigned int lightIndex) {

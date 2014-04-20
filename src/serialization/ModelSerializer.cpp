@@ -6,14 +6,14 @@
 
 namespace ModelSerializer {
 
-ModelRef load(const std::string &jsonFileName) {
+ModelRef load(const std::string &jsonFileName, Scene *scene) {
    Json::Value root = IOUtils::readJsonFile(Model::JSON_FOLDER_PATH + jsonFileName);
 
    // Load the material
    Serializer::check(root, "material", "Model");
    std::string materialJsonFileName = root["material"].asString();
    // TODO Make reusable
-   MaterialRef material = MaterialSerializer::load(materialJsonFileName);
+   MaterialRef material = MaterialSerializer::load(materialJsonFileName, scene);
 
    // Load the mesh
    Serializer::check(root, "mesh", "Model");

@@ -1,4 +1,5 @@
 #include "FancyAssert.h"
+#include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
 

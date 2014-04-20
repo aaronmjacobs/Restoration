@@ -129,30 +129,34 @@ void test() {
    //MaterialRef phongMaterial(new PhongMaterial("phong1.json", program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
    //MaterialRef phongMaterial = PhongMaterialSerializer::load("phong1.json");
    //ModelRef celloModel(new Model("cello.json", phongMaterial, celloMesh));
-   ModelRef celloModel = ModelSerializer::load("cello.json");
+   //ModelRef celloModel = ModelSerializer::load("cello.json");
 
-   NodeRef celloNode(new GeometryNode("cello", celloModel));
-   celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
-   celloNode->rotateBy(glm::angleAxis(-0.25f, glm::vec3(1.0f, 0.0f, 0.0f)));
-   scene.getSceneGraph()->addChild(celloNode);
+   //NodeRef celloNode(std::make_shared<GeometryNode>("cello.json", "cello", celloModel));
+   //celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
+   //celloNode->rotateBy(glm::angleAxis(-0.25f, glm::vec3(1.0f, 0.0f, 0.0f)));
+   //scene.getSceneGraph()->addChild(celloNode);
 
-   NodeRef transformNode(new TransformNode("move"));
-   transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
-   transformNode->rotateBy(glm::angleAxis(-1.57f, glm::vec3(1.0f, 0.0f, 0.0f)));
-   celloNode->addChild(transformNode);
+   //NodeRef transformNode(std::make_shared<TransformNode>("trans0.json", "move"));
+   //transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
+   //transformNode->rotateBy(glm::angleAxis(-1.57f, glm::vec3(1.0f, 0.0f, 0.0f)));
+   //celloNode->addChild(transformNode);
 
    //glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
    //MaterialRef phongMaterial2(new PhongMaterial("phong2.json", program, baseColor2 * 0.1f, baseColor2 * 0.2f, baseColor2 * 0.6f, baseColor2 * 0.0f, 20.0f));
    //MaterialRef phongMaterial2 = PhongMaterialSerializer::load("phong2.json");
 
    //ModelRef celloModel2(new Model("cello2.json", phongMaterial2, celloMesh));
-   ModelRef celloModel2 = ModelSerializer::load("cello2.json");
-   NodeRef celloNode2(new GeometryNode("cello2", celloModel2));
-   transformNode->addChild(celloNode2);
+   //ModelRef celloModel2 = ModelSerializer::load("cello2.json");
+   //NodeRef celloNode2(std::make_shared<GeometryNode>("cello2.json", "cello2", celloModel2));
+   //transformNode->addChild(celloNode2);
 
-   scene.addShaderProgram(celloModel->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
-   scene.addShaderProgram(celloModel2->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
+   NodeRef celloNode = NodeSerializer::load("cello.json", &scene);
+   scene.getSceneGraph()->addChild(celloNode);
 
+   //scene.addShaderProgram(celloModel->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
+   //scene.addShaderProgram(celloModel2->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
+
+   //Serializer::save(*celloNode);
    //Serializer::save(*celloModel);
    //Serializer::save(*celloModel2);
 }
@@ -199,7 +203,9 @@ int main(int argc, char *argv[]) {
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
 
+   double start = glfwGetTime();
    test();
+   std::cout << "Loading time: " << (glfwGetTime() - start) << " seconds." << std::endl;
 
    // Timing values
    double lastTime = glfwGetTime();

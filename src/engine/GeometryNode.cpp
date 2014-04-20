@@ -5,25 +5,23 @@
 
 #include <assimp/Importer.hpp>
 
-GeometryNode::GeometryNode(const std::string &name, ModelRef model)
-   : SceneNode(name), model(model) {
+const std::string GeometryNode::CLASS_NAME = "GeometryNode";
+
+GeometryNode::GeometryNode(const std::string &jsonFileName, const std::string &name, ModelRef model)
+   : SceneNode(jsonFileName, name), model(model) {
 }
 
 GeometryNode::~GeometryNode() {
 }
 
-GeometryNodeRef GeometryNode::fromJson(const Json::Value &root) {
-   std::string name = root["name"].asString();
-   std::string modelName = root["model"].asString();
+Json::Value GeometryNode::serialize() const {
+   Json::Value root = SceneNode::serialize();
 
-   return GeometryNodeRef(new GeometryNode(name, ModelRef()));
-}
+   // Class name
+   root["@class"] = CLASS_NAME;
 
-Json::Value GeometryNode::toJson() {
-   Json::Value root;
-
-   root["name"] = name;
-   root["model"] = "derp";
+   // Model
+   root["model"] = model->getJsonFileName();
 
    return root;
 }

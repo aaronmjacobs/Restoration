@@ -6,7 +6,7 @@
 
 namespace ShaderProgramSerializer {
 
-ShaderProgramRef load(const std::string &jsonFileName) {
+ShaderProgramRef load(const std::string &jsonFileName, Scene *scene) {
    Json::Value root = IOUtils::readJsonFile(ShaderProgram::JSON_FOLDER_PATH + jsonFileName);
 
    ShaderProgramRef shaderProgram(std::make_shared<ShaderProgram>(jsonFileName));
@@ -44,6 +44,9 @@ ShaderProgramRef load(const std::string &jsonFileName) {
       std::string uniformName = uniformsVal[i].asString();
       shaderProgram->addUniform(uniformName);
    }
+
+   // Add the shader program to the scene
+   scene->addShaderProgram(shaderProgram);
 
    return shaderProgram;
 }

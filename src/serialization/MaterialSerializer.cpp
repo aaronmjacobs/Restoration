@@ -7,7 +7,7 @@
 
 namespace MaterialSerializer {
 
-MaterialRef load(const std::string &jsonFileName) {
+MaterialRef load(const std::string &jsonFileName, Scene *scene) {
    Json::Value root = IOUtils::readJsonFile(Material::JSON_FOLDER_PATH + jsonFileName);
 
    Serializer::check(root, "@class", "Material");
@@ -15,7 +15,7 @@ MaterialRef load(const std::string &jsonFileName) {
 
    // Check which material it matches
    if (className == PhongMaterial::CLASS_NAME) {
-      return PhongMaterialSerializer::load(jsonFileName);
+      return PhongMaterialSerializer::load(jsonFileName, scene);
    }
 
    ASSERT("Invalid class name for %s: %s", jsonFileName.c_str(), className.c_str());

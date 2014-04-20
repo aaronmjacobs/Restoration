@@ -6,14 +6,14 @@
 
 namespace PhongMaterialSerializer {
 
-PhongMaterialRef load(const std::string &jsonFileName) {
+PhongMaterialRef load(const std::string &jsonFileName, Scene *scene) {
    Json::Value root = IOUtils::readJsonFile(Material::JSON_FOLDER_PATH + jsonFileName);
 
    Serializer::check(root, "shaderProgram", "PhongMaterial");
    std::string shaderProgramJsonFileName = root["shaderProgram"].asString();
 
    // TODO make reusable somehow
-   ShaderProgramRef shaderProgram = ShaderProgramSerializer::load(shaderProgramJsonFileName);
+   ShaderProgramRef shaderProgram = ShaderProgramSerializer::load(shaderProgramJsonFileName, scene);
 
    // Ambient color
    Serializer::check(root, "ambient", "PhongMaterial");

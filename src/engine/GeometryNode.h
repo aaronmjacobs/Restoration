@@ -23,9 +23,14 @@ private:
 
 public:
    /**
+    * Name of the class (used in deserialization to determine types).
+    */
+   static const std::string CLASS_NAME;
+
+   /**
     * Constructs a geometry node for the given scene with the given name (unique) and model.
     */
-   GeometryNode(const std::string &name, ModelRef model);
+   GeometryNode(const std::string &jsonFileName, const std::string &name, ModelRef model);
 
    /**
     * Does cleanup (currently nothing!).
@@ -33,14 +38,9 @@ public:
    virtual ~GeometryNode();
 
    /**
-    * Generates a mesh from JSON.
+    * Serializes the object to JSON.
     */
-   static GeometryNodeRef fromJson(const Json::Value &root);
-
-   /**
-    * Generates JSON from a mesh.
-    */
-   virtual Json::Value toJson();
+   virtual Json::Value serialize() const;
 
    /**
     * Draws the geometry in the scene.

@@ -8,9 +8,9 @@
    "constFalloff" : 0.025,
    "linearFalloff" : 0.003,
    "position" : {
-      "x" : -1.0,
-      "y" : 5.0,
-      "z" : 4.0
+      "x" : 0.0,
+      "y" : 8.0,
+      "z" : 6.0
    },
    "squareFalloff" : 0.0005
 }

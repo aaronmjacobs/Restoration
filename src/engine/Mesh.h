@@ -32,6 +32,11 @@ private:
     */
    std::string fileName;
 
+   /**
+   * Extreme values for computing bounding box
+   */
+   float minX, minY, maxX, maxY;
+
 public:
    /**
     * Name of the class (used in deserialization to determine types).
@@ -89,6 +94,22 @@ public:
 
    virtual std::string getJsonFolderName() const {
       return JSON_FOLDER_PATH;
+   }
+
+   float getMinX() {
+      return minX;
+   }
+
+   float getMaxX() {
+      return maxX;
+   }
+
+   float getMinY() {
+      return minY;
+   }
+
+   float getMaxY() {
+      return maxY;
    }
 };
 

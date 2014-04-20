@@ -29,6 +29,25 @@ Mesh::Mesh(const std::string &jsonFileName, const std::string &fileName)
       faceIndex += 3;
    }
 
+   for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+      if (i == 0) {
+         this->minX = mesh->mVertices[i].x;
+         this->maxX = mesh->mVertices[i].x;
+         this->minY = mesh->mVertices[i].y;
+         this->maxY = mesh->mVertices[i].y;
+      }
+      else {
+         if (mesh->mVertices[i].x < this->minX)
+            this->minX = mesh->mVertices[i].x;
+         else if (mesh->mVertices[i].x > this->maxX)
+            this->maxX = mesh->mVertices[i].x;
+         if (mesh->mVertices[i].y < this->minY)
+            this->minY = mesh->mVertices[i].y;
+         else if (mesh->mVertices[i].y > this->maxY)
+            this->maxY = mesh->mVertices[i].y;
+      }
+   }
+
    // Prepare the vertex buffer object
    glGenBuffers(1, &vbo);
    glBindBuffer(GL_ARRAY_BUFFER, vbo);

@@ -9,7 +9,7 @@ typedef std::shared_ptr<Enemy> EnemyRef;
 /**
 * A character (NPC or PC) in the scene that can be interacted with.
 */
-class Character : public PhysicalObject {
+class Enemy : public PhysicalObject {
 public:
 
 protected:
@@ -22,6 +22,9 @@ protected:
    */
    int security;
 
+   bool beenShot;
+   
+   bool seePlayer;
 private:
    /**
    * Update the security based on the type of enemy.

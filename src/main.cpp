@@ -109,6 +109,17 @@ void test() {
    enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
    scene.getSceneGraph()->addChild(enemy);
 
+   ModelRef bulletModel = ModelSerializer::load("bullet.json", &scene);
+   AxisAlignedBoundingBox boundsBullet;
+   boundsBullet.xMin = bulletModel->getMesh()->getMinX();
+   boundsBullet.xMax = bulletModel->getMesh()->getMaxX();
+   boundsBullet.yMin = bulletModel->getMesh()->getMinY();
+   boundsBullet.yMax = bulletModel->getMesh()->getMaxY();
+   
+   EnemyRef bullet = std::make_shared<Enemy>(&scene, "", "bullet0", bulletModel);
+   enemy->setBounds(boundsBullet);
+   enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
+   scene.getSceneGraph()->addChild(bullet);
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));

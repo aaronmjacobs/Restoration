@@ -12,6 +12,7 @@
 #include "engine/IOUtils.h"
 #include "PhysicalObjects/Player.h"
 #include "PhysicalObjects/Enemy.h"
+#include "PhysicalObjects/Bullet.h"
 
 #include "serialization/Serializer.h"
 
@@ -30,6 +31,9 @@
 
 #include "engine/lib/json/json.h"
 
+// Audio
+#include "Sound/Audio.h"
+
 // STL
 #include <cerrno>
 #include <iostream>
@@ -40,6 +44,8 @@ namespace {
 
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
+
+Audio audio;
 
 Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
 Renderer renderer(WIDTH, HEIGHT, FOV);
@@ -82,8 +88,9 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void test() {
+   // Player
    ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
-   PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel);
+   PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel, audio);
    scene.addInputListener(player.get());
 
    AxisAlignedBoundingBox bounds;
@@ -97,6 +104,7 @@ void test() {
    scene.getSceneGraph()->addChild(player);
    scene.addInputListener(player.get());
 
+   // Enemies
    ModelRef enemyModel = ModelSerializer::load("magicEnemy.json", &scene);
    AxisAlignedBoundingBox boundsEnemy;
    boundsEnemy.xMin = enemyModel->getMesh()->getMinX();
@@ -109,6 +117,15 @@ void test() {
    enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
    scene.getSceneGraph()->addChild(enemy);
 
+   EnemyRef enemy2 = std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
+   enemy2->setBounds(boundsEnemy);
+   enemy2->translateBy(glm::vec3(0.0f, 15.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy2);
+
+   EnemyRef enemy3= std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
+   enemy3->setBounds(boundsEnemy);
+   enemy3->translateBy(glm::vec3(5.0f, 2.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy3);
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
@@ -197,7 +214,17 @@ void test() {
 
 } // namespace
 
+
 int main(int argc, char *argv[]) {
+   //Audio Setup
+   audio.systemInit();
+
+   audio.loadSound("src/Sound/media/jump.wav", false, SAMPLE_JUMP);
+   audio.loadSound("src/Sound/media/hadouken.mp3", false, SAMPLE_SHOOT);
+   audio.loadSound("src/Sound/media/win.wav", false, SAMPLE_WIN);
+   audio.loadSound("src/Sound/media/lose.wav", false, SAMPLE_LOSE);
+   audio.loadSound("src/Sound/media/ow.wav", false, SAMPLE_OW);
+
    // Initialize GLFW
    GLFWwindow* window;
    glfwSetErrorCallback(errorCallback);

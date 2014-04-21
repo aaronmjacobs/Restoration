@@ -2,6 +2,9 @@
 
 #include "PhysicalObjects/Character.h"
 #include "PhysicalObjects/Enemy.h"
+#include "PhysicalObjects/Bullet.h"
+
+#include <iostream>
 
 CollisionHandler::CollisionHandler() {
 }
@@ -105,8 +108,16 @@ void CollisionHandler::handleCollision(Enemy *character, Platform *platform) {
 }
 
 void CollisionHandler::handleCollision(Player *player, Enemy *enemy) {
+
    enemy->die();
    player->loseHealth(1);
+
+   std::cout << "Health remaining: " << player->getHealth() << std::endl;
+}
+
+void CollisionHandler::handleCollision(Enemy *enemy, Bullet *bullet) {
+   enemy->die();
+   bullet->die();
 }
 
 AxisAlignedBoundingBox CollisionHandler::genCollisionBox(AxisAlignedBoundingBox first, AxisAlignedBoundingBox second) {

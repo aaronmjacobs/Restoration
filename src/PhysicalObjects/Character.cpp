@@ -2,6 +2,7 @@
 
 Character::Character(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
 : PhysicalObject(scene, jsonFileName, name, model) {
+   health = 3;
 }
 
 Character::~Character() {

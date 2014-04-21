@@ -42,6 +42,8 @@ void Player::onKeyEvent(int key, int action) {
       }
       else if (key == GLFW_KEY_D) {
          dKey = false;
+      } else if (key == GLFW_KEY_SPACE) {
+         jump = false;
       }
    }
 }

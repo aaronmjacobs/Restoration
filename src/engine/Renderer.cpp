@@ -17,6 +17,9 @@ void Renderer::prepare() {
    glClearDepth(1.0f);
    glDepthFunc(GL_LEQUAL);
    glEnable(GL_DEPTH_TEST);
+
+   // Back face culling
+   glCullFace(GL_BACK);
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {

@@ -24,22 +24,32 @@ void CollisionHandler::handleCollision(Player *player, Platform *platform) {
       if (playerPos.x >= platformPos.x) {
          // Player is to the right
          playerMove.x = collisionWidth;
+         if (playerVel.x < 0.0f) {
+            playerVel.x = 0.0f;
+         }
       } else {
          // Player is to the left
          playerMove.x = -collisionWidth;
+         if (playerVel.x > 0.0f) {
+            playerVel.x = 0.0f;
+         }
       }
-      playerVel.x = 0.0f;
    } else {
       // Treat the collision in y
       if (playerPos.y >= platformPos.y) {
          // Player is above
          playerMove.y = collisionHeight;
          player->setOnGround();
+         if (playerVel.y < 0.0f) {
+            playerVel.y = 0.0f;
+         }
       } else {
          // Player is below
          playerMove.y = -collisionHeight;
+         if (playerVel.y > 0.0f) {
+            playerVel.y = 0.0f;
+         }
       }
-      playerVel.y = 0.0f;
    }
 
    player->move(playerMove);

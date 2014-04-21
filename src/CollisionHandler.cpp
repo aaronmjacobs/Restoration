@@ -113,10 +113,6 @@ void CollisionHandler::handleCollision(Player *player, Enemy *enemy) {
    player->loseHealth(1);
 
    std::cout << "Health remaining: " << player->getHealth() << std::endl;
-   if (player->getHealth() <= 0) {
-      std::cout << "You died D:" << std::endl;
-      exit(0);
-   }
 }
 
 void CollisionHandler::handleCollision(Enemy *enemy, Bullet *bullet) {

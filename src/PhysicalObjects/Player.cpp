@@ -10,12 +10,14 @@
 
 ModelRef bulletModel;
 bool right;
+int lastHealth;
 
 Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model, Audio audio)
 : Character(scene, jsonFileName, name, model) {
    acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
    bulletModel = ModelSerializer::load("bullet.json", scene);
    audioPlayer = audio;
+   lastHealth = health;
 }
 
 Player::~Player() {
@@ -65,6 +67,8 @@ void Player::onMouseButtonEvent(int button, int action) {
    }
 
    if (click) {
+      audioPlayer.signalSound(SAMPLE_SHOOT);
+
       // Bullet
       AxisAlignedBoundingBox boundsBullet;
       boundsBullet.xMin = bulletModel->getMesh()->getMinX();
@@ -92,6 +96,7 @@ void Player::onMouseButtonEvent(int button, int action) {
 void Player::onMouseMotionEvent(double xPos, double yPos) {
 }
 
+bool playedEndSound;
 void Player::tick(const float dt) {
    if (wKey) {
       //do whatever w does
@@ -139,9 +144,21 @@ void Player::tick(const float dt) {
       }
    }
 
-   if (!anyAlive) {
+   if (!anyAlive && !playedEndSound) {
+      playedEndSound = true;
+      audioPlayer.signalSound(SAMPLE_WIN);
       std::cout << "You win! :D" << std::endl;
-      exit(0);
+   }
+
+   if (lastHealth != getHealth()) {
+      lastHealth = getHealth();
+      audioPlayer.signalSound(SAMPLE_OW);
+   }
+
+   if (getHealth() <= 0 && !playedEndSound) {
+      playedEndSound = true;
+      audioPlayer.signalSound(SAMPLE_LOSE);
+      std::cout << "You died D:" << std::endl;
    }
 }
 

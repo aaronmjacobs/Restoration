@@ -218,7 +218,12 @@ void test() {
 int main(int argc, char *argv[]) {
    //Audio Setup
    audio.systemInit();
-   audio.loadSound("src/Sound/media/jaguar.wav", false, SAMPLE_JUMP);
+
+   audio.loadSound("src/Sound/media/jump.wav", false, SAMPLE_JUMP);
+   audio.loadSound("src/Sound/media/hadouken.mp3", false, SAMPLE_SHOOT);
+   audio.loadSound("src/Sound/media/win.wav", false, SAMPLE_WIN);
+   audio.loadSound("src/Sound/media/lose.wav", false, SAMPLE_LOSE);
+   audio.loadSound("src/Sound/media/ow.wav", false, SAMPLE_OW);
 
    // Initialize GLFW
    GLFWwindow* window;

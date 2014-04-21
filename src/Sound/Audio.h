@@ -8,6 +8,9 @@
 
 #define SAMPLE_JUMP 0
 #define SAMPLE_SHOOT 1
+#define SAMPLE_WIN 2
+#define SAMPLE_LOSE 3
+#define SAMPLE_OW 4
 
 struct Sample;
 

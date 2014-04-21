@@ -24,6 +24,10 @@ Player::~Player() {
 }
 
 void Player::onKeyEvent(int key, int action) {
+   if (isDead()) {
+      wKey = sKey = right = aKey = dKey = jump = false;
+      return;
+   }
    if (action == GLFW_PRESS) {
       if (key == GLFW_KEY_W) {
          wKey = true;
@@ -62,34 +66,12 @@ void Player::onKeyEvent(int key, int action) {
 }
 
 void Player::onMouseButtonEvent(int button, int action) {
+   if (isDead()) {
+      wKey = sKey = right = aKey = dKey = jump = false;
+      return;
+   }
    if (button == GLFW_MOUSE_BUTTON_LEFT) {
       click = action == GLFW_PRESS;
-   }
-
-   if (click) {
-      audioPlayer.signalSound(SAMPLE_SHOOT);
-
-      // Bullet
-      AxisAlignedBoundingBox boundsBullet;
-      boundsBullet.xMin = bulletModel->getMesh()->getMinX();
-      boundsBullet.xMax = bulletModel->getMesh()->getMaxX();
-      boundsBullet.yMin = bulletModel->getMesh()->getMinY();
-      boundsBullet.yMax = bulletModel->getMesh()->getMaxY();
-      
-      glm::vec3 bulletVel = glm::vec3(10.0f, 0.0f, 0.0f);;
-      if (!right) {
-         bulletVel *= -1.0f;
-      }
-
-      BulletRef bullet = std::make_shared<Bullet>(scene, "", "bullet0", bulletModel, bulletVel);
-      bullet->setBounds(boundsBullet);
-
-      if (!right) {
-         bullet->rotateBy(glm::angleAxis(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
-      }
-
-      bullet->translateBy(position);
-      scene->getSceneGraph()->addChild(bullet);
    }
 }
 
@@ -118,6 +100,29 @@ void Player::tick(const float dt) {
       velocity += glm::vec3(0.0f, 500.0f, 0.0f) * dt;
    }
    if (click) {
+      audioPlayer.signalSound(SAMPLE_SHOOT);
+
+      // Bullet
+      AxisAlignedBoundingBox boundsBullet;
+      boundsBullet.xMin = bulletModel->getMesh()->getMinX();
+      boundsBullet.xMax = bulletModel->getMesh()->getMaxX();
+      boundsBullet.yMin = bulletModel->getMesh()->getMinY();
+      boundsBullet.yMax = bulletModel->getMesh()->getMaxY();
+      
+      glm::vec3 bulletVel = glm::vec3(10.0f, 0.0f, 0.0f);;
+      if (!right) {
+         bulletVel *= -1.0f;
+      }
+
+      BulletRef bullet = std::make_shared<Bullet>(scene, "", "bullet0", bulletModel, bulletVel);
+      bullet->setBounds(boundsBullet);
+
+      if (!right) {
+         bullet->rotateBy(glm::angleAxis(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+      }
+
+      bullet->translateBy(position);
+      scene->getSceneGraph()->addChild(bullet);
       //shoot something
       click = false;
    }
@@ -155,7 +160,7 @@ void Player::tick(const float dt) {
       audioPlayer.signalSound(SAMPLE_OW);
    }
 
-   if (getHealth() <= 0 && !playedEndSound) {
+   if (isDead() && !playedEndSound) {
       playedEndSound = true;
       audioPlayer.signalSound(SAMPLE_LOSE);
       std::cout << "You died D:" << std::endl;

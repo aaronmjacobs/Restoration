@@ -47,6 +47,10 @@ public:
    virtual void move(glm::vec3 dir);
 
    virtual void attack();
+
+   bool isDead() {
+      return health <= 0;
+   }
 };
 
 #endif

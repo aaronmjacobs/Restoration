@@ -122,10 +122,20 @@ void test() {
    enemy2->translateBy(glm::vec3(0.0f, 15.0f, 0.0f));
    scene.getSceneGraph()->addChild(enemy2);
 
-   EnemyRef enemy3= std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
+   EnemyRef enemy3= std::make_shared<Enemy>(&scene, "", "enemy2", enemyModel);
    enemy3->setBounds(boundsEnemy);
-   enemy3->translateBy(glm::vec3(5.0f, 2.0f, 0.0f));
+   enemy3->translateBy(glm::vec3(5.0f, 20.0f, 0.0f));
    scene.getSceneGraph()->addChild(enemy3);
+
+   EnemyRef enemy4= std::make_shared<Enemy>(&scene, "", "enemy3", enemyModel);
+   enemy4->setBounds(boundsEnemy);
+   enemy4->translateBy(glm::vec3(10.0f, 2.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy4);
+
+   EnemyRef enemy5= std::make_shared<Enemy>(&scene, "", "enemy4", enemyModel);
+   enemy5->setBounds(boundsEnemy);
+   enemy5->translateBy(glm::vec3(25.0f, 15.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy5);
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));

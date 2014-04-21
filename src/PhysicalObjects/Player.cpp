@@ -4,9 +4,10 @@
 
 #include <iostream>
 
-Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
+Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model, Audio audio)
 : Character(scene, jsonFileName, name, model) {
    acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
+   audioPlayer = audio;
 }
 
 Player::~Player() {
@@ -28,6 +29,7 @@ void Player::onKeyEvent(int key, int action) {
       }
       else if (key == GLFW_KEY_SPACE) {
          jump = true;
+         audioPlayer.signalSound(SAMPLE_JUMP);
       }
    }
    else if (action == GLFW_RELEASE) {

@@ -32,7 +32,7 @@
 #include "engine/lib/json/json.h"
 
 // Audio
-#include "Audio.h"
+#include "Sound/Audio.h"
 
 // STL
 #include <cerrno>

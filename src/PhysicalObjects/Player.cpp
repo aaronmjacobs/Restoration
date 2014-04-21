@@ -11,10 +11,11 @@
 ModelRef bulletModel;
 bool right;
 
-Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
+Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model, Audio audio)
 : Character(scene, jsonFileName, name, model) {
    acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
    bulletModel = ModelSerializer::load("bullet.json", scene);
+   audioPlayer = audio;
 }
 
 Player::~Player() {

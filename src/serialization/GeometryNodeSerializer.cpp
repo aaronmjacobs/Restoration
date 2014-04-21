@@ -41,7 +41,7 @@ GeometryNodeRef deserialize(const Json::Value &root, Scene *scene) {
    float zOri = oriValue["z"].asFloat();
    glm::quat orientation(wOri, xOri, yOri, zOri);
 
-   // Position
+   // Scale
    Serializer::check(root, "scale", "GeometryNode");
    Json::Value scaleValue = root["scale"];
    Serializer::check(scaleValue, "x", "GeometryNode");

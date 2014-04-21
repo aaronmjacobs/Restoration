@@ -39,7 +39,6 @@ void Player::onKeyEvent(int key, int action) {
       }
       else if (key == GLFW_KEY_SPACE) {
          jump = true;
-         audioPlayer.signalSound(SAMPLE_JUMP);
       }
    }
    else if (action == GLFW_RELEASE) {
@@ -108,6 +107,7 @@ void Player::tick(const float dt) {
    }
    if (jump && onGround) {
       //jump
+      audioPlayer.signalSound(SAMPLE_JUMP);
       jump = false;
       onGround = false;
       velocity += glm::vec3(0.0f, 500.0f, 0.0f) * dt;

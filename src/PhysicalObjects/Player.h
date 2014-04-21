@@ -20,9 +20,6 @@ private:
    //set character's movement speed
    const float SPEED = 5.0f;
 
-   glm::vec3 velocity;
-   glm::vec3 acceleration;
-
    Audio audioPlayer;
 
 public:

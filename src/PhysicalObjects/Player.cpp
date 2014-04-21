@@ -1,13 +1,20 @@
 #include "Player.h"
 #include "Platform.h"
+#include "Bullet.h"
 #include "Enemy.h"
 #include "../engine/Scene.h"
 
+#include "../serialization/Serializer.h"
+
 #include <iostream>
+
+ModelRef bulletModel;
+bool right;
 
 Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
 : Character(scene, jsonFileName, name, model) {
    acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
+   bulletModel = ModelSerializer::load("bullet.json", scene);
 }
 
 Player::~Player() {
@@ -22,9 +29,11 @@ void Player::onKeyEvent(int key, int action) {
          sKey = true;
       }
       else if (key == GLFW_KEY_A) {
+         right = false;
          aKey = true;
       }
       else if (key == GLFW_KEY_D) {
+         right = true;
          dKey = true;
       }
       else if (key == GLFW_KEY_SPACE) {
@@ -52,6 +61,30 @@ void Player::onKeyEvent(int key, int action) {
 void Player::onMouseButtonEvent(int button, int action) {
    if (button == GLFW_MOUSE_BUTTON_LEFT) {
       click = action == GLFW_PRESS;
+   }
+
+   if (click) {
+      // Bullet
+      AxisAlignedBoundingBox boundsBullet;
+      boundsBullet.xMin = bulletModel->getMesh()->getMinX();
+      boundsBullet.xMax = bulletModel->getMesh()->getMaxX();
+      boundsBullet.yMin = bulletModel->getMesh()->getMinY();
+      boundsBullet.yMax = bulletModel->getMesh()->getMaxY();
+      
+      glm::vec3 bulletVel = glm::vec3(10.0f, 0.0f, 0.0f);;
+      if (!right) {
+         bulletVel *= -1.0f;
+      }
+
+      BulletRef bullet = std::make_shared<Bullet>(scene, "", "bullet0", bulletModel, bulletVel);
+      bullet->setBounds(boundsBullet);
+
+      if (!right) {
+         bullet->rotateBy(glm::angleAxis(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+      }
+
+      bullet->translateBy(position);
+      scene->getSceneGraph()->addChild(bullet);
    }
 }
 
@@ -93,10 +126,20 @@ void Player::tick(const float dt) {
    }
 
    // Enemies
+   bool anyAlive = false;
    for (Enemy *enemy : Enemy::allEnemies) {
+      if (!enemy->alive) {
+         continue;
+      }
+      anyAlive = true;
       if (checkCollision(enemy)) {
          scene->getCollisionHanlder()->handleCollision(this, enemy); // TODO
       }
+   }
+
+   if (!anyAlive) {
+      std::cout << "You win! :D" << std::endl;
+      exit(0);
    }
 }
 

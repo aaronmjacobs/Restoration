@@ -3,6 +3,9 @@
 
 #include "PhysicalObject.h"
 
+class Bullet;
+typedef std::shared_ptr<Bullet> BulletRef;
+
 class Bullet : public PhysicalObject {
 public:
    bool alive;

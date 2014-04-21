@@ -111,6 +111,18 @@ void test() {
    enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
    scene.getSceneGraph()->addChild(enemy);
 
+   ModelRef bulletModel = ModelSerializer::load("bullet.json", &scene);
+   AxisAlignedBoundingBox boundsBullet;
+   boundsBullet.xMin = bulletModel->getMesh()->getMinX();
+   boundsBullet.xMax = bulletModel->getMesh()->getMaxX();
+   boundsBullet.yMin = bulletModel->getMesh()->getMinY();
+   boundsBullet.yMax = bulletModel->getMesh()->getMaxY();
+   
+   EnemyRef bullet = std::make_shared<Enemy>(&scene, "", "bullet0", bulletModel);
+   enemy->setBounds(boundsBullet);
+   enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
+   scene.getSceneGraph()->addChild(bullet);
+
    EnemyRef enemy2 = std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
    enemy2->setBounds(boundsEnemy);
    enemy2->translateBy(glm::vec3(0.0f, 15.0f, 0.0f));

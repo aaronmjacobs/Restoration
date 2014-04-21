@@ -39,19 +39,3 @@ void Platform::tick(const float dt) {
 void Platform::move(glm::vec3 dir) {
    // TODO
 }
-
-void Platform::collideWith(PhysicalObject *physObj) {
-   // Resolve the type of physObj through a polymorphic function call
-   physObj->collideWith(this);
-}
-
-void Platform::collideWith(Player *player) {
-   // We know the types of both colliding parties, tell the collision handler
-
-   // Figure out when to use * vs Ref
-   scene->getCollisionHanlder()->handleCollision(player, this); // TODO
-}
-
-void Platform::collideWith(Platform *platform) {
-   // Do nothing for now
-}

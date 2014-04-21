@@ -40,16 +40,6 @@ public:
       onGround = true;
    }
 
-protected:
-   /**
-   * Health value for the character
-   */
-   int health;
-
-   glm::vec3 velocity;
-   glm::vec3 acceleration;
-   bool onGround = false;
-
    /**
    * Lose health function for character based on some integer health lost.
    */
@@ -59,6 +49,16 @@ protected:
    * Regenerate health for character based on some integer health gained.
    */
    virtual void regenHealth(int heal);
+
+protected:
+   /**
+   * Health value for the character
+   */
+   int health;
+
+   glm::vec3 velocity;
+   glm::vec3 acceleration;
+   bool onGround = false;
 
    /**
    * Attack with the character.

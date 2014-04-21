@@ -104,6 +104,11 @@ void CollisionHandler::handleCollision(Enemy *character, Platform *platform) {
    character->setVelocity(characterVel);
 }
 
+void CollisionHandler::handleCollision(Player *player, Enemy *enemy) {
+   enemy->die();
+   player->loseHealth(1);
+}
+
 AxisAlignedBoundingBox CollisionHandler::genCollisionBox(AxisAlignedBoundingBox first, AxisAlignedBoundingBox second) {
    AxisAlignedBoundingBox collision;
 

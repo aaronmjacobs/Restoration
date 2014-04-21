@@ -22,6 +22,10 @@ public:
    */
    virtual ~Enemy();
 
+   bool alive;
+
+   void die();
+
 protected:
    /**
    * How secure the NPC feels with the human near it.

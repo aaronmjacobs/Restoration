@@ -14,6 +14,7 @@ public:
    virtual ~CollisionHandler();
    void handleCollision(Character *character, Platform *platform);
    void handleCollision(Enemy *enemy, Platform *platform);
+   void handleCollision(Player *player, Enemy *enemy);
 };
 
 #endif

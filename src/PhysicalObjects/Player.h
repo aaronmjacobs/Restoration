@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "../engine/InputListener.h"
+#include "Audio.h"
 
 #include <memory>
 
@@ -19,11 +20,16 @@ private:
    //set character's movement speed
    const float SPEED = 5.0f;
 
+   glm::vec3 velocity;
+   glm::vec3 acceleration;
+
+   Audio audioPlayer;
+
 public:
    /**
    * Constructs a character for the given scene with the given name (unique) and model.
    */
-   Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model);
+   Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model, Audio audio);
 
    /**
    * Does cleanup (currently nothing!).

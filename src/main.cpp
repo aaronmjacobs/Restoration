@@ -31,6 +31,9 @@
 
 #include "engine/lib/json/json.h"
 
+// Audio
+#include "Audio.h"
+
 // STL
 #include <cerrno>
 #include <iostream>
@@ -41,6 +44,8 @@ namespace {
 
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
+
+Audio audio;
 
 Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
 Renderer renderer(WIDTH, HEIGHT, FOV);
@@ -85,7 +90,7 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 void test() {
    // Player
    ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
-   PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel);
+   PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel, audio);
    scene.addInputListener(player.get());
 
    AxisAlignedBoundingBox bounds;
@@ -209,7 +214,12 @@ void test() {
 
 } // namespace
 
+
 int main(int argc, char *argv[]) {
+   //Audio Setup
+   audio.systemInit();
+   audio.loadSound("src/Sound/media/jaguar.wav", false, SAMPLE_JUMP);
+
    // Initialize GLFW
    GLFWwindow* window;
    glfwSetErrorCallback(errorCallback);

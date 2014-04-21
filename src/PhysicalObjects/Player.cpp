@@ -38,6 +38,7 @@ void Player::onKeyEvent(int key, int action) {
       }
       else if (key == GLFW_KEY_SPACE) {
          jump = true;
+         audioPlayer.signalSound(SAMPLE_JUMP);
       }
    }
    else if (action == GLFW_RELEASE) {

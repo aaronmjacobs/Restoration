@@ -109,6 +109,15 @@ void test() {
    enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
    scene.getSceneGraph()->addChild(enemy);
 
+   EnemyRef enemy2 = std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
+   enemy2->setBounds(boundsEnemy);
+   enemy2->translateBy(glm::vec3(0.0f, 15.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy2);
+
+   EnemyRef enemy3= std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
+   enemy3->setBounds(boundsEnemy);
+   enemy3->translateBy(glm::vec3(5.0f, 2.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy3);
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));

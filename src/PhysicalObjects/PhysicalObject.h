@@ -3,16 +3,23 @@
 
 #include "../engine/GeometryNode.h"
 
-
+#include <list>
 
 class PhysicalObject;
 typedef std::shared_ptr<PhysicalObject> PhysicalObjectRef;
+
+typedef struct {
+   float xMin, xMax, yMin, yMax;
+} AxisAlignedBoundingBox;
 
 /**
 * A physical object in the scene that can be interacted with.
 */
 class PhysicalObject : public GeometryNode {
 public:
+   // TODO Make a non-global list in the scene
+   static std::list<PhysicalObject*> physicalObjects;
+
    /**
    * Constructs a physical oject for the given scene with the given name (unique) and model.
    */
@@ -26,18 +33,20 @@ public:
    /**
    * Checks the collision between two physical objects.
    */
-   virtual bool checkCollision(PhysicalObjectRef PhysObj);
+   virtual bool checkCollision(PhysicalObjectRef physObj);
 
    /**
    * Steps |dt| seconds through time.
    */
    virtual void tick(const float dt) = 0;
 
+   AxisAlignedBoundingBox getBounds();
+
 protected:
    /**
    * Bounded box parameters for interaction between each physical object.
    */
-   float xMin, xMax, yMin, yMax;
+   AxisAlignedBoundingBox boundingBox;
 
    /**
    * Move the physical object in a certain direction.

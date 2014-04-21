@@ -1,29 +1,35 @@
 #include "PhysicalObject.h"
 
+std::list<PhysicalObject*> PhysicalObject::physicalObjects;
 
 PhysicalObject::PhysicalObject(const std::string &jsonFileName, const std::string &name, ModelRef model)
 : GeometryNode(jsonFileName, name, model) {
+   physicalObjects.push_back(this);
 }
 
 PhysicalObject::~PhysicalObject() {
+   physicalObjects.remove(this);
 }
 
-// MAKE RELATIVE
-// make four variables xmax xmin ymin ymax relative positions
+AxisAlignedBoundingBox PhysicalObject::getBounds() {
+   AxisAlignedBoundingBox absoluteBounds = boundingBox;
+
+   absoluteBounds.xMin += position.x;
+   absoluteBounds.xMax += position.x;
+   absoluteBounds.yMin += position.y;
+   absoluteBounds.yMax += position.y;
+
+   return absoluteBounds;
+}
 
 bool PhysicalObject::checkCollision(PhysicalObjectRef physObj) {
-   float relXMin = this->position.x + this->xMin;
-   float relXMax = this->position.x + this->xMax;
-   float relYMin = this->position.y + this->yMin;
-   float relYMax = this->position.y + this->yMax;
-   float oRelXMin = physObj->position.x + physObj->xMin;
-   float oRelXMax = physObj->position.x + physObj->xMax;
-   float oRelYMin = physObj->position.y + physObj->yMin;
-   float oRelYMax = physObj->position.y + physObj->yMax;
+   AxisAlignedBoundingBox tBounds = getBounds();
+   AxisAlignedBoundingBox oBounds = physObj->getBounds();
+
    //check if objects are on screen via clipping and culling
-   if (relXMax < oRelXMin || relXMin > oRelXMax)
+   if (tBounds.xMax < oBounds.xMin || tBounds.xMin > oBounds.xMax)
       return false;
-   if (relYMax < oRelYMin || relYMin > oRelYMax)
+   if (tBounds.yMax < oBounds.yMin || tBounds.yMin > oBounds.yMax)
       return false;
    return true;
 }

@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "Platform.h"
 #include "../engine/InputListener.h"
 
 #include <memory>
@@ -13,7 +14,7 @@ private:
    bool wKey = false, aKey = false, sKey = false, dKey = false, spaceKey = false, click = false;
 
    //set character's movement speed
-   const float SPEED = 1.0f;
+   const float SPEED = 5.0f;
 
 public:
    /**
@@ -32,6 +33,15 @@ public:
    //function for mouse input
    virtual void onMouseButtonEvent(int button, int action);
 
+   virtual void onMouseMotionEvent(double xPos, double yPos);
+
    //run on time tick
    virtual void tick(const float dt);
+
+   virtual void move(glm::vec3 dir);
+
+   virtual void attack();
+
+   // Collision stuff
+   virtual void collideWith(PlatformRef platform);
 };

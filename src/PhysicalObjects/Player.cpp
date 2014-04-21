@@ -2,7 +2,6 @@
 
 Player::Player(const std::string &jsonFileName, const std::string &name, ModelRef model)
 : Character(jsonFileName, name, model) {
-
 }
 
 Player::~Player() {
@@ -51,6 +50,9 @@ void Player::onMouseButtonEvent(int button, int action) {
    }
 }
 
+void Player::onMouseMotionEvent(double xPos, double yPos) {
+}
+
 void Player::tick(const float dt) {
    if (wKey) {
       //do whatever w does
@@ -72,3 +74,17 @@ void Player::tick(const float dt) {
       click = false;
    }
 }
+
+void Player::move(glm::vec3 dir) {
+   // TODO
+   translateBy(dir);
+}
+
+void Player::attack() {
+
+}
+
+void Player::collideWith(PlatformRef platform) {
+   // TODO Tell CollisionHandler
+}
+

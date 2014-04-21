@@ -10,6 +10,7 @@
 #include "engine/ShaderProgram.h"
 #include "engine/TransformNode.h"
 #include "engine/IOUtils.h"
+#include "PhysicalObjects/Player.h"
 
 #include "serialization/Serializer.h"
 
@@ -78,8 +79,14 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void test() {
-   scene.addInputListener(&cameraController);
+   //scene.addInputListener(&cameraController);
    scene.addTickListener(&cameraController);
+
+   ModelRef playerModel = ModelSerializer::load("cello.json", &scene);
+   PlayerRef player = std::make_shared<Player>("", "player", playerModel);
+   scene.addInputListener(player.get());
+   player->translateBy(glm::vec3(0.0f, 1.5f, 0.0f));
+   scene.getSceneGraph()->addChild(player);
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));

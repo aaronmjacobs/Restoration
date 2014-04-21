@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Platform.h"
+#include "Enemy.h"
 #include "../engine/Scene.h"
 
 #include <iostream>
@@ -88,6 +89,13 @@ void Player::tick(const float dt) {
    for (Platform *platform : Platform::allPlatforms) {
       if (checkCollision(platform)) {
          scene->getCollisionHanlder()->handleCollision(this, platform); // TODO
+      }
+   }
+
+   // Enemies
+   for (Enemy *enemy : Enemy::allEnemies) {
+      if (checkCollision(enemy)) {
+         scene->getCollisionHanlder()->handleCollision(this, enemy); // TODO
       }
    }
 }

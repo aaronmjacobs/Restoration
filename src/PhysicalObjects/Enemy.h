@@ -4,6 +4,8 @@
 #include "Character.h"
 #include "../engine/Scene.h"
 
+#include <list>
+
 class Enemy;
 typedef std::shared_ptr<Enemy> EnemyRef;
 
@@ -12,6 +14,7 @@ typedef std::shared_ptr<Enemy> EnemyRef;
 */
 class Enemy : public Character {
 public:
+   static std::list<Enemy*> allEnemies;
    /**
    * Constructs an enemy for the given scene with the given name (unique) and model.
    */
@@ -21,6 +24,10 @@ public:
    * Does cleanup (currently nothing!).
    */
    virtual ~Enemy();
+
+   bool alive;
+
+   void die();
 
 protected:
    /**

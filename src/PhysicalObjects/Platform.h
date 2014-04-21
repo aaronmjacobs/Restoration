@@ -26,10 +26,6 @@ public:
 
    virtual void tick(const float dt);
    virtual void move(glm::vec3 dir);
-
-   virtual void collideWith(PhysicalObject *physObj);
-   virtual void collideWith(Player *player);
-   virtual void collideWith(Platform *platform);
 };
 
 #endif

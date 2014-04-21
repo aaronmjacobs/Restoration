@@ -16,7 +16,6 @@ private:
 
    //bools to be set by input functions and used in tick
    bool wKey = false, aKey = false, sKey = false, dKey = false, jump = false, click = false;
-   bool onGround = false;
 
    //set character's movement speed
    const float SPEED = 5.0f;
@@ -37,18 +36,6 @@ public:
    */
    virtual ~Player();
 
-   void setVelocity(glm::vec3 vel) {
-      velocity = vel;
-   }
-
-   glm::vec3 getVelocity() {
-      return velocity;
-   }
-
-   void setOnGround() {
-      onGround = true;
-   }
-
    //function for key input
    virtual void onKeyEvent(int key, int action);
 
@@ -63,11 +50,6 @@ public:
    virtual void move(glm::vec3 dir);
 
    virtual void attack();
-
-   // Collision stuff
-   virtual void collideWith(PhysicalObject *physObj);
-   virtual void collideWith(Player *player);
-   virtual void collideWith(Platform *platform);
 };
 
 #endif

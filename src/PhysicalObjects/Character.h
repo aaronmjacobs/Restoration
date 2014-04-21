@@ -28,11 +28,17 @@ public:
    */
    int getHealth();
 
-protected:
-   /**
-   * Health value for the character
-   */
-   int health;
+   void setVelocity(glm::vec3 vel) {
+      velocity = vel;
+   }
+
+   glm::vec3 getVelocity() {
+      return velocity;
+   }
+
+   void setOnGround() {
+      onGround = true;
+   }
 
    /**
    * Lose health function for character based on some integer health lost.
@@ -43,6 +49,16 @@ protected:
    * Regenerate health for character based on some integer health gained.
    */
    virtual void regenHealth(int heal);
+
+protected:
+   /**
+   * Health value for the character
+   */
+   int health;
+
+   glm::vec3 velocity;
+   glm::vec3 acceleration;
+   bool onGround = false;
 
    /**
    * Attack with the character.

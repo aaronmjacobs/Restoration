@@ -2,7 +2,9 @@
 #define COLLISION_HANDLER_H
 
 #include "PhysicalObjects/Platform.h"
-#include "PhysicalObjects/Player.h"
+
+class Character;
+class Enemy;
 
 class CollisionHandler {
 protected:
@@ -10,7 +12,9 @@ protected:
 public:
    CollisionHandler();
    virtual ~CollisionHandler();
-   void handleCollision(Player *player, Platform *platform);
+   void handleCollision(Character *character, Platform *platform);
+   void handleCollision(Enemy *enemy, Platform *platform);
+   void handleCollision(Player *player, Enemy *enemy);
 };
 
 #endif

@@ -11,10 +11,12 @@
 #include "engine/TransformNode.h"
 #include "engine/IOUtils.h"
 #include "PhysicalObjects/Player.h"
+#include "PhysicalObjects/Enemy.h"
 
 #include "serialization/Serializer.h"
 
 #include "FirstPersonCameraController.h"
+#include "FollowCameraController.h"
 #include "PhongMaterial.h"
 
 // Fancy assertions
@@ -46,7 +48,8 @@ Audio audio;
 
 Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
 Renderer renderer(WIDTH, HEIGHT, FOV);
-FirstPersonCameraController cameraController(scene.getCamera());
+FollowCameraController *cameraController;
+//FirstPersonCameraController cameraController(scene.getCamera());
 
 void testGlError(const char *message) {
    GLenum error = glGetError();
@@ -84,9 +87,6 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void test() {
-   scene.addInputListener(&cameraController);
-   scene.addTickListener(&cameraController);
-
    ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
    PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel, audio);
    scene.addInputListener(player.get());
@@ -100,6 +100,29 @@ void test() {
 
    player->translateBy(glm::vec3(0.0f, 1.5f, 0.0f));
    scene.getSceneGraph()->addChild(player);
+   scene.addInputListener(player.get());
+
+   ModelRef enemyModel = ModelSerializer::load("magicEnemy.json", &scene);
+   AxisAlignedBoundingBox boundsEnemy;
+   boundsEnemy.xMin = enemyModel->getMesh()->getMinX();
+   boundsEnemy.xMax = enemyModel->getMesh()->getMaxX();
+   boundsEnemy.yMin = enemyModel->getMesh()->getMinY();
+   boundsEnemy.yMax = enemyModel->getMesh()->getMaxY();
+
+   EnemyRef enemy = std::make_shared<Enemy>(&scene, "", "enemy0", enemyModel);
+   enemy->setBounds(boundsEnemy);
+   enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy);
+
+   EnemyRef enemy2 = std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
+   enemy2->setBounds(boundsEnemy);
+   enemy2->translateBy(glm::vec3(0.0f, 15.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy2);
+
+   EnemyRef enemy3= std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
+   enemy3->setBounds(boundsEnemy);
+   enemy3->translateBy(glm::vec3(5.0f, 2.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy3);
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
@@ -181,6 +204,9 @@ void test() {
    //Serializer::save(*celloNode);
    //Serializer::save(*celloModel);
    //Serializer::save(*celloModel2);
+
+   cameraController = new FollowCameraController(scene.getCamera(), player);
+   scene.addTickListener(cameraController);
 }
 
 } // namespace

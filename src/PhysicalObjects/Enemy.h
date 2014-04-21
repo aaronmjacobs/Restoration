@@ -2,6 +2,9 @@
 #define ENEMY_H
 
 #include "Character.h"
+#include "../engine/Scene.h"
+
+#include <list>
 
 class Enemy;
 typedef std::shared_ptr<Enemy> EnemyRef;
@@ -11,6 +14,7 @@ typedef std::shared_ptr<Enemy> EnemyRef;
 */
 class Enemy : public Character {
 public:
+   static std::list<Enemy*> allEnemies;
    /**
    * Constructs an enemy for the given scene with the given name (unique) and model.
    */
@@ -20,6 +24,10 @@ public:
    * Does cleanup (currently nothing!).
    */
    virtual ~Enemy();
+
+   bool alive;
+
+   void die();
 
 protected:
    /**
@@ -40,14 +48,18 @@ private:
    * Maybe the melee enemy reacts differently from the shooter
    * enemy when isolated.
    */
-   virtual int updateSecurity() = 0;
+   //virtual int updateSecurity();
 
    /**
    * Update the state based on the security.
    */
-   virtual void updateState(int security) = 0;
+   //virtual void updateState(int security) = 0;
 
+   virtual void tick(const float dt);
 
+   virtual void move(glm::vec3 dir);
+
+   virtual void attack();
 };
 
 #endif

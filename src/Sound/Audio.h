@@ -11,6 +11,7 @@
 #define SAMPLE_WIN 2
 #define SAMPLE_LOSE 3
 #define SAMPLE_OW 4
+#define SAMPLE_MUSIC 5
 
 struct Sample;
 

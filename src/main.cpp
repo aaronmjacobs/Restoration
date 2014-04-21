@@ -234,6 +234,7 @@ int main(int argc, char *argv[]) {
    audio.loadSound("src/Sound/media/win.wav", false, SAMPLE_WIN);
    audio.loadSound("src/Sound/media/lose.wav", false, SAMPLE_LOSE);
    audio.loadSound("src/Sound/media/ow.wav", false, SAMPLE_OW);
+   audio.loadSound("src/Sound/media/music_quiet.ogg", false, SAMPLE_MUSIC);
 
    // Initialize GLFW
    GLFWwindow* window;
@@ -276,6 +277,7 @@ int main(int argc, char *argv[]) {
 
    double start = glfwGetTime();
    test();
+   audio.signalSound(SAMPLE_MUSIC);
    std::cout << "Loading time: " << (glfwGetTime() - start) << " seconds." << std::endl;
 
    // Timing values

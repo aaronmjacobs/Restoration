@@ -28,11 +28,27 @@ public:
    */
    int getHealth();
 
+   void setVelocity(glm::vec3 vel) {
+      velocity = vel;
+   }
+
+   glm::vec3 getVelocity() {
+      return velocity;
+   }
+
+   void setOnGround() {
+      onGround = true;
+   }
+
 protected:
    /**
    * Health value for the character
    */
    int health;
+
+   glm::vec3 velocity;
+   glm::vec3 acceleration;
+   bool onGround = false;
 
    /**
    * Lose health function for character based on some integer health lost.

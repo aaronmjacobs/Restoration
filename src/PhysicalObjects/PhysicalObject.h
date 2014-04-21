@@ -48,10 +48,6 @@ public:
 
    AxisAlignedBoundingBox getBounds();
 
-   virtual void collideWith(PhysicalObject *physObj) = 0;
-   virtual void collideWith(Player *player) = 0;
-   virtual void collideWith(Platform *platform) = 0;
-
 protected:
    /**
    * Bounded box parameters for interaction between each physical object.

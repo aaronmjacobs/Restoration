@@ -3,6 +3,8 @@
 
 #include "../engine/GeometryNode.h"
 
+
+
 class PhysicalObject;
 typedef std::shared_ptr<PhysicalObject> PhysicalObjectRef;
 
@@ -12,6 +14,16 @@ typedef std::shared_ptr<PhysicalObject> PhysicalObjectRef;
 class PhysicalObject : public GeometryNode {
 public:
    /**
+   * Constructs a physical oject for the given scene with the given name (unique) and model.
+   */
+   PhysicalObject(const std::string &jsonFileName, const std::string &name, ModelRef model);
+
+   /**
+   * Does cleanup (currently nothing!).
+   */
+   virtual ~PhysicalObject();
+
+   /**
    * Checks the collision between two physical objects.
    */
    virtual bool checkCollision(PhysicalObjectRef PhysObj);
@@ -19,7 +31,7 @@ public:
    /**
    * Steps |dt| seconds through time.
    */
-   virtual void tick(const double dt) = 0;
+   virtual void tick(const float dt) = 0;
 
 protected:
    /**

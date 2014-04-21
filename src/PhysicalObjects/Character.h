@@ -13,6 +13,16 @@ class Character : public PhysicalObject {
 public:
 
    /**
+   * Constructs a character for the given scene with the given name (unique) and model.
+   */
+   Character(const std::string &jsonFileName, const std::string &name, ModelRef model);
+
+   /**
+   * Does cleanup (currently nothing!).
+   */
+   virtual ~Character();
+
+   /**
    * Get the health of the character for traps and other physical object
    * that may not extend character.
    */
@@ -27,12 +37,12 @@ protected:
    /**
    * Lose health function for character based on some integer health lost.
    */
-   virtual void loseHealth(int harm) = 0;
+   virtual void loseHealth(int harm);
 
    /**
    * Regenerate health for character based on some integer health gained.
    */
-   virtual void regenHealth(int heal) = 0;
+   virtual void regenHealth(int heal);
 
    /**
    * Attack with the character.

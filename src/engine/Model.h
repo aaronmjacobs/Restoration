@@ -69,6 +69,10 @@ public:
       return material;
    }
 
+   MeshRef getMesh() {
+      return mesh;
+   }
+
    /**
     * Sets the model's material.
     */

@@ -84,6 +84,7 @@ void Player::tick(const float dt) {
    velocity += acceleration * dt;
    move(velocity * dt);
 
+   // Platforms
    for (Platform *platform : Platform::allPlatforms) {
       if (checkCollision(platform)) {
          scene->getCollisionHanlder()->handleCollision(this, platform); // TODO
@@ -98,18 +99,4 @@ void Player::move(glm::vec3 dir) {
 
 void Player::attack() {
 
-}
-
-void Player::collideWith(PhysicalObject *physObj) {
-   // Resolve the type of physObj through a polymorphic function call
-   physObj->collideWith(this);
-}
-
-void Player::collideWith(Player *player) {
-   // Do nothing for now
-}
-
-void Player::collideWith(Platform *platform) {
-   // Figure out when to use * vs Ref
-   scene->getCollisionHanlder()->handleCollision(this, platform); // TODO
 }

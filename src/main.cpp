@@ -11,6 +11,7 @@
 #include "engine/TransformNode.h"
 #include "engine/IOUtils.h"
 #include "PhysicalObjects/Player.h"
+#include "PhysicalObjects/Enemy.h"
 
 #include "serialization/Serializer.h"
 
@@ -95,6 +96,19 @@ void test() {
    player->translateBy(glm::vec3(0.0f, 1.5f, 0.0f));
    scene.getSceneGraph()->addChild(player);
    scene.addInputListener(player.get());
+
+   ModelRef enemyModel = ModelSerializer::load("magicEnemy.json", &scene);
+   AxisAlignedBoundingBox boundsEnemy;
+   boundsEnemy.xMin = enemyModel->getMesh()->getMinX();
+   boundsEnemy.xMax = enemyModel->getMesh()->getMaxX();
+   boundsEnemy.yMin = enemyModel->getMesh()->getMinY();
+   boundsEnemy.yMax = enemyModel->getMesh()->getMaxY();
+
+   EnemyRef enemy = std::make_shared<Enemy>(&scene, "", "enemy0", enemyModel);
+   enemy->setBounds(boundsEnemy);
+   enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
+   scene.getSceneGraph()->addChild(enemy);
+
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));

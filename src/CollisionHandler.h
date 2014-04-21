@@ -5,6 +5,7 @@
 
 class Character;
 class Enemy;
+class Bullet;
 
 class CollisionHandler {
 protected:
@@ -15,6 +16,7 @@ public:
    void handleCollision(Character *character, Platform *platform);
    void handleCollision(Enemy *enemy, Platform *platform);
    void handleCollision(Player *player, Enemy *enemy);
+   void handleCollision(Enemy *enemy, Bullet *bullet);
 };
 
 #endif

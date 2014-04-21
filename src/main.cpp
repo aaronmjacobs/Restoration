@@ -82,6 +82,7 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void test() {
+   // Player
    ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
    PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel);
    scene.addInputListener(player.get());
@@ -97,6 +98,7 @@ void test() {
    scene.getSceneGraph()->addChild(player);
    scene.addInputListener(player.get());
 
+   // Enemies
    ModelRef enemyModel = ModelSerializer::load("magicEnemy.json", &scene);
    AxisAlignedBoundingBox boundsEnemy;
    boundsEnemy.xMin = enemyModel->getMesh()->getMinX();

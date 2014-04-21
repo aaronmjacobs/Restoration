@@ -85,7 +85,7 @@
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizP1",
@@ -104,16 +104,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizP2",
@@ -132,16 +126,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertP3",
@@ -160,16 +148,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizP4",
@@ -188,16 +170,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizMPFL",
@@ -216,16 +192,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertMP1",
@@ -244,16 +214,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertMP2",
@@ -272,16 +236,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertMP3",
@@ -300,16 +258,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertMP4",
@@ -328,16 +280,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizMPTL",
@@ -356,16 +302,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW1",
@@ -384,16 +324,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW2",
@@ -412,16 +346,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW3",
@@ -440,16 +368,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW4",
@@ -468,16 +390,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW5",
@@ -496,16 +412,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW6",
@@ -524,16 +434,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW7",
@@ -552,16 +456,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertLW8",
@@ -580,16 +478,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG1",
@@ -608,16 +500,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG2",
@@ -636,16 +522,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG3",
@@ -664,16 +544,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG4",
@@ -692,16 +566,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       }, 
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG5",
@@ -720,16 +588,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG6",
@@ -748,16 +610,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG7",
@@ -776,16 +632,10 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "Platform",
+         "@class" : "GeometryNode",
          "children" : null,
          "model" : "horizontalPlatform.json",
          "name" : "horizG8",
@@ -804,12 +654,6 @@
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -2.0,
-            "xMax" : 2.0,
-            "yMin" : -0.5,
-            "yMax" : 0.5
          }
       }
    ]

@@ -5,6 +5,8 @@
 #include "PhysicalObjects/Player.h"
 
 class CollisionHandler {
+protected:
+   AxisAlignedBoundingBox genCollisionBox(AxisAlignedBoundingBox first, AxisAlignedBoundingBox second);
 public:
    CollisionHandler();
    virtual ~CollisionHandler();

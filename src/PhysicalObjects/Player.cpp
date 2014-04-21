@@ -6,6 +6,7 @@
 
 Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
 : Character(scene, jsonFileName, name, model) {
+   acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
 }
 
 Player::~Player() {
@@ -26,7 +27,7 @@ void Player::onKeyEvent(int key, int action) {
          dKey = true;
       }
       else if (key == GLFW_KEY_SPACE) {
-         spaceKey = true;
+         jump = true;
       }
    }
    else if (action == GLFW_RELEASE) {
@@ -41,9 +42,6 @@ void Player::onKeyEvent(int key, int action) {
       }
       else if (key == GLFW_KEY_D) {
          dKey = false;
-      }
-      else if (key == GLFW_KEY_SPACE) {
-         spaceKey = false;
       }
    }
 }
@@ -70,17 +68,23 @@ void Player::tick(const float dt) {
    if (dKey) {
       this->translateBy(glm::vec3(SPEED * dt, 0.0f, 0.0f));
    }
-   if (spaceKey) {
+   if (jump && onGround) {
       //jump
+      jump = false;
+      onGround = false;
+      velocity += glm::vec3(0.0f, 500.0f, 0.0f) * dt;
    }
    if (click) {
       //shoot something
       click = false;
    }
 
+   velocity += acceleration * dt;
+   move(velocity * dt);
+
    for (Platform *platform : Platform::allPlatforms) {
       if (checkCollision(platform)) {
-         std::cout << "Collision!" << std::endl;
+         scene->getCollisionHanlder()->handleCollision(this, platform); // TODO
       }
    }
 }
@@ -92,6 +96,15 @@ void Player::move(glm::vec3 dir) {
 
 void Player::attack() {
 
+}
+
+void Player::collideWith(PhysicalObject *physObj) {
+   // Resolve the type of physObj through a polymorphic function call
+   physObj->collideWith(this);
+}
+
+void Player::collideWith(Player *player) {
+   // Do nothing for now
 }
 
 void Player::collideWith(Platform *platform) {

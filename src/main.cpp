@@ -82,9 +82,17 @@ void test() {
    //scene.addInputListener(&cameraController);
    scene.addTickListener(&cameraController);
 
-   ModelRef playerModel = ModelSerializer::load("cello.json", &scene);
+   ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
    PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel);
    scene.addInputListener(player.get());
+
+   AxisAlignedBoundingBox bounds;
+   bounds.xMin = -0.5f;
+   bounds.xMax = 0.5f;
+   bounds.yMin = -0.5f;
+   bounds.yMax = 0.5f;
+   player->setBounds(bounds);
+
    player->translateBy(glm::vec3(0.0f, 1.5f, 0.0f));
    scene.getSceneGraph()->addChild(player);
 

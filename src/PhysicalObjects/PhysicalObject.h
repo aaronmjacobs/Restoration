@@ -5,6 +5,8 @@
 
 #include <list>
 
+class Platform;
+class Player;
 class PhysicalObject;
 typedef std::shared_ptr<PhysicalObject> PhysicalObjectRef;
 
@@ -40,7 +42,15 @@ public:
    */
    virtual void tick(const float dt) = 0;
 
+   void setBounds(AxisAlignedBoundingBox bounds) {
+      this->boundingBox = bounds;
+   }
+
    AxisAlignedBoundingBox getBounds();
+
+   virtual void collideWith(PhysicalObject *physObj) = 0;
+   virtual void collideWith(Player *player) = 0;
+   virtual void collideWith(Platform *platform) = 0;
 
 protected:
    /**

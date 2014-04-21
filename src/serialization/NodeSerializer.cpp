@@ -19,6 +19,8 @@ NodeRef deserialize(const Json::Value &root, Scene *scene) {
       return GeometryNodeSerializer::deserialize(root, scene);
    } else if (className == TransformNode::CLASS_NAME) {
       return TransformNodeSerializer::deserialize(root, scene);
+   } else if (className == Platform::CLASS_NAME) {
+      return PlatformSerializer::deserialize(root, scene);
    }
 
    ASSERT(false, "Invalid class name: %s", className.c_str());

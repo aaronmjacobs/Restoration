@@ -12,6 +12,7 @@
 #include "GeometryNodeSerializer.h"
 #include "TransformNodeSerializer.h"
 #include "MaterialSerializer.h"
+#include "PlatformSerializer.h"
 #include "PhongMaterialSerializer.h"
 #include "ShaderProgramSerializer.h"
 #include "ShaderSerializer.h"

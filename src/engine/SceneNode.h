@@ -108,6 +108,10 @@ public:
       return children;
    }
 
+   glm::vec3 getPosition() {
+      return position;
+   }
+
    /**
     * Adds a child node to the node.
     */

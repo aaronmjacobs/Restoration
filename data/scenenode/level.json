@@ -19,69 +19,87 @@
    },
    "children" : [
       {
-         "@class" : "GeometryNode",
+         "@class" : "Platform",
          "children" : null,
-         "model" : "magicEnemy.json",
-         "name" : "player",
+         "model" : "horizontalPlatform.json",
+         "name" : "horizEP1",
          "orientation" : {
-            "w" : 0.7071067812,
+            "w" : 1.0,
             "x" : 0.0,
-            "y" : 0.7071067812,
+            "y" : 0.0,
             "z" : 0.0
          },
          "position" : {
-            "x" : 0.0,
-            "y" : 1.15,
+            "x" : 34.0,
+            "y" : 1.0,
             "z" : 0.0
          },
          "scale" : {
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
          }
       },
 	  {
-         "@class" : "GeometryNode",
+         "@class" : "Platform",
          "children" : null,
-         "model" : "magicEnemy.json",
-         "name" : "enemy1",
+         "model" : "verticalPlatform.json",
+         "name" : "vertEP2",
          "orientation" : {
-            "w" : 0.7071067812,
+            "w" : 1.0,
             "x" : 0.0,
-            "y" : 0.7071067812,
+            "y" : 0.0,
             "z" : 0.0
          },
          "position" : {
-            "x" : 5.0,
-            "y" : 1.15,
+            "x" : 33.5,
+            "y" : 1.5,
             "z" : 0.0
          },
          "scale" : {
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
          }
       },
 	  {
-         "@class" : "GeometryNode",
+         "@class" : "Platform",
          "children" : null,
-         "model" : "magicEnemy.json",
-         "name" : "enemy2",
+         "model" : "verticalPlatform.json",
+         "name" : "vertEP3",
          "orientation" : {
-            "w" : 0.7071067812,
+            "w" : 1.0,
             "x" : 0.0,
-            "y" : 0.7071067812,
+            "y" : 0.0,
             "z" : 0.0
          },
          "position" : {
-            "x" : 2.0,
-            "y" : 5.15,
+            "x" : 34.5,
+            "y" : 1.5,
             "z" : 0.0
          },
          "scale" : {
             "x" : 1.0,
             "y" : 1.0,
             "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
          }
       },
 	  {
@@ -227,6 +245,90 @@
 	  {
          "@class" : "Platform",
          "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizMPFR",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 11.0,
+            "y" : 1.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "verticalPlatform.json",
+         "name" : "vertMPFR2",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 10.5,
+            "y" : 3.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "verticalPlatform.json",
+         "name" : "vertMPFR3",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 11.5,
+            "y" : 2.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
          "model" : "verticalPlatform.json",
          "name" : "vertMP1",
          "orientation" : {
@@ -350,6 +452,258 @@
          "position" : {
             "x" : 8.0,
             "y" : 14.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizMPTR",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 12.0,
+            "y" : 14.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "verticalPlatform.json",
+         "name" : "vertSP1",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 27.5,
+            "y" : 6.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "verticalPlatform.json",
+         "name" : "vertSP2",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 27.5,
+            "y" : 10.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "verticalPlatform.json",
+         "name" : "vertSP3",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 27.5,
+            "y" : 14.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "verticalPlatform.json",
+         "name" : "vertSP4",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 27.5,
+            "y" : 18.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "verticalPlatform.json",
+         "name" : "vertSP5",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 27.5,
+            "y" : 20.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -0.5,
+            "xMax" : 0.5,
+            "yMin" : -2.0,
+            "yMax" : 2.0
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizSPTL",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 26.0,
+            "y" : 14.5,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizSPBL1",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 26.0,
+            "y" : 4.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizSPBL2",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 22.0,
+            "y" : 4.0,
             "z" : 0.0
          },
          "scale" : {
@@ -517,63 +871,7 @@
          },
          "position" : {
             "x" : -2.5,
-            "y" : 21.5,
-            "z" : 0.0
-         },
-         "scale" : {
-            "x" : 1.0,
-            "y" : 1.0,
-            "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
-         }
-      },
-	  {
-         "@class" : "Platform",
-         "children" : null,
-         "model" : "verticalPlatform.json",
-         "name" : "vertLW7",
-         "orientation" : {
-            "w" : 1.0,
-            "x" : 0.0,
-            "y" : 0.0,
-            "z" : 0.0
-         },
-         "position" : {
-            "x" : -2.5,
-            "y" : 25.5,
-            "z" : 0.0
-         },
-         "scale" : {
-            "x" : 1.0,
-            "y" : 1.0,
-            "z" : 1.0
-         },
-         "bounds" : {
-            "xMin" : -0.5,
-            "xMax" : 0.5,
-            "yMin" : -2.0,
-            "yMax" : 2.0
-         }
-      },
-	  {
-         "@class" : "Platform",
-         "children" : null,
-         "model" : "verticalPlatform.json",
-         "name" : "vertLW8",
-         "orientation" : {
-            "w" : 1.0,
-            "x" : 0.0,
-            "y" : 0.0,
-            "z" : 0.0
-         },
-         "position" : {
-            "x" : -2.5,
-            "y" : 29.5,
+            "y" : 20.5,
             "z" : 0.0
          },
          "scale" : {
@@ -798,6 +1096,286 @@
          "position" : {
             "x" : 28.0,
             "y" : 0.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizG9",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 32.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizG9",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 36.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR1",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 22.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR2",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 4.0,
+            "y" : 22.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR3",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 8.0,
+            "y" : 22.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR4",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 12.0,
+            "y" : 22.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      }, 
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR5",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 16.0,
+            "y" : 22.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR6",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 20.0,
+            "y" : 22.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR7",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 24.0,
+            "y" : 22.0,
+            "z" : 0.0
+         },
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         },
+         "bounds" : {
+            "xMin" : -2.0,
+            "xMax" : 2.0,
+            "yMin" : -0.5,
+            "yMax" : 0.5
+         }
+      },
+	  {
+         "@class" : "Platform",
+         "children" : null,
+         "model" : "horizontalPlatform.json",
+         "name" : "horizR8",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 26.0,
+            "y" : 22.0,
             "z" : 0.0
          },
          "scale" : {

@@ -9,8 +9,17 @@ typedef std::shared_ptr<Enemy> EnemyRef;
 /**
 * A character (NPC or PC) in the scene that can be interacted with.
 */
-class Character : public PhysicalObject {
+class Enemy : public Character {
 public:
+   /**
+   * Constructs an enemy for the given scene with the given name (unique) and model.
+   */
+   Enemy(const std::string &jsonFileName, const std::string &name, ModelRef model);
+
+   /**
+   * Does cleanup (currently nothing!).
+   */
+   virtual ~Enemy();
 
 protected:
    /**
@@ -22,6 +31,9 @@ protected:
    */
    int security;
 
+   bool beenShot;
+   
+   bool seePlayer;
 private:
    /**
    * Update the security based on the type of enemy.

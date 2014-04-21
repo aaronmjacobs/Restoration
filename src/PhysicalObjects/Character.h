@@ -15,7 +15,7 @@ public:
    /**
    * Constructs a character for the given scene with the given name (unique) and model.
    */
-   Character(const std::string &jsonFileName, const std::string &name, ModelRef model);
+   Character(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model);
 
    /**
    * Does cleanup (currently nothing!).

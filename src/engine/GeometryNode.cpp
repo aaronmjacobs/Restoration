@@ -7,8 +7,8 @@
 
 const std::string GeometryNode::CLASS_NAME = "GeometryNode";
 
-GeometryNode::GeometryNode(const std::string &jsonFileName, const std::string &name, ModelRef model)
-   : SceneNode(jsonFileName, name), model(model) {
+GeometryNode::GeometryNode(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
+   : SceneNode(scene, jsonFileName, name), model(model) {
 }
 
 GeometryNode::~GeometryNode() {

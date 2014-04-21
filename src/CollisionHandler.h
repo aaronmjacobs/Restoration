@@ -5,13 +5,10 @@
 #include "PhysicalObjects/Player.h"
 
 class CollisionHandler {
-private:
-   Scene *scene;
-
 public:
-   CollisionHandler(Scene *scene);
+   CollisionHandler();
    virtual ~CollisionHandler();
-   void handleCollision(PlayerRef player, PlatformRef platform);
+   void handleCollision(Player *player, Platform *platform);
 };
 
 #endif

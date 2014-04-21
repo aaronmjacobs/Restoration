@@ -83,7 +83,7 @@ void test() {
    scene.addTickListener(&cameraController);
 
    ModelRef playerModel = ModelSerializer::load("cello.json", &scene);
-   PlayerRef player = std::make_shared<Player>("", "player", playerModel);
+   PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel);
    scene.addInputListener(player.get());
    player->translateBy(glm::vec3(0.0f, 1.5f, 0.0f));
    scene.getSceneGraph()->addChild(player);

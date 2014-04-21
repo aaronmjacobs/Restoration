@@ -19,7 +19,12 @@ typedef std::shared_ptr<SceneNode> NodeRef;
  */
 class SceneNode : public Serializable, public TickListener {
 protected:
-    /**
+   /**
+    * The scene the node is in.
+    */
+   Scene *scene;
+
+   /**
     * A unique name for the node.
     */
    const std::string name;
@@ -63,7 +68,7 @@ public:
    /**
     * Constructs a node with the given name.
     */
-   SceneNode(const std::string &jsonFileName, const std::string &name);
+   SceneNode(Scene *scene, const std::string &jsonFileName, const std::string &name);
 
    /**
     * Does cleanup.

@@ -14,7 +14,7 @@ public:
    /**
    * Constructs an enemy for the given scene with the given name (unique) and model.
    */
-   Enemy(const std::string &jsonFileName, const std::string &name, ModelRef model);
+   Enemy(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model);
 
    /**
    * Does cleanup (currently nothing!).

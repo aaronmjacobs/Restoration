@@ -1,10 +1,13 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "Character.h"
-#include "Platform.h"
 #include "../engine/InputListener.h"
 
 #include <memory>
 
 class Player;
+class Platform;
 typedef std::shared_ptr<Player> PlayerRef;
 
 class Player : public Character, public InputListener{
@@ -20,7 +23,7 @@ public:
    /**
    * Constructs a character for the given scene with the given name (unique) and model.
    */
-   Player(const std::string &jsonFileName, const std::string &name, ModelRef model);
+   Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model);
 
    /**
    * Does cleanup (currently nothing!).
@@ -43,5 +46,7 @@ public:
    virtual void attack();
 
    // Collision stuff
-   virtual void collideWith(PlatformRef platform);
+   virtual void collideWith(Platform *platform);
 };
+
+#endif

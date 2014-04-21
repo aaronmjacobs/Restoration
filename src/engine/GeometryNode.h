@@ -30,7 +30,7 @@ public:
    /**
     * Constructs a geometry node for the given scene with the given name (unique) and model.
     */
-   GeometryNode(const std::string &jsonFileName, const std::string &name, ModelRef model);
+   GeometryNode(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model);
 
    /**
     * Does cleanup (currently nothing!).

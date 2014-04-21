@@ -20,7 +20,7 @@ public:
    /**
     * Constructs a transformation node with the given name.
     */
-   TransformNode(const std::string &jsonFileName, const std::string &name);
+   TransformNode(Scene *scene, const std::string &jsonFileName, const std::string &name);
 
    /**
     * Does cleanup.

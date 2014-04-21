@@ -53,7 +53,7 @@ TransformNodeRef deserialize(const Json::Value &root, Scene *scene) {
    glm::vec3 scale(xScale, yScale, zScale);
 
    // Create the node
-   TransformNodeRef node = std::make_shared<TransformNode>("TODO", name);
+   TransformNodeRef node = std::make_shared<TransformNode>(scene, "TODO", name);
 
    // Set properties
    node->translateBy(position);

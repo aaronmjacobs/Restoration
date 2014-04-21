@@ -6,8 +6,8 @@
 const std::string SceneNode::CLASS_NAME = "SceneNode";
 const std::string SceneNode::JSON_FOLDER_PATH = "data/scenenode/";
 
-SceneNode::SceneNode(const std::string &jsonFileName, const std::string &name)
-   : Serializable(jsonFileName), name(name) {
+SceneNode::SceneNode(Scene *scene, const std::string &jsonFileName, const std::string &name)
+   : Serializable(jsonFileName), scene(scene), name(name) {
    this->scale = glm::vec3(1.0f);
 }
 

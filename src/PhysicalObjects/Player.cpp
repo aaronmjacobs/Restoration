@@ -1,7 +1,11 @@
 #include "Player.h"
+#include "Platform.h"
+#include "../engine/Scene.h"
 
-Player::Player(const std::string &jsonFileName, const std::string &name, ModelRef model)
-: Character(jsonFileName, name, model) {
+#include <iostream>
+
+Player::Player(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
+: Character(scene, jsonFileName, name, model) {
 }
 
 Player::~Player() {
@@ -73,6 +77,12 @@ void Player::tick(const float dt) {
       //shoot something
       click = false;
    }
+
+   for (Platform *platform : Platform::allPlatforms) {
+      if (checkCollision(platform)) {
+         std::cout << "Collision!" << std::endl;
+      }
+   }
 }
 
 void Player::move(glm::vec3 dir) {
@@ -84,7 +94,7 @@ void Player::attack() {
 
 }
 
-void Player::collideWith(PlatformRef platform) {
-   // TODO Tell CollisionHandler
+void Player::collideWith(Platform *platform) {
+   // Figure out when to use * vs Ref
+   scene->getCollisionHanlder()->handleCollision(this, platform); // TODO
 }
-

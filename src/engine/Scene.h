@@ -8,6 +8,8 @@
 #include "ShaderProgram.h"
 #include "TickListener.h"
 
+#include "../CollisionHandler.h"
+
 #include <list>
 
 /**
@@ -46,6 +48,8 @@ private:
     */
    std::list<TickListener*> tickListeners;
 
+   CollisionHandler collisionHandler;
+
 public:
    /**
     * Creates a scene with the given scene graph.
@@ -83,6 +87,10 @@ public:
     */
    const std::list<ShaderProgramRef> getShaderPrograms() {
       return shaderPrograms;
+   }
+
+   CollisionHandler* getCollisionHanlder() {
+      return &collisionHandler;
    }
 
    void tick(const float dt);

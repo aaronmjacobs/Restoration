@@ -2,8 +2,8 @@
 
 const std::string TransformNode::CLASS_NAME = "TransformNode";
 
-TransformNode::TransformNode(const std::string &jsonFileName, const std::string &name) 
-   : SceneNode(jsonFileName, name) {
+TransformNode::TransformNode(Scene *scene, const std::string &jsonFileName, const std::string &name) 
+   : SceneNode(scene, jsonFileName, name) {
 }
 
 TransformNode::~TransformNode() {

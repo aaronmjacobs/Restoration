@@ -58,7 +58,7 @@ GeometryNodeRef deserialize(const Json::Value &root, Scene *scene) {
    ModelRef model = ModelSerializer::load(modelJsonName, scene);
 
    // Create the node
-   GeometryNodeRef node = std::make_shared<GeometryNode>("TODO", name, model);
+   GeometryNodeRef node = std::make_shared<GeometryNode>(scene, "TODO", name, model);
 
    // Set properties
    node->translateBy(position);

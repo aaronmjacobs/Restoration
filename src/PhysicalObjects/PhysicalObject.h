@@ -23,7 +23,7 @@ public:
    /**
    * Constructs a physical oject for the given scene with the given name (unique) and model.
    */
-   PhysicalObject(const std::string &jsonFileName, const std::string &name, ModelRef model);
+   PhysicalObject(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model);
 
    /**
    * Does cleanup (currently nothing!).
@@ -33,7 +33,7 @@ public:
    /**
    * Checks the collision between two physical objects.
    */
-   virtual bool checkCollision(PhysicalObjectRef physObj);
+   virtual bool checkCollision(PhysicalObject *physObj);
 
    /**
    * Steps |dt| seconds through time.

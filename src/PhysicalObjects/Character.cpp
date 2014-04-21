@@ -1,7 +1,7 @@
 #include "Character.h"
 
-Character::Character(const std::string &jsonFileName, const std::string &name, ModelRef model)
-: PhysicalObject(jsonFileName, name, model) {
+Character::Character(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
+: PhysicalObject(scene, jsonFileName, name, model) {
 }
 
 Character::~Character() {

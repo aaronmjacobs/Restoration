@@ -2,8 +2,8 @@
 
 std::list<PhysicalObject*> PhysicalObject::physicalObjects;
 
-PhysicalObject::PhysicalObject(const std::string &jsonFileName, const std::string &name, ModelRef model)
-: GeometryNode(jsonFileName, name, model) {
+PhysicalObject::PhysicalObject(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model)
+: GeometryNode(scene, jsonFileName, name, model) {
    physicalObjects.push_back(this);
 }
 
@@ -22,7 +22,7 @@ AxisAlignedBoundingBox PhysicalObject::getBounds() {
    return absoluteBounds;
 }
 
-bool PhysicalObject::checkCollision(PhysicalObjectRef physObj) {
+bool PhysicalObject::checkCollision(PhysicalObject *physObj) {
    AxisAlignedBoundingBox tBounds = getBounds();
    AxisAlignedBoundingBox oBounds = physObj->getBounds();
 

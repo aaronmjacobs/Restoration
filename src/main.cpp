@@ -15,6 +15,7 @@
 #include "serialization/Serializer.h"
 
 #include "FirstPersonCameraController.h"
+#include "FollowCameraController.h"
 #include "PhongMaterial.h"
 
 // Fancy assertions
@@ -41,7 +42,8 @@ const float FOV = glm::radians(80.0f);
 
 Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
 Renderer renderer(WIDTH, HEIGHT, FOV);
-FirstPersonCameraController cameraController(scene.getCamera());
+FollowCameraController *cameraController;
+//FirstPersonCameraController cameraController(scene.getCamera());
 
 void testGlError(const char *message) {
    GLenum error = glGetError();
@@ -79,9 +81,6 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void test() {
-   scene.addInputListener(&cameraController);
-   scene.addTickListener(&cameraController);
-
    ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
    PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel);
    scene.addInputListener(player.get());
@@ -95,6 +94,7 @@ void test() {
 
    player->translateBy(glm::vec3(0.0f, 1.5f, 0.0f));
    scene.getSceneGraph()->addChild(player);
+   scene.addInputListener(player.get());
 
    /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
    ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
@@ -176,6 +176,9 @@ void test() {
    //Serializer::save(*celloNode);
    //Serializer::save(*celloModel);
    //Serializer::save(*celloModel2);
+
+   cameraController = new FollowCameraController(scene.getCamera(), player);
+   scene.addTickListener(cameraController);
 }
 
 } // namespace

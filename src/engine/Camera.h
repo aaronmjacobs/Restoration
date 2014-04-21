@@ -103,6 +103,10 @@ public:
       return position;
    }
 
+   void setPosition(glm::vec3 pos) {
+      position = pos;
+   }
+
    /**
     * Gets the current front-facing vector of the camera.
     */

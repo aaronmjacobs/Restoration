@@ -1,0 +1,16 @@
+{
+   "@class" : "Light",
+   "color" : {
+      "b" : 0.2,
+      "g" : 0.2,
+      "r" : 0.2
+   },
+   "constFalloff" : 0.025,
+   "linearFalloff" : 0.003,
+   "position" : {
+      "x" : 30.0,
+      "y" : 8.0,
+      "z" : 6.0
+   },
+   "squareFalloff" : 0.0005
+}

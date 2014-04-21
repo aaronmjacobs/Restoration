@@ -13,23 +13,23 @@ FirstPersonCameraController::~FirstPersonCameraController() {
 void FirstPersonCameraController::onKeyEvent(int key, int action) {
    // Set camera motion state
    if (action == GLFW_PRESS) {
-      if (key == GLFW_KEY_W) {
+      if (key == GLFW_KEY_UP) {
          forward = true;
-      } else if (key == GLFW_KEY_S) {
+      } else if (key == GLFW_KEY_DOWN) {
          backward = true;
-      } else if (key == GLFW_KEY_A) {
+      } else if (key == GLFW_KEY_LEFT) {
          left = true;
-      } else if (key == GLFW_KEY_D) {
+      } else if (key == GLFW_KEY_RIGHT) {
          right = true;
       }
    } else if (action == GLFW_RELEASE) {
-      if (key == GLFW_KEY_W) {
+      if (key == GLFW_KEY_UP) {
          forward = false;
-      } else if (key == GLFW_KEY_S) {
+      } else if (key == GLFW_KEY_DOWN) {
          backward = false;
-      } else if (key == GLFW_KEY_A) {
+      } else if (key == GLFW_KEY_LEFT) {
          left = false;
-      } else if (key == GLFW_KEY_D) {
+      } else if (key == GLFW_KEY_RIGHT) {
          right = false;
       }
    }

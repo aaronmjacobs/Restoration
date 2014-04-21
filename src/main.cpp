@@ -79,7 +79,7 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void test() {
-   //scene.addInputListener(&cameraController);
+   scene.addInputListener(&cameraController);
    scene.addTickListener(&cameraController);
 
    ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
@@ -132,9 +132,11 @@ void test() {
 
    //ShaderProgramRef program = ShaderProgramSerializer::load("phong.json");
    LightRef light = LightSerializer::load("light2.json");
+   LightRef light2 = LightSerializer::load("light3.json");
 
    //LightRef light(new Light("light1.json", glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f));
    scene.addLight(light);
+   scene.addLight(light2);
 
    //Serializer::save(*light);
 

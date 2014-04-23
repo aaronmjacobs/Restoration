@@ -10,7 +10,7 @@ class PhongMaterial;
 typedef std::shared_ptr<PhongMaterial> PhongMaterialRef;
 
 class PhongMaterial : public Material {
-private:
+protected:
    glm::vec3 ambient, diffuse, specular, emission;
    float shininess;
    GLint uAmbient, uDiffuse, uSpecular, uEmission, uShininess;

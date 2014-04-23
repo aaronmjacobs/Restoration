@@ -41,3 +41,32 @@ void Enemy::move(glm::vec3 dir) {
 void Enemy::attack() {
 
 }
+
+void Enemy::updateStatus(Player playerRef){
+   glm::vec3 pPosition = playerRef.getPosition();
+   glm::vec3 ePosition = this->getPosition();
+   int somevalue = 1, maxHealth = 5;
+   //Are they on the same platform and within range?
+   if (ePosition.y == pPosition.y){
+      if (abs(ePosition.x - pPosition.x) <= 10.0f)
+         this->security += somevalue;
+   }
+   if ( true /*last enemy in the scene*/ )
+      this->security = somevalue;
+   
+   if (true /*enemy next to another enemy*/)
+      this->security = somevalue;
+
+   if (true /* if player has been hit by enemy */)
+      this->excitement += somevalue;
+   
+   if (this->getHealth() < maxHealth){
+      this->excitement += somevalue;
+      this->security += somevalue;
+   }
+}
+
+void Enemy::updateState(Player playerRef)
+{
+  //Update scalars that we will use to increase movespeed.
+}

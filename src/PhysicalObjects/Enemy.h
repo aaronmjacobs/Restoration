@@ -39,6 +39,8 @@ protected:
    */
    int security;
 
+   int excitement;
+
    bool beenShot;
    
    bool seePlayer;
@@ -48,12 +50,13 @@ private:
    * Maybe the melee enemy reacts differently from the shooter
    * enemy when isolated.
    */
-   //virtual int updateSecurity();
+   virtual void updateStatus(Player playerRef);
 
    /**
-   * Update the state based on the security.
+   * Update the state based on the security. Get information about the 
+   * player via PlayerRef so that we can do interesting things with the AI.
    */
-   //virtual void updateState(int security) = 0;
+   virtual void updateState(Player playerRef);
 
    virtual void tick(const float dt);
 

@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "Enemy.h"
+#include "Platform.h"
 
 Bullet::Bullet(Scene *scene, const std::string &jsonFileName, const std::string &name, ModelRef model, glm::vec3 dir)
    : PhysicalObject(scene, jsonFileName, name, model) {
@@ -19,6 +20,13 @@ void Bullet::tick(const float dt) {
    for (Enemy *enemy : Enemy::allEnemies) {
       if (checkCollision(enemy)) {
          scene->getCollisionHanlder()->handleCollision(enemy, this); // TODO
+      }
+   }
+
+   // Platforms
+   for (Platform *platform : Platform::allPlatforms) {
+      if (checkCollision(platform)) {
+         scene->getCollisionHanlder()->handleCollision(this, platform); // TODO
       }
    }
 }

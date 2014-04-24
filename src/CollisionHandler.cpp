@@ -120,6 +120,10 @@ void CollisionHandler::handleCollision(Enemy *enemy, Bullet *bullet) {
    bullet->die();
 }
 
+void CollisionHandler::handleCollision(Bullet *bullet, Platform *platform) {
+   bullet->die();
+}
+
 AxisAlignedBoundingBox CollisionHandler::genCollisionBox(AxisAlignedBoundingBox first, AxisAlignedBoundingBox second) {
    AxisAlignedBoundingBox collision;
 

@@ -45,6 +45,8 @@ void Player::onKeyEvent(int key, int action) {
       }
       else if (key == GLFW_KEY_SPACE) {
          jump = true;
+      } else if (key == GLFW_KEY_ENTER) {
+         click = true;
       }
    }
    else if (action == GLFW_RELEASE) {
@@ -71,7 +73,7 @@ void Player::onMouseButtonEvent(int button, int action) {
       return;
    }
    if (button == GLFW_MOUSE_BUTTON_LEFT) {
-      click = action == GLFW_PRESS;
+      //click = action == GLFW_PRESS;
    }
 }
 

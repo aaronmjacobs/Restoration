@@ -40,6 +40,15 @@
 #include <fstream>
 #include <string>
 
+template<typename T>
+using SPtr = std::shared_ptr<T>;
+
+template<typename T>
+using WPtr = std::weak_ptr<T>;
+
+template<typename T>
+using UPtr = std::unique_ptr<T>;
+
 namespace {
 
 const int WIDTH = 1280, HEIGHT = 720;
@@ -50,7 +59,6 @@ Audio audio;
 Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
 Renderer renderer(WIDTH, HEIGHT, FOV);
 FollowCameraController *cameraController;
-//FirstPersonCameraController cameraController(scene.getCamera());
 
 void testGlError(const char *message) {
    GLenum error = glGetError();
@@ -172,7 +180,7 @@ void test() {
    Serializer::save(*program);*/
 
    //ShaderProgramRef program = ShaderProgramSerializer::load("phong.json");
-   LightRef light = LightSerializer::load("light2.json");
+   SPtr<Light> light = LightSerializer::load("light2.json");
    LightRef light2 = LightSerializer::load("light3.json");
 
    //LightRef light(new Light("light1.json", glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f));

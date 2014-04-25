@@ -1,6 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+#include "Mesh.h"
 #include "Serializable.h"
 #include "ShaderProgram.h"
 
@@ -55,11 +56,13 @@ public:
    /**
     * Applies the properties of the material to the shader.
     */
-   virtual void apply() = 0;
+   virtual void apply(MeshRef mesh) = 0;
 
    virtual std::string getJsonFolderName() const {
       return JSON_FOLDER_PATH;
    }
+
+   virtual void disable() = 0;
 };
 
 #endif

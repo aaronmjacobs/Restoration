@@ -60,11 +60,16 @@ Json::Value PhongMaterial::serialize() const {
    return root;
 }
 
-void PhongMaterial::apply() {
+void PhongMaterial::apply(MeshRef mesh) {
    shaderProgram->use();
    glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
    glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));
    glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
    glUniform3fv(uEmission, 1, glm::value_ptr(emission));
    glUniform1f(uShininess, shininess);
+}
+
+void PhongMaterial::disable(){
+   glDisableVertexAttribArray(shaderProgram->getAttribute("aPosition"));
+   glDisableVertexAttribArray(shaderProgram->getAttribute("aNormal"));
 }

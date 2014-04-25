@@ -29,7 +29,7 @@ Json::Value Model::serialize() const {
 
 void Model::draw() {
    // Apply the material properties (and enable the shader)
-   material->apply();
+   material->apply(mesh);
 
    // Prepare the vertex buffer object
    glBindBuffer(GL_ARRAY_BUFFER, mesh->getVBO());
@@ -52,5 +52,6 @@ void Model::draw() {
    // Unbind
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+   material->disable();
    material->getShaderProgram()->disable(); // TODO Make call to material?
 }

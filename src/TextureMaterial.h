@@ -42,6 +42,8 @@ public:
    */
    virtual Json::Value serialize() const;
 
-   virtual void apply();
+   virtual void apply(MeshRef mesh);
+
+   virtual void disable();
 };
 #endif

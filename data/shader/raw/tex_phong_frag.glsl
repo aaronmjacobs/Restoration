@@ -55,5 +55,7 @@ void main() {
   
   finalColor += uMaterial.emission;
 
-  gl_FragColor = vec4(finalColor.rgb, 1);
+  vec4 texColor1 = texture2D(uTexture, vTexCoord);
+  gl_FragColor = vec4(texColor1.rgb, 1);
+  //gl_FragColor = vec4(finalColor.rgb, 1);
 }

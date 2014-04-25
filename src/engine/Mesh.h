@@ -20,7 +20,7 @@ private:
    /**
     * Vertex, normal, and index buffer objects.
     */
-   GLuint vbo, nbo, ibo;
+   GLuint vbo, nbo, ibo, tbo;
 
    /**
     * The number of vertex indices.
@@ -83,6 +83,10 @@ public:
     */
    GLuint getIBO() {
      return ibo;
+   }
+
+   GLuint getTBO() {
+      return tbo;
    }
 
    /**

@@ -13,7 +13,9 @@ private:
 
 protected:
    GLuint texture_id;
-   GLint uTexture;
+   GLint uTexture, aTexCoord;
+   int x, y, comp;
+   unsigned char *data;
 
    std::string textureFile;
 
@@ -38,7 +40,7 @@ public:
    /**
    * Serializes the object to JSON.
    */
-   //virtual Json::Value serialize() const;
+   virtual Json::Value serialize() const;
 
    virtual void apply();
 };

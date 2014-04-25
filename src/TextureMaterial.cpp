@@ -10,14 +10,16 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName, ShaderProgramR
    ambient, diffuse, specular, emission, shininess), textureFile(textureFileName) {
    
    // Generate Texture ID, get the attribute and uniforms for texture.
-   glGenTextures(1, &(this->texture_id));
-   this->uTexture = shaderProgram->getUniform("uTexture");
-   this->aTexCoord = shaderProgram->getAttribute("aTexCoord");
+   glGenTextures(1, &(texture_id));
+   uTexture = shaderProgram->getUniform("uTexture");
+   aTexCoord = shaderProgram->getAttribute("aTexCoord");
+   std::cerr << "I should be getting here\n";
+   this->CreateTexture();
 }
 
 TextureMaterial::~TextureMaterial() {
-   glDeleteTextures(1, &(this->texture_id));
-   stbi_image_free(this->data);
+   glDeleteTextures(1, &(texture_id));
+   stbi_image_free(data);
 }
 
 Json::Value TextureMaterial::serialize() const {
@@ -66,22 +68,23 @@ Json::Value TextureMaterial::serialize() const {
 }
 
 void TextureMaterial::CreateTexture(){
-   glGenTextures(1, &(this->texture_id));
-   glBindTexture(GL_TEXTURE_2D, this->texture_id);
+   glGenTextures(1, &(texture_id));
+   glBindTexture(GL_TEXTURE_2D, texture_id);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    
    // Call the stb_image function for width, height, data.
-   FILE *file = fopen(this->textureFile.c_str(), "rb");
+   FILE *file = fopen(textureFile.c_str(), "rb");
    ASSERT(file, "Null file");
-   this->data = stbi_load_from_file(file, &(this->x), &(this->y), &(this->comp), 0);
+   data = stbi_load_from_file(file, &(x), &(y), &(comp), 0);
    fclose(file);
-   if (this->comp == 4)
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->data);
-   else if (this->comp == 3)
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, this->data);
+   std::cerr << comp << "\n";
+   if (comp == 4)
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+   else if (comp == 3)
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
    else{
-      stbi_image_free(this->data);
+      stbi_image_free(data);
       ASSERT(NULL, "composition of image is not 3 or 4");
    }
    
@@ -94,7 +97,7 @@ void TextureMaterial::apply(){
 
    /* Texture Shading */
    glActiveTexture(GL_TEXTURE0);
-   glBindTexture(GL_TEXTURE_2D, this->texture_id);
+   glBindTexture(GL_TEXTURE_2D, texture_id);
    glUniform1i(uTexture, /*GL_TEXTURE*/0);
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
 

@@ -17,6 +17,9 @@ MaterialRef load(const std::string &jsonFileName, Scene *scene) {
    if (className == PhongMaterial::CLASS_NAME) {
       return PhongMaterialSerializer::load(jsonFileName, scene);
    }
+   else if (className == TextureMaterial::CLASS_NAME) {
+      return TextureMaterialSerializer::load(jsonFileName, scene);
+   }
 
    ASSERT("Invalid class name for %s: %s", jsonFileName.c_str(), className.c_str());
 

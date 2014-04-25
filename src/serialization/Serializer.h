@@ -16,6 +16,7 @@
 #include "PhongMaterialSerializer.h"
 #include "ShaderProgramSerializer.h"
 #include "ShaderSerializer.h"
+#include "TextureMaterialSerializer.h"
 
 namespace Serializer {
 

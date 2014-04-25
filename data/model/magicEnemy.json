@@ -1,4 +1,4 @@
 {
-   "material" : "enemy.json",
+   "material" : "texture.json",
    "mesh" : "magicEnemy.json"
 }

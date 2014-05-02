@@ -7,6 +7,9 @@ class Serializable {
 public:
    const std::string CLASS_NAME;
 
+   Serializable() {
+   }
+
    /**
     * Serializes the object to JSON.
     */

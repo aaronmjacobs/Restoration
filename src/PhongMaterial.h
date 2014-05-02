@@ -1,13 +1,9 @@
 #ifndef PHONG_MATERIAL_H
 #define PHONG_MATERIAL_H
 
-#include "engine/GLMIncludes.h"
-#include "engine/Material.h"
-
-#include <memory>
-
-class PhongMaterial;
-typedef std::shared_ptr<PhongMaterial> PhongMaterialRef;
+#include "GLIncludes.h"
+#include "GLMIncludes.h"
+#include "Material.h"
 
 class PhongMaterial : public Material {
 protected:
@@ -16,21 +12,17 @@ protected:
    GLint uAmbient, uDiffuse, uSpecular, uEmission, uShininess;
 
 public:
-   /**
-    * Name of the class (used in deserialization to determine types).
-    */
    static const std::string CLASS_NAME;
 
-   PhongMaterial(const std::string &jsonFileName, ShaderProgramRef shaderProgram, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 emission, float shininess);
+   PhongMaterial(const std::string &jsonFileName, SPtr<ShaderProgram> shaderProgram, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const glm::vec3 &emission, float shininess);
    virtual ~PhongMaterial();
 
    /**
     * Serializes the object to JSON.
     */
    virtual Json::Value serialize() const;
-   virtual void apply(MeshRef mesh);
 
-   virtual void disable();
+   virtual void apply();
 };
 
 #endif

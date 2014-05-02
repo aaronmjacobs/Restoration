@@ -1,12 +1,10 @@
+#include "IOUtils.h"
 #include "PhongMaterial.h"
-
-#include <string>
 
 const std::string PhongMaterial::CLASS_NAME = "PhongMaterial";
 
-PhongMaterial::PhongMaterial(const std::string &jsonFileName, ShaderProgramRef shaderProgram, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 emission, float shininess)
+PhongMaterial::PhongMaterial(const std::string &jsonFileName, SPtr<ShaderProgram> shaderProgram, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const glm::vec3 &emission, float shininess)
    : Material(jsonFileName, shaderProgram), ambient(ambient), diffuse(diffuse), specular(specular), emission(emission), shininess(shininess) {
-
    uAmbient = shaderProgram->getUniform("uMaterial.ambient");
    uDiffuse = shaderProgram->getUniform("uMaterial.diffuse");
    uSpecular = shaderProgram->getUniform("uMaterial.specular");
@@ -60,16 +58,11 @@ Json::Value PhongMaterial::serialize() const {
    return root;
 }
 
-void PhongMaterial::apply(MeshRef mesh) {
+void PhongMaterial::apply() {
    shaderProgram->use();
    glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
    glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));
    glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
    glUniform3fv(uEmission, 1, glm::value_ptr(emission));
    glUniform1f(uShininess, shininess);
-}
-
-void PhongMaterial::disable(){
-   glDisableVertexAttribArray(shaderProgram->getAttribute("aPosition"));
-   glDisableVertexAttribArray(shaderProgram->getAttribute("aNormal"));
 }

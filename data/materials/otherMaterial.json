@@ -1,0 +1,25 @@
+{
+   "@class" : "PhongMaterial",
+   "ambient" : {
+      "b" : 0.04,
+      "g" : 0.05,
+      "r" : 0.2
+   },
+   "diffuse" : {
+      "b" : 0.08,
+      "g" : 0.1,
+      "r" : 0.4
+   },
+   "emission" : {
+      "b" : 0.0,
+      "g" : 0.0,
+      "r" : 0.0
+   },
+   "shaderProgram" : "phong",
+   "shininess" : 50.0,
+   "specular" : {
+      "b" : 0.4,
+      "g" : 0.4,
+      "r" : 0.4
+   }
+}

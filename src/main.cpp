@@ -1,38 +1,38 @@
-#include "engine/Camera.h"
-#include "engine/GeometryNode.h"
-#include "engine/Loader.h"
-#include "engine/Mesh.h"
-#include "engine/Model.h"
-#include "engine/Renderer.h"
-#include "engine/Scene.h"
-#include "engine/SceneGraph.h"
-#include "engine/Shader.h"
-#include "engine/ShaderProgram.h"
-#include "engine/TransformNode.h"
-#include "engine/IOUtils.h"
-#include "PhysicalObjects/Player.h"
-#include "PhysicalObjects/Enemy.h"
-#include "PhysicalObjects/Bullet.h"
-
-#include "serialization/Serializer.h"
-
-#include "FirstPersonCameraController.h"
-#include "FollowCameraController.h"
-#include "PhongMaterial.h"
-
 // Fancy assertions
-#include "engine/FancyAssert.h"
+#include "FancyAssert.h"
 
 // OpenGL / GLFW
-#include "engine/GLIncludes.h"
+#include "GLIncludes.h"
 
 // GLM
-#include "engine/GLMIncludes.h"
+#include "GLMIncludes.h"
 
-#include "engine/lib/json/json.h"
+#include "FlatSceneGraph.h"
+#include "Renderer.h"
+#include "Scene.h"
+#include "SceneGraph.h"
+#include "SceneObject.h"
+#include "Types.h"
 
-// Audio
-#include "Sound/Audio.h"
+// ***************************** Temporary
+
+#include "Light.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "Model.h"
+#include "Geometry.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
+#include "PhongMaterial.h"
+#include "Camera.h"
+#include "FirstPersonCameraController.h"
+#include "IOUtils.h"
+
+#include "ShaderProgramDeserializer.h"
+#include "PhongMaterialDeserializer.h"
+#include "SceneDeserializer.h"
+
+// ***************************** Temporary
 
 // STL
 #include <cerrno>
@@ -45,12 +45,9 @@ namespace {
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
-Audio audio;
-
-Scene scene(SceneGraphRef(new SceneGraph), CameraSerializer::load("camera1.json"));
+SPtr<Scene> scene;
 Renderer renderer(WIDTH, HEIGHT, FOV);
-FollowCameraController *cameraController;
-//FirstPersonCameraController cameraController(scene.getCamera());
+SPtr<Light> light;
 
 void testGlError(const char *message) {
    GLenum error = glGetError();
@@ -66,20 +63,31 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
       glfwSetWindowShouldClose(window, GL_TRUE);
    }
 
-   scene.onKeyEvent(key, action);
+   if (action == GLFW_PRESS && key == GLFW_KEY_R) {
+      SPtr<SceneGraph> graph = scene->getSceneGraph();
+      /*WPtr<SceneObject> derpObject = graph->find("derp");
+      SPtr<SceneObject> sDerpObject = derpObject.lock();
+      if (sDerpObject) {
+         graph->remove(sDerpObject);
+      }*/
+      graph->remove(light);
+      scene->removeLight(light);
+   }
+
+   scene->onKeyEvent(key, action);
 }
 
 void mouseClickCallback(GLFWwindow *window, int button, int action, int mods) {
-   scene.onMouseButtonEvent(button, action);
+   scene->onMouseButtonEvent(button, action);
 }
 
 void mouseMotionCallback(GLFWwindow *window, double xPos, double yPos) {
-   scene.onMouseMotionEvent(xPos, yPos);
+   scene->onMouseMotionEvent(xPos, yPos);
 }
 
 void focusCallback(GLFWwindow* window, GLint focused) {
    if (focused) {
-      scene.onWindowFocusGained();
+      scene->onWindowFocusGained();
    }
 }
 
@@ -87,155 +95,160 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
    renderer.onWindowSizeChange(width, height);
 }
 
+void addRemoveTest() {
+   SPtr<SceneGraph> graph = scene->getSceneGraph();
+
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
+   SPtr<Material> material2 = PhongMaterialDeserializer::deserialize("otherMaterial", scene);
+   SPtr<Model> model = std::make_shared<Model>(material2, mesh);
+
+   std::string derp = "derp";
+   for (int i = 0; i < 500000; ++i) {
+      graph->add(std::make_shared<Geometry>(scene, model, derp + std::to_string(i)));
+   }
+   int i;
+   std::cin >> i;
+   for (int i = 0; i < 500000; ++i) {
+      WPtr<SceneObject> wObj = graph->find(derp + std::to_string(i));
+      SPtr<SceneObject> obj = wObj.lock();
+      graph->remove(obj);
+   }
+}
+
 void test() {
-   // Player
-   ModelRef playerModel = ModelSerializer::load("cube.json", &scene);
-   PlayerRef player = std::make_shared<Player>(&scene, "", "player", playerModel, audio);
-   scene.addInputListener(player.get());
+   SPtr<SceneGraph> graph = scene->getSceneGraph();
 
-   AxisAlignedBoundingBox bounds;
-   bounds.xMin = -0.5f;
-   bounds.xMax = 0.5f;
-   bounds.yMin = -0.5f;
-   bounds.yMax = 0.5f;
-   player->setBounds(bounds);
+   /*SPtr<Camera> camera = std::make_shared<Camera>(scene, "camera");
+   camera->fly(-5.0f);
+   scene->setCamera(camera);
+   graph->add(camera);
 
-   player->translateBy(glm::vec3(0.0f, 1.5f, 0.0f));
-   scene.getSceneGraph()->addChild(player);
-   scene.addInputListener(player.get());
+   SPtr<Light> light = std::make_shared<Light>(scene, glm::vec3(0.3f), 0.1f, 0.005f, 0.001f);
+   light->setPosition(glm::vec3(0.0f, 5.0f, 5.0f));
+   scene->addLight(light);
+   graph->add(light);*/
 
-   // Enemies
-   ModelRef enemyModel = ModelSerializer::load("magicEnemy.json", &scene);
-   AxisAlignedBoundingBox boundsEnemy;
-   boundsEnemy.xMin = enemyModel->getMesh()->getMinX();
-   boundsEnemy.xMax = enemyModel->getMesh()->getMaxX();
-   boundsEnemy.yMin = enemyModel->getMesh()->getMinY();
-   boundsEnemy.yMax = enemyModel->getMesh()->getMaxY();
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
 
-   EnemyRef enemy = std::make_shared<Enemy>(&scene, "", "enemy0", enemyModel);
-   enemy->setBounds(boundsEnemy);
-   enemy->translateBy(glm::vec3(4.0f, 8.0f, 0.0f));
-   scene.getSceneGraph()->addChild(enemy);
+   /*SPtr<Shader> vertShader = std::make_shared<Shader>(GL_VERTEX_SHADER, "data/shaders/phong_vert.glsl");
+   SPtr<Shader> fragShader = std::make_shared<Shader>(GL_FRAGMENT_SHADER, "data/shaders/phong_frag.glsl");
+   SPtr<ShaderProgram> shaderProgram = std::make_shared<ShaderProgram>("phong");
+   shaderProgram->attach(vertShader);
+   shaderProgram->attach(fragShader);
+   shaderProgram->compileShaders();
+   shaderProgram->link();
+   scene->addShaderProgram(shaderProgram);
 
-   EnemyRef enemy2 = std::make_shared<Enemy>(&scene, "", "enemy1", enemyModel);
-   enemy2->setBounds(boundsEnemy);
-   enemy2->translateBy(glm::vec3(0.0f, 15.0f, 0.0f));
-   scene.getSceneGraph()->addChild(enemy2);
+   shaderProgram->addAttribute("aPosition");
+   shaderProgram->addAttribute("aNormal");
+   shaderProgram->addUniform("uProjMatrix");
+   shaderProgram->addUniform("uViewMatrix");
+   shaderProgram->addUniform("uModelMatrix");
+   shaderProgram->addUniform("uNormalMatrix");
+   shaderProgram->addUniform("uNumLights");
+   shaderProgram->addUniform("uCameraPos");
+   shaderProgram->addUniform("uMaterial.ambient");
+   shaderProgram->addUniform("uMaterial.diffuse");
+   shaderProgram->addUniform("uMaterial.specular");
+   shaderProgram->addUniform("uMaterial.emission");
+   shaderProgram->addUniform("uMaterial.shininess");
+   shaderProgram->addUniform("uLights[0].position");
+   shaderProgram->addUniform("uLights[0].color");
+   shaderProgram->addUniform("uLights[0].constFalloff");
+   shaderProgram->addUniform("uLights[0].linearFalloff");
+   shaderProgram->addUniform("uLights[0].squareFalloff");
 
-   EnemyRef enemy3= std::make_shared<Enemy>(&scene, "", "enemy2", enemyModel);
-   enemy3->setBounds(boundsEnemy);
-   enemy3->translateBy(glm::vec3(5.0f, 20.0f, 0.0f));
-   scene.getSceneGraph()->addChild(enemy3);
+   shaderProgram->addUniform("uLights[1].position");
+   shaderProgram->addUniform("uLights[1].color");
+   shaderProgram->addUniform("uLights[1].constFalloff");
+   shaderProgram->addUniform("uLights[1].linearFalloff");
+   shaderProgram->addUniform("uLights[1].squareFalloff");
 
-   EnemyRef enemy4= std::make_shared<Enemy>(&scene, "", "enemy3", enemyModel);
-   enemy4->setBounds(boundsEnemy);
-   enemy4->translateBy(glm::vec3(10.0f, 2.0f, 0.0f));
-   scene.getSceneGraph()->addChild(enemy4);
+   shaderProgram->addUniform("uLights[2].position");
+   shaderProgram->addUniform("uLights[2].color");
+   shaderProgram->addUniform("uLights[2].constFalloff");
+   shaderProgram->addUniform("uLights[2].linearFalloff");
+   shaderProgram->addUniform("uLights[2].squareFalloff");
 
-   EnemyRef enemy5= std::make_shared<Enemy>(&scene, "", "enemy4", enemyModel);
-   enemy5->setBounds(boundsEnemy);
-   enemy5->translateBy(glm::vec3(25.0f, 15.0f, 0.0f));
-   scene.getSceneGraph()->addChild(enemy5);
+   shaderProgram->addUniform("uLights[3].position");
+   shaderProgram->addUniform("uLights[3].color");
+   shaderProgram->addUniform("uLights[3].constFalloff");
+   shaderProgram->addUniform("uLights[3].linearFalloff");
+   shaderProgram->addUniform("uLights[3].squareFalloff");
 
-   /*ShaderRef vertShader(new Shader("phong_vert.json", GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
-   ShaderRef fragShader(new Shader("phong_frag.json", GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
+   shaderProgram->addUniform("uLights[4].position");
+   shaderProgram->addUniform("uLights[4].color");
+   shaderProgram->addUniform("uLights[4].constFalloff");
+   shaderProgram->addUniform("uLights[4].linearFalloff");
+   shaderProgram->addUniform("uLights[4].squareFalloff");
 
-   Serializer::save(*vertShader);
-   Serializer::save(*fragShader);
+   shaderProgram->addUniform("uLights[5].position");
+   shaderProgram->addUniform("uLights[5].color");
+   shaderProgram->addUniform("uLights[5].constFalloff");
+   shaderProgram->addUniform("uLights[5].linearFalloff");
+   shaderProgram->addUniform("uLights[5].squareFalloff");
 
-   ShaderProgramRef program = ShaderProgramRef(new ShaderProgram("phong.json"));
-   program->attach(vertShader);
-   program->attach(fragShader);
-   program->compileShaders();
-   program->link();
+   shaderProgram->addUniform("uLights[6].position");
+   shaderProgram->addUniform("uLights[6].color");
+   shaderProgram->addUniform("uLights[6].constFalloff");
+   shaderProgram->addUniform("uLights[6].linearFalloff");
+   shaderProgram->addUniform("uLights[6].squareFalloff");
 
-   // TODO Load fields via some sort of file
-   program->addUniform("uModelMatrix");
-   program->addUniform("uViewMatrix");
-   program->addUniform("uProjMatrix");
-   program->addUniform("uNormalMatrix");
-   program->addAttribute("aPosition");
-   program->addAttribute("aNormal");
-   program->addUniform("uNumLights");
-   program->addUniform("uCameraPos");
-   program->addUniform("uLights[0].position");
-   program->addUniform("uLights[0].color");
-   program->addUniform("uLights[0].constFalloff");
-   program->addUniform("uLights[0].linearFalloff");
-   program->addUniform("uLights[0].squareFalloff");
-   program->addUniform("uMaterial.ambient");
-   program->addUniform("uMaterial.diffuse");
-   program->addUniform("uMaterial.specular");
-   program->addUniform("uMaterial.emission");
-   program->addUniform("uMaterial.shininess");
+   shaderProgram->addUniform("uLights[7].position");
+   shaderProgram->addUniform("uLights[7].color");
+   shaderProgram->addUniform("uLights[7].constFalloff");
+   shaderProgram->addUniform("uLights[7].linearFalloff");
+   shaderProgram->addUniform("uLights[7].squareFalloff");
 
-   Serializer::save(*program);*/
+   shaderProgram->addUniform("uLights[8].position");
+   shaderProgram->addUniform("uLights[8].color");
+   shaderProgram->addUniform("uLights[8].constFalloff");
+   shaderProgram->addUniform("uLights[8].linearFalloff");
+   shaderProgram->addUniform("uLights[8].squareFalloff");
 
-   //ShaderProgramRef program = ShaderProgramSerializer::load("phong.json");
-   LightRef light = LightSerializer::load("light2.json");
-   LightRef light2 = LightSerializer::load("light3.json");
+   shaderProgram->addUniform("uLights[9].position");
+   shaderProgram->addUniform("uLights[9].color");
+   shaderProgram->addUniform("uLights[9].constFalloff");
+   shaderProgram->addUniform("uLights[9].linearFalloff");
+   shaderProgram->addUniform("uLights[9].squareFalloff");*/
 
-   //LightRef light(new Light("light1.json", glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f));
-   scene.addLight(light);
-   scene.addLight(light2);
 
-   //Serializer::save(*light);
+   //IOUtils::save(*shaderProgram, shaderProgram->getJsonFileName());
 
-   //MeshRef celloMesh = MeshSerializer::load("cello.json");
+   //SPtr<ShaderProgram> shaderProgram2 = ShaderProgramDeserializer::deserialize("phong");
+   //IOUtils::save(*shaderProgram2, "phong2");
 
    //glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
-   //MaterialRef phongMaterial(new PhongMaterial("phong1.json", program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
-   //MaterialRef phongMaterial = PhongMaterialSerializer::load("phong1.json");
-   //ModelRef celloModel(new Model("cello.json", phongMaterial, celloMesh));
-   //ModelRef celloModel = ModelSerializer::load("cello.json");
+   //SPtr<Material> material = std::make_shared<PhongMaterial>("testMaterial", shaderProgram2,
+   //      baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f);
+   //IOUtils::save(*material, material->getJsonFileName());
 
-   //NodeRef celloNode(std::make_shared<GeometryNode>("cello.json", "cello", celloModel));
-   //celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
-   //celloNode->rotateBy(glm::angleAxis(-0.25f, glm::vec3(1.0f, 0.0f, 0.0f)));
-   //scene.getSceneGraph()->addChild(celloNode);
+   SPtr<Material> material2 = PhongMaterialDeserializer::deserialize("otherMaterial", scene);
+   //IOUtils::save(*material2, "testMaterial2");
 
-   //NodeRef transformNode(std::make_shared<TransformNode>("trans0.json", "move"));
-   //transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
-   //transformNode->rotateBy(glm::angleAxis(-1.57f, glm::vec3(1.0f, 0.0f, 0.0f)));
-   //celloNode->addChild(transformNode);
+   SPtr<Model> model = std::make_shared<Model>(material2, mesh);
 
-   //glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
-   //MaterialRef phongMaterial2(new PhongMaterial("phong2.json", program, baseColor2 * 0.1f, baseColor2 * 0.2f, baseColor2 * 0.6f, baseColor2 * 0.0f, 20.0f));
-   //MaterialRef phongMaterial2 = PhongMaterialSerializer::load("phong2.json");
+   SPtr<Geometry> geometry = std::make_shared<Geometry>(scene, model, "derp");
+   geometry->translateBy(glm::vec3(-3.0f, 0.0f, 0.0f));
+   geometry->rotateBy(glm::angleAxis(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
 
-   //ModelRef celloModel2(new Model("cello2.json", phongMaterial2, celloMesh));
-   //ModelRef celloModel2 = ModelSerializer::load("cello2.json");
-   //NodeRef celloNode2(std::make_shared<GeometryNode>("cello2.json", "cello2", celloModel2));
-   //transformNode->addChild(celloNode2);
+   graph->add(geometry);
 
-   NodeRef celloNode = NodeSerializer::load("level.json", &scene);
-   scene.getSceneGraph()->addChild(celloNode);
+   SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
+   scene->addTickListener(cameraController);
+   scene->addInputListener(cameraController);
 
-   //scene.addShaderProgram(celloModel->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
-   //scene.addShaderProgram(celloModel2->getMaterial()->getShaderProgram()); // TODO Automatic somehow?
+   light = std::make_shared<Light>(scene, glm::vec3(0.3f), 0.1f, 0.005f, 0.001f);
+   light->setPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
+   scene->addLight(light);
+   graph->add(light);
 
-   //Serializer::save(*celloNode);
-   //Serializer::save(*celloModel);
-   //Serializer::save(*celloModel2);
-
-   cameraController = new FollowCameraController(scene.getCamera(), player);
-   scene.addTickListener(cameraController);
+   //IOUtils::save(*scene, "testScene2");
 }
 
 } // namespace
 
-
 int main(int argc, char *argv[]) {
-   //Audio Setup
-   audio.systemInit();
-
-   audio.loadSound("src/Sound/media/jump.wav", false, SAMPLE_JUMP);
-   audio.loadSound("src/Sound/media/hadouken.mp3", false, SAMPLE_SHOOT);
-   audio.loadSound("src/Sound/media/win.wav", false, SAMPLE_WIN);
-   audio.loadSound("src/Sound/media/lose.wav", false, SAMPLE_LOSE);
-   audio.loadSound("src/Sound/media/ow.wav", false, SAMPLE_OW);
-   audio.loadSound("src/Sound/media/music_quiet.ogg", false, SAMPLE_MUSIC);
-
    // Initialize GLFW
    GLFWwindow* window;
    glfwSetErrorCallback(errorCallback);
@@ -272,13 +285,18 @@ int main(int argc, char *argv[]) {
    // Enable vsync
    glfwSwapInterval(1);
 
+   // Create the scene
+   //scene = std::make_shared<Scene>("");
+   //scene->setSceneGraph(std::make_shared<FlatSceneGraph>());
+   double start = glfwGetTime();
+   scene = SceneDeserializer::deserialize("testScene");
+   std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
+
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
 
-   double start = glfwGetTime();
    test();
-   audio.signalSound(SAMPLE_MUSIC);
-   std::cout << "Loading time: " << (glfwGetTime() - start) << " seconds." << std::endl;
+   //addRemoveTest();
 
    // Timing values
    double lastTime = glfwGetTime();
@@ -295,12 +313,12 @@ int main(int argc, char *argv[]) {
       // Update the scene
       accumulator += frameTime;
       while (accumulator >= dt) {
-         scene.tick(dt);
+         scene->tick(dt);
          accumulator -= dt;
       }
 
       // Render the scene
-      renderer.render(&scene);
+      renderer.render(*scene);
 
       // Display the rendered scene
       glfwSwapBuffers(window);
@@ -308,6 +326,8 @@ int main(int argc, char *argv[]) {
       // Poll for events
       glfwPollEvents();
    }
+
+   scene.reset();
 
    // Clean up GLFW
    glfwDestroyWindow(window);

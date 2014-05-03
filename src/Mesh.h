@@ -1,8 +1,10 @@
 #ifndef MESH_H
 #define MESH_H
 
+#include "BoundingBox.h"
 #include "GLIncludes.h"
 #include "Serializable.h"
+#include "Types.h"
 
 #include <string>
 
@@ -26,9 +28,9 @@ class Mesh : public Serializable {
    std::string fileName;
 
    /**
-   * Extreme values for computing bounding box
-   */
-   float minX, minY, maxX, maxY;
+    * Bounding box
+    */
+   SPtr<BoundingBox> bounds;
 
 public:
    static const std::string CLASS_NAME;
@@ -77,20 +79,8 @@ public:
      return numIndices;
    }
 
-   float getMinX() {
-      return minX;
-   }
-
-   float getMaxX() {
-      return maxX;
-   }
-
-   float getMinY() {
-      return minY;
-   }
-
-   float getMaxY() {
-      return maxY;
+   SPtr<BoundingBox> getBounds() {
+      return bounds;
    }
 };
 

@@ -5,8 +5,8 @@ BoundingBox::BoundingBox(float xMin, float xMax, float yMin, float yMax)
    : xMin(xMin), xMax(xMax), yMin(yMin), yMax(yMax) {
 }
 
-BoundingBox::BoundingBox(const BoundingBox &source, const glm::vec3 &trans)
-   : xMin(source.xMin + trans.x), xMax(source.xMax + trans.x), yMin(source.yMin + trans.y), yMax(source.yMax + trans.y) {
+BoundingBox::BoundingBox(const BoundingBox &source, const glm::vec3 &trans, const glm::vec3 &scale)
+   : xMin(source.xMin * scale.x + trans.x), xMax(source.xMax * scale.x + trans.x), yMin(source.yMin * scale.y + trans.y), yMax(source.yMax * scale.y + trans.y) {
 }
 
 BoundingBox::BoundingBox(const BoundingBox &first, const BoundingBox &second)
@@ -25,4 +25,12 @@ bool BoundingBox::collidesWith(const BoundingBox &other) const {
       return false;
    }
    return true;
+}
+
+float BoundingBox::height() const {
+   return yMax - yMin;
+}
+
+float BoundingBox::width() const {
+   return xMax - xMin;
 }

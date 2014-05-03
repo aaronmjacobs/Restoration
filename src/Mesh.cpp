@@ -10,8 +10,8 @@ const std::string Mesh::CLASS_NAME = "Mesh";
 Mesh::Mesh(const std::string &fileName)
    : fileName(fileName) {
    // Load the mesh from the file
-   Assimp::Importer importer;
-   const aiScene* scene = Loader::loadScene(importer, fileName);
+   SPtr<Loader> loader = Loader::getInstance();
+   const aiScene* scene = loader->loadAssimpScene(fileName);
    ASSERT(scene->mNumMeshes > 0, "No meshes in scene: %s", fileName.c_str());
 
    // TODO Support multiple meshes
@@ -31,24 +31,32 @@ Mesh::Mesh(const std::string &fileName)
       faceIndex += 3;
    }
 
+   float xMin = 0.0f, xMax = 0.0f, yMin = 0.0f, yMax = 0.0f;
    for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
       if (i == 0) {
-         this->minX = mesh->mVertices[i].x;
-         this->maxX = mesh->mVertices[i].x;
-         this->minY = mesh->mVertices[i].y;
-         this->maxY = mesh->mVertices[i].y;
+         xMin = mesh->mVertices[i].x;
+         xMax = mesh->mVertices[i].x;
+         yMin = mesh->mVertices[i].y;
+         yMax = mesh->mVertices[i].y;
       }
       else {
-         if (mesh->mVertices[i].x < this->minX)
-            this->minX = mesh->mVertices[i].x;
-         else if (mesh->mVertices[i].x > this->maxX)
-            this->maxX = mesh->mVertices[i].x;
-         if (mesh->mVertices[i].y < this->minY)
-            this->minY = mesh->mVertices[i].y;
-         else if (mesh->mVertices[i].y > this->maxY)
-            this->maxY = mesh->mVertices[i].y;
+         if (mesh->mVertices[i].x < xMin) {
+            xMin = mesh->mVertices[i].x;
+         }
+         else if (mesh->mVertices[i].x > xMax) {
+            xMax = mesh->mVertices[i].x;
+         }
+
+         if (mesh->mVertices[i].y < yMin) {
+            yMin = mesh->mVertices[i].y;
+         }
+         else if (mesh->mVertices[i].y > yMax) {
+            yMax = mesh->mVertices[i].y;
+         }
       }
    }
+
+   bounds = std::make_shared<BoundingBox>(xMin, xMax, yMin, yMax);
 
    // Prepare the vertex buffer object
    glGenBuffers(1, &vbo);

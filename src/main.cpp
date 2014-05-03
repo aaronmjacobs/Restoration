@@ -8,6 +8,7 @@
 #include "GLMIncludes.h"
 
 #include "FlatSceneGraph.h"
+#include "Loader.h"
 #include "Renderer.h"
 #include "Scene.h"
 #include "SceneGraph.h"
@@ -28,9 +29,7 @@
 #include "FirstPersonCameraController.h"
 #include "IOUtils.h"
 
-#include "ShaderProgramDeserializer.h"
-#include "PhongMaterialDeserializer.h"
-#include "SceneDeserializer.h"
+#include "Scenery.h"
 
 // ***************************** Temporary
 
@@ -99,7 +98,8 @@ void addRemoveTest() {
    SPtr<SceneGraph> graph = scene->getSceneGraph();
 
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
-   SPtr<Material> material2 = PhongMaterialDeserializer::deserialize("otherMaterial", scene);
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
    SPtr<Model> model = std::make_shared<Model>(material2, mesh);
 
    std::string derp = "derp";
@@ -223,16 +223,17 @@ void test() {
    //      baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f);
    //IOUtils::save(*material, material->getJsonFileName());
 
-   SPtr<Material> material2 = PhongMaterialDeserializer::deserialize("otherMaterial", scene);
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
    //IOUtils::save(*material2, "testMaterial2");
 
    SPtr<Model> model = std::make_shared<Model>(material2, mesh);
 
-   SPtr<Geometry> geometry = std::make_shared<Geometry>(scene, model, "derp");
-   geometry->translateBy(glm::vec3(-3.0f, 0.0f, 0.0f));
-   geometry->rotateBy(glm::angleAxis(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
+   SPtr<Scenery> scenery = std::make_shared<Scenery>(scene, model, "derp");
+   scenery->translateBy(glm::vec3(-3.0f, 0.0f, 0.0f));
+   scenery->rotateBy(glm::angleAxis(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
 
-   graph->add(geometry);
+   graph->add(scenery);
 
    SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
    scene->addTickListener(cameraController);
@@ -289,7 +290,8 @@ int main(int argc, char *argv[]) {
    //scene = std::make_shared<Scene>("");
    //scene->setSceneGraph(std::make_shared<FlatSceneGraph>());
    double start = glfwGetTime();
-   scene = SceneDeserializer::deserialize("testScene");
+   SPtr<Loader> loader = Loader::getInstance();
+   scene = loader->loadScene("testScene");
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 
    // Prepare for rendering (sets up OpenGL stuff)

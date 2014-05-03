@@ -62,17 +62,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
       glfwSetWindowShouldClose(window, GL_TRUE);
    }
 
-   if (action == GLFW_PRESS && key == GLFW_KEY_R) {
-      SPtr<SceneGraph> graph = scene->getSceneGraph();
-      /*WPtr<SceneObject> derpObject = graph->find("derp");
-      SPtr<SceneObject> sDerpObject = derpObject.lock();
-      if (sDerpObject) {
-         graph->remove(sDerpObject);
-      }*/
-      graph->remove(light);
-      scene->removeLight(light);
-   }
-
    scene->onKeyEvent(key, action);
 }
 
@@ -115,114 +104,19 @@ void addRemoveTest() {
    }
 }
 
+void load() {
+   SPtr<Loader> loader = Loader::getInstance();
+   scene = loader->loadScene("testScene");
+
+   SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
+   scene->addTickListener(cameraController);
+   scene->addInputListener(cameraController);
+}
+
 void test() {
    SPtr<SceneGraph> graph = scene->getSceneGraph();
 
-   /*SPtr<Camera> camera = std::make_shared<Camera>(scene, "camera");
-   camera->fly(-5.0f);
-   scene->setCamera(camera);
-   graph->add(camera);
-
-   SPtr<Light> light = std::make_shared<Light>(scene, glm::vec3(0.3f), 0.1f, 0.005f, 0.001f);
-   light->setPosition(glm::vec3(0.0f, 5.0f, 5.0f));
-   scene->addLight(light);
-   graph->add(light);*/
-
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
-
-   /*SPtr<Shader> vertShader = std::make_shared<Shader>(GL_VERTEX_SHADER, "data/shaders/phong_vert.glsl");
-   SPtr<Shader> fragShader = std::make_shared<Shader>(GL_FRAGMENT_SHADER, "data/shaders/phong_frag.glsl");
-   SPtr<ShaderProgram> shaderProgram = std::make_shared<ShaderProgram>("phong");
-   shaderProgram->attach(vertShader);
-   shaderProgram->attach(fragShader);
-   shaderProgram->compileShaders();
-   shaderProgram->link();
-   scene->addShaderProgram(shaderProgram);
-
-   shaderProgram->addAttribute("aPosition");
-   shaderProgram->addAttribute("aNormal");
-   shaderProgram->addUniform("uProjMatrix");
-   shaderProgram->addUniform("uViewMatrix");
-   shaderProgram->addUniform("uModelMatrix");
-   shaderProgram->addUniform("uNormalMatrix");
-   shaderProgram->addUniform("uNumLights");
-   shaderProgram->addUniform("uCameraPos");
-   shaderProgram->addUniform("uMaterial.ambient");
-   shaderProgram->addUniform("uMaterial.diffuse");
-   shaderProgram->addUniform("uMaterial.specular");
-   shaderProgram->addUniform("uMaterial.emission");
-   shaderProgram->addUniform("uMaterial.shininess");
-   shaderProgram->addUniform("uLights[0].position");
-   shaderProgram->addUniform("uLights[0].color");
-   shaderProgram->addUniform("uLights[0].constFalloff");
-   shaderProgram->addUniform("uLights[0].linearFalloff");
-   shaderProgram->addUniform("uLights[0].squareFalloff");
-
-   shaderProgram->addUniform("uLights[1].position");
-   shaderProgram->addUniform("uLights[1].color");
-   shaderProgram->addUniform("uLights[1].constFalloff");
-   shaderProgram->addUniform("uLights[1].linearFalloff");
-   shaderProgram->addUniform("uLights[1].squareFalloff");
-
-   shaderProgram->addUniform("uLights[2].position");
-   shaderProgram->addUniform("uLights[2].color");
-   shaderProgram->addUniform("uLights[2].constFalloff");
-   shaderProgram->addUniform("uLights[2].linearFalloff");
-   shaderProgram->addUniform("uLights[2].squareFalloff");
-
-   shaderProgram->addUniform("uLights[3].position");
-   shaderProgram->addUniform("uLights[3].color");
-   shaderProgram->addUniform("uLights[3].constFalloff");
-   shaderProgram->addUniform("uLights[3].linearFalloff");
-   shaderProgram->addUniform("uLights[3].squareFalloff");
-
-   shaderProgram->addUniform("uLights[4].position");
-   shaderProgram->addUniform("uLights[4].color");
-   shaderProgram->addUniform("uLights[4].constFalloff");
-   shaderProgram->addUniform("uLights[4].linearFalloff");
-   shaderProgram->addUniform("uLights[4].squareFalloff");
-
-   shaderProgram->addUniform("uLights[5].position");
-   shaderProgram->addUniform("uLights[5].color");
-   shaderProgram->addUniform("uLights[5].constFalloff");
-   shaderProgram->addUniform("uLights[5].linearFalloff");
-   shaderProgram->addUniform("uLights[5].squareFalloff");
-
-   shaderProgram->addUniform("uLights[6].position");
-   shaderProgram->addUniform("uLights[6].color");
-   shaderProgram->addUniform("uLights[6].constFalloff");
-   shaderProgram->addUniform("uLights[6].linearFalloff");
-   shaderProgram->addUniform("uLights[6].squareFalloff");
-
-   shaderProgram->addUniform("uLights[7].position");
-   shaderProgram->addUniform("uLights[7].color");
-   shaderProgram->addUniform("uLights[7].constFalloff");
-   shaderProgram->addUniform("uLights[7].linearFalloff");
-   shaderProgram->addUniform("uLights[7].squareFalloff");
-
-   shaderProgram->addUniform("uLights[8].position");
-   shaderProgram->addUniform("uLights[8].color");
-   shaderProgram->addUniform("uLights[8].constFalloff");
-   shaderProgram->addUniform("uLights[8].linearFalloff");
-   shaderProgram->addUniform("uLights[8].squareFalloff");
-
-   shaderProgram->addUniform("uLights[9].position");
-   shaderProgram->addUniform("uLights[9].color");
-   shaderProgram->addUniform("uLights[9].constFalloff");
-   shaderProgram->addUniform("uLights[9].linearFalloff");
-   shaderProgram->addUniform("uLights[9].squareFalloff");*/
-
-
-   //IOUtils::save(*shaderProgram, shaderProgram->getJsonFileName());
-
-   //SPtr<ShaderProgram> shaderProgram2 = ShaderProgramDeserializer::deserialize("phong");
-   //IOUtils::save(*shaderProgram2, "phong2");
-
-   //glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
-   //SPtr<Material> material = std::make_shared<PhongMaterial>("testMaterial", shaderProgram2,
-   //      baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f);
-   //IOUtils::save(*material, material->getJsonFileName());
-
    SPtr<Loader> loader = Loader::getInstance();
    SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
    //IOUtils::save(*material2, "testMaterial2");
@@ -286,19 +180,15 @@ int main(int argc, char *argv[]) {
    // Enable vsync
    glfwSwapInterval(1);
 
-   // Create the scene
-   //scene = std::make_shared<Scene>("");
-   //scene->setSceneGraph(std::make_shared<FlatSceneGraph>());
    double start = glfwGetTime();
-   SPtr<Loader> loader = Loader::getInstance();
-   scene = loader->loadScene("testScene");
+
+   // Load the scene
+   load();
+
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
-
-   test();
-   //addRemoveTest();
 
    // Timing values
    double lastTime = glfwGetTime();

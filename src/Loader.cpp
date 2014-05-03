@@ -49,7 +49,7 @@ Loader::~Loader() {
 }
 
 void Loader::check(const std::string &type, const Json::Value &container, const std::string &key) {
-   ASSERT(container[key], "Missing key while loading %s: %s", type.c_str(), key.c_str());
+   ASSERT(container.isMember(key), "Missing key while loading %s: %s", type.c_str(), key.c_str());
 }
 
 /**********************************

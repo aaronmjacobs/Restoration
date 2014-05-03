@@ -1,29 +1,42 @@
-#include "engine/Camera.h"
-#include "engine/GeometryNode.h"
-#include "engine/Loader.h"
-#include "engine/Mesh.h"
-#include "engine/Model.h"
-#include "engine/Renderer.h"
-#include "engine/SceneGraph.h"
-#include "engine/Shader.h"
-#include "engine/ShaderProgram.h"
-#include "engine/TransformNode.h"
-#include "engine/Utils.h"
-
-#include "PhongMaterial.h"
-
 // Fancy assertions
-#include "engine/FancyAssert.h"
+#include "FancyAssert.h"
 
 // OpenGL / GLFW
-#include "engine/GLIncludes.h"
+#include "GLIncludes.h"
 
 // GLM
-#include "engine/GLMIncludes.h"
+#include "GLMIncludes.h"
+
+#include "FlatSceneGraph.h"
+#include "Loader.h"
+#include "Renderer.h"
+#include "Scene.h"
+#include "SceneGraph.h"
+#include "SceneObject.h"
+#include "Types.h"
+
+// ***************************** Temporary
+
+#include "Light.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "Model.h"
+#include "Geometry.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
+#include "PhongMaterial.h"
+#include "Camera.h"
+#include "FirstPersonCameraController.h"
+#include "IOUtils.h"
+
+#include "Scenery.h"
+
+// ***************************** Temporary
 
 // STL
 #include <cerrno>
 #include <iostream>
+#include <fstream>
 #include <string>
 
 namespace {
@@ -31,8 +44,9 @@ namespace {
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
-SceneGraph sceneGraph;
+SPtr<Scene> scene;
 Renderer renderer(WIDTH, HEIGHT, FOV);
+SPtr<Light> light;
 
 void testGlError(const char *message) {
    GLenum error = glGetError();
@@ -48,20 +62,20 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
       glfwSetWindowShouldClose(window, GL_TRUE);
    }
 
-   sceneGraph.onKeyEvent(key, action);
+   scene->onKeyEvent(key, action);
 }
 
 void mouseClickCallback(GLFWwindow *window, int button, int action, int mods) {
-   sceneGraph.onMouseEvent(button, action);
+   scene->onMouseButtonEvent(button, action);
 }
 
 void mouseMotionCallback(GLFWwindow *window, double xPos, double yPos) {
-   sceneGraph.onMouseMotionEvent(xPos, yPos);
+   scene->onMouseMotionEvent(xPos, yPos);
 }
 
 void focusCallback(GLFWwindow* window, GLint focused) {
    if (focused) {
-      renderer.onWindowFocusGained();
+      scene->onWindowFocusGained();
    }
 }
 
@@ -69,58 +83,62 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
    renderer.onWindowSizeChange(width, height);
 }
 
+void addRemoveTest() {
+   SPtr<SceneGraph> graph = scene->getSceneGraph();
+
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
+   SPtr<Model> model = std::make_shared<Model>(material2, mesh);
+
+   std::string derp = "derp";
+   for (int i = 0; i < 500000; ++i) {
+      graph->add(std::make_shared<Geometry>(scene, model, derp + std::to_string(i)));
+   }
+   int i;
+   std::cin >> i;
+   for (int i = 0; i < 500000; ++i) {
+      WPtr<SceneObject> wObj = graph->find(derp + std::to_string(i));
+      SPtr<SceneObject> obj = wObj.lock();
+      graph->remove(obj);
+   }
+}
+
+void load() {
+   SPtr<Loader> loader = Loader::getInstance();
+   scene = loader->loadScene("testScene");
+
+   SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
+   scene->addTickListener(cameraController);
+   scene->addInputListener(cameraController);
+}
+
 void test() {
-   ShaderRef vertShader(new Shader(GL_VERTEX_SHADER, "shaders/phong_vert.glsl"));
-   ShaderRef fragShader(new Shader(GL_FRAGMENT_SHADER, "shaders/phong_frag.glsl"));
+   SPtr<SceneGraph> graph = scene->getSceneGraph();
 
-   ShaderProgramRef program = ShaderProgramRef(new ShaderProgram());
-   program->attach(vertShader);
-   program->attach(fragShader);
-   program->compileShaders();
-   program->link();
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
+   //IOUtils::save(*material2, "testMaterial2");
 
-   // TODO Load fields via some sort of file
-   program->addUniform("uModelMatrix");
-   program->addUniform("uViewMatrix");
-   program->addUniform("uProjMatrix");
-   program->addUniform("uNormalMatrix");
-   program->addAttribute(POSITION, "aPosition");
-   program->addAttribute(NORMAL, "aNormal");
-   program->addUniform("uNumLights");
-   program->addUniform("uCameraPos");
-   program->addUniform("uLights[0].position");
-   program->addUniform("uLights[0].color");
-   program->addUniform("uLights[0].constFalloff");
-   program->addUniform("uLights[0].linearFalloff");
-   program->addUniform("uLights[0].squareFalloff");
-   program->addUniform("uMaterial.ambient");
-   program->addUniform("uMaterial.diffuse");
-   program->addUniform("uMaterial.specular");
-   program->addUniform("uMaterial.emission");
-   program->addUniform("uMaterial.shininess");
+   SPtr<Model> model = std::make_shared<Model>(material2, mesh);
 
-   renderer.addLight(LightRef(new Light(glm::vec3(0.0f, 0.5f, 0.5f), glm::vec3(0.3f), 0.1f, 0.005f, 0.001f)));
-   renderer.addShaderProgram(program);
-   MeshRef celloMesh(new Mesh("assets/cello_and_stand.obj"));
-   glm::vec3 baseColor(0.65f, 0.0f, 1.0f);
-   MaterialRef phongMaterial(new PhongMaterial(program, baseColor * 0.2f, baseColor * 0.4f, glm::vec3(0.4f), baseColor * 0.0f, 300.0f));
-   ModelRef celloModel(new Model(phongMaterial, celloMesh));
+   SPtr<Scenery> scenery = std::make_shared<Scenery>(scene, model, "derp");
+   scenery->translateBy(glm::vec3(-3.0f, 0.0f, 0.0f));
+   scenery->rotateBy(glm::angleAxis(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
 
-   NodeRef celloNode(new GeometryNode(&sceneGraph, "cello", celloModel));
-   celloNode->translateBy(glm::vec3(0.0f, 0.0f, -2.0f));
-   celloNode->rotateBy(glm::angleAxis(-0.25f, glm::vec3(1.0f, 0.0f, 0.0f)));
-   sceneGraph.addChild(celloNode);
+   graph->add(scenery);
 
-   NodeRef transformNode(new TransformNode(&sceneGraph, "move"));
-   transformNode->translateBy(glm::vec3(0.0f, -2.0f, 0.0f));
-   transformNode->rotateBy(glm::angleAxis(-1.57f, glm::vec3(1.0f, 0.0f, 0.0f)));
-   celloNode->addChild(transformNode);
+   SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
+   scene->addTickListener(cameraController);
+   scene->addInputListener(cameraController);
 
-   glm::vec3 baseColor2(0.2f, 0.6f, 0.5f);
-   MaterialRef phongMaterial2(new PhongMaterial(program, baseColor2 * 0.1f, baseColor2 * 0.2f, baseColor2 * 0.6f, baseColor2 * 0.0f, 20.0f));
-   ModelRef celloModel2(new Model(phongMaterial2, celloMesh));
-   NodeRef celloNode2(new GeometryNode(&sceneGraph, "cello2", celloModel2));
-   transformNode->addChild(celloNode2);
+   light = std::make_shared<Light>(scene, glm::vec3(0.3f), 0.1f, 0.005f, 0.001f);
+   light->setPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
+   scene->addLight(light);
+   graph->add(light);
+
+   //IOUtils::save(*scene, "testScene2");
 }
 
 } // namespace
@@ -131,13 +149,13 @@ int main(int argc, char *argv[]) {
    glfwSetErrorCallback(errorCallback);
    ASSERT(glfwInit(), "Unable to init glfw");
 
-#ifdef __APPLE__
+/*#ifdef __APPLE__
    // Set hints to use OpenGL 3.3
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
+#endif*/
 
    // Enable anti-aliasing
    glfwWindowHint(GLFW_SAMPLES, 4);
@@ -162,10 +180,15 @@ int main(int argc, char *argv[]) {
    // Enable vsync
    glfwSwapInterval(1);
 
+   double start = glfwGetTime();
+
+   // Load the scene
+   load();
+
+   std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
+
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
-
-   test();
 
    // Timing values
    double lastTime = glfwGetTime();
@@ -182,12 +205,12 @@ int main(int argc, char *argv[]) {
       // Update the scene
       accumulator += frameTime;
       while (accumulator >= dt) {
-         sceneGraph.tick(dt);
+         scene->tick(dt);
          accumulator -= dt;
       }
 
       // Render the scene
-      renderer.render(&sceneGraph);
+      renderer.render(*scene);
 
       // Display the rendered scene
       glfwSwapBuffers(window);
@@ -195,6 +218,8 @@ int main(int argc, char *argv[]) {
       // Poll for events
       glfwPollEvents();
    }
+
+   scene.reset();
 
    // Clean up GLFW
    glfwDestroyWindow(window);

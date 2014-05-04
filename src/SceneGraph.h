@@ -21,13 +21,6 @@ public:
    SceneGraph();
    virtual ~SceneGraph();
 
-   /**
-    * Gets the name of the folder the serializable will be written to.
-    */
-   virtual std::string getJsonFolderName() const {
-      return "scenes";
-   }
-
    virtual void add(SPtr<SceneObject> sceneObject);
    virtual void remove(SPtr<SceneObject> sceneObject);
    WPtr<SceneObject> find(const std::string &name);

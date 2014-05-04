@@ -13,6 +13,7 @@ public:
    virtual ~BoundingBox();
 
    bool collidesWith(const BoundingBox &other) const;
+   bool contains(const glm::vec3 &point) const;
    float height() const;
    float width() const;
 };

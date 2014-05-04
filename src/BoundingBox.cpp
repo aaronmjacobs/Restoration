@@ -27,6 +27,11 @@ bool BoundingBox::collidesWith(const BoundingBox &other) const {
    return true;
 }
 
+bool BoundingBox::contains(const glm::vec3 &point) const {
+   return xMin <= point.x && point.x <= xMax
+       && yMin <= point.y && point.y <= yMax;
+}
+
 float BoundingBox::height() const {
    return yMax - yMin;
 }

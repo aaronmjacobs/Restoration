@@ -116,10 +116,10 @@
                "material" : "testMaterial",
                "mesh" : {
                   "@class" : "Mesh",
-                  "fileName" : "data/meshes/cello_and_stand.obj"
+                  "fileName" : "data/meshes/cube.obj"
                }
             },
-            "name" : "test3",
+            "name" : "cube",
             "orientation" : {
                "w" : 0.7071067690849304,
                "x" : 0.7071067690849304,

@@ -15,13 +15,13 @@ protected:
 
 public:
    /**
-   * Name of the class (used in deserialization to determine types).
-   */
+    * Name of the class (used in deserialization to determine types).
+    */
    static const std::string CLASS_NAME;
 
    /**
-   * Create the texture id and phong material
-   */
+    * Create the texture id and phong material
+    */
    TextureMaterial(const std::string &jsonFileName,
                    SPtr<ShaderProgram> shaderProgram,
                    const glm::vec3 &ambient,
@@ -32,13 +32,13 @@ public:
                    const std::string &textureFileName);
 
    /**
-   * Delete the texture.
-   */
+    * Delete the texture.
+    */
    virtual ~TextureMaterial();
 
    /**
-   * Serializes the object to JSON.
-   */
+    * Serializes the object to JSON.
+    */
    virtual Json::Value serialize() const;
 
    virtual void apply(SPtr<Mesh> mesh);

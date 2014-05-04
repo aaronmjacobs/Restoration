@@ -15,10 +15,19 @@
 #include "SceneObject.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+#include "TextureMaterial.h"
 
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <fstream>
+
+namespace {
+
+struct PhongMaterialData {
+   glm::vec3 ambient, diffuse, specular, emission;
+   float shininess;
+   SPtr<ShaderProgram> shaderProgram;
+};
 
 struct SceneObjectData {
    std::string name;
@@ -26,6 +35,8 @@ struct SceneObjectData {
    glm::quat orientation;
    glm::vec3 scale;
 };
+
+} // namespace
 
 SPtr<Loader> Loader::instance;
 
@@ -94,6 +105,64 @@ SceneObjectData Loader::loadSceneObjectData(const Json::Value &root) {
    data.scale.x = scaleVal["x"].asFloat();
    data.scale.y = scaleVal["y"].asFloat();
    data.scale.z = scaleVal["z"].asFloat();
+
+   return data;
+}
+
+PhongMaterialData Loader::loadPhongMaterialData(SPtr<Scene> scene, const Json::Value &root) {
+   PhongMaterialData data;
+
+   // Shader program
+   check("PhongMaterial", root, "shaderProgram");
+   data.shaderProgram = loadShaderProgram(scene, root["shaderProgram"].asString());
+
+   // Ambient color
+   check("PhongMaterial", root, "ambient");
+   Json::Value ambientValue = root["ambient"];
+   check("PhongMaterial", ambientValue, "r");
+   check("PhongMaterial", ambientValue, "g");
+   check("PhongMaterial", ambientValue, "b");
+   float ambientR = ambientValue["r"].asFloat();
+   float ambientG = ambientValue["g"].asFloat();
+   float ambientB = ambientValue["b"].asFloat();
+   data.ambient = glm::vec3(ambientR, ambientG, ambientB);
+
+   // Diffuse color
+   check("PhongMaterial", root, "diffuse");
+   Json::Value diffuseValue = root["diffuse"];
+   check("PhongMaterial", diffuseValue, "r");
+   check("PhongMaterial", diffuseValue, "g");
+   check("PhongMaterial", diffuseValue, "b");
+   float diffuseR = diffuseValue["r"].asFloat();
+   float diffuseG = diffuseValue["g"].asFloat();
+   float diffuseB = diffuseValue["b"].asFloat();
+   data.diffuse = glm::vec3(diffuseR, diffuseG, diffuseB);
+
+   // Specular color
+   check("PhongMaterial", root, "specular");
+   Json::Value specularValue = root["specular"];
+   check("PhongMaterial", specularValue, "r");
+   check("PhongMaterial", specularValue, "g");
+   check("PhongMaterial", specularValue, "b");
+   float specularR = specularValue["r"].asFloat();
+   float specularG = specularValue["g"].asFloat();
+   float specularB = specularValue["b"].asFloat();
+   data.specular = glm::vec3(specularR, specularG, specularB);
+
+   // Emission color
+   check("PhongMaterial", root, "emission");
+   Json::Value emissionValue = root["emission"];
+   check("PhongMaterial", emissionValue, "r");
+   check("PhongMaterial", emissionValue, "g");
+   check("PhongMaterial", emissionValue, "b");
+   float emissionR = emissionValue["r"].asFloat();
+   float emissionG = emissionValue["g"].asFloat();
+   float emissionB = emissionValue["b"].asFloat();
+   data.emission = glm::vec3(emissionR, emissionG, emissionB);
+
+   // Shininess
+   check("PhongMaterial", root, "shininess");
+   data.shininess = root["shininess"].asFloat();
 
    return data;
 }
@@ -227,6 +296,8 @@ SPtr<Material> Loader::loadMaterial(SPtr<Scene> scene, const std::string &fileNa
 
    if (className == PhongMaterial::CLASS_NAME) {
       return loadPhongMaterial(scene, fileName);
+   } else if (className == TextureMaterial::CLASS_NAME) {
+      return loadTextureMaterial(scene, fileName);
    }
    
    ASSERT(false, "Invalid class name for Material: %s", className.c_str());
@@ -261,59 +332,9 @@ SPtr<Model> Loader::loadModel(SPtr<Scene> scene, const Json::Value &root) {
 SPtr<PhongMaterial> Loader::loadPhongMaterial(SPtr<Scene> scene, const std::string &fileName) {
    Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<PhongMaterial>(fileName));
 
-   // Shader program
-   check("PhongMaterial", root, "shaderProgram");
-   SPtr<ShaderProgram> shaderProgram = loadShaderProgram(scene, root["shaderProgram"].asString());
+   PhongMaterialData data = loadPhongMaterialData(scene, root);
 
-   // Ambient color
-   check("PhongMaterial", root, "ambient");
-   Json::Value ambientValue = root["ambient"];
-   check("PhongMaterial", ambientValue, "r");
-   check("PhongMaterial", ambientValue, "g");
-   check("PhongMaterial", ambientValue, "b");
-   float ambientR = ambientValue["r"].asFloat();
-   float ambientG = ambientValue["g"].asFloat();
-   float ambientB = ambientValue["b"].asFloat();
-   glm::vec3 ambient(ambientR, ambientG, ambientB);
-
-   // Diffuse color
-   check("PhongMaterial", root, "diffuse");
-   Json::Value diffuseValue = root["diffuse"];
-   check("PhongMaterial", diffuseValue, "r");
-   check("PhongMaterial", diffuseValue, "g");
-   check("PhongMaterial", diffuseValue, "b");
-   float diffuseR = diffuseValue["r"].asFloat();
-   float diffuseG = diffuseValue["g"].asFloat();
-   float diffuseB = diffuseValue["b"].asFloat();
-   glm::vec3 diffuse(diffuseR, diffuseG, diffuseB);
-
-   // Specular color
-   check("PhongMaterial", root, "specular");
-   Json::Value specularValue = root["specular"];
-   check("PhongMaterial", specularValue, "r");
-   check("PhongMaterial", specularValue, "g");
-   check("PhongMaterial", specularValue, "b");
-   float specularR = specularValue["r"].asFloat();
-   float specularG = specularValue["g"].asFloat();
-   float specularB = specularValue["b"].asFloat();
-   glm::vec3 specular(specularR, specularG, specularB);
-
-   // Emission color
-   check("PhongMaterial", root, "emission");
-   Json::Value emissionValue = root["emission"];
-   check("PhongMaterial", emissionValue, "r");
-   check("PhongMaterial", emissionValue, "g");
-   check("PhongMaterial", emissionValue, "b");
-   float emissionR = emissionValue["r"].asFloat();
-   float emissionG = emissionValue["g"].asFloat();
-   float emissionB = emissionValue["b"].asFloat();
-   glm::vec3 emission(emissionR, emissionG, emissionB);
-
-   // Shininess
-   check("PhongMaterial", root, "shininess");
-   float shininess = root["shininess"].asFloat();
-
-   return std::make_shared<PhongMaterial>(fileName, shaderProgram, ambient, diffuse, specular, emission, shininess);
+   return std::make_shared<PhongMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess);
 }
 
 SPtr<Scene> Loader::loadScene(const std::string &fileName) {
@@ -427,4 +448,16 @@ SPtr<ShaderProgram> Loader::loadShaderProgram(SPtr<Scene> scene, const std::stri
    scene->addShaderProgram(shaderProgram);
 
    return shaderProgram;
+}
+
+SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName) {
+   Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<TextureMaterial>(fileName));
+
+   PhongMaterialData data = loadPhongMaterialData(scene, root);
+
+   // Texture
+   check("TextureMaterial", root, "texture");
+   std::string textureFileName = root["texture"].asString();
+
+   return std::make_shared<TextureMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess, textureFileName);
 }

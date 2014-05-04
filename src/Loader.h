@@ -21,12 +21,16 @@ class SceneGraph;
 class SceneObject;
 class Shader;
 class ShaderProgram;
+class TextureMaterial;
 
 namespace Json {
 class Value;
 } // namespace Json
 
+namespace {
+struct PhongMaterialData;
 struct SceneObjectData;
+} // namespace
 
 typedef std::map<std::string, SPtr<Mesh>> MeshMap;
 typedef std::map<std::string, SPtr<Shader>> ShaderMap;
@@ -45,6 +49,7 @@ protected:
 
    Loader();
    void check(const std::string &type, const Json::Value &container, const std::string &key);
+   PhongMaterialData loadPhongMaterialData(SPtr<Scene> scene, const Json::Value &root);
    SceneObjectData loadSceneObjectData(const Json::Value &root);
 
 public:
@@ -71,6 +76,7 @@ public:
    SPtr<SceneObject> loadSceneObject(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Shader> loadShader(const Json::Value &root);
    SPtr<ShaderProgram> loadShaderProgram(SPtr<Scene> scene, const std::string &fileName);
+   SPtr<TextureMaterial> loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName);
 };
 
 #endif

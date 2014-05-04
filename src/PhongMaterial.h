@@ -14,7 +14,14 @@ protected:
 public:
    static const std::string CLASS_NAME;
 
-   PhongMaterial(const std::string &jsonFileName, SPtr<ShaderProgram> shaderProgram, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const glm::vec3 &emission, float shininess);
+   PhongMaterial(const std::string &jsonFileName,
+                 SPtr<ShaderProgram> shaderProgram,
+                 const glm::vec3 &ambient,
+                 const glm::vec3 &diffuse,
+                 const glm::vec3 &specular,
+                 const glm::vec3 &emission,
+                 float shininess);
+
    virtual ~PhongMaterial();
 
    /**
@@ -22,7 +29,7 @@ public:
     */
    virtual Json::Value serialize() const;
 
-   virtual void apply();
+   virtual void apply(SPtr<Mesh> mesh);
 };
 
 #endif

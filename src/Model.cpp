@@ -33,7 +33,7 @@ Json::Value Model::serialize() const {
 
 void Model::draw() {
    // Apply the material properties (and enable the shader)
-   material->apply();
+   material->apply(mesh);
 
    SPtr<ShaderProgram> shaderProgram = material->getShaderProgram();
 

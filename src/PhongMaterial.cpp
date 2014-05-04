@@ -58,7 +58,7 @@ Json::Value PhongMaterial::serialize() const {
    return root;
 }
 
-void PhongMaterial::apply() {
+void PhongMaterial::apply(SPtr<Mesh> mesh) {
    shaderProgram->use();
    glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
    glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));

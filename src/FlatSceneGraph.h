@@ -5,11 +5,11 @@
 
 #include <list>
 
-class SceneNode;
+class PhysicalObject;
 
 class FlatSceneGraph : public SceneGraph {
 private:
-   std::list<SceneNode> nodes;
+   std::list<SPtr<SceneObject>> objects;
 
 public:
    static const std::string CLASS_NAME;

@@ -1,5 +1,4 @@
 #include "FlatSceneGraph.h"
-#include "SceneNode.h"
 #include "SceneObject.h"
 
 const std::string FlatSceneGraph::CLASS_NAME = "FlatSceneGraph";
@@ -16,8 +15,8 @@ Json::Value FlatSceneGraph::serialize() const {
    root["@class"] = CLASS_NAME;
 
    Json::Value objectsVal;
-   for (SceneNode node : nodes) {
-      objectsVal.append(node.getObject()->serialize());
+   for (SPtr<SceneObject> object : objects) {
+      objectsVal.append(object->serialize());
    }
    root["objects"] = objectsVal;
 
@@ -26,21 +25,21 @@ Json::Value FlatSceneGraph::serialize() const {
 
 void FlatSceneGraph::tick(const float dt) {
    // TODO Collision handling
-   for (SceneNode node : nodes) {
-      node.getObject()->tick(dt);
+   for (SPtr<SceneObject> object : objects) {
+      object->tick(dt);
    }
 }
 
 void FlatSceneGraph::add(SPtr<SceneObject> sceneObject) {
    SceneGraph::add(sceneObject);
-   nodes.push_back(SceneNode(sceneObject));
+   objects.push_back(sceneObject);
 }
 
 void FlatSceneGraph::remove(SPtr<SceneObject> sceneObject) {
-   for (std::list<SceneNode>::iterator itr = nodes.begin();
-      itr != nodes.end(); ++itr) {
-      if (sceneObject == itr->getObject()) {
-         nodes.erase(itr);
+   for (std::list<SPtr<SceneObject>>::iterator itr = objects.begin();
+      itr != objects.end(); ++itr) {
+      if (sceneObject == *itr) {
+         objects.erase(itr);
          SceneGraph::remove(sceneObject);
          return;
       }
@@ -48,7 +47,7 @@ void FlatSceneGraph::remove(SPtr<SceneObject> sceneObject) {
 }
 
 void FlatSceneGraph::forEach(void (*function)(SceneObject &obj)) {
-   for (SceneNode node : nodes) {
-      function(*node.getObject());
+   for (SPtr<SceneObject> object : objects) {
+      function(*object);
    }
 }

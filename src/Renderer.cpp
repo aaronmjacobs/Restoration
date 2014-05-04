@@ -4,7 +4,6 @@
 #include "Renderer.h"
 #include "Scene.h"
 #include "SceneGraph.h"
-#include "SceneNode.h"
 #include "ShaderProgram.h"
 
 Renderer::Renderer(int width, int height, float fov)

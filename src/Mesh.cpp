@@ -84,7 +84,12 @@ Mesh::Mesh(const std::string &fileName)
       glGenBuffers(1, &tbo);
       glBindBuffer(GL_ARRAY_BUFFER, tbo);
       glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh->mNumVertices, texCoords, GL_STATIC_DRAW);
+
+      hasTextureBufferObject = true;
       delete[] texCoords;
+   } else {
+      hasTextureBufferObject = false;
+      tbo = 0;
    }
 
    // Unbind
@@ -109,4 +114,9 @@ Json::Value Mesh::serialize() const {
    root["fileName"] = fileName;
 
    return root;
+}
+
+GLuint Mesh::getTBO() {
+   ASSERT(hasTextureBufferObject, "Mesh doesn't have texture coordinates: %s", fileName.c_str());
+   return tbo;
 }

@@ -18,6 +18,11 @@ class Mesh : public Serializable {
    GLuint vbo, nbo, ibo, tbo;
 
    /**
+    * If the mesh has a texture buffer object.
+    */
+   bool hasTextureBufferObject;
+
+   /**
     * The number of vertex indices.
     */
    unsigned int numIndices;
@@ -75,9 +80,7 @@ public:
    /**
     * Gets the texture buffer object handle.
     */
-   GLuint getTBO() {
-     return tbo;
-   }
+   GLuint getTBO();
 
    /**
     * Gets the number of vertex indices.

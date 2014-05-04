@@ -13,9 +13,9 @@
  */
 class Mesh : public Serializable {
    /**
-    * Vertex, normal, and index buffer objects.
+    * Vertex, normal, index, and texture buffer objects.
     */
-   GLuint vbo, nbo, ibo;
+   GLuint vbo, nbo, ibo, tbo;
 
    /**
     * The number of vertex indices.
@@ -70,6 +70,13 @@ public:
     */
    GLuint getIBO() {
      return ibo;
+   }
+
+   /**
+    * Gets the texture buffer object handle.
+    */
+   GLuint getTBO() {
+     return tbo;
    }
 
    /**

@@ -5,6 +5,8 @@
 #include "ShaderProgram.h"
 #include "Types.h"
 
+class Mesh;
+
 class Material : public Saveable {
 protected:
    /**
@@ -34,7 +36,7 @@ public:
    /**
     * Applies the properties of the material to the shader.
     */
-   virtual void apply() = 0; // TODO Send model
+   virtual void apply(SPtr<Mesh> mesh) = 0;
 };
 
 #endif

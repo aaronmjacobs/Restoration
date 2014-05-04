@@ -21,6 +21,7 @@ class SceneGraph;
 class SceneObject;
 class Shader;
 class ShaderProgram;
+class TextureMaterial;
 
 namespace Json {
 class Value;
@@ -71,6 +72,7 @@ public:
    SPtr<SceneObject> loadSceneObject(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Shader> loadShader(const Json::Value &root);
    SPtr<ShaderProgram> loadShaderProgram(SPtr<Scene> scene, const std::string &fileName);
+   SPtr<TextureMaterial> loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName);
 };
 
 #endif

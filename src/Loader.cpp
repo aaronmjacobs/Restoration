@@ -15,6 +15,7 @@
 #include "SceneObject.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+#include "TextureMaterial.h"
 
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
@@ -227,6 +228,8 @@ SPtr<Material> Loader::loadMaterial(SPtr<Scene> scene, const std::string &fileNa
 
    if (className == PhongMaterial::CLASS_NAME) {
       return loadPhongMaterial(scene, fileName);
+   } else if (className == TextureMaterial::CLASS_NAME) {
+      return loadTextureMaterial(scene, fileName);
    }
    
    ASSERT(false, "Invalid class name for Material: %s", className.c_str());
@@ -427,4 +430,66 @@ SPtr<ShaderProgram> Loader::loadShaderProgram(SPtr<Scene> scene, const std::stri
    scene->addShaderProgram(shaderProgram);
 
    return shaderProgram;
+}
+
+SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName) {
+   Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<TextureMaterial>(fileName));
+
+   // Shader program
+   check("TextureMaterial", root, "shaderProgram");
+   SPtr<ShaderProgram> shaderProgram = loadShaderProgram(scene, root["shaderProgram"].asString());
+
+   // Ambient color
+   check("TextureMaterial", root, "ambient");
+   Json::Value ambientValue = root["ambient"];
+   check("TextureMaterial", ambientValue, "r");
+   check("TextureMaterial", ambientValue, "g");
+   check("TextureMaterial", ambientValue, "b");
+   float ambientR = ambientValue["r"].asFloat();
+   float ambientG = ambientValue["g"].asFloat();
+   float ambientB = ambientValue["b"].asFloat();
+   glm::vec3 ambient(ambientR, ambientG, ambientB);
+
+   // Diffuse color
+   check("TextureMaterial", root, "diffuse");
+   Json::Value diffuseValue = root["diffuse"];
+   check("TextureMaterial", diffuseValue, "r");
+   check("TextureMaterial", diffuseValue, "g");
+   check("TextureMaterial", diffuseValue, "b");
+   float diffuseR = diffuseValue["r"].asFloat();
+   float diffuseG = diffuseValue["g"].asFloat();
+   float diffuseB = diffuseValue["b"].asFloat();
+   glm::vec3 diffuse(diffuseR, diffuseG, diffuseB);
+
+   // Specular color
+   check("TextureMaterial", root, "specular");
+   Json::Value specularValue = root["specular"];
+   check("TextureMaterial", specularValue, "r");
+   check("TextureMaterial", specularValue, "g");
+   check("TextureMaterial", specularValue, "b");
+   float specularR = specularValue["r"].asFloat();
+   float specularG = specularValue["g"].asFloat();
+   float specularB = specularValue["b"].asFloat();
+   glm::vec3 specular(specularR, specularG, specularB);
+
+   // Emission color
+   check("TextureMaterial", root, "emission");
+   Json::Value emissionValue = root["emission"];
+   check("TextureMaterial", emissionValue, "r");
+   check("TextureMaterial", emissionValue, "g");
+   check("TextureMaterial", emissionValue, "b");
+   float emissionR = emissionValue["r"].asFloat();
+   float emissionG = emissionValue["g"].asFloat();
+   float emissionB = emissionValue["b"].asFloat();
+   glm::vec3 emission(emissionR, emissionG, emissionB);
+
+   // Shininess
+   check("TextureMaterial", root, "shininess");
+   float shininess = root["shininess"].asFloat();
+
+   // Texture
+   check("TextureMaterial", root, "texture");
+   std::string textureFileName = root["texture"].asString();
+
+   return std::make_shared<TextureMaterial>(fileName, shaderProgram, ambient, diffuse, specular, emission, shininess, textureFileName);
 }

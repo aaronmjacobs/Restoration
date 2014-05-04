@@ -1,5 +1,6 @@
 #include "FancyAssert.h"
 #include "Material.h"
+#include "ShaderProgram.h"
 
 const std::string Material::CLASS_NAME = "Material";
 const std::string Material::FOLDER_NAME = "materials";

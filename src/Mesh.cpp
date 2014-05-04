@@ -73,6 +73,20 @@ Mesh::Mesh(const std::string &fileName)
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * numIndices, faceArray, GL_STATIC_DRAW);
 
+   // Buffer for vertex texture coordinates
+   if (mesh->HasTextureCoords(0)) {
+      float *texCoords = new float[mesh->mNumVertices * 2];
+      for (unsigned int k = 0; k < mesh->mNumVertices; ++k) {
+         texCoords[k * 2] = mesh->mTextureCoords[0][k].x;
+         texCoords[k * 2 + 1] = mesh->mTextureCoords[0][k].y;
+      }
+
+      glGenBuffers(1, &tbo);
+      glBindBuffer(GL_ARRAY_BUFFER, tbo);
+      glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh->mNumVertices, texCoords, GL_STATIC_DRAW);
+      delete[] texCoords;
+   }
+
    // Unbind
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

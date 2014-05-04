@@ -57,7 +57,7 @@
             "@class" : "Geometry",
             "model" : {
                "@class" : "Model",
-               "material" : "testMaterial",
+               "material" : "text",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/cello_and_stand.obj"

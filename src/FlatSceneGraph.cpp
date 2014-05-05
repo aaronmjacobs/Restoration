@@ -1,10 +1,12 @@
 #include "FlatSceneGraph.h"
 #include "PhysicalObject.h"
+#include "Scene.h"
 #include "SceneObject.h"
 
 const std::string FlatSceneGraph::CLASS_NAME = "FlatSceneGraph";
 
-FlatSceneGraph::FlatSceneGraph() {
+FlatSceneGraph::FlatSceneGraph(SPtr<Scene> scene)
+: SceneGraph(scene) {
 }
 
 FlatSceneGraph::~FlatSceneGraph() {

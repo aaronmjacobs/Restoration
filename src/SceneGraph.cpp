@@ -1,11 +1,13 @@
 #include "FancyAssert.h"
 #include "PhysicalObject.h"
+#include "Scene.h"
 #include "SceneGraph.h"
 #include "SceneObject.h"
 
 const std::string SceneGraph::CLASS_NAME = "SceneGraph";
 
-SceneGraph::SceneGraph() {
+SceneGraph::SceneGraph(SPtr<Scene> scene)
+: scene(WPtr<Scene>(scene)) {
 }
 
 SceneGraph::~SceneGraph() {

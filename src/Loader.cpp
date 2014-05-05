@@ -205,7 +205,7 @@ SPtr<Camera> Loader::loadCamera(SPtr<Scene> scene, const Json::Value &root) {
 }
 
 SPtr<FlatSceneGraph> Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
-   SPtr<FlatSceneGraph> graph = std::make_shared<FlatSceneGraph>();
+   SPtr<FlatSceneGraph> graph = std::make_shared<FlatSceneGraph>(scene);
 
    bool cameraLoaded = false;
 

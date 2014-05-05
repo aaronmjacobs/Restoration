@@ -13,7 +13,7 @@ private:
 public:
    static const std::string CLASS_NAME;
 
-   FlatSceneGraph();
+   FlatSceneGraph(SPtr<Scene> scene);
    virtual ~FlatSceneGraph();
 
    /**

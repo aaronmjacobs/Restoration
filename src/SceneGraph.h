@@ -9,6 +9,7 @@
 #include <string>
 
 class PhysicalObject;
+class Scene;
 class SceneObject;
 
 typedef std::map<std::string, WPtr<SceneObject>> ObjectMap;
@@ -20,13 +21,14 @@ private:
    PhysObjectMap physObjectMap;
 
 protected:
+   WPtr<Scene> scene;
    void remove(SPtr<SceneObject> sceneObject);
    void removePhys(SPtr<PhysicalObject> physObject);
 
 public:
    static const std::string CLASS_NAME;
 
-   SceneGraph();
+   SceneGraph(SPtr<Scene> scene);
    virtual ~SceneGraph();
 
    virtual void add(SPtr<SceneObject> sceneObject);

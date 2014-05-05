@@ -10,6 +10,11 @@ protected:
     * (a little bit less than pi/2).
     */
    const float VERT_LOOK_BOUND = 1.5f;
+   
+   /**
+    * The field of view of the projection.
+    */
+   float fov;
 
    /**
     * Front facing vector.
@@ -25,12 +30,24 @@ protected:
     * Updates the front facing vector based off of the phi and theta angles.
     */
    void updateFront();
+   
+   /**
+    * The projection matrix.
+    */
+   glm::mat4 projectionMatrix;
 
 public:
    static const std::string CLASS_NAME;
 
-   Camera(SPtr<Scene> const scene, const std::string &name = "");
+   Camera(SPtr<Scene> const scene, float fov, const std::string &name = "");
    virtual ~Camera();
+   
+   glm::mat4 getProjectionMatrix();
+   
+   /**
+    * Handles window size changes.
+    */
+   void onWindowSizeChange(int width, int height);
 
    /**
     * Serializes the object to JSON.

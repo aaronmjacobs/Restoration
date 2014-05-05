@@ -192,10 +192,12 @@ SPtr<Camera> Loader::loadCamera(SPtr<Scene> scene, const Json::Value &root) {
    // Phi, theta
    check("Camera", root, "phi");
    check("Camera", root, "theta");
+   check("Camera", root, "fov");
    float phi = root["phi"].asFloat();
    float theta = root["theta"].asFloat();
+   float fov = root["fov"].asFloat();
 
-   SPtr<Camera> camera = std::make_shared<Camera>(scene, data.name);
+   SPtr<Camera> camera = std::make_shared<Camera>(scene, fov, data.name);
    camera->setPosition(data.position);
    camera->setOrientation(data.orientation);
    camera->setScale(data.scale);

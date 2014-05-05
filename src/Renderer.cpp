@@ -6,9 +6,7 @@
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
 
-Renderer::Renderer(int width, int height, float fov)
-   : fov(fov) {
-   onWindowSizeChange(width, height);
+Renderer::Renderer() {
 }
 
 Renderer::~Renderer() {
@@ -25,11 +23,6 @@ void Renderer::prepare() {
 
    // Back face culling
    glCullFace(GL_BACK);
-}
-
-void Renderer::onWindowSizeChange(int width, int height) {
-   // Update the projection to match the new window size.
-   projectionMatrix = glm::perspective(fov, (float)width / height, 0.1f, 100.f);
 }
 
 namespace {
@@ -51,7 +44,7 @@ void Renderer::render(Scene &scene) {
    }
 
    // Grab the view matrix
-   viewMatrix = camera->getViewMatrix();
+   glm::mat4 viewMatrix = camera->getViewMatrix();
 
    // Set up the matrices and lights
    const unsigned int numLights = scene.getLights().size();
@@ -67,7 +60,7 @@ void Renderer::render(Scene &scene) {
 
       // Projection matrix
       GLint uProjMatrix = shaderProgram->getUniform("uProjMatrix");
-      glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+      glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(camera->getProjectionMatrix()));
 
       // View matrix
       GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");

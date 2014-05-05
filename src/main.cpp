@@ -47,7 +47,7 @@ const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
 SPtr<Scene> scene;
-Renderer renderer(WIDTH, HEIGHT, FOV);
+Renderer renderer;
 SPtr<Light> light;
 
 void testGlError(const char *message) {
@@ -82,7 +82,10 @@ void focusCallback(GLFWwindow* window, GLint focused) {
 }
 
 void windowSizeCallback(GLFWwindow* window, int width, int height) {
-   renderer.onWindowSizeChange(width, height);
+   SPtr<Camera> camera = scene->getCamera().lock();
+   if (camera) {
+      camera->onWindowSizeChange(width, height);
+   }
 }
 
 void addRemoveTest() {
@@ -208,6 +211,9 @@ int main(int argc, char *argv[]) {
    load();
 
    physTest();
+   
+   // TODO
+   windowSizeCallback(NULL, WIDTH, HEIGHT);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 

@@ -16,27 +16,11 @@ protected:
     */
    MatrixStack modelMatrixStack;
 
-   /**
-    * The view matrix.
-    */
-   glm::mat4 viewMatrix;
-
-   /**
-    * The projection matrix.
-    */
-   glm::mat4 projectionMatrix;
-
-   /**
-    * The field of view of the projection.
-    */
-   float fov;
-
 public:
    /**
-    * Constructs a renderer for a window with the given width and height, and
-    * the desired field of view (in radians).
+    * Constructs a renderer for a window with the given width and height.
     */
-   Renderer(int width, int height, float fov);
+   Renderer();
 
    /**
     * Does cleanup.
@@ -47,11 +31,6 @@ public:
     * Prepares the renderer for use, making any necessary OpenGL calls.
     */
    void prepare();
-
-   /**
-    * Handles window size changes.
-    */
-   void onWindowSizeChange(int width, int height);
 
    /**
     * Renders the given scene.

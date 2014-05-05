@@ -2,14 +2,23 @@
 
 const std::string Camera::CLASS_NAME = "Camera";
 
-Camera::Camera(SPtr<Scene> const scene, const std::string &name)
-   : SceneObject(scene, name) {
+Camera::Camera(SPtr<Scene> const scene, float fov, const std::string &name)
+   : SceneObject(scene, name), fov(fov) {
    phi = 0.0f;
    theta = -glm::half_pi<float>();
    updateFront();
 }
 
 Camera::~Camera() {
+}
+
+glm::mat4 Camera::getProjectionMatrix() {
+   return projectionMatrix;
+}
+
+void Camera::onWindowSizeChange(int width, int height) {
+   // Update the projection to match the new window size.
+   projectionMatrix = glm::perspective(fov, (float)width / height, 0.1f, 100.f);
 }
 
 Json::Value Camera::serialize() const {
@@ -19,6 +28,7 @@ Json::Value Camera::serialize() const {
 
    root["phi"] = phi;
    root["theta"] = theta;
+   root["fov"] = fov;
 
    return root;
 }

@@ -9,7 +9,7 @@ const std::string Scene::CLASS_NAME = "Scene";
 const std::string Scene::FOLDER_NAME = "scenes";
 
 Scene::Scene(const std::string &jsonFileName)
-   : Saveable(jsonFileName) {
+   : Saveable(jsonFileName), collisionHandler(*this) {
 }
 
 Scene::~Scene() {
@@ -52,6 +52,10 @@ const std::list<WPtr<Light>>& Scene::getLights() {
 
 const std::list<WPtr<ShaderProgram>>& Scene::getShaderPrograms() {
    return shaderPrograms;
+}
+
+CollisionHandler& Scene::getCollisionHanlder() {
+   return collisionHandler;
 }
 
 void Scene::tick(const float dt) {

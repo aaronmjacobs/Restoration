@@ -16,6 +16,11 @@ public:
    glm::vec3 getAcceleration();
    void setVelocity(const glm::vec3 &vel);
    void setAcceleration(const glm::vec3 &acc);
+
+   virtual void tick(const float dt);
+
+   virtual void collideWith(PhysicalObject &other);
+   virtual void collideWith(MovableObject &other);
 };
 
 #endif

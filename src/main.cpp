@@ -29,6 +29,8 @@
 #include "FirstPersonCameraController.h"
 #include "IOUtils.h"
 
+#include "MovableObject.h"
+#include "PhysicalObject.h"
 #include "Scenery.h"
 
 // ***************************** Temporary
@@ -100,8 +102,9 @@ void addRemoveTest() {
    for (int i = 0; i < 500000; ++i) {
       WPtr<SceneObject> wObj = graph->find(derp + std::to_string(i));
       SPtr<SceneObject> obj = wObj.lock();
-      graph->remove(obj);
+      obj->markForRemoval();
    }
+   scene->tick(0.016f);
 }
 
 void load() {
@@ -113,7 +116,7 @@ void load() {
    scene->addInputListener(cameraController);
 }
 
-void test() {
+/*void test() {
    SPtr<SceneGraph> graph = scene->getSceneGraph();
 
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
@@ -139,6 +142,25 @@ void test() {
    graph->add(light);
 
    //IOUtils::save(*scene, "testScene2");
+}*/
+
+void physTest() {
+   SPtr<SceneGraph> graph = scene->getSceneGraph();
+
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
+
+   SPtr<Model> model = std::make_shared<Model>(material, mesh);
+
+   SPtr<MovableObject> physOne = std::make_shared<MovableObject>(scene, model, "one");
+   SPtr<MovableObject> physTwo = std::make_shared<MovableObject>(scene, model, "two");
+
+   physOne->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
+   physOne->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
+
+   graph->addPhys(physOne);
+   graph->addPhys(physTwo);
 }
 
 } // namespace
@@ -184,6 +206,8 @@ int main(int argc, char *argv[]) {
 
    // Load the scene
    load();
+
+   physTest();
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 

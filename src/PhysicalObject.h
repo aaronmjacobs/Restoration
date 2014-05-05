@@ -4,6 +4,8 @@
 #include "BoundingBox.h"
 #include "Geometry.h"
 
+class MovableObject;
+
 class PhysicalObject : public Geometry {
 protected:
    BoundingBox bounds;
@@ -16,6 +18,9 @@ public:
    bool collidesWith(const PhysicalObject &other) const;
    float height() const;
    float width() const;
+
+   virtual void collideWith(PhysicalObject &other) = 0;
+   virtual void collideWith(MovableObject &other) = 0;
 };
 
 #endif

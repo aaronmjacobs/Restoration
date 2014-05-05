@@ -4,7 +4,7 @@
 const std::string SceneObject::CLASS_NAME = "SceneObject";
 
 SceneObject::SceneObject(SPtr<Scene> const scene, const std::string &name) :
-   scene(WPtr<Scene>(scene)), name(name) {
+   scene(WPtr<Scene>(scene)), name(name), markedForRemoval(false) {
    scale = glm::vec3(1.0f);
 }
 
@@ -77,4 +77,12 @@ void SceneObject::rotateBy(const glm::quat &rot) {
 
 void SceneObject::scaleBy(const glm::vec3 &sc) {
    scale *= sc;
+}
+
+bool SceneObject::shouldBeRemoved() {
+   return markedForRemoval;
+}
+
+void SceneObject::markForRemoval() {
+   markedForRemoval = true;
 }

@@ -17,6 +17,7 @@ protected:
    glm::vec3 position;
    glm::quat orientation;
    glm::vec3 scale;
+   bool markedForRemoval;
 
 public:
    static const std::string CLASS_NAME;
@@ -53,6 +54,10 @@ public:
    void rotateBy(const glm::quat &rot);
 
    void scaleBy(const glm::vec3 &scale);
+
+   bool shouldBeRemoved();
+
+   void markForRemoval();
 
    virtual void draw() = 0;
 };

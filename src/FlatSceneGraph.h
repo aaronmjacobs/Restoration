@@ -5,11 +5,10 @@
 
 #include <list>
 
-class PhysicalObject;
-
 class FlatSceneGraph : public SceneGraph {
 private:
    std::list<SPtr<SceneObject>> objects;
+   std::list<SPtr<PhysicalObject>> physObjects;
 
 public:
    static const std::string CLASS_NAME;
@@ -28,8 +27,9 @@ public:
    virtual void tick(const float dt);
 
    virtual void add(SPtr<SceneObject> sceneObject);
-   virtual void remove(SPtr<SceneObject> sceneObject);
+   virtual void addPhys(SPtr<PhysicalObject> physObject);
    virtual void forEach(void (*function)(SceneObject &obj));
+   virtual void forEachPhys(void (*function)(PhysicalObject &obj));
 };
 
 #endif

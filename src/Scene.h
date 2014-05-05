@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "CollisionHandler.h"
 #include "InputListener.h"
 #include "Saveable.h"
 #include "TickListener.h"
@@ -19,6 +20,7 @@ protected:
    WPtr<Camera> camera;
    std::list<WPtr<Light>> lights;
    std::list<WPtr<ShaderProgram>> shaderPrograms;
+   CollisionHandler collisionHandler;
 
    /**
     * All items listening for user input.
@@ -53,6 +55,8 @@ public:
    const std::list<WPtr<Light>>& getLights();
 
    const std::list<WPtr<ShaderProgram>>& getShaderPrograms();
+
+   CollisionHandler& getCollisionHanlder();
 
    void tick(const float dt);
 

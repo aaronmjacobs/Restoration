@@ -6,14 +6,22 @@
 #include "Types.h"
 
 #include <map>
-#include <list>
 #include <string>
 
+class PhysicalObject;
 class SceneObject;
+
+typedef std::map<std::string, WPtr<SceneObject>> ObjectMap;
+typedef std::map<std::string, WPtr<PhysicalObject>> PhysObjectMap;
 
 class SceneGraph : public Serializable, public TickListener {
 private:
-   std::map<std::string, WPtr<SceneObject>> objectMap;
+   ObjectMap objectMap;
+   PhysObjectMap physObjectMap;
+
+protected:
+   void remove(SPtr<SceneObject> sceneObject);
+   void removePhys(SPtr<PhysicalObject> physObject);
 
 public:
    static const std::string CLASS_NAME;
@@ -22,9 +30,11 @@ public:
    virtual ~SceneGraph();
 
    virtual void add(SPtr<SceneObject> sceneObject);
-   virtual void remove(SPtr<SceneObject> sceneObject);
+   virtual void addPhys(SPtr<PhysicalObject> physObject);
    WPtr<SceneObject> find(const std::string &name);
+   WPtr<PhysicalObject> findPhys(const std::string &name);
    virtual void forEach(void (*function)(SceneObject &obj)) = 0;
+   virtual void forEachPhys(void (*function)(PhysicalObject &obj)) = 0;
 };
 
 #endif

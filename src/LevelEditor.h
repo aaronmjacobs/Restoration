@@ -2,11 +2,14 @@
 #define LVLEDIT_H
 
 #include "InputListener.h"
+#include "Types.h"
 
-#include <memory>
+class Scene;
 
 class LevelEditor : public InputListener {
 private:
+   WPtr<Scene> scene;
+
 	//Transformation Modes
 	bool transMode = true, rotMode = false, scaleMode = false, createMode = false;
 	//Three types of areas to build on
@@ -20,7 +23,7 @@ public:
 	/**
 	 * Makes a level editor with the given string and json file
 	 */
-	LevelEditor(Scene *scene);
+	LevelEditor(SPtr<Scene> scene);
 
 	/**
 	 * Cleanup

@@ -1,15 +1,14 @@
+#include "GLIncludes.h"
 #include "LevelEditor.h"
-#include "../engine/Scene.h"
-#include "../serialization/Serializer.h"
-#include <iostream>
+#include "Scene.h"
 
 /*
 *Todo
 *Change Listeners
 *Create LE scene
 */
-LevelEditor::LevelEditor(Scene *scene, Audio audio) {
-
+LevelEditor::LevelEditor(SPtr<Scene> scene)
+: scene(scene) {
 }
 
 /*
@@ -18,7 +17,6 @@ LevelEditor::LevelEditor(Scene *scene, Audio audio) {
  *Delete Stuff
  */
 LevelEditor::~LevelEditor() {
-
 }
 
 /*
@@ -133,7 +131,7 @@ void LevelEditor::onMouseMotionEvent(double xPos, double yPos) {
  * add stuff to them depending on mode
  */
 void LevelEditor::transform(double x, double y) {
-	if (!levelOn) {
+	if (!levelOn()) {
 		return;
 	}
 	else if (transMode) {

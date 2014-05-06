@@ -212,7 +212,7 @@ int main(int argc, char *argv[]) {
 
    physTest();
    
-   // TODO
+   // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, WIDTH, HEIGHT);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;

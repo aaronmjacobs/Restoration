@@ -28,7 +28,7 @@ public:
 
    virtual void add(SPtr<SceneObject> sceneObject);
    virtual void addPhys(SPtr<PhysicalObject> physObject);
-   virtual void forEach(void (*function)(SceneObject &obj));
+   virtual void forEach(void (*function)(SceneObject &obj, unsigned int renderState), unsigned int renderState);
    virtual void forEachPhys(void (*function)(PhysicalObject &obj));
 };
 

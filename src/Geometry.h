@@ -16,6 +16,8 @@ protected:
     */
    SPtr<Model> model;
 
+   unsigned int renderState;
+
 public:
    static const std::string CLASS_NAME;
 
@@ -30,6 +32,41 @@ public:
    virtual ~Geometry();
 
    /**
+   * Enable the stencil renderstate.
+   */
+   void enableStencil();
+
+   /**
+   * Disable the stencil renderstate.
+   */
+   void disableStencil();
+
+   /**
+   * Enable the darkworld renderstate.
+   */
+   void enableDarkWorld();
+
+   /**
+   * Disable the darkworld renderstate.
+   */
+   void disableDarkWorld();
+
+   /**
+   * Enable the lightworld renderstate.
+   */
+   void enableLightWorld();
+
+   /**
+   * Disable the lightworld renderstate.
+   */
+   void disableLightWorld();
+
+   /**
+   * Check if stencil is used for this geometry
+   */
+   bool getRenderState();
+
+   /**
     * Serializes the object to JSON.
     */
    virtual Json::Value serialize() const;
@@ -42,8 +79,8 @@ public:
    /**
     * Draws the geometry in the scene.
     */
-   virtual void draw();
-
+   virtual void draw(unsigned int renderState);
+   
    /**
     * Steps |dt| seconds through time.
     */

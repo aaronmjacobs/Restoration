@@ -1,0 +1,8 @@
+#ifndef RENDERSTATE_H
+#define RENDERSTATE_H
+
+#define STENCIL_STATE 0x01
+#define LIGHTWORLD_STATE 0x02
+#define DARKWORLD_STATE 0x04
+
+#endif

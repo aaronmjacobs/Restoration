@@ -81,9 +81,9 @@ void FlatSceneGraph::addPhys(SPtr<PhysicalObject> physObject) {
    add(physObject);
 }
 
-void FlatSceneGraph::forEach(void (*function)(SceneObject &obj)) {
+void FlatSceneGraph::forEach(void(*function)(SceneObject &obj, unsigned int renderState), unsigned int renderState) {
    for (SPtr<SceneObject> object : objects) {
-      function(*object);
+      function(*object, renderState);
    }
 }
 

@@ -33,6 +33,11 @@ public:
    void prepare();
 
    /**
+   * Setup the stencil
+   */
+   void setupStencil();
+
+   /**
     * Renders the given scene.
     */
    void render(Scene &scene);

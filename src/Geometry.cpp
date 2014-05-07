@@ -12,8 +12,37 @@ Geometry::Geometry(SPtr<Scene> scene, SPtr<Model> model, const std::string &name
    this->model = model;
 }
 
+void Geometry::enableStencil(){
+   renderState |= STENCIL_STATE;
+}
+
+void Geometry::disableStencil(){
+   renderState &= ~(STENCIL_STATE);
+}
+
+void Geometry::enableDarkWorld(){
+   renderState |= DARKWORLD_STATE;
+}
+
+void Geometry::disableDarkWorld(){
+   renderState &= ~(DARKWORLD_STATE);
+}
+
+void Geometry::enableLightWorld(){
+   renderState |= LIGHTWORLD_STATE;
+}
+
+void Geometry::disableLightWorld(){
+   renderState &= ~(LIGHTWORLD_STATE);
+}
+
+bool Geometry::getRenderState(){
+   return renderState;
+}
+
 Geometry::~Geometry() {
 }
+
 
 Json::Value Geometry::serialize() const {
    Json::Value root = SceneObject::serialize();
@@ -31,7 +60,7 @@ SPtr<Model> Geometry::getModel() {
    return model;
 }
 
-void Geometry::draw() {
+void Geometry::draw(unsigned int renderState) {
    // Set the shader program, and grab the matrix uniforms
    SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
    shaderProgram->use();
@@ -53,7 +82,7 @@ void Geometry::draw() {
    glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
    // Draw the model
-   model->draw();
+   model->draw(renderState);
 }
 
 void Geometry::tick(const float dt) {

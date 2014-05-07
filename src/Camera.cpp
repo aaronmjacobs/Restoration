@@ -87,7 +87,7 @@ glm::mat4 Camera::getViewMatrix() {
                      glm::vec3(0.0, 1.0, 0.0)); // Up vector
 }
 
-void Camera::draw() {
+void Camera::draw(unsigned int renderState) {
 }
 
 void Camera::tick(const float dt) {

@@ -40,6 +40,9 @@ protected:
    /* width and height of the texture */
    int textureWidth, textureHeight;
 
+   /* original viewscreen width and height */
+   int originalWidth, originalHeight;
+
 private:
 
 

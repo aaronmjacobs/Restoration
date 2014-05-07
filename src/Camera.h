@@ -92,7 +92,7 @@ public:
     */
    glm::mat4 getViewMatrix();
 
-   virtual void draw();
+   virtual void draw(unsigned int renderState);
 
    /**
     * Steps |dt| seconds through time.

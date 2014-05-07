@@ -2,6 +2,7 @@
 #define SCENE_OBJECT_H
 
 #include "GLMIncludes.h"
+#include "RenderState.h"
 #include "Serializable.h"
 #include "TickListener.h"
 #include "Types.h"
@@ -59,7 +60,7 @@ public:
 
    void markForRemoval();
 
-   virtual void draw() = 0;
+   virtual void draw(unsigned int renderState) = 0;
 };
 
 #endif

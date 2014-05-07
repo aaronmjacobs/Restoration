@@ -1,7 +1,9 @@
 #include "Camera.h"
+#include "FrameBuffer.h"
 #include "GLIncludes.h"
 #include "Light.h"
 #include "Renderer.h"
+#include "RenderState.h"
 #include "Scene.h"
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
@@ -28,11 +30,23 @@ void Renderer::prepare() {
 namespace {
 
 // Function that draws a SceneObject
-void draw(SceneObject &obj) {
-   obj.draw();
+void draw(SceneObject &obj, unsigned int renderState) {
+   obj.draw(renderState);
 }
 
 } // namespace
+
+void Renderer::setupStencil(){
+   // disable color and depth buffers
+   glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+   glDepthMask(GL_FALSE);
+
+   glStencilFunc(GL_NEVER, 1, 0xFF); // never pass stencil test
+   glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);  // replace stencil buffer values to ref=1
+   glStencilMask(0xFF); // stencil buffer free to write
+   glClear(GL_STENCIL_BUFFER_BIT);  // first clear stencil buffer by writing default stencil value (0) to all of stencil buffer.
+   //now draw stencil shape at stencil shape pixel locations in stencil buffer replace stencil buffer values to ref = 1
+}
 
 void Renderer::render(Scene &scene) {
    // Clear the render buffer
@@ -86,7 +100,24 @@ void Renderer::render(Scene &scene) {
          ++lightIndex;
       }
    }
+   // Render each item in the scene (to stencil buffer)
+   setupStencil();
+   scene.getSceneGraph()->forEach(draw, STENCIL_STATE);
+   // enable color and depth buffers.
+   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+   glDepthMask(GL_TRUE);
 
-   // Render each item in the scene
-   scene.getSceneGraph()->forEach(draw);
+   // no more modifying of stencil buffer on stencil and depth pass.
+   glStencilMask(0x00);
+   // can also be achieved by glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+   // stencil test: only pass stencil test at stencilValue == 1 (Assuming depth test would pass.) 
+   // and write actual content to depth and color buffer only at stencil shape locations.
+   glStencilFunc(GL_EQUAL, 1, 0xFF);
+
+   // Render each item in the scene (to frame buffer object)
+   scene.getSceneGraph()->forEach(draw, LIGHTWORLD_STATE);
+
+   // Render each item in the scene (to actual window)
+   //scene.getSceneGraph()->forEach(draw);
 }

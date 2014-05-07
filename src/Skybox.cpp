@@ -88,7 +88,6 @@ Skybox::Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::st
 void Skybox::renderSkybox()
 {
    glDisable(GL_DEPTH_TEST);
-   // glDisable(GL_LIGHTING); Deprecated enum - should just be handled now by shader
 
    shaderProgram->use();
 

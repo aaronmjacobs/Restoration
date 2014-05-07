@@ -24,6 +24,12 @@ public:
    Material(const std::string &jsonFileName, SPtr<ShaderProgram> shaderProgram);
 
    /**
+   * Constructs a material with the given shader program. Used for creating material without json file.
+   * EX: Render to texture via Frame Buffer Object.
+   */
+   Material(SPtr<ShaderProgram> shaderProgram);
+
+   /**
     * Does cleanup.
     */
    virtual ~Material();

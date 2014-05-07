@@ -11,6 +11,11 @@ Material::Material(const std::string &jsonFileName, SPtr<ShaderProgram> shaderPr
    this->shaderProgram = shaderProgram;
 }
 
+Material::Material(SPtr<ShaderProgram> shaderProgram) {
+   ASSERT(shaderProgram, "Null shader program");
+   this->shaderProgram = shaderProgram;
+}
+
 Material::~Material() {
 }
 

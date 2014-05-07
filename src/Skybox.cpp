@@ -9,7 +9,7 @@ struct skyImgInfo{
    unsigned char *pixels;
 };
 
-Skybox::Skybox(ShaderProgramRef shaderProgram, MeshRef mesh, const std::string xpos, const std::string xneg, const std::string ypos, const std::string yneg,
+Skybox::Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::string xpos, const std::string xneg, const std::string ypos, const std::string yneg,
    const std::string zpos, const std::string zneg, const std::string skydir)
    :shaderProgram(shaderProgram), mesh(mesh) {
    

@@ -12,6 +12,15 @@ PhongMaterial::PhongMaterial(const std::string &jsonFileName, SPtr<ShaderProgram
    uShininess = shaderProgram->getUniform("uMaterial.shininess");
 }
 
+PhongMaterial::PhongMaterial(SPtr<ShaderProgram> shaderProgram, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const glm::vec3 &emission, float shininess)
+: Material(shaderProgram), ambient(ambient), diffuse(diffuse), specular(specular), emission(emission), shininess(shininess) {
+   uAmbient = shaderProgram->getUniform("uMaterial.ambient");
+   uDiffuse = shaderProgram->getUniform("uMaterial.diffuse");
+   uSpecular = shaderProgram->getUniform("uMaterial.specular");
+   uEmission = shaderProgram->getUniform("uMaterial.emission");
+   uShininess = shaderProgram->getUniform("uMaterial.shininess");
+}
+
 PhongMaterial::~PhongMaterial() {
 }
 

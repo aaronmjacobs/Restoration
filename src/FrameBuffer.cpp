@@ -18,6 +18,7 @@ FrameBuffer::~FrameBuffer(){
 }
 
 void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight){
+   // Get and save the texture size so that we know how big it is when we apply it as a texture.
    this->textureWidth = textureWidth;
    this->textureHeight = textureHeight;
 
@@ -58,6 +59,12 @@ void FrameBuffer::checkFBOStatus(){
 }
 
 void FrameBuffer::applyFBO(){
+   // Get the current viewport size so that when we change it to what the texture
+   // size is, we can change it back.
+   GLint m_viewport[4];
+   glGetIntegerv(GL_VIEWPORT, m_viewport);
+
+   // Bind the Framebuffer so that we say, "Render to the frame buffer, NOT the actual window.
    glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
    glViewport(0, 0, (GLsizei)textureWidth, (GLsizei)textureHeight);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -67,6 +74,5 @@ void FrameBuffer::applyFBO(){
    glEnable(GL_TEXTURE_2D);
    glActiveTexture(GL_TEXTURE1);
    glBindTexture(GL_TEXTURE_2D, fBTexture);
-
 
 }

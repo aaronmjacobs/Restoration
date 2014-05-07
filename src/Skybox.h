@@ -13,7 +13,7 @@ typedef std::shared_ptr<Skybox> SkyboxRef;
 class Skybox
 {
 public:
-   Skybox(ShaderProgramRef shaderProgram, MeshRef mesh, const std::string xpos, const std::string xneg, const std::string ypos,
+   Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::string xpos, const std::string xneg, const std::string ypos,
       const std::string yneg, const std::string zpos, const std::string zneg, const std::string skydir);
 
    void renderSkybox();
@@ -27,12 +27,12 @@ protected:
    /**
    * Shader program with which to draw.
    */
-   ShaderProgramRef shaderProgram;
+   SPtr<ShaderProgram> shaderProgram;
 
    /**
    * The mesh with which to draw.
    */
-   MeshRef mesh;
+   SPtr<Mesh> mesh;
 
 
 private:

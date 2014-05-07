@@ -22,6 +22,11 @@ public:
    /* Apply the FBO to the scene */
    void applyFBO();
 
+   /* Return the texture id of the FrameBuffer */
+   GLuint getTextureID() const {
+      return fBTexture;
+   }
+
 protected:
    /* Create object to capture frame */
    GLuint fBObject;

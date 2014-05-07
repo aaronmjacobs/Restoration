@@ -2,19 +2,21 @@
 #define SKYBOX_H
 
 #include "GLIncludes.h"
-#include "ShaderProgram.h"
-#include "Mesh.h"
-#include <memory>
+
 #include <string>
 
-class Skybox;
-typedef std::shared_ptr<Skybox> SkyboxRef;
+class Mesh;
+class ShaderProgram;
 
-class Skybox
-{
+class Skybox {
 public:
+<<<<<<< HEAD
    Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::string xpos, const std::string xneg, const std::string ypos,
       const std::string yneg, const std::string zpos, const std::string zneg, const std::string skydir);
+=======
+   Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::string &xpos, const std::string &xneg, const std::string &ypos,
+      const std::string &yneg, const std::string &zpos, const std::string &zneg, const std::string &skydir);
+>>>>>>> 768e00b4b80780e2205f420839347b9e8abc12a7
 
    void renderSkybox();
 

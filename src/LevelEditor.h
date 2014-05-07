@@ -17,7 +17,7 @@ private:
 
 	bool saved = true, on = false;
 
-	double prevPoint[2] = { 0.0, 0.0 };
+	double prevPoint[2];
 
 public:
 	/**

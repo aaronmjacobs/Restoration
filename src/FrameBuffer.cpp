@@ -67,8 +67,5 @@ void FrameBuffer::applyFBO(){
    glEnable(GL_TEXTURE_2D);
    glActiveTexture(GL_TEXTURE1);
    glBindTexture(GL_TEXTURE_2D, fBTexture);
-<<<<<<< HEAD
 
-=======
->>>>>>> 768e00b4b80780e2205f420839347b9e8abc12a7
 }

@@ -1,6 +1,8 @@
-#include "Skybox.h"
-#include "lib/stb_image.h"
 #include "FancyAssert.h"
+#include "lib/stb_image.h"
+#include "Mesh.h"
+#include "ShaderProgram.h"
+#include "Skybox.h"
 
 struct skyImgInfo{
    int w;
@@ -9,8 +11,8 @@ struct skyImgInfo{
    unsigned char *pixels;
 };
 
-Skybox::Skybox(ShaderProgramRef shaderProgram, MeshRef mesh, const std::string xpos, const std::string xneg, const std::string ypos, const std::string yneg,
-   const std::string zpos, const std::string zneg, const std::string skydir)
+Skybox::Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::string &xpos, const std::string &xneg, const std::string &ypos, const std::string &yneg,
+   const std::string &zpos, const std::string &zneg, const std::string &skydir)
    :shaderProgram(shaderProgram), mesh(mesh) {
    
    uSkybox = shaderProgram->getUniform("uSkybox");
@@ -86,7 +88,7 @@ Skybox::Skybox(ShaderProgramRef shaderProgram, MeshRef mesh, const std::string x
 void Skybox::renderSkybox()
 {
    glDisable(GL_DEPTH_TEST);
-   glDisable(GL_LIGHTING);
+   // glDisable(GL_LIGHTING); Deprecated enum - should just be handled now by shader
 
    shaderProgram->use();
 

@@ -6,6 +6,7 @@ const std::string SceneObject::CLASS_NAME = "SceneObject";
 SceneObject::SceneObject(SPtr<Scene> const scene, const std::string &name) :
    scene(WPtr<Scene>(scene)), name(name), markedForRemoval(false) {
    scale = glm::vec3(1.0f);
+   renderState = LIGHTWORLD_STATE | DARKWORLD_STATE;
 }
 
 SceneObject::~SceneObject() {
@@ -39,6 +40,9 @@ Json::Value SceneObject::serialize() const {
    scaleValue["y"] = scale.y;
    scaleValue["z"] = scale.z;
    root["scale"] = scaleValue;
+
+   // Render state
+   root["renderState"] = renderState;
 
    return root;
 }
@@ -77,6 +81,10 @@ void SceneObject::rotateBy(const glm::quat &rot) {
 
 void SceneObject::scaleBy(const glm::vec3 &sc) {
    scale *= sc;
+}
+
+void SceneObject::setRenderState(unsigned int state) {
+   renderState = state;
 }
 
 void SceneObject::enableRenderState(unsigned int state) {

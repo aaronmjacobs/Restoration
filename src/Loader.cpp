@@ -34,6 +34,7 @@ struct SceneObjectData {
    glm::vec3 position;
    glm::quat orientation;
    glm::vec3 scale;
+   unsigned int renderState;
 };
 
 } // namespace
@@ -105,6 +106,10 @@ SceneObjectData Loader::loadSceneObjectData(const Json::Value &root) {
    data.scale.x = scaleVal["x"].asFloat();
    data.scale.y = scaleVal["y"].asFloat();
    data.scale.z = scaleVal["z"].asFloat();
+
+   // Render state
+   check("SceneObjectData", root, "renderState");
+   data.renderState = root["renderState"].asUInt();
 
    return data;
 }
@@ -202,6 +207,7 @@ SPtr<Camera> Loader::loadCamera(SPtr<Scene> scene, const Json::Value &root) {
    camera->setOrientation(data.orientation);
    camera->setScale(data.scale);
    camera->setRotation(phi, theta);
+   camera->setRenderState(data.renderState);
 
    return camera;
 }
@@ -256,6 +262,7 @@ SPtr<Geometry> Loader::loadGeometry(SPtr<Scene> scene, const Json::Value &root) 
    geometry->setPosition(data.position);
    geometry->setOrientation(data.orientation);
    geometry->setScale(data.scale);
+   geometry->setRenderState(data.renderState);
 
    return geometry;
 }
@@ -287,6 +294,7 @@ SPtr<Light> Loader::loadLight(SPtr<Scene> scene, const Json::Value &root) {
    light->setPosition(data.position);
    light->setOrientation(data.orientation);
    light->setScale(data.scale);
+   light->setRenderState(data.renderState);
 
    return light;
 }

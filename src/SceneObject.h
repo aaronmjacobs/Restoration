@@ -57,6 +57,8 @@ public:
 
    void scaleBy(const glm::vec3 &scale);
 
+   void setRenderState(unsigned int state);
+
    void enableRenderState(unsigned int state);
 
    void disableRenderState(unsigned int state);

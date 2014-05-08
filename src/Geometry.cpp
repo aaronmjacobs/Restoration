@@ -10,7 +10,6 @@ Geometry::Geometry(SPtr<Scene> scene, SPtr<Model> model, const std::string &name
    : SceneObject(scene, name) {
    ASSERT(model, "Model is null");
    this->model = model;
-   this->renderState = STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE;
 }
 
 Geometry::~Geometry() {

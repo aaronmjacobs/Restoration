@@ -64,7 +64,7 @@ public:
    /**
    * Check if stencil is used for this geometry
    */
-   bool getRenderState();
+   unsigned int getRenderState();
 
    /**
     * Serializes the object to JSON.

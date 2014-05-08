@@ -4,6 +4,7 @@
 
 PhysicalObject::PhysicalObject(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
    : Geometry(scene, model, name), bounds(*model->getMesh()->getBounds()) {
+   this->renderState = LIGHTWORLD_STATE;
 }
 
 PhysicalObject::~PhysicalObject() {

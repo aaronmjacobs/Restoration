@@ -37,6 +37,7 @@ void draw(SceneObject &obj, unsigned int renderState) {
 } // namespace
 
 void Renderer::setupStencil(){
+   glEnable(GL_STENCIL_TEST);
    // disable color and depth buffers
    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
    glDepthMask(GL_FALSE);

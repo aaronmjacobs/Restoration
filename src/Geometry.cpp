@@ -10,6 +10,7 @@ Geometry::Geometry(SPtr<Scene> scene, SPtr<Model> model, const std::string &name
    : SceneObject(scene, name) {
    ASSERT(model, "Model is null");
    this->model = model;
+   this->renderState = STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE;
 }
 
 void Geometry::enableStencil(){
@@ -36,7 +37,7 @@ void Geometry::disableLightWorld(){
    renderState &= ~(LIGHTWORLD_STATE);
 }
 
-bool Geometry::getRenderState(){
+unsigned int Geometry::getRenderState(){
    return renderState;
 }
 
@@ -82,7 +83,9 @@ void Geometry::draw(unsigned int renderState) {
    glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
    // Draw the model
-   model->draw(renderState);
+   if (this->renderState & renderState){
+      model->draw(renderState);
+   }
 }
 
 void Geometry::tick(const float dt) {

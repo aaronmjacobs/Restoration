@@ -127,7 +127,8 @@ void Renderer::render(Scene &scene) {
          ++lightIndex;
       }
    }
-   // Render each item in the scene (to stencil buffer)
+
+   // Render items to the stencil buffer
    prepareStencilDraw();
    scene.getSceneGraph()->forEach(drawStencil);
 

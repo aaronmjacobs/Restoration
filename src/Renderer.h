@@ -1,6 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "FrameBuffer.h"
 #include "GLMIncludes.h"
 #include "MatrixStack.h"
 
@@ -30,6 +31,8 @@ protected:
     * Prepare to draw the dark world (with no stencil)
     */
    void prepareDarkDraw();
+
+   FrameBuffer fb;
 
 public:
    /**

@@ -51,7 +51,7 @@ void FrameBuffer::checkFBOStatus(){
    ASSERT(status == GL_FRAMEBUFFER_COMPLETE, "Could not setup FrameBufferObject. Error #%d\n", status);
 }
 
-void FrameBuffer::applyFBO(){
+void FrameBuffer::applyRenderToTextureFBO(){
    // Get the current viewport size so that when we change it to what the texture
    // size is, we can change it back.
    GLint m_viewport[4];
@@ -72,4 +72,8 @@ void FrameBuffer::applyFBO(){
    glActiveTexture(GL_TEXTURE1);
    glBindTexture(GL_TEXTURE_2D, fBTexture);
 
+}
+
+void FrameBuffer::applyFBO(){
+   glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
 }

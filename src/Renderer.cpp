@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include "FrameBuffer.h"
 #include "GLIncludes.h"
 #include "Light.h"
 #include "Renderer.h"
@@ -25,6 +24,10 @@ void Renderer::prepare() {
 
    // Back face culling
    glCullFace(GL_BACK);
+
+
+   // Setup Framebuffer
+   fb = new FrameBuffer();
 }
 
 namespace {

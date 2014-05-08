@@ -19,7 +19,9 @@ public:
    /* Check the status of the FrameBuffer */
    void checkFBOStatus();
 
-   /* Apply the FBO to the scene */
+   /* Apply the FBO to the scene for render to texture */
+   void applyRenderToTextureFBO();
+
    void applyFBO();
 
    /* Return the texture id of the FrameBuffer */

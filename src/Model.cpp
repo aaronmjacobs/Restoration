@@ -31,7 +31,7 @@ Json::Value Model::serialize() const {
    return root;
 }
 
-void Model::draw(unsigned int renderState) {
+void Model::draw() {
    // Apply the material properties (and enable the shader)
    material->apply(mesh);
 

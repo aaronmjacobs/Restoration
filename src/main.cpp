@@ -33,6 +33,8 @@
 #include "PhysicalObject.h"
 #include "Scenery.h"
 
+#include "RenderState.h"
+
 // ***************************** Temporary
 
 // STL
@@ -158,6 +160,8 @@ void physTest() {
 
    SPtr<MovableObject> physOne = std::make_shared<MovableObject>(scene, model, "one");
    SPtr<MovableObject> physTwo = std::make_shared<MovableObject>(scene, model, "two");
+
+   physOne->enableRenderState(STENCIL_STATE);
 
    physOne->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
    physOne->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));

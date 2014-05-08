@@ -45,7 +45,7 @@ public:
    /**
     * Draws the model.
     */
-   virtual void draw(unsigned int renderState);
+   virtual void draw();
 
    /**
     * Gets the model's material.

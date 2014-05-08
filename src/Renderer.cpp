@@ -30,8 +30,16 @@ void Renderer::prepare() {
 namespace {
 
 // Function that draws a SceneObject
-void draw(SceneObject &obj, unsigned int renderState) {
-   obj.draw(renderState);
+void drawStencil(SceneObject &obj) {
+   obj.draw(STENCIL_STATE);
+}
+
+void drawLight(SceneObject &obj) {
+   obj.draw(LIGHTWORLD_STATE);
+}
+
+void drawDark(SceneObject &obj) {
+   obj.draw(DARKWORLD_STATE);
 }
 
 } // namespace
@@ -103,7 +111,7 @@ void Renderer::render(Scene &scene) {
    }
    // Render each item in the scene (to stencil buffer)
    setupStencil();
-   scene.getSceneGraph()->forEach(draw, STENCIL_STATE);
+   scene.getSceneGraph()->forEach(drawStencil);
    // enable color and depth buffers.
    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
    glDepthMask(GL_TRUE);
@@ -117,8 +125,8 @@ void Renderer::render(Scene &scene) {
    glStencilFunc(GL_EQUAL, 1, 0xFF);
 
    // Render each item in the scene (to frame buffer object)
-   scene.getSceneGraph()->forEach(draw, LIGHTWORLD_STATE);
+   scene.getSceneGraph()->forEach(drawLight);
 
    // Render each item in the scene (to actual window)
-   //scene.getSceneGraph()->forEach(draw);
+   //scene.getSceneGraph()->forEach(drawDark);
 }

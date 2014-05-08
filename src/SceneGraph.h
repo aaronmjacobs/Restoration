@@ -35,7 +35,7 @@ public:
    virtual void addPhys(SPtr<PhysicalObject> physObject);
    WPtr<SceneObject> find(const std::string &name);
    WPtr<PhysicalObject> findPhys(const std::string &name);
-   virtual void forEach(void (*function)(SceneObject &obj, unsigned int renderState), unsigned int renderState) = 0;
+   virtual void forEach(void (*function)(SceneObject &obj)) = 0;
    virtual void forEachPhys(void (*function)(PhysicalObject &obj)) = 0;
 };
 

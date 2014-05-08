@@ -13,37 +13,8 @@ Geometry::Geometry(SPtr<Scene> scene, SPtr<Model> model, const std::string &name
    this->renderState = STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE;
 }
 
-void Geometry::enableStencil(){
-   renderState |= STENCIL_STATE;
-}
-
-void Geometry::disableStencil(){
-   renderState &= ~(STENCIL_STATE);
-}
-
-void Geometry::enableDarkWorld(){
-   renderState |= DARKWORLD_STATE;
-}
-
-void Geometry::disableDarkWorld(){
-   renderState &= ~(DARKWORLD_STATE);
-}
-
-void Geometry::enableLightWorld(){
-   renderState |= LIGHTWORLD_STATE;
-}
-
-void Geometry::disableLightWorld(){
-   renderState &= ~(LIGHTWORLD_STATE);
-}
-
-unsigned int Geometry::getRenderState(){
-   return renderState;
-}
-
 Geometry::~Geometry() {
 }
-
 
 Json::Value Geometry::serialize() const {
    Json::Value root = SceneObject::serialize();
@@ -84,7 +55,7 @@ void Geometry::draw(unsigned int renderState) {
 
    // Draw the model
    if (this->renderState & renderState){
-      model->draw(renderState);
+      model->draw();
    }
 }
 

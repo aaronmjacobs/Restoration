@@ -18,6 +18,7 @@ protected:
    glm::vec3 position;
    glm::quat orientation;
    glm::vec3 scale;
+   unsigned int renderState;
    bool markedForRemoval;
 
 public:
@@ -55,6 +56,10 @@ public:
    void rotateBy(const glm::quat &rot);
 
    void scaleBy(const glm::vec3 &scale);
+
+   void enableRenderState(unsigned int state);
+
+   void disableRenderState(unsigned int state);
 
    bool shouldBeRemoved();
 

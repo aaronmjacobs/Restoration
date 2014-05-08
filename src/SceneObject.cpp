@@ -79,6 +79,14 @@ void SceneObject::scaleBy(const glm::vec3 &sc) {
    scale *= sc;
 }
 
+void SceneObject::enableRenderState(unsigned int state) {
+   renderState |= state;
+}
+
+void SceneObject::disableRenderState(unsigned int state) {
+   renderState &= ~state;
+}
+
 bool SceneObject::shouldBeRemoved() {
    return markedForRemoval;
 }

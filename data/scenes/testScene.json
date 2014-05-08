@@ -58,7 +58,7 @@
          },
          {
             "@class" : "Geometry",
-            "renderState" : 7,
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "text",
@@ -116,7 +116,7 @@
          },
          {
             "@class" : "Geometry",
-            "renderState" : 7,
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "testMaterial",

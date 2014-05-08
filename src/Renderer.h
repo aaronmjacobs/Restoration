@@ -16,6 +16,21 @@ protected:
     */
    MatrixStack modelMatrixStack;
 
+   /**
+    * Setup the stencil buffer to generate the stencil
+    */
+   void prepareStencilDraw();
+
+   /**
+    * Prepare to draw the light world (using the generated stencil)
+    */
+   void prepareLightDraw();
+
+   /**
+    * Prepare to draw the dark world (with no stencil)
+    */
+   void prepareDarkDraw();
+
 public:
    /**
     * Constructs a renderer for a window with the given width and height.
@@ -31,11 +46,6 @@ public:
     * Prepares the renderer for use, making any necessary OpenGL calls.
     */
    void prepare();
-
-   /**
-   * Setup the stencil
-   */
-   void setupStencil();
 
    /**
     * Renders the given scene.

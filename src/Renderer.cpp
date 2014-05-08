@@ -44,7 +44,7 @@ void drawDark(SceneObject &obj) {
 
 } // namespace
 
-void Renderer::setupStencil(){
+void Renderer::prepareStencilDraw() {
    glEnable(GL_STENCIL_TEST);
    // disable color and depth buffers
    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
@@ -55,6 +55,24 @@ void Renderer::setupStencil(){
    glStencilMask(0xFF); // stencil buffer free to write
    glClear(GL_STENCIL_BUFFER_BIT);  // first clear stencil buffer by writing default stencil value (0) to all of stencil buffer.
    //now draw stencil shape at stencil shape pixel locations in stencil buffer replace stencil buffer values to ref = 1
+}
+
+void Renderer::prepareLightDraw() {
+   // enable color and depth buffers.
+   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+   glDepthMask(GL_TRUE);
+
+   // no more modifying of stencil buffer on stencil and depth pass.
+   glStencilMask(0x00);
+   // can also be achieved by glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+   // stencil test: only pass stencil test at stencilValue == 1 (Assuming depth test would pass.)
+   // and write actual content to depth and color buffer only at stencil shape locations.
+   glStencilFunc(GL_EQUAL, 1, 0xFF);
+}
+
+void Renderer::prepareDarkDraw() {
+   glDisable(GL_STENCIL_TEST);
 }
 
 void Renderer::render(Scene &scene) {
@@ -70,7 +88,7 @@ void Renderer::render(Scene &scene) {
    glm::mat4 viewMatrix = camera->getViewMatrix();
 
    // Set up the matrices and lights
-   const unsigned int numLights = scene.getLights().size();
+   const unsigned int numLights = (unsigned int)scene.getLights().size();
    glm::vec3 cameraPos = camera->getPosition();
    unsigned int lightIndex;
    for (WPtr<ShaderProgram> wShaderProgram : scene.getShaderPrograms()) {
@@ -110,23 +128,14 @@ void Renderer::render(Scene &scene) {
       }
    }
    // Render each item in the scene (to stencil buffer)
-   setupStencil();
+   prepareStencilDraw();
    scene.getSceneGraph()->forEach(drawStencil);
-   // enable color and depth buffers.
-   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-   glDepthMask(GL_TRUE);
-
-   // no more modifying of stencil buffer on stencil and depth pass.
-   glStencilMask(0x00);
-   // can also be achieved by glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-
-   // stencil test: only pass stencil test at stencilValue == 1 (Assuming depth test would pass.) 
-   // and write actual content to depth and color buffer only at stencil shape locations.
-   glStencilFunc(GL_EQUAL, 1, 0xFF);
 
    // Render each item in the scene (to frame buffer object)
+   prepareLightDraw();
    scene.getSceneGraph()->forEach(drawLight);
 
-   // Render each item in the scene (to actual window)
-   //scene.getSceneGraph()->forEach(drawDark);
+   // Render each item in the scene (to color buffer)
+   prepareDarkDraw();
+   scene.getSceneGraph()->forEach(drawDark);
 }

@@ -140,11 +140,15 @@ void Renderer::render(Scene &scene) {
    prepareStencilDraw();
    scene.getSceneGraph()->forEach(drawStencil);
 
-   // Render each item in the scene (to frame buffer object)
+   // Render each item in the scene (to frame buffer object) - clear color should be transparent
    prepareLightDraw();
    scene.getSceneGraph()->forEach(drawLight);
+
+   // Do any post processing on the light world buffer
 
    // Render each item in the scene (to color buffer)
    prepareDarkDraw();
    scene.getSceneGraph()->forEach(drawDark);
+
+   // Draw light scene as textured quad over the dark scene with alpha blending enabled
 }

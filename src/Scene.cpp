@@ -58,6 +58,14 @@ CollisionHandler& Scene::getCollisionHanlder() {
    return collisionHandler;
 }
 
+void Scene::setAudio(SPtr<Audio> audio) {
+   this->audio = audio;
+}
+
+SPtr<Audio> Scene::getAudio() {
+   return audio;
+}
+
 void Scene::tick(const float dt) {
    for (SPtr<TickListener> listener : tickListeners) {
       listener->tick(dt);

@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "Audio.h"
 #include "CollisionHandler.h"
 #include "InputListener.h"
 #include "Saveable.h"
@@ -21,6 +22,7 @@ protected:
    std::list<WPtr<Light>> lights;
    std::list<WPtr<ShaderProgram>> shaderPrograms;
    CollisionHandler collisionHandler;
+   SPtr<Audio> audio;
 
    /**
     * All items listening for user input.
@@ -57,6 +59,10 @@ public:
    const std::list<WPtr<ShaderProgram>>& getShaderPrograms();
 
    CollisionHandler& getCollisionHanlder();
+
+   void setAudio(SPtr<Audio> audio);
+
+   SPtr<Audio> getAudio();
 
    void tick(const float dt);
 

@@ -88,6 +88,8 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
    if (camera) {
       camera->onWindowSizeChange(width, height);
    }
+
+   renderer.onWindowSizeChange(width, height);
 }
 
 void addRemoveTest() {
@@ -216,14 +218,14 @@ int main(int argc, char *argv[]) {
    load();
 
    physTest();
+
+   // Prepare for rendering (sets up OpenGL stuff)
+   renderer.prepare();
    
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, WIDTH, HEIGHT);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
-
-   // Prepare for rendering (sets up OpenGL stuff)
-   renderer.prepare();
 
    // Timing values
    double lastTime = glfwGetTime();

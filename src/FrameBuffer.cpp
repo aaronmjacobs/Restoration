@@ -3,14 +3,15 @@
 
 #include <iostream>
 
-FrameBuffer::FrameBuffer(){
+FrameBuffer::FrameBuffer() {
    // Create FrameBufferObject
    std::cerr << "Failing on Cameron computer\n";
+
    glGenFramebuffers(1, &fBObject);
    //glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
 }
 
-FrameBuffer::~FrameBuffer(){
+FrameBuffer::~FrameBuffer() {
    //Delete resources
    glDeleteTextures(1, &fBTexture);
    glDeleteRenderbuffers(1, &fBRender);
@@ -20,7 +21,7 @@ FrameBuffer::~FrameBuffer(){
    glDeleteFramebuffers(1, &fBObject);
 }
 
-void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight){
+void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight) {
    // Get and save the texture size so that we know how big it is when we apply it as a texture.
    this->textureWidth = textureWidth;
    this->textureHeight = textureHeight;
@@ -49,12 +50,12 @@ void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight){
    checkFBOStatus();
 }
 
-void FrameBuffer::checkFBOStatus(){
+void FrameBuffer::checkFBOStatus() {
    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
    ASSERT(status == GL_FRAMEBUFFER_COMPLETE, "Could not setup FrameBufferObject. Error #%d\n", status);
 }
 
-void FrameBuffer::applyRenderToTextureFBO(){
+void FrameBuffer::applyRenderToTextureFBO() {
    // Get the current viewport size so that when we change it to what the texture
    // size is, we can change it back.
    GLint m_viewport[4];
@@ -77,10 +78,10 @@ void FrameBuffer::applyRenderToTextureFBO(){
 
 }
 
-void FrameBuffer::applyFBO(){
+void FrameBuffer::applyFBO() {
    glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
 }
 
-void FrameBuffer::disableFBO(){
+void FrameBuffer::disableFBO() {
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

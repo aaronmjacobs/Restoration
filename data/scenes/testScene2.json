@@ -5,6 +5,7 @@
       "objects" : [
          {
             "@class" : "Camera",
+            "fov" : 1.399999976158142,
             "name" : "camera",
             "orientation" : {
                "w" : 1.0,
@@ -18,6 +19,7 @@
                "y" : 0.0,
                "z" : 5.0
             },
+            "renderState" : 0,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -32,8 +34,8 @@
                "g" : 0.3000000119209290,
                "r" : 0.3000000119209290
             },
-            "constFalloff" : 0.1000000014901161,
-            "linearFalloff" : 0.004999999888241291,
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
             "name" : "",
             "orientation" : {
                "w" : 1.0,
@@ -44,48 +46,21 @@
             "position" : {
                "x" : 0.0,
                "y" : 5.0,
-               "z" : 5.0
+               "z" : 15.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
                "z" : 1.0
             },
-            "squareFalloff" : 0.001000000047497451
-         },
-         {
-            "@class" : "Light",
-            "color" : {
-               "b" : 0.3000000119209290,
-               "g" : 0.3000000119209290,
-               "r" : 0.3000000119209290
-            },
-            "constFalloff" : 0.1000000014901161,
-            "linearFalloff" : 0.004999999888241291,
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 3.0,
-               "y" : -2.0,
-               "z" : -2.0
-            },
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            },
-            "squareFalloff" : 0.001000000047497451
+            "squareFalloff" : 0.0007999999797903001
          },
          {
             "@class" : "Geometry",
             "model" : {
                "@class" : "Model",
-               "material" : "testMaterial",
+               "material" : "text",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/cello_and_stand.obj"
@@ -103,6 +78,7 @@
                "y" : 0.0,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -116,7 +92,7 @@
                "material" : "otherMaterial",
                "mesh" : {
                   "@class" : "Mesh",
-                  "fileName" : "data/meshes/cube.obj"
+                  "fileName" : "data/meshes/sphere.obj"
                }
             },
             "name" : "test2",
@@ -131,6 +107,7 @@
                "y" : 0.0,
                "z" : 0.0
             },
+            "renderState" : 7,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -144,10 +121,10 @@
                "material" : "testMaterial",
                "mesh" : {
                   "@class" : "Mesh",
-                  "fileName" : "data/meshes/cello_and_stand.obj"
+                  "fileName" : "data/meshes/cube.obj"
                }
             },
-            "name" : "test3",
+            "name" : "cube",
             "orientation" : {
                "w" : 0.7071067690849304,
                "x" : 0.7071067690849304,
@@ -159,10 +136,69 @@
                "y" : 5.0,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 0.50,
                "y" : 0.50,
                "z" : 0.50
+            }
+         },
+         {
+            "@class" : "Geometry",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/cello_and_stand.obj"
+               }
+            },
+            "name" : "one",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 10.0,
+               "z" : 0.0
+            },
+            "renderState" : 7,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Geometry",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/cello_and_stand.obj"
+               }
+            },
+            "name" : "two",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
             }
          }
       ]

@@ -17,6 +17,8 @@ protected:
     */
    MatrixStack modelMatrixStack;
 
+   UPtr<FrameBuffer> fb;
+
    /**
     * Setup the stencil buffer to generate the stencil
     */
@@ -32,8 +34,6 @@ protected:
     */
    void prepareDarkDraw();
 
-   FrameBuffer fb;
-
 public:
    /**
     * Constructs a renderer for a window with the given width and height.
@@ -44,6 +44,11 @@ public:
     * Does cleanup.
     */
    virtual ~Renderer();
+
+   /**
+    * Handles window size changes.
+    */
+   void onWindowSizeChange(int width, int height);
 
    /**
     * Prepares the renderer for use, making any necessary OpenGL calls.

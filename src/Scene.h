@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "Audio.h"
+#include "audio/Audio.h"
 #include "CollisionHandler.h"
 #include "InputListener.h"
 #include "Saveable.h"

@@ -1,8 +1,11 @@
 #include "FancyAssert.h"
 #include "FrameBuffer.h"
 
+#include <iostream>
+
 FrameBuffer::FrameBuffer(){
    // Create FrameBufferObject
+   std::cerr << "Failing on Cameron computer\n";
    glGenFramebuffers(1, &fBObject);
    //glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
 }
@@ -76,4 +79,8 @@ void FrameBuffer::applyRenderToTextureFBO(){
 
 void FrameBuffer::applyFBO(){
    glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
+}
+
+void FrameBuffer::disableFBO(){
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

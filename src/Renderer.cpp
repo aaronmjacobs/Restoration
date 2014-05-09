@@ -24,10 +24,7 @@ void Renderer::prepare() {
 
    // Back face culling
    glCullFace(GL_BACK);
-
-
-   // Setup Framebuffer
-   fb = new FrameBuffer();
+   std::cerr << this->fb.getFBO() << "\n";
 }
 
 namespace {
@@ -72,10 +69,12 @@ void Renderer::prepareLightDraw() {
    // stencil test: only pass stencil test at stencilValue == 1 (Assuming depth test would pass.)
    // and write actual content to depth and color buffer only at stencil shape locations.
    glStencilFunc(GL_EQUAL, 1, 0xFF);
+   fb.applyFBO();
 }
 
 void Renderer::prepareDarkDraw() {
    glDisable(GL_STENCIL_TEST);
+   fb.disableFBO();
 }
 
 void Renderer::render(Scene &scene) {

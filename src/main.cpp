@@ -203,6 +203,7 @@ int main(int argc, char *argv[]) {
 
 #ifdef _WIN32
    // Initialize GLEW
+   glewExperimental = true;
    ASSERT(glewInit() == GLEW_OK, "Unable to init glew");
 #endif
 

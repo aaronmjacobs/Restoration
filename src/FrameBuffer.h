@@ -22,11 +22,19 @@ public:
    /* Apply the FBO to the scene for render to texture */
    void applyRenderToTextureFBO();
 
+   /* Apply the FBO to the scene to only be rendered to */
    void applyFBO();
+
+   /* Stop rendering to frame buffer object. */
+   void disableFBO();
 
    /* Return the texture id of the FrameBuffer */
    GLuint getTextureID() const {
       return fBTexture;
+   }
+
+   GLuint getFBO() const {
+      return fBObject;
    }
 
 protected:

@@ -7,6 +7,7 @@
 // GLM
 #include "GLMIncludes.h"
 
+#include "audio/Audio.h"
 #include "FlatSceneGraph.h"
 #include "Loader.h"
 #include "Renderer.h"
@@ -46,6 +47,7 @@ namespace {
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
+Audio audio;
 SPtr<Scene> scene;
 Renderer renderer;
 SPtr<Light> light;
@@ -220,6 +222,12 @@ int main(int argc, char *argv[]) {
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
 
+   audio.systemInit();
+
+   std::string winSound = "win.wav";
+   audio.loadSound(winSound, false);
+   audio.signalSound(winSound);
+
    // Timing values
    double lastTime = glfwGetTime();
    double accumulator = 0.0;
@@ -250,6 +258,8 @@ int main(int argc, char *argv[]) {
    }
 
    scene.reset();
+
+   audio.cleanUp();
 
    // Clean up GLFW
    glfwDestroyWindow(window);

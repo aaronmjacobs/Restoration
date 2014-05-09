@@ -61,13 +61,13 @@
                "material" : "text",
                "mesh" : {
                   "@class" : "Mesh",
-                  "fileName" : "data/meshes/cello_and_stand.obj"
+                  "fileName" : "data/meshes/back_inside.obj"
                }
             },
             "name" : "test",
             "orientation" : {
-               "w" : 0.7071067690849304,
-               "x" : 0.7071067690849304,
+               "w" : 0.0,
+               "x" : 0.0,
                "y" : 0.0,
                "z" : 0.0
             },

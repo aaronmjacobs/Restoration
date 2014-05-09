@@ -27,7 +27,7 @@ void Audio::systemInit() {
 }
 
 void Audio::loadSound(const std::string &name, bool loop) {
-   ASSERT(samples.find(name) == samples.end(), "Sound already loaded: %s", name.c_str());
+   ASSERT(!samples.count(name), "Sound already loaded: %s", name.c_str());
 
    FMOD_RESULT result;
    static bool musicLoaded = false;
@@ -67,7 +67,7 @@ void Audio::loadSound(const std::string &name, bool loop) {
 }
 
 void Audio::signalSound(const std::string &name) {
-   ASSERT(samples.find(name) != samples.end(), "Sound not loaded: %s", name.c_str());
+   ASSERT(samples.count(name), "Sound not loaded: %s", name.c_str());
 
    FMOD_RESULT      result;
    SPtr<Sample> sample = samples[name];

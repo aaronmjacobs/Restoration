@@ -33,22 +33,22 @@ private:
 
 public:
    /* Initialize Audio System*/
-   int systemInit();
+   void systemInit();
 
    /* Load in a media file. The first loop track loaded will auto start playing */
    void loadSound(const std::string &name, bool loop);
 
    /* Starts a non-loop sound */
-   int signalSound(const std::string &name);
+   void signalSound(const std::string &name);
 
    /* Swaps the running track to sampleNum track (loop tracks only) */
-   int swapMusicTrack(const std::string &name);
+   void swapMusicTrack(const std::string &name);
 
    /* Edits volume: (1.0 to 0.0). Volume is grouped into effects and loop tracks */
-   int setVolume(bool isLoop, float volume);
+   void setVolume(bool isLoop, float volume);
 
    /* Clean-up references */
-   int cleanUp();
+   void cleanUp();
 };
 
 #endif

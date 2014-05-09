@@ -5,7 +5,7 @@ void Audio::ERRCHECK(FMOD_RESULT result) {
    ASSERT(result == FMOD_OK, "FMod Broke");
 }
 
-int Audio::systemInit() {
+void Audio::systemInit() {
    FMOD_RESULT result;
    unsigned int version;
 
@@ -24,8 +24,6 @@ int Audio::systemInit() {
    ERRCHECK(result);
    result = system->createChannelGroup("Group Effects", &groupE);
    ERRCHECK(result);
-
-   return 0;
 }
 
 void Audio::loadSound(const std::string &name, bool loop) {
@@ -68,7 +66,7 @@ void Audio::loadSound(const std::string &name, bool loop) {
    samples[name] = sample;
 }
 
-int Audio::signalSound(const std::string &name) {
+void Audio::signalSound(const std::string &name) {
    ASSERT(samples.find(name) != samples.end(), "Sound not loaded: %s", name.c_str());
 
    FMOD_RESULT      result;
@@ -78,10 +76,9 @@ int Audio::signalSound(const std::string &name) {
       ERRCHECK(result);
    }
    system->update();
-   return 0;
 }
 
-int Audio::swapMusicTrack(const std::string &name) {
+void Audio::swapMusicTrack(const std::string &name) {
    if (name != curMusic) {
       FMOD_RESULT      result;
       SPtr<Sample> sample = samples[curMusic];
@@ -102,10 +99,9 @@ int Audio::swapMusicTrack(const std::string &name) {
       curMusic = name;
       system->update();
    }
-   return 0;
 }
 
-int Audio::setVolume(bool isLoop, float volume) {
+void Audio::setVolume(bool isLoop, float volume) {
    FMOD_RESULT      result;
    if (isLoop) {
       result = (groupL)->setVolume(volume);
@@ -117,11 +113,10 @@ int Audio::setVolume(bool isLoop, float volume) {
    }
 
    system->update();
-   return 0;
 }
 
 /* Assumes NUM_SOUNDS entries in sounds*/
-int Audio::cleanUp() {
+void Audio::cleanUp() {
    FMOD_RESULT      result;
 
    for (std::pair<const std::string, SPtr<Sample>> sample : samples) {
@@ -134,6 +129,4 @@ int Audio::cleanUp() {
    ERRCHECK(result);
    result = system->release();
    ERRCHECK(result);
-
-   return 0;
 }

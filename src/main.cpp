@@ -28,6 +28,7 @@
 #include "Camera.h"
 #include "FirstPersonCameraController.h"
 #include "IOUtils.h"
+#include "LevelEditor.h"
 
 #include "MovableObject.h"
 #include "PhysicalObject.h"
@@ -49,6 +50,7 @@ const float FOV = glm::radians(80.0f);
 SPtr<Scene> scene;
 Renderer renderer;
 SPtr<Light> light;
+SPtr<LevelEditor> levelEdit;
 
 void testGlError(const char *message) {
    GLenum error = glGetError();
@@ -113,10 +115,12 @@ void addRemoveTest() {
 void load() {
    SPtr<Loader> loader = Loader::getInstance();
    scene = loader->loadScene("testScene");
+   levelEdit = std::make_shared<LevelEditor>(scene);
 
    SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
    scene->addTickListener(cameraController);
    scene->addInputListener(cameraController);
+   scene->addInputListener(levelEdit);
 }
 
 /*void test() {
@@ -236,6 +240,7 @@ int main(int argc, char *argv[]) {
       accumulator += frameTime;
       while (accumulator >= dt) {
          scene->tick(dt);
+		 levelEdit->tick(dt);
          accumulator -= dt;
       }
 

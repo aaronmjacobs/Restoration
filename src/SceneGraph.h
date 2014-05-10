@@ -37,6 +37,7 @@ public:
    WPtr<PhysicalObject> findPhys(const std::string &name);
    virtual void forEach(void (*function)(SceneObject &obj)) = 0;
    virtual void forEachPhys(void (*function)(PhysicalObject &obj)) = 0;
+   virtual SPtr<PhysicalObject> mouseCollides(double x, double y) = 0;
 };
 
 #endif

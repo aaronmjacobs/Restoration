@@ -5,10 +5,7 @@
 
 FrameBuffer::FrameBuffer() {
    // Create FrameBufferObject
-   std::cerr << "Failing on Cameron computer\n";
-
    glGenFramebuffers(1, &fBObject);
-   //glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
 }
 
 FrameBuffer::~FrameBuffer() {

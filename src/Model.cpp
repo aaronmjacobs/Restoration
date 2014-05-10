@@ -44,10 +44,14 @@ void Model::draw() {
    glVertexAttribPointer(aPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
    // Prepare the normal buffer object
-   glBindBuffer(GL_ARRAY_BUFFER, mesh->getNBO());
-   GLint aNormal = shaderProgram->getAttribute("aNormal");
-   glEnableVertexAttribArray(aNormal);
-   glVertexAttribPointer(aNormal, 3, GL_FLOAT, GL_FALSE, 0, 0);
+   GLint aNormal = 0;
+   bool hasNormals = shaderProgram->hasAttribute("aNormal");
+   if (hasNormals) {
+      glBindBuffer(GL_ARRAY_BUFFER, mesh->getNBO());
+      aNormal = shaderProgram->getAttribute("aNormal");
+      glEnableVertexAttribArray(aNormal);
+      glVertexAttribPointer(aNormal, 3, GL_FLOAT, GL_FALSE, 0, 0);
+   }
 
    // Prepare the index buffer object
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIBO());
@@ -57,7 +61,9 @@ void Model::draw() {
 
    // Unbind
    glDisableVertexAttribArray(aPosition);
-   glDisableVertexAttribArray(aNormal);
+   if (hasNormals) {
+      glDisableVertexAttribArray(aNormal);
+   }
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
    shaderProgram->disable(); // TODO Make call to material?

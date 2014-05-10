@@ -6,6 +6,7 @@
 #include "MatrixStack.h"
 
 class Scene;
+class Skybox;
 
 /**
  * Manages the rendering of a scene.
@@ -18,6 +19,7 @@ protected:
    MatrixStack modelMatrixStack;
 
    UPtr<FrameBuffer> fb;
+   UPtr<Skybox> skybox;
 
    /**
     * Setup the stencil buffer to generate the stencil
@@ -53,7 +55,7 @@ public:
    /**
     * Prepares the renderer for use, making any necessary OpenGL calls.
     */
-   void prepare();
+   void prepare(SPtr<Scene> scene);
 
    /**
     * Renders the given scene.

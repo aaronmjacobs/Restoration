@@ -1,11 +1,16 @@
 #include "Camera.h"
 #include "GLIncludes.h"
 #include "Light.h"
+#include "Loader.h"
+#include "Mesh.h"
+#include "Model.h"
 #include "Renderer.h"
 #include "RenderState.h"
 #include "Scene.h"
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
+#include "Skybox.h"
+#include "SkyboxMaterial.h"
 
 Renderer::Renderer() {
 }
@@ -13,7 +18,7 @@ Renderer::Renderer() {
 Renderer::~Renderer() {
 }
 
-void Renderer::prepare() {
+void Renderer::prepare(SPtr<Scene> scene) {
    // Set the clear (background) color.
    glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -27,6 +32,16 @@ void Renderer::prepare() {
 
    // Create frame buffer
    fb = UPtr<FrameBuffer>(new FrameBuffer);
+
+   SPtr<Loader> loader = Loader::getInstance();
+   Json::Value root;
+
+   SPtr<ShaderProgram> program = loader->loadShaderProgram(nullptr, "skybox");
+   SPtr<Material> material = std::make_shared<SkyboxMaterial>("skybox", program, scene->getCamera().lock());
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
+   SPtr<Model> model = std::make_shared<Model>(material, mesh);
+
+   skybox = UPtr<Skybox>(new Skybox(model, "posx.png", "negx.png", "posy.png", "negy.png", "posz.png", "negz.png", "data/textures/skyboxes/forest/"));
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
@@ -148,6 +163,10 @@ void Renderer::render(Scene &scene) {
 
    // Render each item in the scene (to color buffer)
    prepareDarkDraw();
+
+   skybox->renderSkybox();
+   skybox->releaseSkybox();
+
    scene.getSceneGraph()->forEach(drawDark);
 
    // Draw light scene as textured quad over the dark scene with alpha blending enabled

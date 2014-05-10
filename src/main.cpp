@@ -220,7 +220,7 @@ int main(int argc, char *argv[]) {
    physTest();
 
    // Prepare for rendering (sets up OpenGL stuff)
-   renderer.prepare();
+   renderer.prepare(scene);
    
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, WIDTH, HEIGHT);

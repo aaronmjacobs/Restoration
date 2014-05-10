@@ -5,13 +5,12 @@ uniform mat4 uViewMatrix;
 uniform mat4 uModelMatrix;
 
 attribute vec3 aPosition;
-attribute vec2 aSkyboxCoord;
-varying vec2 vSkyboxCoord;
+
+varying vec3 vSkyboxCoord;
 
 void main() {
-  // Transforms
-  vec4 lPosition = uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);
-  gl_Position = uProjMatrix * uViewMatrix * lPosition;
+  vec4 pos = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition.xyz, 1.0);
+  gl_Position = pos.xyww; // Use W (1) for the Z so that the skybox is always at max distance
   
-  vSkyboxCoord = aSkyboxCoord;
+  vSkyboxCoord = aPosition;
 }

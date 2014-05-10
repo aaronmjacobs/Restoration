@@ -95,16 +95,22 @@ GLint ShaderProgram::addUniform(const std::string &name) {
 
 GLint ShaderProgram::getAttribute(const std::string &name) {
    // Make sure the attribute exists in the map
-   std::map<std::string, GLint>::iterator it = attributeMap.find(name);
-   ASSERT(it != attributeMap.end(), "Unable to find attribute: %s", name.c_str());
+   ASSERT(hasAttribute(name), "Unable to find attribute: %s", name.c_str());
 
    return attributeMap[name];
 }
 
 GLint ShaderProgram::getUniform(const std::string &name) {
    // Make sure the uniform exists in the map.
-   std::map<std::string, GLint>::iterator it = uniformMap.find(name);
-   ASSERT(it != uniformMap.end(), "Unable to find uniform: %s", name.c_str());
+   ASSERT(hasUniform(name), "Unable to find uniform: %s", name.c_str());
 
    return uniformMap[name];
+}
+
+bool ShaderProgram::hasAttribute(const std::string &name) {
+   return attributeMap.count(name) > 0;
+}
+
+bool ShaderProgram::hasUniform(const std::string &name) {
+   return uniformMap.count(name) > 0;
 }

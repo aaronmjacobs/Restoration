@@ -1,32 +1,34 @@
 #include "FancyAssert.h"
 #include "lib/stb_image.h"
+#include "Material.h"
 #include "Mesh.h"
+#include "Model.h"
 #include "ShaderProgram.h"
 #include "Skybox.h"
 
-struct skyImgInfo{
+struct SkyImgInfo {
    int w;
    int h;
    int comp;
    unsigned char *pixels;
 };
 
-Skybox::Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::string &xpos, const std::string &xneg, const std::string &ypos, const std::string &yneg,
+Skybox::Skybox(SPtr<Model> model, const std::string &xpos, const std::string &xneg, const std::string &ypos, const std::string &yneg,
    const std::string &zpos, const std::string &zneg, const std::string &skydir)
-   :shaderProgram(shaderProgram), mesh(mesh) {
-   
+   : model(model) {
+
+   SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
    uSkybox = shaderProgram->getUniform("uSkybox");
-   aSkyboxCoord = shaderProgram->getAttribute("aSkyboxCoord");
+   //aSkyboxCoord = shaderProgram->getAttribute("aSkyboxCoord");
 
    FILE *file;
-   struct skyImgInfo xp, xn, yp, yn, zp, zn;
+   SkyImgInfo xp, xn, yp, yn, zp, zn;
 
    //Generate 6 skybox ids to reference the images that will be loaded.
    //glGenTextures(SKYBOX_NUM_TEXTURES, &(skybox_id));
 
-   glGenTextures(1, &(skybox_id));
+   glGenTextures(1, &skybox_id);
    glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_id);
-
 
    file = fopen((skydir + xpos).c_str(), "rb");
    ASSERT(file, "Null skybox file %s", (skydir + xpos).c_str());
@@ -65,7 +67,7 @@ Skybox::Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::st
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-   if (xp.comp == 3 && xn.comp == 3 && yp.comp == 3 && yn.comp == 3 && zp.comp == 3 && zn.comp == 3){
+   if (xp.comp == 3 && xn.comp == 3 && yp.comp == 3 && yn.comp == 3 && zp.comp == 3 && zn.comp == 3) {
       glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, xp.w, xp.h, 0, GL_RGB, GL_UNSIGNED_BYTE, xp.pixels);
       glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, xn.w, xn.h, 0, GL_RGB, GL_UNSIGNED_BYTE, xn.pixels);
       glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, yp.w, yp.h, 0, GL_RGB, GL_UNSIGNED_BYTE, yp.pixels);
@@ -78,28 +80,33 @@ Skybox::Skybox(SPtr<ShaderProgram> shaderProgram, SPtr<Mesh> mesh, const std::st
    stbi_image_free(xp.pixels);
    stbi_image_free(xn.pixels);
    stbi_image_free(yp.pixels);
-   stbi_image_free(xp.pixels);
+   stbi_image_free(yn.pixels);
    stbi_image_free(zp.pixels);
    stbi_image_free(zn.pixels);
     
-   glBindTexture(GL_TEXTURE_2D, 0);
+   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
-void Skybox::renderSkybox()
-{
+void Skybox::renderSkybox() {
    glDisable(GL_DEPTH_TEST);
 
+   SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
    shaderProgram->use();
 
    glEnable(GL_TEXTURE_CUBE_MAP);
-   glActiveTexture(GL_TEXTURE1);
+   glActiveTexture(GL_TEXTURE0 + skybox_id);
    glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_id);
 
    glUniform1i(uSkybox, skybox_id);
-   glEnableVertexAttribArray(aSkyboxCoord);
-   glBindBuffer(GL_ARRAY_BUFFER, mesh->getTBO());
-   glVertexAttribPointer(aSkyboxCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+   /*glEnableVertexAttribArray(aSkyboxCoord);
+   glBindBuffer(GL_ARRAY_BUFFER, model->getMesh()->getTBO());
+   glVertexAttribPointer(aSkyboxCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);*/
 
+   model->draw();
+
+   glDisable(GL_TEXTURE_CUBE_MAP);
+   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+   glEnable(GL_DEPTH_TEST);
 }
 
 void Skybox::releaseSkybox()

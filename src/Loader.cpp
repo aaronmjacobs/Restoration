@@ -455,7 +455,9 @@ SPtr<ShaderProgram> Loader::loadShaderProgram(SPtr<Scene> scene, const std::stri
    }
 
    shaderProgramMap[fileName] = shaderProgram;
-   scene->addShaderProgram(shaderProgram);
+   if (scene) {
+      scene->addShaderProgram(shaderProgram);
+   }
 
    return shaderProgram;
 }

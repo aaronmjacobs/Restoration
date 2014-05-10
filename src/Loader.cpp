@@ -54,6 +54,7 @@ void Loader::resetSingleton() {
 }
 
 Loader::Loader() {
+   assimpImporter.SetPropertyInteger(AI_CONFIG_PP_LBW_MAX_WEIGHTS, 3);
 }
 
 Loader::~Loader() {

@@ -56,6 +56,9 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   virtual void updateAnimation() {
+   }
+
    /**
     * Gets the vertex buffer object handle.
     */

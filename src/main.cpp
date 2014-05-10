@@ -211,6 +211,7 @@ int main(int argc, char *argv[]) {
 
    audio = std::make_shared<Audio>();
    audio->systemInit();
+   audio->loadSound("Restoration_5_4.ogg", true);
    audio->loadSound("win.wav", false);
 
    // Load the scene

@@ -19,6 +19,16 @@ glm::mat4 Camera::getProjectionMatrix() {
 void Camera::onWindowSizeChange(int width, int height) {
    // Update the projection to match the new window size.
    projectionMatrix = glm::perspective(fov, (float)width / height, 0.1f, 100.f);
+   windowWidth = width;
+   windowHeight = height;
+}
+
+int Camera::getWindowHeight() {
+   return windowHeight;
+}
+
+int Camera::getWindowWidth() {
+   return windowWidth;
 }
 
 Json::Value Camera::serialize() const {

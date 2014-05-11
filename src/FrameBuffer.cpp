@@ -65,14 +65,13 @@ void FrameBuffer::applyRenderToTextureFBO() {
    // Bind the Framebuffer so that we say, "Render to the frame buffer, NOT the actual window.
    glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
    glViewport(0, 0, (GLsizei)textureWidth, (GLsizei)textureHeight);
+   glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   glClearColor(.0f, .0f, .0f, 1.0f);
 
    //set up the texture unit so that this is the active texture we're going to be using.
    glEnable(GL_TEXTURE_2D);
-   glActiveTexture(GL_TEXTURE1);
+   glActiveTexture(GL_TEXTURE0 + fBTexture);
    glBindTexture(GL_TEXTURE_2D, fBTexture);
-
 }
 
 void FrameBuffer::applyFBO() {

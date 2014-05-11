@@ -1,5 +1,7 @@
 #include "Camera.h"
+#include "FBOTextureMaterial.h"
 #include "GLIncludes.h"
+#include "GLMIncludes.h"
 #include "Light.h"
 #include "Loader.h"
 #include "Mesh.h"
@@ -33,6 +35,9 @@ void Renderer::prepare(SPtr<Scene> scene) {
    // Create frame buffer
    fb = UPtr<FrameBuffer>(new FrameBuffer);
 
+   // TODO
+   fb->setupToTexture2D(1280, 720);
+
    SPtr<Loader> loader = Loader::getInstance();
    Json::Value root;
 
@@ -40,12 +45,16 @@ void Renderer::prepare(SPtr<Scene> scene) {
    SPtr<Material> material = std::make_shared<SkyboxMaterial>("skybox", program, scene->getCamera().lock());
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
+   skybox = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/arrakis/"));
 
-   skybox = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/storm/"));
+   SPtr<ShaderProgram> fboProgram = loader->loadShaderProgram(nullptr, "fbo");
+   SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
+   SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
+   plane = UPtr<Model>(new Model(fboMaterial, planeMesh));
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
-   fb->setupToTexture2D(width, height); // TODO State cleanup
+   //fb->setupToTexture2D(width, height); // TODO State cleanup
 }
 
 namespace {
@@ -157,6 +166,10 @@ void Renderer::render(Scene &scene) {
 
    // Render each item in the scene (to frame buffer object) - clear color should be transparent
    prepareLightDraw();
+
+   //skybox->renderSkybox();
+   //skybox->releaseSkybox();
+
    scene.getSceneGraph()->forEach(drawLight);
 
    // Do any post processing on the light world buffer
@@ -169,5 +182,11 @@ void Renderer::render(Scene &scene) {
 
    scene.getSceneGraph()->forEach(drawDark);
 
+   //fb->applyRenderToTextureFBO();
+
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
+   GLint uProjMatrix = plane->getMaterial()->getShaderProgram()->getUniform("uProjMatrix");
+   glm::mat4 orthographic = glm::ortho(0.0f, (float)camera->getWindowWidth(), 0.0f, (float)camera->getWindowHeight(), 0.0f, 1.0f);
+   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
+   plane->draw();
 }

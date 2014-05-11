@@ -20,6 +20,7 @@ protected:
 
    UPtr<FrameBuffer> fb;
    UPtr<Skybox> skybox;
+   UPtr<Model> plane;
 
    /**
     * Setup the stencil buffer to generate the stencil

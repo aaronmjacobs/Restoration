@@ -20,7 +20,9 @@ class LevelEditor : public InputListener, public TickListener {
 private:
    WPtr<Scene> scene;
 
-	bool saved = true, on = false, big = false;
+	bool saved = true, on = false, big = false, precision = false;
+	bool transUp = false, transDown = false, transRight = false, transLeft = false, transBack = false, transFront = false;
+	bool transX = false, transY = false, transZ = false;
 
 	int editState = TRANSLATE, stageState = MAIN, keepTransforming = 0;
 

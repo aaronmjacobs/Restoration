@@ -57,7 +57,8 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 		}
 		else if (key == GLFW_KEY_UP) {
-			keepTransforming++;
+			transUp = true;
+			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
 					curTransformVec = glm::vec3(0.0, 0.35, 0.0);
@@ -72,7 +73,8 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 		}
 		else if (key == GLFW_KEY_DOWN) {
-			keepTransforming++;
+			transDown = true;
+			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
 					curTransformVec = glm::vec3(0.0, -0.35, 0.0);
@@ -87,7 +89,8 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 		}
 		else if (key == GLFW_KEY_LEFT) {
-			keepTransforming++;
+			transLeft = true;
+			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
 					curTransformVec = glm::vec3(-0.35, 0.0, 0.0);
@@ -102,7 +105,8 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 		}
 		else if (key == GLFW_KEY_RIGHT) {
-			keepTransforming++;
+			transRight = true;
+			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
 					curTransformVec = glm::vec3(0.35, 0.0, 0.0);
@@ -117,7 +121,8 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 		}
 		else if (key == GLFW_KEY_APOSTROPHE) {
-			keepTransforming++;
+			transBack = true;
+			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
 					curTransformVec = glm::vec3(0.0, 0.0, -0.35);
@@ -132,7 +137,8 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 		}
 		else if (key == GLFW_KEY_LEFT_BRACKET) {
-			keepTransforming++;
+			transFront = true;
+			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
 					curTransformVec = glm::vec3(0.0, 0.0, 0.35);
@@ -145,6 +151,12 @@ void LevelEditor::onKeyEvent(int key, int action) {
 				else
 					curTransformVec = glm::vec3(1.0, 1.0, 1.05);
 			}
+		}
+		else if (key == GLFW_KEY_P) {
+			if (!precision)
+				precision = true;
+			else
+				precision = false;
 		}
 		else if (key == GLFW_KEY_T) {
 			editState = TRANSLATE;
@@ -168,10 +180,10 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			stageState = MAIN;
 		}
 		else if (key == GLFW_KEY_G) {
-			big = true;
-		}
-		else if (key == GLFW_KEY_H) {
-			big = false;
+			if (!big)
+				big = true;
+			else
+				big = false;
 		}
 		/*else if (key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT) {
 			quickSwitch(key);
@@ -187,10 +199,18 @@ void LevelEditor::onKeyEvent(int key, int action) {
 		}
 	}
 	else if (action == GLFW_RELEASE) {
-		if (key == GLFW_KEY_UP || key == GLFW_KEY_DOWN || key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT ||
-			key == GLFW_KEY_APOSTROPHE || key == GLFW_KEY_LEFT_BRACKET) {
-			keepTransforming--;
-		}
+		if (key == GLFW_KEY_UP)
+			transUp = false;
+		else if (key == GLFW_KEY_DOWN)
+			transDown = false;
+		else if (key == GLFW_KEY_LEFT)
+			transLeft = false;
+		else if (key == GLFW_KEY_RIGHT)
+			transRight = false;
+		else if (key == GLFW_KEY_APOSTROPHE)
+			transBack = false;
+		else if (key == GLFW_KEY_LEFT_BRACKET)
+			transFront = false;
 	}
 }
 
@@ -238,14 +258,16 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 				pos += camera->getPosition();
 			}
 
-			if (stageState = MAIN) {
+			if (stageState == MAIN) {
 				pos.z = 0.0;
 			}
-			else if (stageState = FORE) {
-
+			else if (stageState == FORE) {
+				if (pos.z < 0.0)
+					pos.z = -pos.z;
 			}
-			else if (stageState = BACK) {
-
+			else if (stageState == BACK) {
+				if (pos.z > 0.0)
+					pos.z = -pos.z;
 			}
 
 			newObj->setPosition(pos);
@@ -304,7 +326,6 @@ void LevelEditor::transform(glm::vec3 trans) {
 			currentObj->translateBy(trans);
 		}
 		else if (editState == SCALE) {
-			printf("making sure\n");
 			currentObj->scaleBy(trans);
 		}
 		else if (editState == ROTATE) {
@@ -333,7 +354,45 @@ SPtr<PhysicalObject> LevelEditor::getCurObj() {
 }
 
 void LevelEditor::tick(const float dt) {
-	if (keepTransforming > 0) {
-		transform(curTransformVec);
+	glm::vec3 v = curTransformVec;
+	//printf("v: (x) %f.2 (y) %f.2 (z) %f.2", v.x, v.y, v.z);
+	if ((v.x == 1.0 && v.y == 1.0) || (v.x == 0.0 && v.y == 0.0)) {
+		//printf("hello?\n");
+		if ((((editState == TRANSLATE && v.z > 0.0 && v.x == 0.0 && v.y == 0.0) || (editState == SCALE && v.z > 1.0)) && transFront) ||
+			(((editState == TRANSLATE && v.z < 0.0) || (editState == SCALE && v.z < 1.0)) && transBack)) {
+			transform(v);
+		}
+	}
+	else if ((v.z == 1.0 && v.y == 1.0) || (v.z == 0.0 && v.y == 0.0)) {
+		if ((((editState == TRANSLATE && v.x > 0.0) || (editState == SCALE && v.x > 1.0)) && transRight) ||
+			(((editState == TRANSLATE && v.x < 0.0) || (editState == SCALE && v.x < 1.0)) && transLeft)) {
+			transform(v);
+		}
+	}
+	else if ((v.x == 1.0 && v.z == 1.0) || (v.x == 0.0 && v.z == 0.0)) {
+		if ((((editState == TRANSLATE && v.y > 0.0) || (editState == SCALE && v.y > 1.0)) && transUp) ||
+			(((editState == TRANSLATE && v.y < 0.0) || (editState == SCALE && v.y < 1.0)) && transDown)) {
+			transform(v);
+		}
+	}
+	if (precision) {
+		if ((v.x == 1.0 && v.y == 1.0) || (v.x == 0.0 && v.y == 0.0)) {
+			if ((editState == TRANSLATE && v.z > 0.0) || (editState == SCALE && v.z > 1.0))
+				transFront = false;
+			else
+				transBack = false;
+		}
+		else if ((v.z == 1.0 && v.y == 1.0) || (v.z == 0.0 && v.y == 0.0)) {
+			if ((editState == TRANSLATE && v.x > 0.0) || (editState == SCALE && v.x > 1.0))
+				transRight = false;
+			else
+				transLeft = false;
+		}
+		else if ((v.x == 1.0 && v.z == 1.0) || (v.x == 0.0 && v.z == 0.0)) {
+			if ((editState == TRANSLATE && v.y > 0.0) || (editState == SCALE && v.y > 1.0))
+				transUp = false;
+			else
+				transDown = false;
+		}
 	}
 }

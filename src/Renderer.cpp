@@ -36,7 +36,9 @@ void Renderer::prepare(SPtr<Scene> scene) {
    fb = UPtr<FrameBuffer>(new FrameBuffer);
 
    // TODO
-   fb->setupToTexture2D(1280, 720);
+   GLint m_viewport[4];
+   glGetIntegerv(GL_VIEWPORT, m_viewport);
+   fb->setupToTexture2D(m_viewport[2], m_viewport[3]);
 
    SPtr<Loader> loader = Loader::getInstance();
    Json::Value root;
@@ -50,7 +52,7 @@ void Renderer::prepare(SPtr<Scene> scene) {
    SPtr<ShaderProgram> fboProgram = loader->loadShaderProgram(nullptr, "fbo");
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
    SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
-   plane = UPtr<Model>(new Model(fboMaterial, mesh));
+   plane = UPtr<Model>(new Model(fboMaterial, planeMesh));
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
@@ -169,17 +171,11 @@ void Renderer::render(Scene &scene) {
 
    //skybox->renderSkybox();
    //skybox->releaseSkybox();
-
-   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+   glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-   glEnable(GL_BLEND);;
+   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
    scene.getSceneGraph()->forEach(drawLight);
-
-   glDisable(GL_BLEND);
 
    // Do any post processing on the light world buffer
 
@@ -191,9 +187,17 @@ void Renderer::render(Scene &scene) {
 
    scene.getSceneGraph()->forEach(drawDark);
 
+   glEnable(GL_STENCIL_TEST);
+   glStencilFunc(GL_EQUAL, 1, 0xFF);
+
+
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
-   GLint uProjMatrix = plane->getMaterial()->getShaderProgram()->getUniform("uProjMatrix");
-   glm::mat4 orthographic = glm::ortho(0.0f, (float)camera->getWindowWidth(), 0.0f, (float)camera->getWindowHeight(), 0.0f, 100.0f);
+   SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
+   program->use();
+   GLint uProjMatrix = program->getUniform("uProjMatrix");
+   glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
    glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
    plane->draw();
+
+   glDisable(GL_STENCIL_TEST);
 }

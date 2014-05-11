@@ -11,8 +11,15 @@ protected:
    BoundingBox bounds;
 
 public:
+   static const std::string CLASS_NAME;
+
    PhysicalObject(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
    virtual ~PhysicalObject();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    BoundingBox getBounds() const;
    bool collidesWith(const PhysicalObject &other) const;
@@ -20,7 +27,6 @@ public:
    float width() const;
 
    virtual void collideWith(PhysicalObject &other) = 0;
-   virtual void collideWith(MovableObject &other) = 0;
 };
 
 #endif

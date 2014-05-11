@@ -13,8 +13,15 @@ protected:
    bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
 
 public:
+   static const std::string CLASS_NAME;
+
    Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
    ~Player();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    virtual void onKeyEvent(int key, int action);
 
@@ -23,6 +30,8 @@ public:
    virtual void onMouseMotionEvent(double xPos, double yPos);
 
    virtual void tick(const float dt);
+
+   virtual void collideWith(PhysicalObject &other);
 };
 
 #endif

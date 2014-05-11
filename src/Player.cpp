@@ -1,7 +1,7 @@
 #include "GLIncludes.h"
 #include "Player.h"
 
-const int Player::BASE_HEALTH = 20;
+const int Player::BASE_HEALTH = 10;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 300.0f;
 

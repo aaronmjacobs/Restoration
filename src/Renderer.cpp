@@ -41,7 +41,7 @@ void Renderer::prepare(SPtr<Scene> scene) {
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
 
-   skybox = UPtr<Skybox>(new Skybox(model, "posx.png", "negx.png", "posy.png", "negy.png", "posz.png", "negz.png", "data/textures/skyboxes/forest/"));
+   skybox = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/storm/"));
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {

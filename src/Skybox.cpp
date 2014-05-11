@@ -41,22 +41,22 @@ Skybox::Skybox(SPtr<Model> model, const std::string &xpos, const std::string &xn
    fclose(file);
 
    file = fopen((skydir + ypos).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + xpos).c_str());
+   ASSERT(file, "Null skybox file %s", (skydir + ypos).c_str());
    yp.pixels = stbi_load_from_file(file, &(yp.w), &(yp.h), &(yp.comp), 0);
    fclose(file);
 
    file = fopen((skydir + yneg).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + xpos).c_str());
+   ASSERT(file, "Null skybox file %s", (skydir + yneg).c_str());
    yn.pixels = stbi_load_from_file(file, &(yn.w), &(yn.h), &(yn.comp), 0);
    fclose(file);
 
    file = fopen((skydir + zpos).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + xpos).c_str());
+   ASSERT(file, "Null skybox file %s", (skydir + zpos).c_str());
    zp.pixels = stbi_load_from_file(file, &(zp.w), &(zp.h), &(zp.comp), 0);
    fclose(file);
 
    file = fopen((skydir + zneg).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + xpos).c_str());
+   ASSERT(file, "Null skybox file %s", (skydir + zneg).c_str());
    zn.pixels = stbi_load_from_file(file, &(zn.w), &(zn.h), &(zn.comp), 0);
    fclose(file);
 

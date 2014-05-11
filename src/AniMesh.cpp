@@ -5,6 +5,8 @@
 #include <assimp/postprocess.h>
 #include <fstream>
 
+#include <iostream>
+
 AniMesh::AniMesh(const std::string &fileName)
 : Mesh(fileName) {
    importer.SetPropertyInteger(AI_CONFIG_PP_LBW_MAX_WEIGHTS, 3);
@@ -23,10 +25,10 @@ AniMesh::AniMesh(const std::string &fileName)
    int tBoneNum = scene->mMeshes[0]->mNumBones;
 
    for (int i = 0; i < tBoneNum; i++) {
-      int tBoneIndx = 0;
-      std::string tBoneName(scene->mMeshes[0]->mBones[i]->mName.C_Str());
+      //int tBoneIndx = tBoneNum;
+      //std::string tBoneName(scene->mMeshes[0]->mBones[i]->mName.C_Str());
 
-      convertToGlmMat(&boneOffset[tBoneIndx], scene->mMeshes[0]->mBones[i]->mOffsetMatrix);
+      convertToGlmMat(&boneOffset[tBoneNum], scene->mMeshes[0]->mBones[i]->mOffsetMatrix);
 
       for (int j = 0; j < scene->mMeshes[0]->mNumVertices; j++) {
          boneWeights[i].push_back(0.0f);
@@ -145,22 +147,30 @@ void AniMesh::convertToGlmMat(glm::mat4* glmMat,  aiMatrix4x4 aiMat) {
 }
 
 glm::quat AniMesh::interpolateRotation(float aniTime, const aiNodeAnim* aniNode) {
-   int indx = findRotation(aniTime, aniNode);
-   float dt = aniNode->mRotationKeys[indx + 1].mTime - aniNode->mRotationKeys[indx].mTime;
-   float amt = (aniTime - aniNode->mRotationKeys[indx].mTime) / dt;
+   glm::quat ret;
+   if (aniNode->mNumRotationKeys == 1) {
+      ret = glm::quat(aniNode->mRotationKeys[0].mValue.w,
+         aniNode->mRotationKeys[0].mValue.x,
+         aniNode->mRotationKeys[0].mValue.y,
+         aniNode->mRotationKeys[0].mValue.z);
+   }
+   else {
+      int indx = findRotation(aniTime, aniNode);
+      float dt = aniNode->mRotationKeys[indx + 1].mTime - aniNode->mRotationKeys[indx].mTime;
+      float amt = (aniTime - aniNode->mRotationKeys[indx].mTime) / dt;
 
-   glm::quat q1 = glm::quat(aniNode->mRotationKeys[indx].mValue.w,
-                            aniNode->mRotationKeys[indx].mValue.x,
-                            aniNode->mRotationKeys[indx].mValue.y,
-                            aniNode->mRotationKeys[indx].mValue.z);
+      glm::quat q1 = glm::quat(aniNode->mRotationKeys[indx].mValue.w,
+         aniNode->mRotationKeys[indx].mValue.x,
+         aniNode->mRotationKeys[indx].mValue.y,
+         aniNode->mRotationKeys[indx].mValue.z);
 
-   glm::quat q2 = glm::quat(aniNode->mRotationKeys[indx + 1].mValue.w,
-                            aniNode->mRotationKeys[indx + 1].mValue.x,
-                            aniNode->mRotationKeys[indx + 1].mValue.y,
-                            aniNode->mRotationKeys[indx + 1].mValue.z);
+      glm::quat q2 = glm::quat(aniNode->mRotationKeys[indx + 1].mValue.w,
+         aniNode->mRotationKeys[indx + 1].mValue.x,
+         aniNode->mRotationKeys[indx + 1].mValue.y,
+         aniNode->mRotationKeys[indx + 1].mValue.z);
 
-   glm::quat ret = glm::mix(q1, q2, amt);
-
+      ret = glm::mix(q1, q2, amt);
+   }
    return ret;
 }
 
@@ -176,21 +186,28 @@ int AniMesh::findRotation(float aniTime, const aiNodeAnim* aniNode) {
 }
 
 glm::vec3 AniMesh::interpolateScale(float aniTime, const aiNodeAnim* aniNode) {
-   int indx = findScale(aniTime, aniNode);
-   float dt = aniNode->mScalingKeys[indx + 1].mTime - aniNode->mScalingKeys[indx].mTime;
-   float amt1 = (aniTime - aniNode->mScalingKeys[indx].mTime) / dt;
-   float amt2 = 1.0f - amt1;
+   glm::vec3 ret;
+   if (aniNode->mNumScalingKeys == 1) {
+      ret = glm::vec3(aniNode->mScalingKeys[0].mValue.x,
+         aniNode->mScalingKeys[0].mValue.y,
+         aniNode->mScalingKeys[0].mValue.z);
+   }
+   else {
+      int indx = findScale(aniTime, aniNode);
+      float dt = aniNode->mScalingKeys[indx + 1].mTime - aniNode->mScalingKeys[indx].mTime;
+      float amt1 = (aniTime - aniNode->mScalingKeys[indx].mTime) / dt;
+      float amt2 = 1.0f - amt1;
 
-   glm::vec3 sca1 = glm::vec3(aniNode->mScalingKeys[indx].mValue.x,
-                              aniNode->mScalingKeys[indx].mValue.y,
-                              aniNode->mScalingKeys[indx].mValue.z);
+      glm::vec3 sca1 = glm::vec3(aniNode->mScalingKeys[indx].mValue.x,
+         aniNode->mScalingKeys[indx].mValue.y,
+         aniNode->mScalingKeys[indx].mValue.z);
 
-   glm::vec3 sca2 = glm::vec3(aniNode->mScalingKeys[indx + 1].mValue.x,
-                              aniNode->mScalingKeys[indx + 1].mValue.y,
-                              aniNode->mScalingKeys[indx + 1].mValue.z);
+      glm::vec3 sca2 = glm::vec3(aniNode->mScalingKeys[indx + 1].mValue.x,
+         aniNode->mScalingKeys[indx + 1].mValue.y,
+         aniNode->mScalingKeys[indx + 1].mValue.z);
 
-   glm::vec3 ret = (amt1 * sca1) + (amt2 * sca2);
-
+      ret = (amt1 * sca1) + (amt2 * sca2);
+   }
    return ret;
 }
 
@@ -206,21 +223,28 @@ int AniMesh::findScale(float aniTime, const aiNodeAnim* aniNode) {
 }
 
 glm::vec3 AniMesh::interpolatePosition(float aniTime, const aiNodeAnim* aniNode) {
-   int indx = findPosition(aniTime, aniNode);
-   float dt = aniNode->mPositionKeys[indx + 1].mTime - aniNode->mPositionKeys[indx].mTime;
-   float amt1 = (aniTime - aniNode->mPositionKeys[indx].mTime) / dt;
-   float amt2 = 1.0f - amt1;
+   glm::vec3 ret;
+   if (aniNode->mNumScalingKeys == 1) {
+      ret = glm::vec3(aniNode->mPositionKeys[0].mValue.x,
+         aniNode->mPositionKeys[0].mValue.y,
+         aniNode->mPositionKeys[0].mValue.z);
+   }
+   else {
+      int indx = findPosition(aniTime, aniNode);
+      float dt = aniNode->mPositionKeys[indx + 1].mTime - aniNode->mPositionKeys[indx].mTime;
+      float amt1 = (aniTime - aniNode->mPositionKeys[indx].mTime) / dt;
+      float amt2 = 1.0f - amt1;
 
-   glm::vec3 pos1 = glm::vec3(aniNode->mPositionKeys[indx].mValue.x,
-                              aniNode->mPositionKeys[indx].mValue.y,
-                              aniNode->mPositionKeys[indx].mValue.z);
+      glm::vec3 pos1 = glm::vec3(aniNode->mPositionKeys[indx].mValue.x,
+         aniNode->mPositionKeys[indx].mValue.y,
+         aniNode->mPositionKeys[indx].mValue.z);
 
-   glm::vec3 pos2 = glm::vec3(aniNode->mPositionKeys[indx + 1].mValue.x,
-                              aniNode->mPositionKeys[indx + 1].mValue.y,
-                              aniNode->mPositionKeys[indx + 1].mValue.z);
-   
-   glm::vec3 ret = (amt1 * pos1) + (amt2 * pos2);
-   
+      glm::vec3 pos2 = glm::vec3(aniNode->mPositionKeys[indx + 1].mValue.x,
+         aniNode->mPositionKeys[indx + 1].mValue.y,
+         aniNode->mPositionKeys[indx + 1].mValue.z);
+
+      ret = (amt1 * pos1) + (amt2 * pos2);
+   }
    return ret;
 }
 

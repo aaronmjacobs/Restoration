@@ -10,4 +10,5 @@ varying vec2 vTexCoord;
 void main() {
    vTexCoord = aTexCoord;
    gl_Position = uProjMatrix *  vec4(aPosition.xyz, 1.0);
+   gl_Position = vec4(aPosition.xyz, 1.0);
 }

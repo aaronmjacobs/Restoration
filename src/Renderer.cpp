@@ -186,7 +186,7 @@ void Renderer::render(Scene &scene) {
 
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    GLint uProjMatrix = plane->getMaterial()->getShaderProgram()->getUniform("uProjMatrix");
-   glm::mat4 orthographic = glm::ortho(0.0f, (float)camera->getWindowWidth(), 0.0f, (float)camera->getWindowHeight(), 0.0f, 1.0f);
+   glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
    glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
    plane->draw();
 }

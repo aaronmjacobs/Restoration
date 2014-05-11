@@ -20,6 +20,7 @@ protected:
 
    UPtr<FrameBuffer> fb;
    UPtr<Skybox> skybox;
+   UPtr<Skybox> skyboxLight;
    UPtr<Model> plane;
 
    /**

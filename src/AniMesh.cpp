@@ -67,6 +67,20 @@ AniMesh::AniMesh(const std::string &fileName)
       boneTransforms[i] = glm::mat4(1.0f);
    }
 
+   // Weights
+   float *weights = getWeights();
+   glGenBuffers(1, &wbo);
+   glBindBuffer(GL_ARRAY_BUFFER, wbo);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * vertWeights.size(), weights, GL_STATIC_DRAW);
+   delete[] weights;
+
+   // Joints
+   float *joints = getJoints();
+   glGenBuffers(1, &jbo);
+   glBindBuffer(GL_ARRAY_BUFFER, jbo);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * vertBones.size(), joints, GL_STATIC_DRAW);
+   delete[] joints;
+
    startTime = glfwGetTime();
 }
 
@@ -219,4 +233,37 @@ int AniMesh::findPosition(float aniTime, const aiNodeAnim* aniNode) {
 
    ASSERT(false, "Could not find position");
    return -1;
+}
+
+float* AniMesh::getBones() {
+   const int VALUES_PER_MATRIX = 16;
+
+   float *packedBones = new float[MAX_BONES * VALUES_PER_MATRIX];
+   for (int i = 0; i < MAX_BONES; i++) {
+      memcpy(packedBones + i * VALUES_PER_MATRIX, glm::value_ptr(boneTransforms[i]), VALUES_PER_MATRIX);
+   }
+
+   return packedBones;
+}
+
+float* AniMesh::getWeights() {
+   const int VALUES_PER_WEIGHT = 3;
+
+   float *packedWeights = new float[vertWeights.size() * VALUES_PER_WEIGHT];
+   for (int i = 0; i < vertWeights.size(); ++i) {
+      memcpy(packedWeights + i * VALUES_PER_WEIGHT, glm::value_ptr(vertWeights[i]), VALUES_PER_WEIGHT);
+   }
+
+   return packedWeights;
+}
+
+float* AniMesh::getJoints() {
+   const int VALUES_PER_JOINT = 3;
+
+   float *packedJoints = new float[vertBones.size() * VALUES_PER_JOINT];
+   for (int i = 0; i < vertBones.size(); ++i) {
+      memcpy(packedJoints + i * VALUES_PER_JOINT, glm::value_ptr(vertBones[i]), VALUES_PER_JOINT);
+   }
+
+   return packedJoints;
 }

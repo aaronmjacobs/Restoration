@@ -2,40 +2,52 @@
 #include "IOUtils.h"
 #include "Material.h"
 #include "Mesh.h"
-#include "Model.h"
+#include "AniModel.h"
+#include "AniMesh.h"
 
-const std::string Model::CLASS_NAME = "Model";
+const std::string AniModel::CLASS_NAME = "AniModel";
 
-Model::Model(SPtr<Material> material, SPtr<Mesh> mesh) {
-   ASSERT(material, "Null material");
-   ASSERT(mesh, "Null mesh");
-   this->material = material;
-   this->mesh = mesh;
+AniModel::AniModel(SPtr<Material> material, SPtr<AniMesh> mesh)
+: Model(material, mesh) {
+   this->aniMesh = mesh;
 }
 
-Model::~Model() {
+AniModel::~AniModel() {
 }
 
-Json::Value Model::serialize() const {
-   Json::Value root;
+Json::Value AniModel::serialize() const {
+   Json::Value root = Model::serialize();
 
    // Class name
    root["@class"] = CLASS_NAME;
 
-   // Material
-   root["material"] = material->getJsonFileName();
-
-   // Mesh
-   root["mesh"] = mesh->serialize();
-
    return root;
 }
 
-void Model::draw() {
+void AniModel::draw() {
+   SPtr<ShaderProgram> shaderProgram = material->getShaderProgram();
+
    // Apply the material properties (and enable the shader)
    material->apply(mesh);
+   aniMesh->updateAnimation();
 
-   SPtr<ShaderProgram> shaderProgram = material->getShaderProgram();
+   // Send the bones
+   float *bones = aniMesh->getBones();
+   GLint bonesMatrix = shaderProgram->getUniform("bonesMatrix");
+   glUniformMatrix4fv(bonesMatrix, MAX_BONES, GL_FALSE, bones);
+   delete[] bones;
+
+   // Set the weights
+   glBindBuffer(GL_ARRAY_BUFFER, aniMesh->getWBO());
+   GLint aWeights = shaderProgram->getAttribute("weights");
+   glEnableVertexAttribArray(aWeights);
+   glVertexAttribPointer(aWeights, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+   // Set the joints
+   glBindBuffer(GL_ARRAY_BUFFER, aniMesh->getJBO());
+   GLint aJoints = shaderProgram->getAttribute("joints");
+   glEnableVertexAttribArray(aJoints);
+   glVertexAttribPointer(aJoints, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
    // Prepare the vertex buffer object
    glBindBuffer(GL_ARRAY_BUFFER, mesh->getVBO());
@@ -61,12 +73,4 @@ void Model::draw() {
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
    shaderProgram->disable(); // TODO Make call to material?
-}
-
-SPtr<Material> Model::getMaterial() {
-   return material;
-}
-
-SPtr<Mesh> Model::getMesh() {
-   return mesh;
 }

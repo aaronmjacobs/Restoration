@@ -15,6 +15,8 @@ private:
    Assimp::Importer importer;
    const aiScene *scene;
 
+   GLuint jbo, wbo;
+
    //The start time for the animation
    float startTime;
 
@@ -65,6 +67,18 @@ public:
    void loadAnimation();
    
    virtual void updateAnimation();
+
+   GLuint getJBO() {
+      return jbo;
+   }
+
+   GLuint getWBO() {
+      return wbo;
+   }
+
+   float* getBones();
+   float* getWeights();
+   float* getJoints();
 };
 
 #endif

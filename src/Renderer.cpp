@@ -50,7 +50,7 @@ void Renderer::prepare(SPtr<Scene> scene) {
    SPtr<ShaderProgram> fboProgram = loader->loadShaderProgram(nullptr, "fbo");
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
    SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
-   plane = UPtr<Model>(new Model(fboMaterial, planeMesh));
+   plane = UPtr<Model>(new Model(fboMaterial, mesh));
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
@@ -170,11 +170,12 @@ void Renderer::render(Scene &scene) {
    //skybox->renderSkybox();
    //skybox->releaseSkybox();
 
-   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-   glEnable(GL_BLEND);
-
-   glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glEnable(GL_BLEND);;
 
    scene.getSceneGraph()->forEach(drawLight);
 
@@ -192,9 +193,7 @@ void Renderer::render(Scene &scene) {
 
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    GLint uProjMatrix = plane->getMaterial()->getShaderProgram()->getUniform("uProjMatrix");
-   //glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
-   //glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
-   glm::mat4 mvp = camera->getProjectionMatrix() * camera->getViewMatrix();
-   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(mvp));
+   glm::mat4 orthographic = glm::ortho(0.0f, (float)camera->getWindowWidth(), 0.0f, (float)camera->getWindowHeight(), 0.0f, 100.0f);
+   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
    plane->draw();
 }

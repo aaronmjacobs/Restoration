@@ -170,12 +170,11 @@ void Renderer::render(Scene &scene) {
    // Render each item in the scene (to frame buffer object) - clear color should be transparent
    prepareLightDraw();
 
+   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
    skyboxLight->renderSkybox();
    skyboxLight->releaseSkybox();
-   /*glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);*/
-
    scene.getSceneGraph()->forEach(drawLight);
 
    // Do any post processing on the light world buffer

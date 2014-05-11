@@ -13,6 +13,15 @@ PlainTextureMaterial::PlainTextureMaterial(const std::string &jsonFileName,
 
 }
 
+PlainTextureMaterial::PlainTextureMaterial(const std::string &jsonFileName,
+	SPtr<ShaderProgram> shaderProgram, const std::string &textureFileName)
+	: Material(jsonFileName, shaderProgram), textureFileName(textureFileName){
+	
+	uTexture = shaderProgram->getUniform("uTexture");
+	aTexCoord = shaderProgram->getAttribute("aTexCoord");
+
+}
+
 PlainTextureMaterial::~PlainTextureMaterial() {
 	if (texture_id){
 		glDeleteTextures(1, &texture_id);

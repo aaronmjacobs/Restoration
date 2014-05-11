@@ -20,7 +20,12 @@ public:
 		SPtr<ShaderProgram> shaderProgram
 		);
 
-	/* Create a texture that will not be used with lighting effects. */
+	PlainTextureMaterial::PlainTextureMaterial(const std::string &jsonFileName,
+		SPtr<ShaderProgram> shaderProgram, const std::string &textureFileName
+		);
+
+
+	/* Load a texture that will not be used with lighting effects. */
 	void createTexture();
 
 	/* Set the texture_id so that we know what to use from the fbo. */

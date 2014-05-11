@@ -1,7 +1,7 @@
 #ifndef ANI_MESH_H
 #define ANI_MESH_H
 
-#define MAX_BONES 100
+#define MAX_BONES 64
 
 #include "Mesh.h"
 #include <assimp/scene.h>

@@ -2,10 +2,21 @@
 #include "FancyAssert.h"
 #include "Loader.h"
 
+#include <assimp/postprocess.h>
+#include <fstream>
+
 AniMesh::AniMesh(const std::string &fileName)
 : Mesh(fileName) {
-   SPtr<Loader> loader = Loader::getInstance();
-   scene = loader->loadAssimpScene(fileName);
+   importer.SetPropertyInteger(AI_CONFIG_PP_LBW_MAX_WEIGHTS, 3);
+
+   // Make sure the file exists and can be read
+   std::ifstream ifile(fileName);
+   ASSERT(ifile, "Unable to open file: %s", fileName.c_str());
+   ifile.close();
+
+   scene = importer.ReadFile(fileName, aiProcess_GenSmoothNormals |
+                      aiProcess_Triangulate);
+   ASSERT(scene, "Unable to import scene: %s", fileName.c_str());
 
    convertToGlmMat(&rootInverseTransform, scene->mRootNode->mTransformation.Inverse());
 

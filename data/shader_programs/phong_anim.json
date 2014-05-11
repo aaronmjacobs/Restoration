@@ -4,7 +4,7 @@
    "shaders" : [
       {
          "@class" : "Shader",
-         "fileName" : "data/shaders/phong_vert.glsl",
+         "fileName" : "data/shaders/phong_vert_anim.glsl",
          "type" : "vertex"
       },
       {

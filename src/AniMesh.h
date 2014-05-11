@@ -12,6 +12,7 @@
  */
 class AniMesh : public Mesh {
 private:
+   Assimp::Importer importer;
    const aiScene *scene;
 
    //The start time for the animation

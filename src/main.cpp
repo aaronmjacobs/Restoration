@@ -7,6 +7,7 @@
 // GLM
 #include "GLMIncludes.h"
 
+#include "audio/Audio.h"
 #include "FlatSceneGraph.h"
 #include "Loader.h"
 #include "Renderer.h"
@@ -47,6 +48,7 @@ namespace {
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
+SPtr<Audio> audio;
 SPtr<Scene> scene;
 Renderer renderer;
 SPtr<Light> light;
@@ -184,8 +186,14 @@ int main(int argc, char *argv[]) {
 
    double start = glfwGetTime();
 
+   audio = std::make_shared<Audio>();
+   audio->systemInit();
+   audio->loadSound("Restoration_5_4.ogg", true);
+   audio->loadSound("win.wav", false);
+
    // Load the scene
    load();
+   scene->setAudio(audio);
 
    //physTest();
    
@@ -228,6 +236,8 @@ int main(int argc, char *argv[]) {
    }
 
    scene.reset();
+
+   audio->cleanUp();
 
    // Clean up GLFW
    glfwDestroyWindow(window);

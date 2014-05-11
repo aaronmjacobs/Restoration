@@ -56,3 +56,6 @@ void Corona::tick(const float dt) {
 int Corona::getAttackPower() {
     return ATTACK_POWER;
 }
+void Corona::collideWith(PhysicalObject &other) {
+   other.collideWith(*this);
+}

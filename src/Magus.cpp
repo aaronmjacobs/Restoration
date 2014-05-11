@@ -56,3 +56,6 @@ void Magus::tick(const float dt) {
 int Magus::getAttackPower() {
     return ATTACK_POWER;
 }
+void Magus::collideWith(PhysicalObject &other) {
+   other.collideWith(*this);
+}

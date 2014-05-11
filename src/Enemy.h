@@ -13,7 +13,9 @@
 
 class Enemy : public Character {
 public:
-    Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, int attackPower, const std::string &name = "");
+   static const std::string CLASS_NAME;
+
+   Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, int attackPower, const std::string &name = "");
     
    virtual ~Enemy();
 

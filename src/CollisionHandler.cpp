@@ -22,13 +22,12 @@ void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
 }
 
 void CollisionHandler::handleCollision(Player &player, Magus &magus) {
-    player.Character::setHealth(player.getHealth() - 1);
-    //Have enemy class with a damage argument
+    player.Character::setHealth(player.getHealth() - magus.getAttackPower());
 }
 
 void CollisionHandler::handleCollision(Player &player, Corona &corona) {
-    player.Character::setHealth(player.getHealth() - 4);
-    //Have enemy class with a damage argument
+    player.Character::setHealth(player.getHealth() - corona.getAttackPower());
+    //Add 
 }
 
 

@@ -14,9 +14,11 @@
 const int Corona::BASE_HEALTH = 14;
 const float Corona::WALK_SPEED = 2.0f;
 const float Corona::JUMP_FORCE = 300.0f;
+const int Corona::ATTACK_POWER = 4;
+
 
 Corona::Corona(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Enemy(scene, model, BASE_HEALTH, name) {
+: Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
 }
 
 Corona::~Corona() {
@@ -41,4 +43,8 @@ void Corona::tick(const float dt) {
     
     position += velocity * dt + 0.5f * acceleration * dt * dt;
     velocity += acceleration * dt;
+}
+
+int Corona::getAttackPower() {
+    return ATTACK_POWER;
 }

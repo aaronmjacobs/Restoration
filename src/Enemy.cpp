@@ -11,7 +11,7 @@
 
 
 
-Enemy::Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, const std::string &name)
+Enemy::Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, int attackPower, const std::string &name)
 : Character(scene, model, health, name) {
 }
 

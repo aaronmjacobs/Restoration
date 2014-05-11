@@ -14,11 +14,12 @@
 const int Magus::BASE_HEALTH = 7;
 const float Magus::WALK_SPEED = 4.0f;
 const float Magus::JUMP_FORCE = 300.0f;
+const int Magus::ATTACK_POWER = 1;
 
 
 //Put health in the creation of Magus, and damage
 Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Enemy(scene, model, BASE_HEALTH, name) {
+: Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
 }
 
 Magus::~Magus() {
@@ -43,4 +44,8 @@ void Magus::tick(const float dt) {
     
     position += velocity * dt + 0.5f * acceleration * dt * dt;
     velocity += acceleration * dt;
+}
+
+int Magus::getAttackPower() {
+    return ATTACK_POWER;
 }

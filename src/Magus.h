@@ -16,6 +16,7 @@ protected:
     static const int BASE_HEALTH;
     static const float WALK_SPEED;
     static const float JUMP_FORCE;
+    static const int ATTACK_POWER;
     
     bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
     
@@ -24,6 +25,7 @@ public:
     ~Magus();
     
     virtual void tick(const float dt);
+    virtual int getAttackPower();
 };
 
 #endif /* defined(MAGUS_H) */

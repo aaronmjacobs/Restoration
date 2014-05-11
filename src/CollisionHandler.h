@@ -3,16 +3,15 @@
 
 #include "Types.h"
 
-class MovableObject;
-class Scene;
-class Player;
+class Corona;
 class Enemy;
 class Magus;
-class Corona;
-//class Platform;
-//class Bullet;
-//class PlayerBullet;
-//class EnemyBullet
+class MovableObject;
+class PhysicalObject;
+class Player;
+class Scene;
+class Scenery;
+
 //class MovingPlatform
 
 class CollisionHandler {
@@ -22,6 +21,8 @@ protected:
 public:
    CollisionHandler(Scene &scene);
    virtual ~CollisionHandler();
+
+   void handleCollision(Scenery &first, PhysicalObject &second);
 
     void handleCollision(MovableObject &first, MovableObject &second);
     void handleCollision(Player &player, Enemy &enemy);

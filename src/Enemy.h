@@ -10,14 +10,19 @@
 #define ENEMY_H
 
 #include "Character.h"
-#include "InputListener.h"
 
-class Enemy : public Character, public InputListener {
+class Enemy : public Character {
 public:
-    Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, const std::string &name = "");
+   static const std::string CLASS_NAME;
+
+   Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, const std::string &name = "");
     
-    virtual ~Enemy();
+   virtual ~Enemy();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 };
+
 #endif /* defined(ENEMY_H) */
-
-

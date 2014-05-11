@@ -7,9 +7,9 @@
 //
 
 #include "Corona.h"
-
 #include "GLIncludes.h"
-#include "Enemy.h"
+
+const std::string Corona::CLASS_NAME = "Corona";
 
 const int Corona::BASE_HEALTH = 14;
 const float Corona::WALK_SPEED = 2.0f;
@@ -20,6 +20,14 @@ Corona::Corona(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 }
 
 Corona::~Corona() {
+}
+
+Json::Value Corona::serialize() const {
+   Json::Value root = Enemy::serialize();
+
+   root["@class"] = CLASS_NAME;
+
+   return root;
 }
 
 void Corona::tick(const float dt) {
@@ -41,4 +49,8 @@ void Corona::tick(const float dt) {
     
     position += velocity * dt + 0.5f * acceleration * dt * dt;
     velocity += acceleration * dt;
+}
+
+void Corona::collideWith(PhysicalObject &other) {
+   other.collideWith(*this);
 }

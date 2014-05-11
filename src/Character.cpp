@@ -1,10 +1,23 @@
 #include "Character.h"
 
+const std::string Character::CLASS_NAME = "Character";
+
 Character::Character(SPtr<Scene> scene, SPtr<Model> model, int health, const std::string &name)
    : MovableObject(scene, model, name), health(health), onGround(false) {
 }
 
 Character::~Character() {
+}
+
+Json::Value Character::serialize() const {
+   Json::Value root = MovableObject::serialize();
+
+   root["@class"] = CLASS_NAME;
+
+   // Health
+   root["health"] = health;
+
+   return root;
 }
 
 int Character::getHealth() {

@@ -13,6 +13,10 @@ CollisionHandler::CollisionHandler(Scene &scene)
 CollisionHandler::~CollisionHandler() {
 }
 
+void CollisionHandler::handleCollision(Scenery &first, PhysicalObject &second) {
+   // TODO Handle collision between an arbitrary immobile object, and an arbitrary mobile object
+}
+
 void CollisionHandler::handleCollision(MovableObject &first, MovableObject &second) {
    std::cout << "Colliding" << std::endl;
 }

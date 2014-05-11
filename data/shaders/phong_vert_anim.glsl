@@ -22,7 +22,7 @@ void main() {
     weights[2] * bonesMatrix[int(joints[2])];
 
   // Transforms
-  vec4 lPosition = uModelMatrix * animationMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);
+  vec4 lPosition = uModelMatrix * animationMatrix * vec4(aPosition, 1);
   vWorldPosition = vec3(lPosition.x, lPosition.y, lPosition.z);
   gl_Position = uProjMatrix * uViewMatrix * lPosition;
 

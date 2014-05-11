@@ -239,8 +239,8 @@ float* AniMesh::getBones() {
    const int VALUES_PER_MATRIX = 16;
 
    float *packedBones = new float[MAX_BONES * VALUES_PER_MATRIX];
-   for (int i = 0; i < MAX_BONES; i++) {
-      memcpy(packedBones + i * VALUES_PER_MATRIX, glm::value_ptr(boneTransforms[i]), VALUES_PER_MATRIX);
+   for (int i = 0; i < MAX_BONES; ++i) {
+      memcpy(&packedBones[i * VALUES_PER_MATRIX], glm::value_ptr(boneTransforms[i]), VALUES_PER_MATRIX * sizeof(float));
    }
 
    return packedBones;
@@ -251,7 +251,7 @@ float* AniMesh::getWeights() {
 
    float *packedWeights = new float[vertWeights.size() * VALUES_PER_WEIGHT];
    for (int i = 0; i < vertWeights.size(); ++i) {
-      memcpy(packedWeights + i * VALUES_PER_WEIGHT, glm::value_ptr(vertWeights[i]), VALUES_PER_WEIGHT);
+      memcpy(&packedWeights[i * VALUES_PER_WEIGHT], glm::value_ptr(vertWeights[i]), VALUES_PER_WEIGHT * sizeof(float));
    }
 
    return packedWeights;
@@ -262,7 +262,7 @@ float* AniMesh::getJoints() {
 
    float *packedJoints = new float[vertBones.size() * VALUES_PER_JOINT];
    for (int i = 0; i < vertBones.size(); ++i) {
-      memcpy(packedJoints + i * VALUES_PER_JOINT, glm::value_ptr(vertBones[i]), VALUES_PER_JOINT);
+      memcpy(&packedJoints[i * VALUES_PER_JOINT], glm::value_ptr(vertBones[i]), VALUES_PER_JOINT * sizeof(float));
    }
 
    return packedJoints;

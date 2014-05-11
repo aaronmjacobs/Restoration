@@ -68,6 +68,8 @@ void AniModel::draw() {
    glDrawElements(GL_TRIANGLES, mesh->getNumIndices(), GL_UNSIGNED_INT, 0);
 
    // Unbind
+   glDisableVertexAttribArray(aWeights);
+   glDisableVertexAttribArray(aJoints);
    glDisableVertexAttribArray(aPosition);
    glDisableVertexAttribArray(aNormal);
    glBindBuffer(GL_ARRAY_BUFFER, 0);

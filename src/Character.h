@@ -9,8 +9,15 @@ protected:
    bool onGround;
 
 public:
+   static const std::string CLASS_NAME;
+
    Character(SPtr<Scene> scene, SPtr<Model> model, int health, const std::string &name = "");
    virtual ~Character();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    int getHealth();
    bool isOnGround();

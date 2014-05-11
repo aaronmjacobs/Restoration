@@ -1,6 +1,8 @@
 #include "GLIncludes.h"
 #include "Player.h"
 
+const std::string Player::CLASS_NAME = "Player";
+
 const int Player::BASE_HEALTH = 10;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 300.0f;
@@ -10,6 +12,14 @@ Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 }
 
 Player::~Player() {
+}
+
+Json::Value Player::serialize() const {
+   Json::Value root = Character::serialize();
+
+   root["@class"] = CLASS_NAME;
+
+   return root;
 }
 
 void Player::onKeyEvent(int key, int action) {
@@ -58,4 +68,8 @@ void Player::tick(const float dt) {
 
    position += velocity * dt + 0.5f * acceleration * dt * dt;
    velocity += acceleration * dt;
+}
+
+void Player::collideWith(PhysicalObject &other) {
+   other.collideWith(*this);
 }

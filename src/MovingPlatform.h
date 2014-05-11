@@ -6,9 +6,7 @@
 //  Copyright (c) 2014 Restoration Team. All rights reserved.
 //
 
-#ifndef __Restoration__MovingPlatform__
-#define __Restoration__MovingPlatform__
+#ifndef MOVING_PLATFORM_H
+#define MOVING_PLATFORM_H
 
-#include <iostream>
-
-#endif /* defined(__Restoration__MovingPlatform__) */
+#endif /* defined(MOVING_PLATFORM_H) */

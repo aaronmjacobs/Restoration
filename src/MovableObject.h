@@ -9,8 +9,15 @@ protected:
    glm::vec3 velocity, acceleration;
 
 public:
+   static const std::string CLASS_NAME;
+
    MovableObject(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
    virtual ~MovableObject();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    glm::vec3 getVelocity();
    glm::vec3 getAcceleration();
@@ -18,9 +25,6 @@ public:
    void setAcceleration(const glm::vec3 &acc);
 
    virtual void tick(const float dt);
-
-   virtual void collideWith(PhysicalObject &other);
-   virtual void collideWith(MovableObject &other);
 };
 
 #endif

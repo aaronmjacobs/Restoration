@@ -55,7 +55,7 @@
             "squareFalloff" : 0.0008
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "text",
@@ -83,7 +83,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "otherMaterial",
@@ -111,7 +111,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "testMaterial",

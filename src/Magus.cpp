@@ -6,16 +6,15 @@
 //  Copyright (c) 2014 Restoration Team. All rights reserved.
 //
 
+#include "GLIncludes.h"
 #include "Magus.h"
 
-#include "GLIncludes.h"
-#include "Enemy.h"
+const std::string Magus::CLASS_NAME = "Magus";
 
 const int Magus::BASE_HEALTH = 7;
 const float Magus::WALK_SPEED = 4.0f;
 const float Magus::JUMP_FORCE = 300.0f;
 const int Magus::ATTACK_POWER = 1;
-
 
 //Put health in the creation of Magus, and damage
 Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
@@ -23,6 +22,14 @@ Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 }
 
 Magus::~Magus() {
+}
+
+Json::Value Magus::serialize() const {
+   Json::Value root = Enemy::serialize();
+
+   root["@class"] = CLASS_NAME;
+
+   return root;
 }
 
 void Magus::tick(const float dt) {

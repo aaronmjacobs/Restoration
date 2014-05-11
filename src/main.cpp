@@ -48,12 +48,6 @@ const float FOV = glm::radians(80.0f);
 
 SPtr<Scene> scene;
 Renderer renderer;
-SPtr<Light> light;
-
-void testGlError(const char *message) {
-   GLenum error = glGetError();
-   ASSERT(error == GL_FALSE, "%s: %d", message, error);
-}
 
 void errorCallback(int error, const char* description) {
    ASSERT(false, "Error %d: %s", error, description);
@@ -86,28 +80,6 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
    if (camera) {
       camera->onWindowSizeChange(width, height);
    }
-}
-
-void addRemoveTest() {
-   SPtr<SceneGraph> graph = scene->getSceneGraph();
-
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
-   SPtr<Loader> loader = Loader::getInstance();
-   SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
-   SPtr<Model> model = std::make_shared<Model>(material2, mesh);
-
-   std::string derp = "derp";
-   for (int i = 0; i < 500000; ++i) {
-      graph->add(std::make_shared<Geometry>(scene, model, derp + std::to_string(i)));
-   }
-   int i;
-   std::cin >> i;
-   for (int i = 0; i < 500000; ++i) {
-      WPtr<SceneObject> wObj = graph->find(derp + std::to_string(i));
-      SPtr<SceneObject> obj = wObj.lock();
-      obj->markForRemoval();
-   }
-   scene->tick(0.016f);
 }
 
 void load() {
@@ -147,7 +119,7 @@ void load() {
    //IOUtils::save(*scene, "testScene2");
 }*/
 
-void physTest() {
+/*void physTest() {
    SPtr<SceneGraph> graph = scene->getSceneGraph();
 
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
@@ -164,7 +136,7 @@ void physTest() {
 
    graph->addPhys(physOne);
    graph->addPhys(physTwo);
-}
+}*/
 
 } // namespace
 
@@ -210,7 +182,7 @@ int main(int argc, char *argv[]) {
    // Load the scene
    load();
 
-   physTest();
+   //physTest();
    
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, WIDTH, HEIGHT);

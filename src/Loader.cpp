@@ -1,4 +1,7 @@
 #include "Camera.h"
+#include "Character.h"
+#include "Corona.h"
+#include "Enemy.h"
 #include "FancyAssert.h"
 #include "FlatSceneGraph.h"
 #include "Geometry.h"
@@ -6,13 +9,18 @@
 #include "lib/json/json.h"
 #include "Light.h"
 #include "Loader.h"
+#include "Magus.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Model.h"
+#include "MovableObject.h"
 #include "PhongMaterial.h"
+#include "PhysicalObject.h"
+#include "Player.h"
 #include "Scene.h"
 #include "SceneGraph.h"
 #include "SceneObject.h"
+#include "Scenery.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "TextureMaterial.h"
@@ -63,50 +71,88 @@ void Loader::check(const std::string &type, const Json::Value &container, const 
    ASSERT(container.isMember(key), "Missing key while loading %s: %s", type.c_str(), key.c_str());
 }
 
+bool Loader::isSceneObject(const std::string &className) {
+   return className == SceneObject::CLASS_NAME || isGeometry(className) || isLight(className) || isCamera(className);
+}
+
+bool Loader::isLight(const std::string &className) {
+   return className == Light::CLASS_NAME;
+}
+
+bool Loader::isCamera(const std::string &className) {
+   return className == Camera::CLASS_NAME;
+}
+
+bool Loader::isGeometry(const std::string &className) {
+   return className == Geometry::CLASS_NAME || isPhysicalObject(className);
+}
+
+bool Loader::isPhysicalObject(const std::string &className) {
+   return className == PhysicalObject::CLASS_NAME || isScenery(className) || isMovableObject(className);
+}
+
+bool Loader::isScenery(const std::string &className) {
+   return className == Scenery::CLASS_NAME;
+}
+
+bool Loader::isMovableObject(const std::string &className) {
+   return className == MovableObject::CLASS_NAME || isCharacter(className);
+}
+
+bool Loader::isCharacter(const std::string &className) {
+   return className == Character::CLASS_NAME || isPlayer(className) || isEnemy(className);
+}
+
+bool Loader::isPlayer(const std::string &className) {
+   return className == Player::CLASS_NAME;
+}
+
+bool Loader::isEnemy(const std::string &className) {
+   return className == Enemy::CLASS_NAME || isMagus(className) || isCorona(className);
+}
+
+bool Loader::isMagus(const std::string &className) {
+   return className == Magus::CLASS_NAME;
+}
+
+bool Loader::isCorona(const std::string &className) {
+   return className == Corona::CLASS_NAME;
+}
+
 /**********************************
  ** Protected (internal) loaders **
  **********************************/
 
-SceneObjectData Loader::loadSceneObjectData(const Json::Value &root) {
-   SceneObjectData data;
+glm::vec3 Loader::loadVec3(const Json::Value &root, bool rgb) {
+   glm::vec3 vec;
 
-   // Name
-   check("SceneObjectData", root, "name");
-   data.name = root["name"].asString();
+   const std::string x = rgb ? "r" : "x";
+   const std::string y = rgb ? "g" : "y";
+   const std::string z = rgb ? "b" : "z";
 
-   // Position
-   check("SceneObjectData", root, "position");
-   Json::Value posVal = root["position"];
-   check("SceneObjectData", posVal, "x");
-   check("SceneObjectData", posVal, "y");
-   check("SceneObjectData", posVal, "z");
-   data.position.x = posVal["x"].asFloat();
-   data.position.y = posVal["y"].asFloat();
-   data.position.z = posVal["z"].asFloat();
+   check("vec3", root, x);
+   check("vec3", root, y);
+   check("vec3", root, z);
+   vec.x = root[x].asFloat();
+   vec.y = root[y].asFloat();
+   vec.z = root[z].asFloat();
 
-   // Orientation
-   check("SceneObjectData", root, "orientation");
-   Json::Value oriVal = root["orientation"];
-   check("SceneObjectData", oriVal, "w");
-   check("SceneObjectData", oriVal, "x");
-   check("SceneObjectData", oriVal, "y");
-   check("SceneObjectData", oriVal, "z");
-   data.orientation.w = oriVal["w"].asFloat();
-   data.orientation.x = oriVal["x"].asFloat();
-   data.orientation.y = oriVal["y"].asFloat();
-   data.orientation.z = oriVal["z"].asFloat();
+   return vec;
+}
 
-   // Scale
-   check("SceneObjectData", root, "scale");
-   Json::Value scaleVal = root["scale"];
-   check("SceneObjectData", scaleVal, "x");
-   check("SceneObjectData", scaleVal, "y");
-   check("SceneObjectData", scaleVal, "z");
-   data.scale.x = scaleVal["x"].asFloat();
-   data.scale.y = scaleVal["y"].asFloat();
-   data.scale.z = scaleVal["z"].asFloat();
+glm::quat Loader::loadQuat(const Json::Value &root) {
+   glm::quat quat;
 
-   return data;
+   check("quat", root, "w");
+   check("quat", root, "x");
+   check("quat", root, "y");
+   check("quat", root, "z");
+   quat.w = root["w"].asFloat();
+   quat.x = root["x"].asFloat();
+   quat.y = root["y"].asFloat();
+   quat.z = root["z"].asFloat();
+
+   return quat;
 }
 
 PhongMaterialData Loader::loadPhongMaterialData(SPtr<Scene> scene, const Json::Value &root) {
@@ -118,51 +164,45 @@ PhongMaterialData Loader::loadPhongMaterialData(SPtr<Scene> scene, const Json::V
 
    // Ambient color
    check("PhongMaterial", root, "ambient");
-   Json::Value ambientValue = root["ambient"];
-   check("PhongMaterial", ambientValue, "r");
-   check("PhongMaterial", ambientValue, "g");
-   check("PhongMaterial", ambientValue, "b");
-   float ambientR = ambientValue["r"].asFloat();
-   float ambientG = ambientValue["g"].asFloat();
-   float ambientB = ambientValue["b"].asFloat();
-   data.ambient = glm::vec3(ambientR, ambientG, ambientB);
+   data.ambient = loadVec3(root["ambient"], true);
 
    // Diffuse color
    check("PhongMaterial", root, "diffuse");
-   Json::Value diffuseValue = root["diffuse"];
-   check("PhongMaterial", diffuseValue, "r");
-   check("PhongMaterial", diffuseValue, "g");
-   check("PhongMaterial", diffuseValue, "b");
-   float diffuseR = diffuseValue["r"].asFloat();
-   float diffuseG = diffuseValue["g"].asFloat();
-   float diffuseB = diffuseValue["b"].asFloat();
-   data.diffuse = glm::vec3(diffuseR, diffuseG, diffuseB);
+   data.diffuse = loadVec3(root["diffuse"], true);
 
    // Specular color
    check("PhongMaterial", root, "specular");
-   Json::Value specularValue = root["specular"];
-   check("PhongMaterial", specularValue, "r");
-   check("PhongMaterial", specularValue, "g");
-   check("PhongMaterial", specularValue, "b");
-   float specularR = specularValue["r"].asFloat();
-   float specularG = specularValue["g"].asFloat();
-   float specularB = specularValue["b"].asFloat();
-   data.specular = glm::vec3(specularR, specularG, specularB);
+   data.specular = loadVec3(root["specular"], true);
 
    // Emission color
    check("PhongMaterial", root, "emission");
-   Json::Value emissionValue = root["emission"];
-   check("PhongMaterial", emissionValue, "r");
-   check("PhongMaterial", emissionValue, "g");
-   check("PhongMaterial", emissionValue, "b");
-   float emissionR = emissionValue["r"].asFloat();
-   float emissionG = emissionValue["g"].asFloat();
-   float emissionB = emissionValue["b"].asFloat();
-   data.emission = glm::vec3(emissionR, emissionG, emissionB);
+   data.emission = loadVec3(root["emission"], true);
 
    // Shininess
    check("PhongMaterial", root, "shininess");
    data.shininess = root["shininess"].asFloat();
+   
+   return data;
+}
+
+SceneObjectData Loader::loadSceneObjectData(const Json::Value &root) {
+   SceneObjectData data;
+
+   // Name
+   check("SceneObjectData", root, "name");
+   data.name = root["name"].asString();
+
+   // Position
+   check("SceneObjectData", root, "position");
+   data.position = loadVec3(root["position"]);
+
+   // Orientation
+   check("SceneObjectData", root, "orientation");
+   data.orientation = loadQuat(root["orientation"]);
+
+   // Scale
+   check("SceneObjectData", root, "scale");
+   data.scale = loadVec3(root["scale"]);
 
    return data;
 }
@@ -206,6 +246,66 @@ SPtr<Camera> Loader::loadCamera(SPtr<Scene> scene, const Json::Value &root) {
    return camera;
 }
 
+SPtr<Character> Loader::loadCharacter(SPtr<Scene> scene, const Json::Value &root) {
+   check("Character", root, "@class");
+   std::string className = root["@class"].asString();
+
+   if (isPlayer(className)) {
+      return loadPlayer(scene, root);
+   } else if (isEnemy(className)) {
+      return loadEnemy(scene, root);
+   }
+
+   ASSERT(false, "Invalid class name for Character: %s", className.c_str());
+
+   return SPtr<Character>();
+}
+
+SPtr<Corona> Loader::loadCorona(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Corona", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   // MovableObject
+   check("Corona", root, "velocity");
+   glm::vec3 velocity = loadVec3(root["velocity"]);
+
+   check("Corona", root, "acceleration");
+   glm::vec3 acceleration = loadVec3("acceleration");
+
+   // Character
+   check("Corona", root, "health");
+   int health = root["health"].asInt();
+
+   SPtr<Corona> corona = std::make_shared<Corona>(scene, model, data.name);
+   corona->setPosition(data.position);
+   corona->setOrientation(data.orientation);
+   corona->setScale(data.scale);
+   corona->setVelocity(velocity);
+   corona->setAcceleration(acceleration);
+   corona->setHealth(health);
+
+   return corona;
+}
+
+SPtr<Enemy> Loader::loadEnemy(SPtr<Scene> scene, const Json::Value &root) {
+   check("Enemy", root, "@class");
+   std::string className = root["@class"].asString();
+
+   if (isMagus(className)) {
+      return loadMagus(scene, root);
+   } else if (isCorona(className)) {
+      return loadCorona(scene, root);
+   }
+
+   ASSERT(false, "Invalid class name for Enemy: %s", className.c_str());
+
+   return SPtr<Enemy>();
+}
+
 SPtr<FlatSceneGraph> Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
    SPtr<FlatSceneGraph> graph = std::make_shared<FlatSceneGraph>(scene);
 
@@ -221,11 +321,11 @@ SPtr<FlatSceneGraph> Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::V
       std::string className = objectVal["@class"].asString();
 
       SPtr<SceneObject> sceneObject;
-      if (className == Light::CLASS_NAME) {
+      if (isLight(className)) {
          SPtr<Light> light = loadLight(scene, objectVal);
          scene->addLight(light);
          sceneObject = light;
-      } else if (className == Camera::CLASS_NAME) {
+      } else if (isCamera(className)) {
          ASSERT(!cameraLoaded, "Camera already loaded for scene graph");
          cameraLoaded = true;
 
@@ -245,19 +345,16 @@ SPtr<FlatSceneGraph> Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::V
 }
 
 SPtr<Geometry> Loader::loadGeometry(SPtr<Scene> scene, const Json::Value &root) {
-   // SceneObject
-   SceneObjectData data = loadSceneObjectData(root);
+   check("Geometry", root, "@class");
+   std::string className = root["@class"].asString();
 
-   // Model
-   check("Geometry", root, "model");
-   SPtr<Model> model = loadModel(scene, root["model"]);
+   if (isPhysicalObject(className)) {
+      return loadPhysicalObject(scene, root);
+   }
 
-   SPtr<Geometry> geometry = std::make_shared<Geometry>(scene, model, data.name);
-   geometry->setPosition(data.position);
-   geometry->setOrientation(data.orientation);
-   geometry->setScale(data.scale);
+   ASSERT(false, "Invalid class name for Geometry: %s", className.c_str());
 
-   return geometry;
+   return SPtr<Geometry>();
 }
 
 SPtr<Light> Loader::loadLight(SPtr<Scene> scene, const Json::Value &root) {
@@ -267,13 +364,7 @@ SPtr<Light> Loader::loadLight(SPtr<Scene> scene, const Json::Value &root) {
    // Color
    glm::vec3 color;
    check("Light", root, "color");
-   Json::Value colorVal = root["color"];
-   check("Light", colorVal, "r");
-   check("Light", colorVal, "g");
-   check("Light", colorVal, "b");
-   color.r = colorVal["r"].asFloat();
-   color.g = colorVal["g"].asFloat();
-   color.b = colorVal["b"].asFloat();
+   color = loadVec3(root["color"], true);
 
    // Falloff
    check("Light", root, "constFalloff");
@@ -289,6 +380,36 @@ SPtr<Light> Loader::loadLight(SPtr<Scene> scene, const Json::Value &root) {
    light->setScale(data.scale);
 
    return light;
+}
+
+SPtr<Magus> Loader::loadMagus(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Magus", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   // MovableObject
+   check("Magus", root, "velocity");
+   glm::vec3 velocity = loadVec3(root["velocity"]);
+
+   check("Magus", root, "acceleration");
+   glm::vec3 acceleration = loadVec3("acceleration");
+
+   // Character
+   check("Magus", root, "health");
+   int health = root["health"].asInt();
+
+   SPtr<Magus> magus = std::make_shared<Magus>(scene, model, data.name);
+   magus->setPosition(data.position);
+   magus->setOrientation(data.orientation);
+   magus->setScale(data.scale);
+   magus->setVelocity(velocity);
+   magus->setAcceleration(acceleration);
+   magus->setHealth(health);
+
+   return magus;
 }
 
 SPtr<Material> Loader::loadMaterial(SPtr<Scene> scene, const std::string &fileName) {
@@ -331,12 +452,70 @@ SPtr<Model> Loader::loadModel(SPtr<Scene> scene, const Json::Value &root) {
    return std::make_shared<Model>(material, mesh);
 }
 
+SPtr<MovableObject> Loader::loadMovableObject(SPtr<Scene> scene, const Json::Value &root) {
+   check("MovableObject", root, "@class");
+   std::string className = root["@class"].asString();
+
+   if (isCharacter(className)) {
+      return loadCharacter(scene, root);
+   }
+
+   ASSERT(false, "Invalid class name for MovableObject: %s", className.c_str());
+
+   return SPtr<MovableObject>();
+}
+
 SPtr<PhongMaterial> Loader::loadPhongMaterial(SPtr<Scene> scene, const std::string &fileName) {
    Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<PhongMaterial>(fileName));
 
    PhongMaterialData data = loadPhongMaterialData(scene, root);
 
    return std::make_shared<PhongMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess);
+}
+
+SPtr<PhysicalObject> Loader::loadPhysicalObject(SPtr<Scene> scene, const Json::Value &root) {
+   check("PhysicalObject", root, "@class");
+   std::string className = root["@class"].asString();
+
+   if (isMovableObject(className)) {
+      return loadMovableObject(scene, root);
+   } else if (isScenery(className)) {
+      return loadScenery(scene, root);
+   }
+
+   ASSERT(false, "Invalid class name for PhysicalObject: %s", className.c_str());
+
+   return SPtr<PhysicalObject>();
+}
+
+SPtr<Player> Loader::loadPlayer(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Player", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   // MovableObject
+   check("Player", root, "velocity");
+   glm::vec3 velocity = loadVec3(root["velocity"]);
+
+   check("Player", root, "acceleration");
+   glm::vec3 acceleration = loadVec3("acceleration");
+
+   // Character
+   check("Player", root, "health");
+   int health = root["health"].asInt();
+
+   SPtr<Player> player = std::make_shared<Player>(scene, model, data.name);
+   player->setPosition(data.position);
+   player->setOrientation(data.orientation);
+   player->setScale(data.scale);
+   player->setVelocity(velocity);
+   player->setAcceleration(acceleration);
+   player->setHealth(health);
+
+   return player;
 }
 
 SPtr<Scene> Loader::loadScene(const std::string &fileName) {
@@ -369,17 +548,33 @@ SPtr<SceneObject> Loader::loadSceneObject(SPtr<Scene> scene, const Json::Value &
    check("SceneObject", root, "@class");
    std::string className = root["@class"].asString();
 
-   if (className == Geometry::CLASS_NAME) {
+   if (isGeometry(className)) {
       return loadGeometry(scene, root);
-   } else if (className == Light::CLASS_NAME) {
+   } else if (isLight(className)) {
       return loadLight(scene, root);
-   } else if (className == Camera::CLASS_NAME) {
+   } else if (isCamera(className)) {
       return loadCamera(scene, root);
    }
 
    ASSERT(false, "Invalid class name for SceneObject: %s", className.c_str());
 
    return SPtr<SceneObject>();
+}
+
+SPtr<Scenery> Loader::loadScenery(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Scenery", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   SPtr<Scenery> scenery = std::make_shared<Scenery>(scene, model, data.name);
+   scenery->setPosition(data.position);
+   scenery->setOrientation(data.orientation);
+   scenery->setScale(data.scale);
+
+   return scenery;
 }
 
 SPtr<Shader> Loader::loadShader(const Json::Value &root) {

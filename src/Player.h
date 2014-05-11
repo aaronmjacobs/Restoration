@@ -3,8 +3,6 @@
 
 #include "Character.h"
 #include "InputListener.h"
-//#include "Enemy.h"
-//#include "Platform.h"
 
 class Player : public Character, public InputListener {
 protected:
@@ -15,16 +13,25 @@ protected:
    bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
 
 public:
+   static const std::string CLASS_NAME;
+
    Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
    ~Player();
 
-    virtual void onKeyEvent(int key, int action);
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
-    virtual void onMouseButtonEvent(int button, int action);
+   virtual void onKeyEvent(int key, int action);
 
-    virtual void onMouseMotionEvent(double xPos, double yPos);
+   virtual void onMouseButtonEvent(int button, int action);
 
-    virtual void tick(const float dt);
+   virtual void onMouseMotionEvent(double xPos, double yPos);
+
+   virtual void tick(const float dt);
+
+   virtual void collideWith(PhysicalObject &other);
 };
 
 #endif

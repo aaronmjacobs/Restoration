@@ -104,15 +104,16 @@ SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 	glm::vec3 objPos, near, far, objRay, mouseRay, mousePos;
 	glm::vec4 viewP;
 
-	double minDist = NULL, newDist = 0.0;
+	double minDist = 0.0, newDist = 0.0;
+   bool minDistSet = false;
 
 	SPtr<Scene> s = scene.lock();
 	if (!s) {
-		return NULL;
+		return SPtr<PhysicalObject>();
 	}
 	SPtr<Camera> c = s->getCamera().lock();
 	if (!c) {
-		return NULL;
+		return SPtr<PhysicalObject>();
 	}
 
 	proj = c->getProjectionMatrix();
@@ -139,7 +140,8 @@ SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 
 		if ((physObject->getBounds()).contains(rayIntersect)) {
 			printf("hi\n");
-			if (minDist == NULL || (newDist = glm::length(objRay)) < minDist) {
+			if (!minDistSet|| (newDist = glm::length(objRay)) < minDist) {
+            minDistSet = true;
 				minDist = newDist;
 				obj = physObject;
 			}

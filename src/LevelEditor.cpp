@@ -9,6 +9,7 @@
 #include "Loader.h"
 #include "Material.h"
 #include "MovableObject.h"
+#include "Scenery.h"
 
 /*
 *Todo
@@ -248,7 +249,7 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 			SPtr<Material> material2 = loader->loadMaterial(s, "otherMaterial");
 			SPtr<Model> model = std::make_shared<Model>(material2, mesh);
 
-			SPtr<MovableObject> newObj = std::make_shared<MovableObject>(s, model);
+			SPtr<Scenery> newObj = std::make_shared<Scenery>(s, model);
 
 			//tempObj = SPtr<PhysicalObject>(placeObj);
 			glm::vec3 pos(0.0f, 0.0f, -3.0f);

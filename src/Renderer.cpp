@@ -170,7 +170,15 @@ void Renderer::render(Scene &scene) {
    //skybox->renderSkybox();
    //skybox->releaseSkybox();
 
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glEnable(GL_BLEND);
+
+   glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
    scene.getSceneGraph()->forEach(drawLight);
+
+   glDisable(GL_BLEND);
 
    // Do any post processing on the light world buffer
 
@@ -182,11 +190,11 @@ void Renderer::render(Scene &scene) {
 
    scene.getSceneGraph()->forEach(drawDark);
 
-   //fb->applyRenderToTextureFBO();
-
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    GLint uProjMatrix = plane->getMaterial()->getShaderProgram()->getUniform("uProjMatrix");
-   glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
-   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
+   //glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
+   //glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
+   glm::mat4 mvp = camera->getProjectionMatrix() * camera->getViewMatrix();
+   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(mvp));
    plane->draw();
 }

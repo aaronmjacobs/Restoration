@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Magus.h"
 #include "Corona.h"
+#include "Scenery.h"
 
 CollisionHandler::CollisionHandler(Scene &scene)
    : scene(scene) {
@@ -19,6 +20,8 @@ void CollisionHandler::handleCollision(Scenery &first, PhysicalObject &second) {
 
 void CollisionHandler::handleCollision(MovableObject &first, MovableObject &second) {
    std::cout << "Colliding" << std::endl;
+    
+    
 }
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
@@ -31,31 +34,55 @@ void CollisionHandler::handleCollision(Player &player, Magus &magus) {
 
 void CollisionHandler::handleCollision(Player &player, Corona &corona) {
     player.Character::setHealth(player.getHealth() - corona.getAttackPower());
-    //Add 
+    corona.reverseMovement();
+    //Add enemy logic for backing off after hurting you
 }
 
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
     //Reverse direction
+    enemy1.reverseMovement();
+    enemy2.reverseMovement();
 }
 
-/*void CollisionHandler::handleCollision(Player &player, Platform &platform) {
-    if(!player.Character::isOnGround()) {
-        //Make sure player doesn't clip into platform
+void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
+    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
+    float collisionWidth = collision.xMax - collision.xMin;
+    float collisionHeight = collision.yMax - collision.yMin;
+    glm::vec3 movementChange = glm::vec3(0.0f);
+    glm::vec3 velocityChange = glm::vec3(0.0f);
+    
+    if (collisionWidth <= collisionHeight) {
+        if (character.getPosition().x > scenery.getPosition().x) {
+            //Hit from the right
+            movementChange = glm::vec3(collisionWidth, 0.0f, 0.0f);
+        } else {
+            //Hit from the left
+            movementChange = glm::vec3(-collisionWidth, 0.0f, 0.0f);
+        }
+        velocityChange = glm::vec3(0.0f, character.getVelocity().y, 0.0f);
+    } else {
+        if (character.getPosition().y > scenery.getPosition().y) {
+            //Hit from above
+            movementChange = glm::vec3(0.0f, collisionHeight, 0.0f);
+            
+            character.setOnGround();
+        } else {
+            //Hit from below
+            movementChange = glm::vec3(0.0f, -collisionHeight, 0.0f);
+        }
+        velocityChange = glm::vec3(character.getVelocity().x, 0.0f, 0.0f);
     }
+    character.translateBy(movementChange);
+    character.setVelocity(velocityChange);
 }
 
-void CollisionHandler::handleCollision(Enemy &enemy, Platform &platform) {
-    if(!enemy.Character::isOnGround()) {
-        //Make sure player doesn't clip into platform
-    }
-}
-
-void CollisionHandler::handleCollision(movingPlatform &movingPlatform, Platform &platform) {
+/*
+void CollisionHandler::handleCollision(movingPlatform &movingPlatform, Scenery &scenery) {
     //Reverse moving direction
 }
 
-void CollisionHandler::handleCollision(Bullet &bullet, Platform &platform) {
+void CollisionHandler::handleCollision(Bullet &bullet, Scenery &scenery) {
     //Remove bullet from scene, both for players and enemies
 }
 

@@ -11,6 +11,7 @@ class PhysicalObject;
 class Player;
 class Scene;
 class Scenery;
+class Character;
 
 //class MovingPlatform
 
@@ -29,9 +30,8 @@ public:
     void handleCollision(Player &player, Magus &magus);
     void handleCollision(Player &player, Corona &corona);
     void handleCollision(Enemy &enemy1, Enemy &enemy2);
-    /*void handleCollision(Player &player, Platform &platform);
-    void handleCollision(Enemy &enemy, Platform &platform);
-    void handleCollision(movingPlatform &movingPlatform, Platform &platform);
+    void handleCollision(Character &character, Scenery &scenery);
+   /* void handleCollision(movingPlatform &movingPlatform, Platform &platform);
     void handleCollision(Bullet &bullet, Platform &platform);
     void handleCollision(PlayerBullet &pBullet, Enemy &enemy);
     void handleCollision(EnemyBullet &eBullet, Player &player);

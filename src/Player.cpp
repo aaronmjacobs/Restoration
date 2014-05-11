@@ -65,6 +65,10 @@ void Player::tick(const float dt) {
    if (wantsToAttack) {
       // TODO Handle attack logic
    }
+    
+    if (getHealth() <= 0) {
+        markForRemoval();
+    }
 
    position += velocity * dt + 0.5f * acceleration * dt * dt;
    velocity += acceleration * dt;

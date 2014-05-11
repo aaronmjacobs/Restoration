@@ -23,6 +23,10 @@ public:
     * Serializes the object to JSON.
     */
    virtual Json::Value serialize() const;
+    
+    virtual void reverseMovement();
+    
+    virtual void platformReaction();
 };
 
 #endif /* defined(ENEMY_H) */

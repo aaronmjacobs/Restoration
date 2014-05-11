@@ -17,6 +17,7 @@ const float Corona::JUMP_FORCE = 300.0f;
 const int Corona::ATTACK_POWER = 4;
 
 
+
 Corona::Corona(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
 }
@@ -51,11 +52,36 @@ void Corona::tick(const float dt) {
     
     position += velocity * dt + 0.5f * acceleration * dt * dt;
     velocity += acceleration * dt;
+    
+    if (getHealth() <= 0) {
+        markForRemoval();
+    }
 }
 
 int Corona::getAttackPower() {
     return ATTACK_POWER;
 }
+
 void Corona::collideWith(PhysicalObject &other) {
    other.collideWith(*this);
 }
+
+
+void Corona::reverseMovement() {
+    if (wantsToGoLeft) {
+        wantsToGoLeft = false;
+        wantsToGoRight = true;
+    } else {
+        wantsToGoLeft = true;
+        wantsToGoRight = false;
+    }
+}
+
+void Corona::platformReaction() {
+    if(!onGround) {
+        //////fiiiiinnnniiisssshhhhh
+    }
+}
+
+
+

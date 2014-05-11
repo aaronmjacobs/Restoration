@@ -19,6 +19,7 @@ Json::Value Scenery::serialize() const {
 }
 
 void Scenery::tick(const float dt) {
+    //Do nothing, it's just scenery
 }
 
 void Scenery::collideWith(PhysicalObject &other) {

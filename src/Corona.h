@@ -35,7 +35,11 @@ public:
 
    virtual void collideWith(PhysicalObject &other);
 
-    virtual int getAttackPower();
+   virtual int getAttackPower();
+
+   virtual void reverseMovement();
+    
+   virtual void platformReaction();
 };
 
 #endif /* defined(CORONA_H) */

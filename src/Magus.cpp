@@ -12,8 +12,7 @@
 const std::string Magus::CLASS_NAME = "Magus";
 
 const int Magus::BASE_HEALTH = 7;
-const float Magus::WALK_SPEED = 4.0f;
-const float Magus::JUMP_FORCE = 300.0f;
+const float Magus::HOVER_SPEED = 4.0f;
 const int Magus::ATTACK_POWER = 1;
 
 //Put health in the creation of Magus, and damage
@@ -34,15 +33,18 @@ Json::Value Magus::serialize() const {
 
 void Magus::tick(const float dt) {
     if (wantsToGoLeft) {
-        position += glm::vec3(-WALK_SPEED * dt, 0.0f, 0.0f);
+        position += glm::vec3(-HOVER_SPEED * dt, 0.0f, 0.0f);
     }
     if (wantsToGoRight) {
-        position += glm::vec3(WALK_SPEED * dt, 0.0f, 0.0f);
+        position += glm::vec3(HOVER_SPEED * dt, 0.0f, 0.0f);
     }
     
-    if (wantsToJump && onGround) {
-        onGround = false;
-        velocity += glm::vec3(0.0f, JUMP_FORCE, 0.0f) * dt;
+    if (wantsToGoUp) {
+        position += glm::vec3(0.0f, HOVER_SPEED * dt, 0.0f);
+    }
+    
+    if (wantsToGoDown && !onGround) {
+        position += glm::vec3(0.0f, -HOVER_SPEED * dt, 0.0f);
     }
     
     if (wantsToAttack) {
@@ -51,6 +53,10 @@ void Magus::tick(const float dt) {
     
     position += velocity * dt + 0.5f * acceleration * dt * dt;
     velocity += acceleration * dt;
+    
+    if (getHealth() <= 0) {
+        markForRemoval();
+    }
 }
 
 int Magus::getAttackPower() {
@@ -58,4 +64,21 @@ int Magus::getAttackPower() {
 }
 void Magus::collideWith(PhysicalObject &other) {
    other.collideWith(*this);
+}
+
+void Magus::reverseMovement() {
+    if (wantsToGoLeft) {
+        wantsToGoLeft = false;
+        wantsToGoRight = true;
+    } else {
+        wantsToGoLeft = true;
+        wantsToGoRight = false;
+    }
+    if (wantsToGoUp) {
+        wantsToGoUp = false;
+        wantsToGoDown = true;
+    } else {
+        wantsToGoUp = true;
+        wantsToGoDown = false;
+    }
 }

@@ -14,12 +14,12 @@
 class Magus : public Enemy {
 protected:
    static const int BASE_HEALTH;
-   static const float WALK_SPEED;
-   static const float JUMP_FORCE;
+   static const float HOVER_SPEED;
     static const int ATTACK_POWER;
 
-   bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
+   bool wantsToGoLeft, wantsToGoRight, wantsToGoUp, wantsToGoDown, wantsToAttack;
 
+public:    
    static const std::string CLASS_NAME;
 
    Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
@@ -35,6 +35,8 @@ protected:
    virtual void collideWith(PhysicalObject &other);
     
     virtual int getAttackPower();
+    
+    virtual void reverseMovement();
 };
 
 #endif /* defined(MAGUS_H) */

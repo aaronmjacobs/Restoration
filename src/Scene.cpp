@@ -10,7 +10,7 @@ const std::string Scene::CLASS_NAME = "Scene";
 const std::string Scene::FOLDER_NAME = "scenes";
 
 Scene::Scene(const std::string &jsonFileName)
-   : Saveable(jsonFileName), collisionHandler(*this) {
+   : Saveable(jsonFileName), collisionHandler(*this), editMode(false) {
 }
 
 Scene::~Scene() {
@@ -80,14 +80,14 @@ void Scene::tick(const float dt) {
       listener->tick(dt);
    }
 
-   if (sceneGraph) {
+   if (sceneGraph && !isInEditMode()) {
       sceneGraph->tick(dt);
    }
 }
 
 void Scene::onKeyEvent(int key, int action) {
    SPtr<Player> sPlayer = player.lock();
-   if (sPlayer) {
+   if (sPlayer && !isInEditMode()) {
       sPlayer->onKeyEvent(key, action);
    }
 
@@ -98,7 +98,7 @@ void Scene::onKeyEvent(int key, int action) {
 
 void Scene::onMouseButtonEvent(int button, int action) {
    SPtr<Player> sPlayer = player.lock();
-   if (sPlayer) {
+   if (sPlayer && !isInEditMode()) {
       sPlayer->onMouseButtonEvent(button, action);
    }
 
@@ -109,7 +109,7 @@ void Scene::onMouseButtonEvent(int button, int action) {
 
 void Scene::onMouseMotionEvent(double xPos, double yPos) {
    SPtr<Player> sPlayer = player.lock();
-   if (sPlayer) {
+   if (sPlayer && !isInEditMode()) {
       sPlayer->onMouseMotionEvent(xPos, yPos);
    }
 

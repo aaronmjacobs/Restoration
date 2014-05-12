@@ -44,6 +44,7 @@ struct SceneObjectData;
 typedef std::map<std::string, SPtr<Mesh>> MeshMap;
 typedef std::map<std::string, SPtr<Shader>> ShaderMap;
 typedef std::map<std::string, SPtr<ShaderProgram>> ShaderProgramMap;
+typedef std::map<std::string, SPtr<TextureMaterial>> TextureMaterialMap;
 
 /**
  * Assists with the loading of content from files.
@@ -55,6 +56,7 @@ protected:
    MeshMap meshMap;
    ShaderMap shaderMap;
    ShaderProgramMap shaderProgramMap;
+   TextureMaterialMap textureMaterialMap;
 
    Loader();
    void check(const std::string &type, const Json::Value &container, const std::string &key);

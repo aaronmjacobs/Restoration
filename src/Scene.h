@@ -24,6 +24,7 @@ protected:
    std::list<WPtr<ShaderProgram>> shaderPrograms;
    CollisionHandler collisionHandler;
    SPtr<Audio> audio;
+   bool editMode;
 
    /**
     * All items listening for user input.
@@ -46,6 +47,14 @@ public:
     * Serializes the object to JSON.
     */
    virtual Json::Value serialize() const;
+
+   void setEditMode(bool editMode) {
+      this->editMode = editMode;
+   }
+
+   bool isInEditMode() {
+      return editMode;
+   }
 
    SPtr<SceneGraph> getSceneGraph();
 

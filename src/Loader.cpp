@@ -670,6 +670,11 @@ SPtr<ShaderProgram> Loader::loadShaderProgram(SPtr<Scene> scene, const std::stri
 }
 
 SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName) {
+   TextureMaterialMap::iterator it = textureMaterialMap.find(fileName);
+   if (it != textureMaterialMap.end()) {
+      return it->second;
+   }
+
    Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<TextureMaterial>(fileName));
 
    PhongMaterialData data = loadPhongMaterialData(scene, root);
@@ -678,5 +683,9 @@ SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::
    check("TextureMaterial", root, "texture");
    std::string textureFileName = root["texture"].asString();
 
-   return std::make_shared<TextureMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess, textureFileName);
+   SPtr<TextureMaterial> textureMaterial = std::make_shared<TextureMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess, textureFileName);
+
+   textureMaterialMap[fileName] = textureMaterial;
+
+   return textureMaterial;
 }

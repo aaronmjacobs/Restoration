@@ -18,6 +18,7 @@
 
 // ***************************** Temporary
 
+#include "FollowGeometry.h"
 #include "AniMesh.h"
 #include "AniModel.h"
 #include "Light.h"
@@ -60,6 +61,9 @@ Renderer renderer;
 SPtr<Light> light;
 SPtr<LevelEditor> levelEdit;
 
+SPtr<FirstPersonCameraController> fpCameraController;
+SPtr<FollowCameraController> followCameraController;
+
 void errorCallback(int error, const char* description) {
    ASSERT(false, "Error %d: %s", error, description);
 }
@@ -67,6 +71,20 @@ void errorCallback(int error, const char* description) {
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
    if (action == GLFW_PRESS && key == GLFW_KEY_ESCAPE) {
       glfwSetWindowShouldClose(window, GL_TRUE);
+   }
+
+   if (action == GLFW_PRESS && key == GLFW_KEY_GRAVE_ACCENT) {
+      if (scene->isInEditMode()) {
+         scene->removeInputListener(fpCameraController);
+         scene->removeTickListener(fpCameraController);
+         scene->addTickListener(followCameraController);
+      } else {
+         scene->removeTickListener(followCameraController);
+         scene->addInputListener(fpCameraController);
+         scene->addTickListener(fpCameraController);
+      }
+
+      scene->setEditMode(!scene->isInEditMode());
    }
 
    scene->onKeyEvent(key, action);
@@ -113,8 +131,18 @@ void load() {
    scene->setPlayer(player);
    scene->getSceneGraph()->addPhys(player);
 
-   SPtr<FollowCameraController> cameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock());
-   scene->addTickListener(cameraController);
+   SPtr<Mesh> sphereMesh = std::make_shared<Mesh>("data/meshes/sphere.obj");
+   SPtr<Material> sphereMaterial = loader->loadMaterial(scene, "otherMaterial");
+   SPtr<Model> sphereModel = std::make_shared<Model>(sphereMaterial, sphereMesh);
+   SPtr<FollowGeometry> sphere = std::make_shared<FollowGeometry>(scene, sphereModel, player);
+   sphere->setRenderState(STENCIL_STATE);
+   sphere->setScale(glm::vec3(3.0f));
+   scene->getSceneGraph()->add(sphere);
+
+   followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock());
+   scene->addTickListener(followCameraController);
+
+   fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
 
    scene->addInputListener(levelEdit);
 }
@@ -171,7 +199,8 @@ void physTest() {
    SPtr<AniMesh> aniMesh = std::make_shared<AniMesh>("data/meshes/dancingTube.dae");
    SPtr<AniModel> aniModel = std::make_shared<AniModel>(aniMaterial, aniMesh);
    SPtr<Scenery> geometry = std::make_shared<Scenery>(scene, aniModel);
-   geometry->setPosition(glm::vec3(3.0f, 0.0f, 0.0f));
+   geometry->setPosition(glm::vec3(20.5f, 5.0f, 0.0f));
+   geometry->scaleBy(glm::vec3(0.75f, 0.53f, 0.75f));
    graph->addPhys(geometry);
 }
 
@@ -192,7 +221,7 @@ int main(int argc, char *argv[]) {
 #endif*/
 
    // Enable anti-aliasing
-   glfwWindowHint(GLFW_SAMPLES, 4);
+   //glfwWindowHint(GLFW_SAMPLES, 4);
 
    // Create the window
    window = glfwCreateWindow(WIDTH, HEIGHT, "Restoration", NULL, NULL);
@@ -220,7 +249,6 @@ int main(int argc, char *argv[]) {
    audio = std::make_shared<Audio>();
    audio->systemInit();
    audio->loadSound("Restoration_5_4.ogg", true);
-   audio->loadSound("win.wav", false);
 
    // Load the scene
    load();
@@ -233,6 +261,8 @@ int main(int argc, char *argv[]) {
    
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, WIDTH, HEIGHT);
+
+   audio->loadSound("win.wav", false);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 

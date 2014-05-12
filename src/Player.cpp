@@ -9,10 +9,11 @@ const std::string Player::CLASS_NAME = "Player";
 
 const int Player::BASE_HEALTH = 10;
 const float Player::WALK_SPEED = 5.0f;
-const float Player::JUMP_FORCE = 300.0f;
+const float Player::JUMP_FORCE = 520.0f;
 
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
    : Character(scene, model, BASE_HEALTH, name) {
+   wantsToGoLeft = wantsToGoRight = wantsToJump = wantsToAttack = false;
 }
 
 Player::~Player() {

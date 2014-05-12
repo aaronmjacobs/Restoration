@@ -26,5 +26,9 @@ void FollowCameraController::tick(const float dt) {
    float moveLen = glm::max(toObjectLen, toObjectLen * toObjectLen);
    glm::vec3 move = glm::normalize(toObject) * moveLen;
 
-   sCamera->setPosition(cameraPos + (move * dt));
+   glm::vec3 newCameraPos(cameraPos + (move * dt));
+   newCameraPos.z = 10.0f;
+
+   sCamera->setRotation(-0.2f, -1.45f); // TODO
+   sCamera->setPosition(newCameraPos);
 }

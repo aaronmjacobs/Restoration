@@ -5,7 +5,8 @@
       "objects" : [
          {
             "@class" : "Camera",
-            "fov" : 1.399999976158142,
+            "renderState" : 0,
+            "fov" : 1.4,
             "name" : "camera",
             "orientation" : {
                "w" : 1.0,
@@ -13,21 +14,22 @@
                "y" : 0.0,
                "z" : 0.0
             },
-            "phi" : 0.2249948233366013,
+            "phi" : -0.2,
             "position" : {
-               "x" : 14.91015243530273,
-               "y" : 6.040615081787109,
-               "z" : 63.79367065429688
+               "x" : 0.0,
+               "y" : 10.0,
+               "z" : 10.0
             },
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
                "z" : 1.0
             },
-            "theta" : -1.120795369148254
+            "theta" : -1.45
          },
          {
             "@class" : "Light",
+            "renderState" : 0,
             "color" : {
                "b" : 0.3000000119209290,
                "g" : 0.3000000119209290,
@@ -44,8 +46,124 @@
             },
             "position" : {
                "x" : 0.0,
-               "y" : 5.0,
-               "z" : 15.0
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "renderState" : 0,
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -50.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "renderState" : 0,
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -100.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "renderState" : 0,
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 50.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "renderState" : 0,
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 100.0,
+               "y" : 20.0,
+               "z" : 20.0
             },
             "scale" : {
                "x" : 1.0,
@@ -56,9 +174,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "text",
+               "material" : "insidePill",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/back_inside.obj"
@@ -84,37 +203,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "testMaterial",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/cube.obj"
-               }
-            },
-            "name" : "cube",
-            "orientation" : {
-               "w" : 0.7071067690849304,
-               "x" : 0.7071067690849304,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 0.0,
-               "y" : 5.0,
-               "z" : 0.0
-            },
-            "scale" : {
-               "x" : 0.50,
-               "y" : 0.50,
-               "z" : 0.50
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -140,9 +232,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -168,9 +261,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -196,9 +290,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -224,121 +319,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/back_inside.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : -44.66306686401367,
-               "y" : -13.73559474945068,
-               "z" : 0.0
-            },
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
-               "material" : "otherMaterial",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/pillar.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : -15.32460403442383,
-               "y" : -14.43559741973877,
-               "z" : 0.0
-            },
-            "scale" : {
-               "x" : 1.0,
-               "y" : 0.5853989124298096,
-               "z" : 1.0
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
-               "material" : "otherMaterial",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/structure_temple.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 18.32691001892090,
-               "y" : -13.58559417724609,
-               "z" : 0.0
-            },
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.094251632690430
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
-               "material" : "otherMaterial",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/block.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 33.32015991210938,
-               "y" : -9.135577201843262,
-               "z" : 0.0
-            },
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "aquaduct",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"
@@ -364,9 +348,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "aquaduct",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"
@@ -392,9 +377,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "aquaduct",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"
@@ -420,9 +406,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "aquaduct",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"
@@ -448,9 +435,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "aquaduct",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"
@@ -476,9 +464,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -504,9 +493,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -532,9 +522,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -560,9 +551,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -588,9 +580,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "arch",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/archGem_goal.obj"
@@ -616,9 +609,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -644,9 +638,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -672,9 +667,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "insidePill",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/back_inside.obj"
@@ -700,9 +696,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "insidePill",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/back_inside.obj"
@@ -728,9 +725,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillEnd",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/back_insideEnd.obj"
@@ -756,9 +754,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -784,9 +783,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -812,9 +812,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -840,9 +841,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -868,9 +870,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -896,9 +899,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -924,9 +928,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -952,9 +957,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -980,9 +986,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -1008,9 +1015,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -1036,9 +1044,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "arch",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/archGem_goal.obj"
@@ -1064,9 +1073,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "arch",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/archGem_goal.obj"
@@ -1092,9 +1102,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "arch",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/archGem_goal.obj"
@@ -1120,9 +1131,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 2,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "arch",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/archGem_goal.obj"
@@ -1148,9 +1160,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 2,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "arch",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/archGem_goal.obj"
@@ -1176,9 +1189,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 2,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "arch",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/archGem_goal.obj"
@@ -1204,9 +1218,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1232,9 +1247,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1260,9 +1276,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1288,9 +1305,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1316,9 +1334,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1344,9 +1363,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1372,9 +1392,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1400,9 +1421,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/pillar.obj"
@@ -1428,9 +1450,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -1456,9 +1479,10 @@
          },
          {
             "@class" : "Scenery",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "gem",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/structure_temple.obj"

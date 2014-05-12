@@ -11,10 +11,11 @@
 #include "Loader.h"
 #include "Model.h"
 #include "GLMIncludes.h"
+#include "audio/Audio.h"
 
 const std::string Player::CLASS_NAME = "Player";
 
-const int Player::BASE_HEALTH = 10;
+const int Player::BASE_HEALTH = 5;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 570.0f;
 
@@ -96,6 +97,7 @@ void Player::tick(const float dt) {
       wantsToAttack = false;
       SPtr<Scene> sScene = scene.lock();
       if (sScene) {
+         sScene->getAudio()->signalSound("pew.ogg");
          SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, getBulletModel(sScene));
          justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE);
          justitia->setPosition(getPosition() + facing + glm::vec3(0.0f, 0.25f, 0.0f));
@@ -108,7 +110,12 @@ void Player::tick(const float dt) {
    }
     
     if (!isAlive()) {
-        markForRemoval();
+       SPtr<Scene> sScene = scene.lock();
+       if (sScene) {
+          sScene->getAudio()->signalSound("dead.ogg");
+       }
+       markForRemoval();
+
     }
 
    position += velocity * dt + 0.5f * acceleration * dt * dt;

@@ -16,6 +16,7 @@
 #include "Aegrum.h"
 
 const std::string Magus::CLASS_NAME = "Magus";
+int Magus::count = 0;
 
 const int Magus::BASE_HEALTH = 8;
 const float Magus::HOVER_SPEED = 4.0f;
@@ -27,9 +28,12 @@ Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
    wantsToGoLeft = wantsToGoRight = wantsToGoUp = wantsToGoDown = wantsToAttack = false;
    wantsToGoLeft = rand() % 2 == 0;
    wantsToGoRight = !wantsToGoLeft;
+
+   ++count;
 }
 
 Magus::~Magus() {
+   --count;
 }
 
 Json::Value Magus::serialize() const {
@@ -65,6 +69,10 @@ void Magus::tick(const float dt) {
     
     if (!isAlive()) {
         markForRemoval();
+       SPtr<Scene> sScene = scene.lock();
+       if (sScene) {
+          sScene->getAudio()->signalSound("dead.ogg");
+       }
     }
 }
 

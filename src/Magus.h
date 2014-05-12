@@ -22,9 +22,11 @@ protected:
    static const float HOVER_SPEED;
     static const int ATTACK_POWER;
 
+
    bool wantsToGoLeft, wantsToGoRight, wantsToGoUp, wantsToGoDown, wantsToAttack;
 
-public:    
+public:
+   static int count;
    static const std::string CLASS_NAME;
 
    Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");

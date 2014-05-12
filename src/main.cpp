@@ -215,6 +215,30 @@ void loadEnemies() {
    magus0->setPosition(glm::vec3(-80.0f, 15.0f, 0.0f));
    magus0->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
    graph->addPhys(magus0);
+
+   SPtr<Magus> magus1 = std::make_shared<Magus>(scene, model);
+   magus1->setScale(glm::vec3(0.15f));
+   magus1->setPosition(glm::vec3(-40.0f, 15.0f, 0.0f));
+   magus1->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
+   graph->addPhys(magus1);
+
+   SPtr<Magus> magus2 = std::make_shared<Magus>(scene, model);
+   magus2->setScale(glm::vec3(0.15f));
+   magus2->setPosition(glm::vec3(0.0f, 15.0f, 0.0f));
+   magus2->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
+   graph->addPhys(magus2);
+
+   SPtr<Magus> magus3 = std::make_shared<Magus>(scene, model);
+   magus3->setScale(glm::vec3(0.15f));
+   magus3->setPosition(glm::vec3(30.0f, 15.0f, 0.0f));
+   magus3->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
+   graph->addPhys(magus3);
+
+   SPtr<Magus> magus4 = std::make_shared<Magus>(scene, model);
+   magus4->setScale(glm::vec3(0.15f));
+   magus4->setPosition(glm::vec3(70.0f, 15.0f, 0.0f));
+   magus4->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
+   graph->addPhys(magus4);
 }
 
 } // namespace
@@ -280,6 +304,10 @@ int main(int argc, char *argv[]) {
 
    audio->loadSound("win.wav", false);
    audio->loadSound("hit.wav", false);
+   audio->loadSound("ow.ogg", false);
+   audio->loadSound("pew.ogg", false);
+   audio->loadSound("dead.ogg", false);
+   audio->loadSound("win.wav", false);
    audio->loadSound("Restoration_5_4.ogg", true);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
@@ -288,6 +316,8 @@ int main(int argc, char *argv[]) {
    double lastTime = glfwGetTime();
    double accumulator = 0.0;
    const double dt = 1.0 / 60.0;
+
+   bool won = false;
 
    // Game loop
    while (!glfwWindowShouldClose(window)) {
@@ -302,6 +332,11 @@ int main(int argc, char *argv[]) {
          scene->tick(dt);
 		 levelEdit->tick(dt);
          accumulator -= dt;
+      }
+
+      if (!won && Magus::count == 0) {
+         won = true;
+         audio->signalSound("win.wav");
       }
 
       // Render the scene

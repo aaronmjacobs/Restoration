@@ -9,6 +9,7 @@
 #include "Vis.h"
 #include "Justitia.h"
 #include "Aegrum.h"
+#include "audio/Audio.h"
 
 CollisionHandler::CollisionHandler(Scene &scene)
    : scene(scene) {
@@ -32,6 +33,8 @@ void CollisionHandler::handleCollision(MovableObject &first, MovableObject &seco
 }
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
+   scene.getAudio()->signalSound("ow.ogg");
+
     player.Character::setHealth(player.getHealth() - enemy.getAttackPower());
 
    BoundingBox collision = BoundingBox(player.getBounds(), enemy.getBounds());
@@ -116,7 +119,7 @@ void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
 
 //Separate handleCollisions for two different Vis types so that the attacker isn't hurt instantly when firing
 void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
-   scene.getAudio->signalSound("hit.wav");
+   scene.getAudio()->signalSound("hit.wav");
     enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
     justitia.removeVis();
 }

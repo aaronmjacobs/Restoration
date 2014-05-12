@@ -11,7 +11,7 @@
 
 const std::string Magus::CLASS_NAME = "Magus";
 
-const int Magus::BASE_HEALTH = 7;
+const int Magus::BASE_HEALTH = 8;
 const float Magus::HOVER_SPEED = 4.0f;
 const int Magus::ATTACK_POWER = 1;
 

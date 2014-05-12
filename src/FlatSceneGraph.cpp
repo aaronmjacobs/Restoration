@@ -94,10 +94,6 @@ void FlatSceneGraph::forEachPhys(void (*function)(PhysicalObject &obj)) {
    }
 }
 
-void printVec(const glm::vec3 &vec) {
-	std::cout << "<" << vec.x << ", " << vec.y << ", " << vec.z << ">" << std::endl;
-}
-
 SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 	SPtr<PhysicalObject> obj = NULL;
 	glm::mat4 view, proj;

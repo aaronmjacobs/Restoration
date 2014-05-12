@@ -11,6 +11,8 @@
 
 #include "Enemy.h"
 
+class Player;
+
 class Corona : public Enemy {
 protected:
    static const int BASE_HEALTH;
@@ -33,13 +35,17 @@ public:
 
    virtual void tick(const float dt);
 
-   virtual void collideWith(PhysicalObject &other);
-
    virtual int getAttackPower();
 
    virtual void reverseMovement();
     
    virtual void platformReaction();
+
+   virtual void collideWith(PhysicalObject &other);
+   virtual void collideWith(Scenery &other);
+   virtual void collideWith(Player &other);
+   virtual void collideWith(Magus &other);
+   virtual void collideWith(Corona &other);
 };
 
 #endif /* defined(CORONA_H) */

@@ -1,5 +1,9 @@
 #include "GLIncludes.h"
+#include "Corona.h"
+#include "Magus.h"
 #include "Player.h"
+#include "Scene.h"
+#include "Scenery.h"
 
 const std::string Player::CLASS_NAME = "Player";
 
@@ -76,4 +80,32 @@ void Player::tick(const float dt) {
 
 void Player::collideWith(PhysicalObject &other) {
    other.collideWith(*this);
+}
+
+void Player::collideWith(Scenery &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Player::collideWith(Player &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Player::collideWith(Magus &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Player::collideWith(Corona &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
 }

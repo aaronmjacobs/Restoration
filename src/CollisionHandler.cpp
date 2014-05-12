@@ -14,6 +14,10 @@ CollisionHandler::CollisionHandler(Scene &scene)
 CollisionHandler::~CollisionHandler() {
 }
 
+void handleCollision(PhysicalObject &first, PhysicalObject &second) {
+   // Default handler, does nothing
+}
+
 void CollisionHandler::handleCollision(Scenery &first, PhysicalObject &second) {
    // TODO Handle collision between an arbitrary immobile object, and an arbitrary mobile object
 }
@@ -47,8 +51,8 @@ void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
 
 void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
     BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
-    float collisionWidth = collision.xMax - collision.xMin;
-    float collisionHeight = collision.yMax - collision.yMin;
+    float collisionWidth = collision.width();
+    float collisionHeight = collision.height();
     glm::vec3 movementChange = glm::vec3(0.0f);
     glm::vec3 velocityChange = glm::vec3(0.0f);
     

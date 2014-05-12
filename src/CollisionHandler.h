@@ -23,6 +23,8 @@ public:
    CollisionHandler(Scene &scene);
    virtual ~CollisionHandler();
 
+   void handleCollision(PhysicalObject &first, PhysicalObject &second);
+
    void handleCollision(Scenery &first, PhysicalObject &second);
 
     void handleCollision(MovableObject &first, MovableObject &second);

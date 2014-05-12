@@ -8,6 +8,9 @@
 
 #include "Corona.h"
 #include "GLIncludes.h"
+#include "Magus.h"
+#include "Player.h"
+#include "Scene.h"
 
 const std::string Corona::CLASS_NAME = "Corona";
 
@@ -15,8 +18,6 @@ const int Corona::BASE_HEALTH = 14;
 const float Corona::WALK_SPEED = 2.0f;
 const float Corona::JUMP_FORCE = 300.0f;
 const int Corona::ATTACK_POWER = 4;
-
-
 
 Corona::Corona(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
@@ -62,11 +63,6 @@ int Corona::getAttackPower() {
     return ATTACK_POWER;
 }
 
-void Corona::collideWith(PhysicalObject &other) {
-   other.collideWith(*this);
-}
-
-
 void Corona::reverseMovement() {
     if (wantsToGoLeft) {
         wantsToGoLeft = false;
@@ -83,5 +79,35 @@ void Corona::platformReaction() {
     }
 }
 
+void Corona::collideWith(PhysicalObject &other) {
+   other.collideWith(*this);
+}
 
+void Corona::collideWith(Scenery &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Corona::collideWith(Player &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Corona::collideWith(Magus &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Corona::collideWith(Corona &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
 

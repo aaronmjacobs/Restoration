@@ -4,7 +4,10 @@
 #include "BoundingBox.h"
 #include "Geometry.h"
 
-class MovableObject;
+class Corona;
+class Magus;
+class Player;
+class Scenery;
 
 class PhysicalObject : public Geometry {
 protected:
@@ -27,6 +30,10 @@ public:
    float width() const;
 
    virtual void collideWith(PhysicalObject &other) = 0;
+   virtual void collideWith(Scenery &other) = 0;
+   virtual void collideWith(Player &other) = 0;
+   virtual void collideWith(Magus &other) = 0;
+   virtual void collideWith(Corona &other) = 0;
 };
 
 #endif

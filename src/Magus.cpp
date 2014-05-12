@@ -7,7 +7,11 @@
 //
 
 #include "GLIncludes.h"
+#include "Corona.h"
 #include "Magus.h"
+#include "Player.h"
+#include "Scene.h"
+#include "Scenery.h"
 
 const std::string Magus::CLASS_NAME = "Magus";
 
@@ -62,9 +66,6 @@ void Magus::tick(const float dt) {
 int Magus::getAttackPower() {
     return ATTACK_POWER;
 }
-void Magus::collideWith(PhysicalObject &other) {
-   other.collideWith(*this);
-}
 
 void Magus::reverseMovement() {
     if (wantsToGoLeft) {
@@ -82,3 +83,36 @@ void Magus::reverseMovement() {
         wantsToGoDown = false;
     }
 }
+
+void Magus::collideWith(PhysicalObject &other) {
+   other.collideWith(*this);
+}
+
+void Magus::collideWith(Scenery &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Magus::collideWith(Player &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Magus::collideWith(Magus &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Magus::collideWith(Corona &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+

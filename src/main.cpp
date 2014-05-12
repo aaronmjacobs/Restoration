@@ -100,19 +100,20 @@ void load() {
    scene = loader->loadScene("testScene");
    levelEdit = std::make_shared<LevelEditor>(scene);
 
-   SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
+   /*SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
    scene->addTickListener(cameraController);
-   scene->addInputListener(cameraController);
+   scene->addInputListener(cameraController);*/
 
-   /*SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
    SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
    SPtr<Player> player = std::make_shared<Player>(scene, model);
-   player->setPosition(glm::vec3(0.0f, 10.0f, -3.0f));
+   player->setPosition(glm::vec3(0.0f, 15.0f, 0.0f));
+   player->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
    scene->setPlayer(player);
    scene->getSceneGraph()->addPhys(player);
 
-   SPtr<FollowCameraController> cameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock());*/
+   SPtr<FollowCameraController> cameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock());
    scene->addTickListener(cameraController);
 
    scene->addInputListener(levelEdit);

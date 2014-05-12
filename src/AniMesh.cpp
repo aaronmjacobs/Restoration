@@ -206,7 +206,7 @@ glm::vec3 AniMesh::interpolateScale(float aniTime, const aiNodeAnim* aniNode) {
          aniNode->mScalingKeys[indx + 1].mValue.y,
          aniNode->mScalingKeys[indx + 1].mValue.z);
 
-      ret = (amt1 * sca1) + (amt2 * sca2);
+      ret = (amt2 * sca1) + (amt1 * sca2);
    }
    return ret;
 }
@@ -243,7 +243,7 @@ glm::vec3 AniMesh::interpolatePosition(float aniTime, const aiNodeAnim* aniNode)
          aniNode->mPositionKeys[indx + 1].mValue.y,
          aniNode->mPositionKeys[indx + 1].mValue.z);
 
-      ret = (amt1 * pos1) + (amt2 * pos2);
+      ret = (amt2 * pos1) + (amt1 * pos2);
    }
    return ret;
 }

@@ -48,7 +48,7 @@ void Renderer::prepare(SPtr<Scene> scene) {
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
    skybox = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/arrakis/"));
-   skyboxLight = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/storm/"));
+   skyboxLight = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/crater/"));
 
    SPtr<ShaderProgram> fboProgram = loader->loadShaderProgram(nullptr, "fbo");
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);

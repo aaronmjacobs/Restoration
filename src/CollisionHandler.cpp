@@ -27,9 +27,6 @@ void CollisionHandler::handleCollision(Scenery &first, PhysicalObject &second) {
 }
 
 void CollisionHandler::handleCollision(MovableObject &first, MovableObject &second) {
-   std::cout << "Colliding" << std::endl;
-    
-    
 }
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {

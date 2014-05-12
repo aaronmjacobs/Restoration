@@ -212,7 +212,7 @@ void loadEnemies() {
 
    SPtr<Magus> magus0 = std::make_shared<Magus>(scene, model);
    magus0->setScale(glm::vec3(0.15f));
-   magus0->setPosition(glm::vec3(-80.0f, 15.0f, 0.0f));
+   magus0->setPosition(glm::vec3(-75.0f, 15.0f, 0.0f));
    magus0->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
    graph->addPhys(magus0);
 

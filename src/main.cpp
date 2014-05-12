@@ -124,11 +124,11 @@ void load() {
    scene->addTickListener(cameraController);
    scene->addInputListener(cameraController);*/
 
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/character.obj");
    SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
    SPtr<Player> player = std::make_shared<Player>(scene, model);
-   player->scaleBy(glm::vec3(1.0f, 2.0f, 1.0f));
+   player->scaleBy(glm::vec3(2.0f));
    player->setPosition(glm::vec3(-85.0f, 15.0f, 0.0f));
    player->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
    scene->setPlayer(player);

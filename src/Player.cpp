@@ -81,10 +81,12 @@ void Player::tick(const float dt) {
    if (wantsToGoLeft) {
       facing = glm::vec3(-1.0f, 0.0f, 0.0f);
       position += glm::vec3(-WALK_SPEED * dt, 0.0f, 0.0f);
+      orientation = glm::angleAxis(glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
    }
    if (wantsToGoRight) {
       facing = glm::vec3(1.0f, 0.0f, 0.0f);
       position += glm::vec3(WALK_SPEED * dt, 0.0f, 0.0f);
+      orientation = glm::angleAxis(glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
    }
 
    if (wantsToJump && onGround) {

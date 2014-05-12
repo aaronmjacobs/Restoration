@@ -279,6 +279,7 @@ int main(int argc, char *argv[]) {
    windowSizeCallback(NULL, WIDTH, HEIGHT);
 
    audio->loadSound("win.wav", false);
+   audio->loadSound("hit.wav", false);
    audio->loadSound("Restoration_5_4.ogg", true);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;

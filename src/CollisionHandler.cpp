@@ -99,6 +99,7 @@ void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
 
 //Separate handleCollisions for two different Vis types so that the attacker isn't hurt instantly when firing
 void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
+   scene.getAudio->signalSound("hit.wav");
     enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
     justitia.removeVis();
 }

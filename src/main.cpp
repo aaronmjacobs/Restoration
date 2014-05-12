@@ -18,6 +18,8 @@
 
 // ***************************** Temporary
 
+#include "AniMesh.h"
+#include "AniModel.h"
 #include "Light.h"
 #include "Mesh.h"
 #include "Material.h"
@@ -166,6 +168,13 @@ void physTest() {
 
    graph->addPhys(physOne);
    graph->addPhys(physTwo);
+
+   SPtr<Material> aniMaterial = loader->loadMaterial(scene, "animMaterial");
+   SPtr<AniMesh> aniMesh = std::make_shared<AniMesh>("data/meshes/dancingTube.dae");
+   SPtr<AniModel> aniModel = std::make_shared<AniModel>(aniMaterial, aniMesh);
+   SPtr<Geometry> geometry = std::make_shared<Geometry>(scene, aniModel);
+   geometry->setPosition(glm::vec3(3.0f, 0.0f, 0.0f));
+   graph->add(geometry);
 }
 
 } // namespace

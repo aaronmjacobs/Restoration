@@ -302,12 +302,11 @@ int main(int argc, char *argv[]) {
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, WIDTH, HEIGHT);
 
-   audio->loadSound("win.wav", false);
    audio->loadSound("hit.wav", false);
    audio->loadSound("ow.ogg", false);
    audio->loadSound("pew.ogg", false);
    audio->loadSound("dead.ogg", false);
-   audio->loadSound("win.wav", false);
+   audio->loadSound("win.ogg", false);
    audio->loadSound("Restoration_5_4.ogg", true);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
@@ -336,7 +335,7 @@ int main(int argc, char *argv[]) {
 
       if (!won && Magus::count == 0) {
          won = true;
-         audio->signalSound("win.wav");
+         audio->signalSound("win.ogg");
       }
 
       // Render the scene

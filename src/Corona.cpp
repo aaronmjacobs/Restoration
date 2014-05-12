@@ -11,6 +11,8 @@
 #include "Magus.h"
 #include "Player.h"
 #include "Scene.h"
+#include "Justitia.h"
+#include "Aegrum.h"
 
 const std::string Corona::CLASS_NAME = "Corona";
 
@@ -105,6 +107,20 @@ void Corona::collideWith(Magus &other) {
 }
 
 void Corona::collideWith(Corona &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Corona::collideWith(Justitia &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Corona::collideWith(Aegrum &other) {
    SPtr<Scene> sScene = scene.lock();
    if (sScene) {
       sScene->getCollisionHanlder().handleCollision(*this, other);

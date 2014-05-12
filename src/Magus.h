@@ -48,6 +48,8 @@ public:
    virtual void collideWith(Player &other);
    virtual void collideWith(Magus &other);
    virtual void collideWith(Corona &other);
+   virtual void collideWith(Justitia &other);
+   virtual void collideWith(Aegrum &other);
 };
 
 #endif /* defined(MAGUS_H) */

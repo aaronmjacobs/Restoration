@@ -18,6 +18,8 @@
 
 // ***************************** Temporary
 
+#include "Magus.h"
+#include "Corona.h"
 #include "FollowGeometry.h"
 #include "AniMesh.h"
 #include "AniModel.h"
@@ -126,6 +128,7 @@ void load() {
    SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
    SPtr<Player> player = std::make_shared<Player>(scene, model);
+   player->scaleBy(glm::vec3(1.0f, 2.0f, 1.0f));
    player->setPosition(glm::vec3(-85.0f, 15.0f, 0.0f));
    player->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
    scene->setPlayer(player);
@@ -178,12 +181,6 @@ void load() {
 void physTest() {
    SPtr<SceneGraph> graph = scene->getSceneGraph();
 
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
-   SPtr<Loader> loader = Loader::getInstance();
-   SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
-
-   SPtr<Model> model = std::make_shared<Model>(material, mesh);
-
    /*SPtr<MovableObject> physOne = std::make_shared<MovableObject>(scene, model, "one");
    SPtr<MovableObject> physTwo = std::make_shared<MovableObject>(scene, model, "two");
 
@@ -195,6 +192,7 @@ void physTest() {
    graph->addPhys(physOne);
    graph->addPhys(physTwo);*/
 
+   SPtr<Loader> loader = Loader::getInstance();
    SPtr<Material> aniMaterial = loader->loadMaterial(scene, "animMaterial");
    SPtr<AniMesh> aniMesh = std::make_shared<AniMesh>("data/meshes/dancingTube.dae");
    SPtr<AniModel> aniModel = std::make_shared<AniModel>(aniMaterial, aniMesh);
@@ -204,6 +202,21 @@ void physTest() {
    graph->addPhys(geometry);
 }
 
+void loadEnemies() {
+   SPtr<SceneGraph> graph = scene->getSceneGraph();
+
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/enemyFull.obj");
+   SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
+   SPtr<Model> model = std::make_shared<Model>(material, mesh);
+
+   SPtr<Magus> magus0 = std::make_shared<Magus>(scene, model);
+   magus0->setScale(glm::vec3(0.15f));
+   magus0->setPosition(glm::vec3(-80.0f, 15.0f, 0.0f));
+   magus0->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
+   graph->addPhys(magus0);
+}
+
 } // namespace
 
 int main(int argc, char *argv[]) {
@@ -211,6 +224,8 @@ int main(int argc, char *argv[]) {
    GLFWwindow* window;
    glfwSetErrorCallback(errorCallback);
    ASSERT(glfwInit(), "Unable to init glfw");
+
+   srand(time(NULL));
 
 /*#ifdef __APPLE__
    // Set hints to use OpenGL 3.3
@@ -254,6 +269,8 @@ int main(int argc, char *argv[]) {
    scene->setAudio(audio);
 
    physTest();
+
+   loadEnemies();
 
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare(scene);

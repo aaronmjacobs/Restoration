@@ -32,19 +32,9 @@ void CollisionHandler::handleCollision(MovableObject &first, MovableObject &seco
 }
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
-    std::cout << "Colliding with an enemy" << std::endl;
+    player.Character::setHealth(player.getHealth() - enemy.getAttackPower());
+   enemy.reverseMovement();
 }
-
-void CollisionHandler::handleCollision(Player &player, Magus &magus) {
-    player.Character::setHealth(player.getHealth() - magus.getAttackPower());
-}
-
-void CollisionHandler::handleCollision(Player &player, Corona &corona) {
-    player.Character::setHealth(player.getHealth() - corona.getAttackPower());
-    corona.reverseMovement();
-    //Add enemy logic for backing off after hurting you
-}
-
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
     //Reverse direction
@@ -84,6 +74,17 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
     character.setVelocity(velocityChange);
 }
 
+void CollisionHandler::handleCollision(Enemy &enemy, Scenery &scenery) {
+   BoundingBox collision = BoundingBox(enemy.getBounds(), scenery.getBounds());
+
+   if (collision.width() < collision.height()) {
+      enemy.reverseMovement();
+   }
+
+   Character &character = enemy;
+   handleCollision(character, scenery);
+}
+
 /*
 void CollisionHandler::handleCollision(movingPlatform &movingPlatform, Scenery &scenery) {
     //Reverse moving direction
@@ -111,4 +112,9 @@ void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
 void CollisionHandler::handleCollision(Justitia &justitia, Aegrum &aegrum) {
     justitia.removeVis();
     aegrum.removeVis();
+}
+
+void CollisionHandler::handleCollision(Vis &first, Vis &second) {
+   //
+
 }

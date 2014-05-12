@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Scene.h"
 #include "Scenery.h"
+#include "Justitia.h"
+#include "Aegrum.h"
 
 const std::string Scenery::CLASS_NAME = "Scenery";
 
@@ -51,6 +53,20 @@ void Scenery::collideWith(Magus &other) {
 }
 
 void Scenery::collideWith(Corona &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Scenery::collideWith(Justitia &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Scenery::collideWith(Aegrum &other) {
    SPtr<Scene> sScene = scene.lock();
    if (sScene) {
       sScene->getCollisionHanlder().handleCollision(*this, other);

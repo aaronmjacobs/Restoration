@@ -8,6 +8,8 @@ class Corona;
 class Magus;
 class Player;
 class Scenery;
+class Justitia;
+class Aegrum;
 
 class PhysicalObject : public Geometry {
 protected:
@@ -34,6 +36,8 @@ public:
    virtual void collideWith(Player &other) = 0;
    virtual void collideWith(Magus &other) = 0;
    virtual void collideWith(Corona &other) = 0;
+   virtual void collideWith(Justitia &other) = 0;
+   virtual void collideWith(Aegrum &other) = 0;
 };
 
 #endif

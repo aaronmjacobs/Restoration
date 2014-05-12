@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Scene.h"
 #include "Scenery.h"
+#include "Justitia.h"
+#include "Aegrum.h"
 
 const std::string Magus::CLASS_NAME = "Magus";
 
@@ -22,6 +24,9 @@ const int Magus::ATTACK_POWER = 1;
 //Put health in the creation of Magus, and damage
 Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+   wantsToGoLeft = wantsToGoRight = wantsToGoUp = wantsToGoDown = wantsToAttack = false;
+   wantsToGoLeft = rand() % 2 == 0;
+   wantsToGoRight = !wantsToGoLeft;
 }
 
 Magus::~Magus() {
@@ -116,6 +121,20 @@ void Magus::collideWith(Magus &other) {
 }
 
 void Magus::collideWith(Corona &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Magus::collideWith(Justitia &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Magus::collideWith(Aegrum &other) {
    SPtr<Scene> sScene = scene.lock();
    if (sScene) {
       sScene->getCollisionHanlder().handleCollision(*this, other);

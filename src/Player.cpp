@@ -1,9 +1,16 @@
 #include "GLIncludes.h"
 #include "Corona.h"
+#include "Justitia.h"
 #include "Magus.h"
 #include "Player.h"
 #include "Scene.h"
+#include "SceneGraph.h"
 #include "Scenery.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "Loader.h"
+#include "Model.h"
+#include "GLMIncludes.h"
 
 const std::string Player::CLASS_NAME = "Player";
 
@@ -14,6 +21,7 @@ const float Player::JUMP_FORCE = 570.0f;
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
    : Character(scene, model, BASE_HEALTH, name) {
    wantsToGoLeft = wantsToGoRight = wantsToJump = wantsToAttack = false;
+      facing = glm::vec3(1.0f, 0.0f, 0.0f);
 }
 
 Player::~Player() {
@@ -54,11 +62,27 @@ void Player::onMouseButtonEvent(int button, int action) {
 void Player::onMouseMotionEvent(double xPos, double yPos) {
 }
 
+SPtr<Model> Player::getBulletModel(SPtr<Scene> scene) {
+   static SPtr<Model> bulletModel;
+
+   if (bulletModel) {
+      return bulletModel;
+   }
+
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/bullet.obj");
+   SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
+   bulletModel = std::make_shared<Model>(material, mesh);
+   return bulletModel;
+}
+
 void Player::tick(const float dt) {
    if (wantsToGoLeft) {
+      facing = glm::vec3(-1.0f, 0.0f, 0.0f);
       position += glm::vec3(-WALK_SPEED * dt, 0.0f, 0.0f);
    }
    if (wantsToGoRight) {
+      facing = glm::vec3(1.0f, 0.0f, 0.0f);
       position += glm::vec3(WALK_SPEED * dt, 0.0f, 0.0f);
    }
 
@@ -69,9 +93,21 @@ void Player::tick(const float dt) {
 
    if (wantsToAttack) {
       // TODO Handle attack logic
+      wantsToAttack = false;
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, getBulletModel(sScene));
+         justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE);
+         justitia->setPosition(getPosition() + facing + glm::vec3(0.0f, 0.25f, 0.0f));
+         if (facing.x < 0) {
+            justitia->setOrientation(glm::angleAxis(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+         }
+         justitia->setVelocity(facing * 15.0f);
+         sScene->getSceneGraph()->addPhys(justitia);
+      }
    }
     
-    if (getHealth() <= 0) {
+    if (!isAlive()) {
         markForRemoval();
     }
 
@@ -105,6 +141,20 @@ void Player::collideWith(Magus &other) {
 }
 
 void Player::collideWith(Corona &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Player::collideWith(Justitia &other) {
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      sScene->getCollisionHanlder().handleCollision(*this, other);
+   }
+}
+
+void Player::collideWith(Aegrum &other) {
    SPtr<Scene> sScene = scene.lock();
    if (sScene) {
       sScene->getCollisionHanlder().handleCollision(*this, other);

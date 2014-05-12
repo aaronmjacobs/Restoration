@@ -32,15 +32,15 @@ public:
 
     void handleCollision(MovableObject &first, MovableObject &second);
     void handleCollision(Player &player, Enemy &enemy);
-    void handleCollision(Player &player, Magus &magus);
-    void handleCollision(Player &player, Corona &corona);
     void handleCollision(Enemy &enemy1, Enemy &enemy2);
     void handleCollision(Character &character, Scenery &scenery);
+   void handleCollision(Enemy &enemy, Scenery &scenery);
    /* void handleCollision(movingPlatform &movingPlatform, Platform &platform);*/
     void handleCollision(Vis &vis, Scenery &scenery);
     void handleCollision(Justitia &justitia, Enemy &enemy);
     void handleCollision(Aegrum &aegrum, Player &player);
     //Incase we want to do a shiny collision explosion
+    void handleCollision(Vis &first, Vis &second);
     void handleCollision(Justitia &justitia, Aegrum &aegrum);
 
 };

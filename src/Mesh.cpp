@@ -38,8 +38,8 @@ Mesh::Mesh(const std::string &fileName)
          xMax = mesh->mVertices[i].x;
          yMin = mesh->mVertices[i].y;
          yMax = mesh->mVertices[i].y;
-		 zMin = mesh->mVertices[i].z;
-		 zMax = mesh->mVertices[i].z;
+         zMin = mesh->mVertices[i].z;
+         zMax = mesh->mVertices[i].z;
       }
       else {
          if (mesh->mVertices[i].x < xMin) {
@@ -56,12 +56,12 @@ Mesh::Mesh(const std::string &fileName)
             yMax = mesh->mVertices[i].y;
          }
 
-		 if (mesh->mVertices[i].z < zMin) {
-			 zMin = mesh->mVertices[i].z;
-		 }
-		 else if (mesh->mVertices[i].z > zMax) {
-			 zMax = mesh->mVertices[i].z;
-		 }
+         if (mesh->mVertices[i].z < zMin) {
+            zMin = mesh->mVertices[i].z;
+         }
+         else if (mesh->mVertices[i].z > zMax) {
+            zMax = mesh->mVertices[i].z;
+         }
       }
    }
 

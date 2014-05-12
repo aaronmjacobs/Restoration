@@ -320,23 +320,28 @@ SPtr<FlatSceneGraph> Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::V
       check("FlatSceneGraph", objectVal, "@class");
       std::string className = objectVal["@class"].asString();
 
-      SPtr<SceneObject> sceneObject;
-      if (isLight(className)) {
-         SPtr<Light> light = loadLight(scene, objectVal);
-         scene->addLight(light);
-         sceneObject = light;
-      } else if (isCamera(className)) {
-         ASSERT(!cameraLoaded, "Camera already loaded for scene graph");
-         cameraLoaded = true;
-
-         SPtr<Camera> camera = loadCamera(scene, objectVal);
-         scene->setCamera(camera);
-         sceneObject = camera;
+      if (isPhysicalObject(className)) {
+         SPtr<PhysicalObject> physObj = loadPhysicalObject(scene, objectVal);
+         graph->addPhys(physObj);
       } else {
-         sceneObject = loadSceneObject(scene, objectVal);
-      }
+         SPtr<SceneObject> sceneObject;
+         if (isLight(className)) {
+            SPtr<Light> light = loadLight(scene, objectVal);
+            scene->addLight(light);
+            sceneObject = light;
+         } else if (isCamera(className)) {
+            ASSERT(!cameraLoaded, "Camera already loaded for scene graph");
+            cameraLoaded = true;
 
-      graph->add(sceneObject);
+            SPtr<Camera> camera = loadCamera(scene, objectVal);
+            scene->setCamera(camera);
+            sceneObject = camera;
+         } else {
+            sceneObject = loadSceneObject(scene, objectVal);
+         }
+
+         graph->add(sceneObject);
+      }
    }
 
    ASSERT(cameraLoaded, "No camera loaded for scene graph");

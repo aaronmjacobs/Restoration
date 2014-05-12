@@ -6,6 +6,9 @@
 #include "Magus.h"
 #include "Corona.h"
 #include "Scenery.h"
+#include "Vis.h"
+#include "Justitia.h"
+#include "Aegrum.h"
 
 CollisionHandler::CollisionHandler(Scene &scene)
    : scene(scene) {
@@ -84,25 +87,29 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
 /*
 void CollisionHandler::handleCollision(movingPlatform &movingPlatform, Scenery &scenery) {
     //Reverse moving direction
-}
+}*/
 
-void CollisionHandler::handleCollision(Bullet &bullet, Scenery &scenery) {
+void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
     //Remove bullet from scene, both for players and enemies
+    //Add shiny particle explosion if we want to later
+    vis.removeVis();
+
 }
 
-//Maybe combine these two, just have the bullet class have a damage associated with it
-void CollisionHandler::handleCollision(PlayerBullet &pBullet, Enemy &enemy) {
-    enemy.Character::setHealth(enemy.getHealth() - 1);
-    //Change with bullet damage
-    //mark for removal thingie
+//Separate handleCollisions for two different Vis types so that the attacker isn't hurt instantly when firing
+void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
+    enemy.Character::setHealth(enemy.getHealth() - justitia.getAttackPower());
+    justitia.removeVis();
 }
 
-void CollisionHandler::handleCollision(EnemyBullet &eBullet, Player &player) {
-    player.Character::setHealth(player.getHealth() - 2);
-    //change with enemy class done
+void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
+    player.Character::setHealth(player.getHealth() - aegrum.getAttackPower());
+    aegrum.removeVis();
+
 }
 
 //Incase we want to do a shiny collision explosion
-void CollisionHandler::handleCollision(PlayerBullet &pBullet, EnemyBullet &eBullet) {
-    
-}*/
+void CollisionHandler::handleCollision(Justitia &justitia, Aegrum &aegrum) {
+    justitia.removeVis();
+    aegrum.removeVis();
+}

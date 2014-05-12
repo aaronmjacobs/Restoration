@@ -12,6 +12,9 @@ class Player;
 class Scene;
 class Scenery;
 class Character;
+class Vis;
+class Justitia;
+class Aegrum;
 
 //class MovingPlatform
 
@@ -33,12 +36,12 @@ public:
     void handleCollision(Player &player, Corona &corona);
     void handleCollision(Enemy &enemy1, Enemy &enemy2);
     void handleCollision(Character &character, Scenery &scenery);
-   /* void handleCollision(movingPlatform &movingPlatform, Platform &platform);
-    void handleCollision(Bullet &bullet, Platform &platform);
-    void handleCollision(PlayerBullet &pBullet, Enemy &enemy);
-    void handleCollision(EnemyBullet &eBullet, Player &player);
+   /* void handleCollision(movingPlatform &movingPlatform, Platform &platform);*/
+    void handleCollision(Vis &vis, Scenery &scenery);
+    void handleCollision(Justitia &justitia, Enemy &enemy);
+    void handleCollision(Aegrum &aegrum, Player &player);
     //Incase we want to do a shiny collision explosion
-    void handleCollision(PlayerBullet &pBullet, EnemyBullet &eBullet);*/
+    void handleCollision(Justitia &justitia, Aegrum &aegrum);
 
 };
 

@@ -98,14 +98,13 @@ void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
 
 //Separate handleCollisions for two different Vis types so that the attacker isn't hurt instantly when firing
 void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
-    enemy.Character::setHealth(enemy.getHealth() - justitia.getAttackPower());
+    enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
     justitia.removeVis();
 }
 
 void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
-    player.Character::setHealth(player.getHealth() - aegrum.getAttackPower());
+    player.setHealth(player.getHealth() - aegrum.getAttackPower());
     aegrum.removeVis();
-
 }
 
 //Incase we want to do a shiny collision explosion

@@ -31,6 +31,7 @@
 #include "Camera.h"
 #include "FirstPersonCameraController.h"
 #include "IOUtils.h"
+#include "LevelEditor.h"
 
 #include "MovableObject.h"
 #include "PhysicalObject.h"
@@ -55,11 +56,7 @@ SPtr<Audio> audio;
 SPtr<Scene> scene;
 Renderer renderer;
 SPtr<Light> light;
-
-void testGlError(const char *message) {
-   GLenum error = glGetError();
-   ASSERT(error == GL_FALSE, "%s: %d", message, error);
-}
+SPtr<LevelEditor> levelEdit;
 
 void errorCallback(int error, const char* description) {
    ASSERT(false, "Error %d: %s", error, description);
@@ -96,35 +93,15 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
    renderer.onWindowSizeChange(width, height);
 }
 
-void addRemoveTest() {
-   SPtr<SceneGraph> graph = scene->getSceneGraph();
-
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
-   SPtr<Loader> loader = Loader::getInstance();
-   SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
-   SPtr<Model> model = std::make_shared<Model>(material2, mesh);
-
-   std::string derp = "derp";
-   for (int i = 0; i < 500000; ++i) {
-      graph->add(std::make_shared<Geometry>(scene, model, derp + std::to_string(i)));
-   }
-   int i;
-   std::cin >> i;
-   for (int i = 0; i < 500000; ++i) {
-      WPtr<SceneObject> wObj = graph->find(derp + std::to_string(i));
-      SPtr<SceneObject> obj = wObj.lock();
-      obj->markForRemoval();
-   }
-   scene->tick(0.016f);
-}
-
 void load() {
    SPtr<Loader> loader = Loader::getInstance();
    scene = loader->loadScene("testScene");
+   levelEdit = std::make_shared<LevelEditor>(scene);
 
    SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
    scene->addTickListener(cameraController);
    scene->addInputListener(cameraController);
+   scene->addInputListener(levelEdit);
 }
 
 /*void test() {
@@ -164,7 +141,7 @@ void physTest() {
 
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
 
-   SPtr<MovableObject> physOne = std::make_shared<MovableObject>(scene, model, "one");
+   /*SPtr<MovableObject> physOne = std::make_shared<MovableObject>(scene, model, "one");
    SPtr<MovableObject> physTwo = std::make_shared<MovableObject>(scene, model, "two");
 
    physOne->enableRenderState(STENCIL_STATE);
@@ -173,14 +150,14 @@ void physTest() {
    physOne->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
 
    graph->addPhys(physOne);
-   graph->addPhys(physTwo);
+   graph->addPhys(physTwo);*/
 
    SPtr<Material> aniMaterial = loader->loadMaterial(scene, "animMaterial");
    SPtr<AniMesh> aniMesh = std::make_shared<AniMesh>("data/meshes/dancingTube.dae");
    SPtr<AniModel> aniModel = std::make_shared<AniModel>(aniMaterial, aniMesh);
-   SPtr<Geometry> geometry = std::make_shared<Geometry>(scene, aniModel);
+   SPtr<Scenery> geometry = std::make_shared<Scenery>(scene, aniModel);
    geometry->setPosition(glm::vec3(3.0f, 0.0f, 0.0f));
-   graph->add(geometry);
+   graph->addPhys(geometry);
 }
 
 } // namespace
@@ -260,6 +237,7 @@ int main(int argc, char *argv[]) {
       accumulator += frameTime;
       while (accumulator >= dt) {
          scene->tick(dt);
+		 levelEdit->tick(dt);
          accumulator -= dt;
       }
 

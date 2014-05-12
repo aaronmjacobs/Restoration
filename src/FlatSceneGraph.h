@@ -2,6 +2,9 @@
 #define FLAT_SCENE_GRAPH_H
 
 #include "SceneGraph.h"
+#include "GLIncludes.h"
+#include "Camera.h"
+#include "TickListener.h"
 
 #include <list>
 
@@ -30,6 +33,11 @@ public:
    virtual void addPhys(SPtr<PhysicalObject> physObject);
    virtual void forEach(void (*function)(SceneObject &obj));
    virtual void forEachPhys(void (*function)(PhysicalObject &obj));
+
+   /**
+    * Goes through each phys object and finds the first thing the mouse collides with
+	*/
+   virtual SPtr<PhysicalObject> mouseCollides(double xPos, double yPos);
 };
 
 #endif

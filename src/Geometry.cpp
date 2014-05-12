@@ -57,6 +57,3 @@ void Geometry::draw(unsigned int renderState) {
       model->draw();
    }
 }
-
-void Geometry::tick(const float dt) {
-}

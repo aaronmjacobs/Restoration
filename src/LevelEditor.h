@@ -3,22 +3,35 @@
 
 #include "InputListener.h"
 #include "Types.h"
+#include "PhysicalObject.h"
+
+#define TRANSLATE 0
+#define SCALE 1
+#define ROTATE 2
+#define CREATE 3
+
+#define MAIN 0
+#define FORE 1
+#define BACK 2
 
 class Scene;
 
-class LevelEditor : public InputListener {
+class LevelEditor : public InputListener, public TickListener {
 private:
    WPtr<Scene> scene;
 
-	//Transformation Modes
-	bool transMode = true, rotMode = false, scaleMode = false, createMode = false;
-	//Three types of areas to build on
-	bool foreground = false, background = false, mainground = true;
+	bool saved = true, on = false, big = false, precision = false;
+	bool transUp = false, transDown = false, transRight = false, transLeft = false, transBack = false, transFront = false;
+	bool transX = false, transY = false, transZ = false;
 
-	bool saved = true, on = false;
+	int editState = TRANSLATE, stageState = MAIN, keepTransforming = 0;
+
+	SPtr<PhysicalObject> currentObj = NULL, placeObj = NULL;
 
 	double prevPoint[2];
 
+	std::string curObjFile = "data/meshes/block.obj";
+	glm::vec3 curTransformVec = glm::vec3(0.0, 0.0, 0.0);
 public:
 	/**
 	 * Makes a level editor with the given string and json file
@@ -38,13 +51,20 @@ public:
 
 	virtual void onMouseMotionEvent(double xPos, double yPos);
 
-	virtual void transform(double x, double y);
+	virtual void transform(glm::vec3 trans);
 
 	virtual void changeGround(int gound);
 	
 	virtual void quickSwitch(int key);
 
+	virtual SPtr<PhysicalObject> getCurObj();
+
 	bool levelOn();
+
+	/**
+	* Steps |dt| seconds through time.
+	*/
+	virtual void tick(const float dt);
 };
 
 #endif

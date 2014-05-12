@@ -43,11 +43,6 @@ public:
     * Draws the geometry in the scene.
     */
    virtual void draw(unsigned int renderState);
-   
-   /**
-    * Steps |dt| seconds through time.
-    */
-   virtual void tick(const float dt);
 };
 
 #endif

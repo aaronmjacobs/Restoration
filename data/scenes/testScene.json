@@ -57,7 +57,7 @@
             "squareFalloff" : 0.0008
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "renderState" : 6,
             "model" : {
                "@class" : "Model",
@@ -86,7 +86,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "renderState" : 1,
             "model" : {
                "@class" : "Model",
@@ -115,7 +115,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "renderState" : 2,
             "model" : {
                "@class" : "Model",

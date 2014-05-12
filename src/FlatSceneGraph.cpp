@@ -2,6 +2,7 @@
 #include "PhysicalObject.h"
 #include "Scene.h"
 #include "SceneObject.h"
+#include "Camera.h"
 
 const std::string FlatSceneGraph::CLASS_NAME = "FlatSceneGraph";
 
@@ -91,4 +92,60 @@ void FlatSceneGraph::forEachPhys(void (*function)(PhysicalObject &obj)) {
    for (SPtr<PhysicalObject> physObject : physObjects) {
       function(*physObject);
    }
+}
+
+void printVec(const glm::vec3 &vec) {
+	std::cout << "<" << vec.x << ", " << vec.y << ", " << vec.z << ">" << std::endl;
+}
+
+SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
+	SPtr<PhysicalObject> obj = NULL;
+	glm::mat4 view, proj;
+	glm::vec3 objPos, near, far, objRay, mouseRay, mousePos;
+	glm::vec4 viewP;
+
+	double minDist = 0.0, newDist = 0.0;
+   bool minDistSet = false;
+
+	SPtr<Scene> s = scene.lock();
+	if (!s) {
+		return SPtr<PhysicalObject>();
+	}
+	SPtr<Camera> c = s->getCamera().lock();
+	if (!c) {
+		return SPtr<PhysicalObject>();
+	}
+
+	proj = c->getProjectionMatrix();
+	view = c->getViewMatrix();
+	viewP = glm::vec4(0, 0, c->getWindowWidth(), c->getWindowHeight());
+	mousePos = glm::vec3(xPos, c->getWindowHeight() - yPos, 0.0);
+
+	near = glm::unProject(mousePos, view, proj, viewP);
+	mousePos.z = 1.0;
+	far = glm::unProject(mousePos, view, proj, viewP);
+	mouseRay = far - near;
+	//printf("here?\n");
+	for (SPtr<PhysicalObject> physObject : physObjects) {
+		//printf("just making sure, should be 3 or 4 in a row\n");
+		objPos = physObject->getPosition();
+		objRay = objPos - near;
+		glm::vec3 rayIntersect = glm::normalize(mouseRay) * glm::length(objRay) + c->getPosition();
+
+		/*std::cout << "Ray: " << std::endl;
+		printVec(rayIntersect);
+		std::cout << "Position: " << std::endl;
+		printVec(objPos);
+		std::cout << std::endl;*/
+
+		if ((physObject->getBounds()).contains(rayIntersect)) {
+			printf("hi\n");
+			if (!minDistSet|| (newDist = glm::length(objRay)) < minDist) {
+            minDistSet = true;
+				minDist = newDist;
+				obj = physObject;
+			}
+		}
+	}
+	return obj;
 }

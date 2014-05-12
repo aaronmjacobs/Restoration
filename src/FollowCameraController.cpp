@@ -4,6 +4,11 @@
 
 FollowCameraController::FollowCameraController(SPtr<Camera> camera, SPtr<SceneObject> objectToFollow)
 : camera(camera), objectToFollow(objectToFollow) {
+   camera->setRotation(-0.2f, -1.45f);
+   glm::vec3 pos = objectToFollow->getPosition();
+   pos.z = 10.0f;
+   pos.x += 0.5f;
+   camera->setPosition(pos);
 }
 
 FollowCameraController::~FollowCameraController() {

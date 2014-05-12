@@ -8,7 +8,7 @@
 
 #include "Vis.h"
 
-const std::string MovableObject::CLASS_NAME = "Vis";
+const std::string Vis::CLASS_NAME = "Vis";
 
 Vis::Vis(SPtr<Scene> scene, SPtr<Model> model, int attackPower, const std::string &name)
 : MovableObject(scene, model, name),  attackPower(attackPower){

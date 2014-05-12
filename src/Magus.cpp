@@ -84,6 +84,12 @@ void Magus::reverseMovement() {
     }
 }
 
+void Magus::platformReaction() {
+   if(!onGround) {
+      //////fiiiiinnnniiisssshhhhh
+   }
+}
+
 void Magus::collideWith(PhysicalObject &other) {
    other.collideWith(*this);
 }

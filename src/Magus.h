@@ -41,6 +41,8 @@ public:
 
    virtual void reverseMovement();
 
+   virtual void platformReaction();
+
    virtual void collideWith(PhysicalObject &other);
    virtual void collideWith(Scenery &other);
    virtual void collideWith(Player &other);

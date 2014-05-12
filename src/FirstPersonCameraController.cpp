@@ -57,7 +57,7 @@ void FirstPersonCameraController::onMouseMotionEvent(double xPos, double yPos) {
    mouseX = xPos;
    mouseY = yPos;
 }
-#include <iostream>
+
 void FirstPersonCameraController::tick(const float dt) {
    SPtr<Camera> sCamera = camera.lock();
    if (!sCamera) {

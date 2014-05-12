@@ -4,7 +4,7 @@
 const std::string MovableObject::CLASS_NAME = "MovableObject";
 
 MovableObject::MovableObject(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-   : PhysicalObject(scene, model, name) {
+   : PhysicalObject(scene, model, name), velocity(0.0f), acceleration(0.0f) {
 }
 
 MovableObject::~MovableObject() {

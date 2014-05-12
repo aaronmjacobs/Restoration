@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "FancyAssert.h"
 #include "Light.h"
+#include "Player.h"
 #include "Scene.h"
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
@@ -46,6 +47,14 @@ void Scene::setCamera(SPtr<Camera> camera) {
    this->camera = WPtr<Camera>(camera);
 }
 
+WPtr<Player> Scene::getPlayer() {
+   return player;
+}
+
+void Scene::setPlayer(SPtr<Player> player) {
+   this->player = WPtr<Player>(player);
+}
+
 const std::list<WPtr<Light>>& Scene::getLights() {
    return lights;
 }
@@ -77,18 +86,33 @@ void Scene::tick(const float dt) {
 }
 
 void Scene::onKeyEvent(int key, int action) {
+   SPtr<Player> sPlayer = player.lock();
+   if (sPlayer) {
+      sPlayer->onKeyEvent(key, action);
+   }
+
    for (SPtr<InputListener> listener : inputListeners) {
       listener->onKeyEvent(key, action);
    }
 }
 
 void Scene::onMouseButtonEvent(int button, int action) {
+   SPtr<Player> sPlayer = player.lock();
+   if (sPlayer) {
+      sPlayer->onMouseButtonEvent(button, action);
+   }
+
    for (SPtr<InputListener> listener : inputListeners) {
       listener->onMouseButtonEvent(button, action);
    }
 }
 
 void Scene::onMouseMotionEvent(double xPos, double yPos) {
+   SPtr<Player> sPlayer = player.lock();
+   if (sPlayer) {
+      sPlayer->onMouseMotionEvent(xPos, yPos);
+   }
+
    for (SPtr<InputListener> listener : inputListeners) {
       listener->onMouseMotionEvent(xPos, yPos);
    }

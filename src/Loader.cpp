@@ -531,6 +531,9 @@ SPtr<Player> Loader::loadPlayer(SPtr<Scene> scene, const Json::Value &root) {
    player->setAcceleration(acceleration);
    player->setHealth(health);
 
+   ASSERT(!scene->getPlayer().lock(), "Scene already has player");
+   scene->setPlayer(player);
+
    return player;
 }
 

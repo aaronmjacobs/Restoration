@@ -19,6 +19,7 @@ class Scene : public Saveable, public TickListener {
 protected:
    SPtr<SceneGraph> sceneGraph;
    WPtr<Camera> camera;
+   WPtr<Player> player;
    std::list<WPtr<Light>> lights;
    std::list<WPtr<ShaderProgram>> shaderPrograms;
    CollisionHandler collisionHandler;
@@ -53,6 +54,10 @@ public:
    WPtr<Camera> getCamera();
 
    void setCamera(SPtr<Camera> camera);
+
+   WPtr<Player> getPlayer();
+
+   void setPlayer(SPtr<Player> player);
 
    const std::list<WPtr<Light>>& getLights();
 

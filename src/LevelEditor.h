@@ -30,6 +30,7 @@ private:
 
 	double prevPoint[2];
 
+	std::string curObjFile = "data/meshes/block.obj";
 	glm::vec3 curTransformVec = glm::vec3(0.0, 0.0, 0.0);
 public:
 	/**

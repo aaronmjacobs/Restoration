@@ -2,15 +2,21 @@
 #include "FancyAssert.h"
 
 BoundingBox::BoundingBox(float xMin, float xMax, float yMin, float yMax)
-   : xMin(xMin), xMax(xMax), yMin(yMin), yMax(yMax) {
+   : xMin(xMin), xMax(xMax), yMin(yMin), yMax(yMax), zMin(0.0), zMax(0.0) {
+}
+
+BoundingBox::BoundingBox(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax)
+: xMin(xMin), xMax(xMax), yMin(yMin), yMax(yMax), zMin(zMin), zMax(zMax), threeD(true){
 }
 
 BoundingBox::BoundingBox(const BoundingBox &source, const glm::vec3 &trans, const glm::vec3 &scale)
-   : xMin(source.xMin * scale.x + trans.x), xMax(source.xMax * scale.x + trans.x), yMin(source.yMin * scale.y + trans.y), yMax(source.yMax * scale.y + trans.y) {
+   : xMin(source.xMin * scale.x + trans.x), xMax(source.xMax * scale.x + trans.x), yMin(source.yMin * scale.y + trans.y), yMax(source.yMax * scale.y + trans.y),
+   zMax(0.0), zMin(0.0) {
 }
 
 BoundingBox::BoundingBox(const BoundingBox &first, const BoundingBox &second)
-   : xMin(glm::max(first.xMin, second.xMin)), xMax(glm::min(first.xMax, second.xMax)), yMin(glm::max(first.yMin, second.yMin)), yMax(glm::min(first.yMax, second.yMax)) {
+   : xMin(glm::max(first.xMin, second.xMin)), xMax(glm::min(first.xMax, second.xMax)), yMin(glm::max(first.yMin, second.yMin)), yMax(glm::min(first.yMax, second.yMax)),
+   zMax(0.0), zMin(0.0) {
    ASSERT(first.collidesWith(second), "Trying to generate collision box from non-colliding bounding boxes");
 }
 
@@ -23,6 +29,11 @@ bool BoundingBox::collidesWith(const BoundingBox &other) const {
    }
    if (yMax < other.yMin || yMin > other.yMax) {
       return false;
+   }
+   if (threeD) {
+	   if (zMax < other.zMin || zMin > other.zMax) {
+		   return false;
+	   }
    }
    return true;
 }

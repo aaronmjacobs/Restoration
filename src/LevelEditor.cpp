@@ -10,6 +10,7 @@
 #include "Material.h"
 #include "MovableObject.h"
 #include "Scenery.h"
+#include "IOUtils.h"
 
 /*
 *Todo
@@ -40,6 +41,7 @@ LevelEditor::~LevelEditor() {
  * arrow keys to quick switch objects
  */
 void LevelEditor::onKeyEvent(int key, int action) {
+	char yes = 'n';
 	if (action == GLFW_PRESS) {
 		if (!levelOn()) {
 			if (key == GLFW_KEY_GRAVE_ACCENT) {
@@ -54,7 +56,12 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 			else {
 				// Ask before doing
-				on = false;
+				printf("Quit without saving? (y/n) ");
+				scanf("%c", &yes);
+				if (yes == 'y') {
+					on = false;
+					yes = 'n';
+				}
 			}
 		}
 		else if (key == GLFW_KEY_UP) {
@@ -186,6 +193,13 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			else
 				big = false;
 		}
+		/*else if (key == GLFW_KEY_H) {
+			if (currentObj && editState == SCALE) {
+				glm::vec3 tempMir = currentObj->getScale();
+				tempMir.x = -tempMir.x;
+				currentObj->setScale(tempMir);
+			}
+		}*/
 		/*else if (key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT) {
 			quickSwitch(key);
 		}*/
@@ -198,6 +212,44 @@ void LevelEditor::onKeyEvent(int key, int action) {
 		else if (key == GLFW_KEY_X) {
 			currentObj = NULL;
 		}
+		else if (key == GLFW_KEY_PERIOD) {
+			//save here
+			//somewhere in scenes maybe?
+
+			std::string fileName;
+			std::cout << "Enter file name: ";
+			std::cin >> fileName;
+			SPtr<Scene> s = scene.lock();
+			if (s) {
+				IOUtils::save(*s, fileName);
+			}
+
+			saved = true;
+		}
+		else if (key == GLFW_KEY_L) {
+			//load here
+		}
+		//OBJ FILE STUFF
+		else if (key == GLFW_KEY_0)
+			curObjFile = "data/meshes/block.obj";
+		else if (key == GLFW_KEY_1)
+			curObjFile = "data/meshes/aquaduct.obj";
+		else if (key == GLFW_KEY_2)
+			curObjFile = "data/meshes/archGem_goal.obj";
+		else if (key == GLFW_KEY_3)
+			curObjFile = "data/meshes/back_inside.obj";
+		else if (key == GLFW_KEY_4)
+			curObjFile = "data/meshes/back_insideEnd.obj";
+		/*else if (key == GLFW_KEY_5)
+			curObjFile = "data/meshes/desert_backdrop.obj";*/
+		else if (key == GLFW_KEY_6)
+			curObjFile = "data/meshes/pillar.obj";
+		else if (key == GLFW_KEY_7)
+			curObjFile = "data/meshes/sand_background.obj";
+		else if (key == GLFW_KEY_8)
+			curObjFile = "data/meshes/structure_temple.obj";
+		else if (key == GLFW_KEY_9)
+			curObjFile = "data/meshes/block.obj";
 	}
 	else if (action == GLFW_RELEASE) {
 		if (key == GLFW_KEY_UP)
@@ -241,13 +293,17 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 		graph = s->getSceneGraph();
 
 		if (editState == CREATE) {
+			saved = false;
 			//place current object type specified with #0-9
 			std::cout << "Creating new object" << std::endl;
 
-			SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
+			SPtr<Mesh> mesh = std::make_shared<Mesh>(curObjFile);
 			SPtr<Loader> loader = Loader::getInstance();
+			//printf("a\n");
 			SPtr<Material> material2 = loader->loadMaterial(s, "otherMaterial");
+			//printf("b\n");
 			SPtr<Model> model = std::make_shared<Model>(material2, mesh);
+			//printf("c\n");
 
 			SPtr<Scenery> newObj = std::make_shared<Scenery>(s, model);
 
@@ -323,6 +379,7 @@ void LevelEditor::transform(glm::vec3 trans) {
 		printf("no current object selected\n");
 	}
 	else {
+		saved = false;
 		if (editState == TRANSLATE) {
 			currentObj->translateBy(trans);
 		}

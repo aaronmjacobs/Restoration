@@ -31,13 +31,15 @@ Mesh::Mesh(const std::string &fileName)
       faceIndex += 3;
    }
 
-   float xMin = 0.0f, xMax = 0.0f, yMin = 0.0f, yMax = 0.0f;
+   float xMin = 0.0f, xMax = 0.0f, yMin = 0.0f, yMax = 0.0f, zMin = 0.0f, zMax = 0.0f;
    for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
       if (i == 0) {
          xMin = mesh->mVertices[i].x;
          xMax = mesh->mVertices[i].x;
          yMin = mesh->mVertices[i].y;
          yMax = mesh->mVertices[i].y;
+		 zMin = mesh->mVertices[i].z;
+		 zMax = mesh->mVertices[i].z;
       }
       else {
          if (mesh->mVertices[i].x < xMin) {
@@ -53,10 +55,17 @@ Mesh::Mesh(const std::string &fileName)
          else if (mesh->mVertices[i].y > yMax) {
             yMax = mesh->mVertices[i].y;
          }
+
+		 if (mesh->mVertices[i].z < zMin) {
+			 zMin = mesh->mVertices[i].z;
+		 }
+		 else if (mesh->mVertices[i].z > zMax) {
+			 zMax = mesh->mVertices[i].z;
+		 }
       }
    }
 
-   bounds = std::make_shared<BoundingBox>(xMin, xMax, yMin, yMax);
+   bounds = std::make_shared<BoundingBox>(xMin, xMax, yMin, yMax, zMin, zMax);
 
    // Prepare the vertex buffer object
    glGenBuffers(1, &vbo);

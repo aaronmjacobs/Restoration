@@ -16,6 +16,8 @@ protected:
     */
    float fov;
 
+   int windowWidth, windowHeight;
+
    /**
     * Front facing vector.
     */
@@ -48,6 +50,9 @@ public:
     * Handles window size changes.
     */
    void onWindowSizeChange(int width, int height);
+
+   int getWindowWidth();
+   int getWindowHeight();
 
    /**
     * Serializes the object to JSON.
@@ -92,7 +97,7 @@ public:
     */
    glm::mat4 getViewMatrix();
 
-   virtual void draw();
+   virtual void draw(unsigned int renderState);
 
    /**
     * Steps |dt| seconds through time.

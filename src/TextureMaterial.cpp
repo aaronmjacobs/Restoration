@@ -21,6 +21,19 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
    createTexture();
 }
 
+TextureMaterial::TextureMaterial(SPtr<FrameBuffer> frameBuffer,
+                   SPtr<ShaderProgram> shaderProgram,
+                   const glm::vec3 &ambient,
+                   const glm::vec3 &diffuse,
+                   const glm::vec3 &specular,
+                   const glm::vec3 &emission,
+                   float shininess)
+   : PhongMaterial(shaderProgram, ambient, diffuse, specular, emission, shininess){
+   uTexture = shaderProgram->getUniform("uTexture");
+   aTexCoord = shaderProgram->getAttribute("aTexCoord");
+   texture_id = frameBuffer->getTextureID();
+}
+
 TextureMaterial::~TextureMaterial() {
    glDeleteTextures(1, &texture_id);
 }

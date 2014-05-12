@@ -36,6 +36,8 @@
 #include "PhysicalObject.h"
 #include "Scenery.h"
 
+#include "RenderState.h"
+
 // ***************************** Temporary
 
 // STL
@@ -90,6 +92,8 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
    if (camera) {
       camera->onWindowSizeChange(width, height);
    }
+
+   renderer.onWindowSizeChange(width, height);
 }
 
 void addRemoveTest() {
@@ -163,6 +167,8 @@ void physTest() {
    SPtr<MovableObject> physOne = std::make_shared<MovableObject>(scene, model, "one");
    SPtr<MovableObject> physTwo = std::make_shared<MovableObject>(scene, model, "two");
 
+   physOne->enableRenderState(STENCIL_STATE);
+
    physOne->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
    physOne->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
 
@@ -210,6 +216,7 @@ int main(int argc, char *argv[]) {
 
 #ifdef _WIN32
    // Initialize GLEW
+   glewExperimental = true;
    ASSERT(glewInit() == GLEW_OK, "Unable to init glew");
 #endif
 
@@ -228,14 +235,14 @@ int main(int argc, char *argv[]) {
    scene->setAudio(audio);
 
    physTest();
+
+   // Prepare for rendering (sets up OpenGL stuff)
+   renderer.prepare(scene);
    
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, WIDTH, HEIGHT);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
-
-   // Prepare for rendering (sets up OpenGL stuff)
-   renderer.prepare();
 
    // Timing values
    double lastTime = glfwGetTime();

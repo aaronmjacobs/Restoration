@@ -2,6 +2,7 @@
 #define SCENE_OBJECT_H
 
 #include "GLMIncludes.h"
+#include "RenderState.h"
 #include "Serializable.h"
 #include "TickListener.h"
 #include "Types.h"
@@ -17,6 +18,7 @@ protected:
    glm::vec3 position;
    glm::quat orientation;
    glm::vec3 scale;
+   unsigned int renderState;
    bool markedForRemoval;
 
 public:
@@ -55,11 +57,17 @@ public:
 
    void scaleBy(const glm::vec3 &scale);
 
+   void setRenderState(unsigned int state);
+
+   void enableRenderState(unsigned int state);
+
+   void disableRenderState(unsigned int state);
+
    bool shouldBeRemoved();
 
    void markForRemoval();
 
-   virtual void draw() = 0;
+   virtual void draw(unsigned int renderState) = 0;
 };
 
 #endif

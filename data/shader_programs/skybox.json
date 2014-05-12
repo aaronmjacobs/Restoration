@@ -1,0 +1,22 @@
+{
+   "@class" : "ShaderProgram",
+   "attributes" : [ "aPosition" ],
+   "shaders" : [
+      {
+         "@class" : "Shader",
+         "fileName" : "data/shaders/skybox_vert.glsl",
+         "type" : "vertex"
+      },
+      {
+         "@class" : "Shader",
+         "fileName" : "data/shaders/skybox_frag.glsl",
+         "type" : "fragment"
+      }
+   ],
+   "uniforms" : [
+      "uSkybox",
+      "uModelMatrix",
+      "uProjMatrix",
+      "uViewMatrix"
+   ]
+}

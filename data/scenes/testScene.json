@@ -6,6 +6,7 @@
          {
             "@class" : "Camera",
             "name" : "camera",
+            "renderState" : 0,
             "orientation" : {
                "w" : 1.0,
                "x" : 0.0,
@@ -28,6 +29,7 @@
          },
          {
             "@class" : "Light",
+            "renderState" : 6,
             "color" : {
                "r" : 0.3000000119209290,
                "g" : 0.3000000119209290,
@@ -56,6 +58,7 @@
          },
          {
             "@class" : "Geometry",
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "text",
@@ -84,6 +87,7 @@
          },
          {
             "@class" : "Geometry",
+            "renderState" : 1,
             "model" : {
                "@class" : "Model",
                "material" : "otherMaterial",
@@ -112,6 +116,7 @@
          },
          {
             "@class" : "Geometry",
+            "renderState" : 2,
             "model" : {
                "@class" : "Model",
                "material" : "testMaterial",

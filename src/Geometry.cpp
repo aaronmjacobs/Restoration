@@ -31,7 +31,7 @@ SPtr<Model> Geometry::getModel() {
    return model;
 }
 
-void Geometry::draw() {
+void Geometry::draw(unsigned int renderState) {
    // Set the shader program, and grab the matrix uniforms
    SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
    shaderProgram->use();
@@ -53,7 +53,9 @@ void Geometry::draw() {
    glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
    // Draw the model
-   model->draw();
+   if (this->renderState & renderState){
+      model->draw();
+   }
 }
 
 void Geometry::tick(const float dt) {

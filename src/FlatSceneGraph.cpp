@@ -81,7 +81,7 @@ void FlatSceneGraph::addPhys(SPtr<PhysicalObject> physObject) {
    add(physObject);
 }
 
-void FlatSceneGraph::forEach(void (*function)(SceneObject &obj)) {
+void FlatSceneGraph::forEach(void(*function)(SceneObject &obj)) {
    for (SPtr<SceneObject> object : objects) {
       function(*object);
    }

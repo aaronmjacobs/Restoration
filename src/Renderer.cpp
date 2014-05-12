@@ -1,10 +1,18 @@
 #include "Camera.h"
+#include "FBOTextureMaterial.h"
 #include "GLIncludes.h"
+#include "GLMIncludes.h"
 #include "Light.h"
+#include "Loader.h"
+#include "Mesh.h"
+#include "Model.h"
 #include "Renderer.h"
+#include "RenderState.h"
 #include "Scene.h"
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
+#include "Skybox.h"
+#include "SkyboxMaterial.h"
 
 Renderer::Renderer() {
 }
@@ -12,7 +20,7 @@ Renderer::Renderer() {
 Renderer::~Renderer() {
 }
 
-void Renderer::prepare() {
+void Renderer::prepare(SPtr<Scene> scene) {
    // Set the clear (background) color.
    glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -23,16 +31,84 @@ void Renderer::prepare() {
 
    // Back face culling
    glCullFace(GL_BACK);
+
+   // Create frame buffer
+   fb = UPtr<FrameBuffer>(new FrameBuffer);
+
+   // TODO
+   GLint m_viewport[4];
+   glGetIntegerv(GL_VIEWPORT, m_viewport);
+   fb->setupToTexture2D(m_viewport[2], m_viewport[3]);
+
+   SPtr<Loader> loader = Loader::getInstance();
+   Json::Value root;
+
+   SPtr<ShaderProgram> program = loader->loadShaderProgram(nullptr, "skybox");
+   SPtr<Material> material = std::make_shared<SkyboxMaterial>("skybox", program, scene->getCamera().lock());
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
+   SPtr<Model> model = std::make_shared<Model>(material, mesh);
+   skybox = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/arrakis/"));
+   skyboxLight = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/storm/"));
+
+   SPtr<ShaderProgram> fboProgram = loader->loadShaderProgram(nullptr, "fbo");
+   SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
+   SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
+   plane = UPtr<Model>(new Model(fboMaterial, planeMesh));
+}
+
+void Renderer::onWindowSizeChange(int width, int height) {
+   //fb->setupToTexture2D(width, height); // TODO State cleanup
 }
 
 namespace {
 
 // Function that draws a SceneObject
-void draw(SceneObject &obj) {
-   obj.draw();
+void drawStencil(SceneObject &obj) {
+   obj.draw(STENCIL_STATE);
+}
+
+void drawLight(SceneObject &obj) {
+   obj.draw(LIGHTWORLD_STATE);
+}
+
+void drawDark(SceneObject &obj) {
+   obj.draw(DARKWORLD_STATE);
 }
 
 } // namespace
+
+void Renderer::prepareStencilDraw() {
+   glEnable(GL_STENCIL_TEST);
+   // disable color and depth buffers
+   glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+   glDepthMask(GL_FALSE);
+
+   glStencilFunc(GL_NEVER, 1, 0xFF); // never pass stencil test
+   glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);  // replace stencil buffer values to ref=1
+   glStencilMask(0xFF); // stencil buffer free to write
+   glClear(GL_STENCIL_BUFFER_BIT);  // first clear stencil buffer by writing default stencil value (0) to all of stencil buffer.
+   //now draw stencil shape at stencil shape pixel locations in stencil buffer replace stencil buffer values to ref = 1
+}
+
+void Renderer::prepareLightDraw() {
+   // enable color and depth buffers.
+   glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+   glDepthMask(GL_TRUE);
+
+   // no more modifying of stencil buffer on stencil and depth pass.
+   glStencilMask(0x00);
+   // can also be achieved by glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+   // stencil test: only pass stencil test at stencilValue == 1 (Assuming depth test would pass.)
+   // and write actual content to depth and color buffer only at stencil shape locations.
+   glStencilFunc(GL_EQUAL, 1, 0xFF);
+   fb->applyFBO();
+}
+
+void Renderer::prepareDarkDraw() {
+   glDisable(GL_STENCIL_TEST);
+   fb->disableFBO();
+}
 
 void Renderer::render(Scene &scene) {
    // Clear the render buffer
@@ -47,7 +123,7 @@ void Renderer::render(Scene &scene) {
    glm::mat4 viewMatrix = camera->getViewMatrix();
 
    // Set up the matrices and lights
-   const unsigned int numLights = scene.getLights().size();
+   const unsigned int numLights = (unsigned int)scene.getLights().size();
    glm::vec3 cameraPos = camera->getPosition();
    unsigned int lightIndex;
    for (WPtr<ShaderProgram> wShaderProgram : scene.getShaderPrograms()) {
@@ -87,6 +163,41 @@ void Renderer::render(Scene &scene) {
       }
    }
 
-   // Render each item in the scene
-   scene.getSceneGraph()->forEach(draw);
+   // Render items to the stencil buffer
+   prepareStencilDraw();
+   scene.getSceneGraph()->forEach(drawStencil);
+
+   // Render each item in the scene (to frame buffer object) - clear color should be transparent
+   prepareLightDraw();
+
+   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+   skyboxLight->renderSkybox();
+   skyboxLight->releaseSkybox();
+   scene.getSceneGraph()->forEach(drawLight);
+
+   // Do any post processing on the light world buffer
+
+   // Render each item in the scene (to color buffer)
+   prepareDarkDraw();
+
+   skybox->renderSkybox();
+   skybox->releaseSkybox();
+
+   scene.getSceneGraph()->forEach(drawDark);
+
+   glEnable(GL_STENCIL_TEST);
+   glStencilFunc(GL_EQUAL, 1, 0xFF);
+
+
+   // Draw light scene as textured quad over the dark scene with alpha blending enabled
+   SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
+   program->use();
+   GLint uProjMatrix = program->getUniform("uProjMatrix");
+   glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
+   plane->draw();
+
+   glDisable(GL_STENCIL_TEST);
 }

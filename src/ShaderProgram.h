@@ -103,6 +103,10 @@ public:
     * Gets the location of the uniform with the given name from the uniform map.
     */
    GLint getUniform(const std::string &name);
+
+   bool hasAttribute(const std::string &name);
+
+   bool hasUniform(const std::string &name);
 };
 
 #endif

@@ -14,6 +14,9 @@ public:
       : jsonFileName(jsonFileName) {
    }
 
+   Saveable() {
+   }
+
    ~Saveable() {
    }
 

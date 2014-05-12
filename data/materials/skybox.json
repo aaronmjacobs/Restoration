@@ -1,0 +1,4 @@
+{
+   "@class" : "SkyboxMaterial",
+   "shaderProgram" : "skybox",
+}

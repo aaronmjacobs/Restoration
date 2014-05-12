@@ -24,9 +24,11 @@ public:
     */
    virtual Json::Value serialize() const;
     
-    virtual void reverseMovement();
+   virtual void reverseMovement() = 0;
     
-    virtual void platformReaction();
+   virtual void platformReaction() = 0;
+
+   virtual int getAttackPower() = 0;
 };
 
 #endif /* defined(ENEMY_H) */

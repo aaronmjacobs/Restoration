@@ -248,7 +248,6 @@ int main(int argc, char *argv[]) {
 
    audio = std::make_shared<Audio>();
    audio->systemInit();
-   audio->loadSound("Restoration_5_4.ogg", true);
 
    // Load the scene
    load();
@@ -263,6 +262,7 @@ int main(int argc, char *argv[]) {
    windowSizeCallback(NULL, WIDTH, HEIGHT);
 
    audio->loadSound("win.wav", false);
+   audio->loadSound("Restoration_5_4.ogg", true);
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 

@@ -25,11 +25,3 @@ Json::Value Enemy::serialize() const {
 
    return root;
 }
-
-void Enemy::reverseMovement() {
-    //Nothing in here
-}
-
-void Enemy::platformReaction() {
-    //Nothing in here
-}

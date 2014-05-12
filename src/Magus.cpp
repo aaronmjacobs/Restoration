@@ -58,7 +58,7 @@ void Magus::tick(const float dt) {
     position += velocity * dt + 0.5f * acceleration * dt * dt;
     velocity += acceleration * dt;
     
-    if (getHealth() <= 0) {
+    if (!isAlive()) {
         markForRemoval();
     }
 }

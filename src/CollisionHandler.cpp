@@ -33,7 +33,24 @@ void CollisionHandler::handleCollision(MovableObject &first, MovableObject &seco
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
     player.Character::setHealth(player.getHealth() - enemy.getAttackPower());
-   enemy.reverseMovement();
+
+   BoundingBox collision = BoundingBox(player.getBounds(), enemy.getBounds());
+   if (collision.width() < collision.height()) {
+      enemy.reverseMovement();
+
+      if (enemy.getPosition().x < player.getPosition().x) {
+         player.setPosition(player.getPosition() + glm::vec3(1.0f, 0.0f, 0.0f));
+      } else {
+         player.setPosition(player.getPosition() + glm::vec3(-1.0f, 0.0f, 0.0f));
+      }
+   } else {
+      if (enemy.getPosition().y < player.getPosition().y) {
+         player.setPosition(player.getPosition() + glm::vec3(0.0f, 1.0f, 0.0f));
+         player.setVelocity(glm::vec3(0.0f, 8.0f, 0.0f));
+      } else {
+         player.setPosition(player.getPosition() + glm::vec3(0.0f, -1.0f, 0.0f));
+      }
+   }
 }
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {

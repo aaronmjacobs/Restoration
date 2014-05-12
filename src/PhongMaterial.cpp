@@ -69,9 +69,18 @@ Json::Value PhongMaterial::serialize() const {
 
 void PhongMaterial::apply(SPtr<Mesh> mesh) {
    shaderProgram->use();
-   glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
-   glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));
-   glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
-   glUniform3fv(uEmission, 1, glm::value_ptr(emission));
-   glUniform1f(uShininess, shininess);
+   if (light) {
+      glm::vec3 green(0.1f, 0.8f, 0.3f);
+      glUniform3fv(uAmbient, 1, glm::value_ptr(green * 0.1f));
+      glUniform3fv(uDiffuse, 1, glm::value_ptr(green * 0.7f));
+      glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
+      glUniform3fv(uEmission, 1, glm::value_ptr(emission));
+      glUniform1f(uShininess, shininess);
+   } else {
+      glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
+      glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));
+      glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
+      glUniform3fv(uEmission, 1, glm::value_ptr(emission));
+      glUniform1f(uShininess, shininess);
+   }
 }

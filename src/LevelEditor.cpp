@@ -49,7 +49,10 @@ void LevelEditor::onKeyEvent(int key, int action) {
 				printf("LEVEL EDIT MODE ENABLED\n");
 			}
 			return;
-		}
+		} else if (key == GLFW_KEY_GRAVE_ACCENT) {
+         on = false;
+         return;
+      }
 		else if (key == GLFW_KEY_Q) {
 			if (saved) {
 				on = false;

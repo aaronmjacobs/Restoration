@@ -9,6 +9,7 @@ class Mesh;
 
 class Material : public Saveable {
 protected:
+   bool light = false;
    /**
     * Shader program with which to draw.
     */
@@ -33,6 +34,10 @@ public:
     * Does cleanup.
     */
    virtual ~Material();
+
+   void setLight(bool light) {
+      this->light = light;
+   }
 
    /**
     * Gets the shader program used by this material.

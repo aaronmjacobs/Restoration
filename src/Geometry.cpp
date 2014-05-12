@@ -53,7 +53,10 @@ void Geometry::draw(unsigned int renderState) {
    glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
    // Draw the model
-   if (this->renderState & renderState){
+   if (this->renderState & renderState) {
+
+      model->getMaterial()->setLight(renderState == LIGHTWORLD_STATE);
+
       model->draw();
    }
 }

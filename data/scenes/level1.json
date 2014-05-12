@@ -609,7 +609,7 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
+            "renderState" : 2,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -899,7 +899,7 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
+            "renderState" : 2,
             "model" : {
                "@class" : "Model",
                "material" : "block",

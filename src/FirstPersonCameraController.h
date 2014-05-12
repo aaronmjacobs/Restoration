@@ -18,6 +18,7 @@ private:
    WPtr<Camera> camera;
    bool forward, backward, left, right;
    bool leftMouse;
+   bool first;
    double mouseX, mouseY;
 
 public:

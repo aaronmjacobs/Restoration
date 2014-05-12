@@ -126,7 +126,7 @@ void load() {
    SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
    SPtr<Player> player = std::make_shared<Player>(scene, model);
-   player->setPosition(glm::vec3(0.0f, 15.0f, 0.0f));
+   player->setPosition(glm::vec3(-85.0f, 15.0f, 0.0f));
    player->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
    scene->setPlayer(player);
    scene->getSceneGraph()->addPhys(player);

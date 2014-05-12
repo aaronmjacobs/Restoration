@@ -8,6 +8,7 @@ FirstPersonCameraController::FirstPersonCameraController(SPtr<Camera> camera)
    : camera(WPtr<Camera>(camera)) {
    forward = backward = left = right = leftMouse = false;
    mouseX = mouseY = 0.0;
+   first = false;
 }
 
 FirstPersonCameraController::~FirstPersonCameraController() {
@@ -46,6 +47,12 @@ void FirstPersonCameraController::onMouseButtonEvent(int button, int action) {
 
 void FirstPersonCameraController::onMouseMotionEvent(double xPos, double yPos) {
    SPtr<Camera> sCamera = camera.lock();
+
+   if (first) {
+      mouseX = xPos;
+      mouseY = yPos;
+      first = false;
+   }
 
    // Update camera orientation
    if (leftMouse && sCamera) {

@@ -25,10 +25,10 @@ AniMesh::AniMesh(const std::string &fileName)
    int tBoneNum = scene->mMeshes[0]->mNumBones;
 
    for (int i = 0; i < tBoneNum; i++) {
-      //int tBoneIndx = tBoneNum;
-      //std::string tBoneName(scene->mMeshes[0]->mBones[i]->mName.C_Str());
+      int tBoneIndx = i;
+      std::string tBoneName(scene->mMeshes[0]->mBones[i]->mName.C_Str());
 
-      convertToGlmMat(&boneOffset[tBoneNum], scene->mMeshes[0]->mBones[i]->mOffsetMatrix);
+      convertToGlmMat(&boneOffset[tBoneIndx], scene->mMeshes[0]->mBones[i]->mOffsetMatrix);
 
       for (int j = 0; j < scene->mMeshes[0]->mNumVertices; j++) {
          boneWeights[i].push_back(0.0f);
@@ -139,11 +139,11 @@ void AniMesh::updateMatrices(float aniTime, const aiNode* curNode, glm::mat4 par
    }
 }
 
-void AniMesh::convertToGlmMat(glm::mat4* glmMat,  aiMatrix4x4 aiMat) {
-   *glmMat = glm::mat4(aiMat.a1, aiMat.a2, aiMat.a3, aiMat.a4,
-                       aiMat.b1, aiMat.b2, aiMat.b3, aiMat.b4,
-                       aiMat.c1, aiMat.c2, aiMat.c3, aiMat.c4,
-                       aiMat.d1, aiMat.d2, aiMat.d3, aiMat.d4);
+void AniMesh::convertToGlmMat(glm::mat4* glmMat, aiMatrix4x4 aiMat) {
+   *glmMat = glm::mat4(aiMat.a1, aiMat.b1, aiMat.c1, aiMat.d1,
+      aiMat.a2, aiMat.b2, aiMat.c2, aiMat.d2,
+      aiMat.a3, aiMat.b3, aiMat.c3, aiMat.d3,
+      aiMat.a4, aiMat.b4, aiMat.c4, aiMat.d4);
 }
 
 glm::quat AniMesh::interpolateRotation(float aniTime, const aiNodeAnim* aniNode) {

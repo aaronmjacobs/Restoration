@@ -2,8 +2,8 @@
 #include "FollowCameraController.h"
 #include "SceneObject.h"
 
-FollowCameraController::FollowCameraController(SPtr<Camera> camera, SPtr<SceneObject> objectToFollow)
-: camera(camera), objectToFollow(objectToFollow) {
+FollowCameraController::FollowCameraController(SPtr<Camera> camera, SPtr<SceneObject> objectToFollow, float zDist, float phi, float theta)
+: camera(camera), objectToFollow(objectToFollow), zDist(zDist), phi(phi), theta(theta) {
 }
 
 FollowCameraController::~FollowCameraController() {
@@ -27,8 +27,8 @@ void FollowCameraController::tick(const float dt) {
    glm::vec3 move = glm::normalize(toObject) * moveLen;
 
    glm::vec3 newCameraPos(cameraPos + (move * dt));
-   newCameraPos.z = 10.0f;
+   newCameraPos.z = zDist;
 
-   sCamera->setRotation(-0.2f, -1.45f); // TODO
+   sCamera->setRotation(phi, theta);
    sCamera->setPosition(newCameraPos);
 }

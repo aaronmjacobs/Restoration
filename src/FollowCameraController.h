@@ -14,9 +14,10 @@ class FollowCameraController : public TickListener {
 private:
    WPtr<Camera> camera;
    WPtr<SceneObject> objectToFollow;
+   float zDist, phi, theta;
 
 public:
-   FollowCameraController(SPtr<Camera> camera, SPtr<SceneObject> objectToFollow);
+   FollowCameraController(SPtr<Camera> camera, SPtr<SceneObject> objectToFollow, float zDist, float phi, float theta);
    virtual ~FollowCameraController();
 
    /**

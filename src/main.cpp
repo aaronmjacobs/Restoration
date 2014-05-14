@@ -139,7 +139,7 @@ void load() {
    sphere->setScale(glm::vec3(3.0f));
    scene->getSceneGraph()->add(sphere);
 
-   followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock());
+   followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock(), 10.0f, -0.2f, -1.45f);
    scene->addTickListener(followCameraController);
 
    fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());

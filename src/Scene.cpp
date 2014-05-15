@@ -87,7 +87,7 @@ void Scene::tick(const float dt) {
 
 void Scene::onKeyEvent(int key, int action) {
    SPtr<Player> sPlayer = player.lock();
-   if (sPlayer && !isInEditMode()) {
+   if (sPlayer) {
       sPlayer->onKeyEvent(key, action);
    }
 
@@ -98,7 +98,7 @@ void Scene::onKeyEvent(int key, int action) {
 
 void Scene::onMouseButtonEvent(int button, int action) {
    SPtr<Player> sPlayer = player.lock();
-   if (sPlayer && !isInEditMode()) {
+   if (sPlayer) {
       sPlayer->onMouseButtonEvent(button, action);
    }
 
@@ -109,7 +109,7 @@ void Scene::onMouseButtonEvent(int button, int action) {
 
 void Scene::onMouseMotionEvent(double xPos, double yPos) {
    SPtr<Player> sPlayer = player.lock();
-   if (sPlayer && !isInEditMode()) {
+   if (sPlayer) {
       sPlayer->onMouseMotionEvent(xPos, yPos);
    }
 

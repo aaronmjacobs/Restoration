@@ -83,18 +83,19 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
          scene->addInputListener(fpCameraController);
          scene->addTickListener(fpCameraController);
       }
-
-      scene->setEditMode(!scene->isInEditMode());
    }
 
+   levelEdit->onKeyEvent(key, action);
    scene->onKeyEvent(key, action);
 }
 
 void mouseClickCallback(GLFWwindow *window, int button, int action, int mods) {
+   levelEdit->onMouseButtonEvent(button, action);
    scene->onMouseButtonEvent(button, action);
 }
 
 void mouseMotionCallback(GLFWwindow *window, double xPos, double yPos) {
+   levelEdit->onMouseMotionEvent(xPos, yPos);
    scene->onMouseMotionEvent(xPos, yPos);
 }
 
@@ -143,8 +144,6 @@ void load() {
    scene->addTickListener(followCameraController);
 
    fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
-
-   scene->addInputListener(levelEdit);
 }
 
 /*void test() {
@@ -282,7 +281,7 @@ int main(int argc, char *argv[]) {
       accumulator += frameTime;
       while (accumulator >= dt) {
          scene->tick(dt);
-		 levelEdit->tick(dt);
+         levelEdit->tick(dt);
          accumulator -= dt;
       }
 

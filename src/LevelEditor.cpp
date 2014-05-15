@@ -43,23 +43,28 @@ LevelEditor::~LevelEditor() {
 void LevelEditor::onKeyEvent(int key, int action) {
 	char yes = 'n';
 	if (action == GLFW_PRESS) {
-		if (!levelOn()) {
-			if (key == GLFW_KEY_GRAVE_ACCENT) {
-				on = true;
-				printf("LEVEL EDIT MODE ENABLED\n");
-			}
-			return;
-		}
+      if (key == GLFW_KEY_GRAVE_ACCENT) {
+         enabled = !enabled;
+
+         SPtr<Scene> sScene = scene.lock();
+         if (sScene) {
+            sScene->setEditMode(enabled);
+         }
+
+         if (!isEnabled()) {
+            return;
+         }
+      }
 		else if (key == GLFW_KEY_Q) {
 			if (saved) {
-				on = false;
+				enabled = false;
 			}
 			else {
 				// Ask before doing
 				printf("Quit without saving? (y/n) ");
 				scanf("%c", &yes);
 				if (yes == 'y') {
-					on = false;
+					enabled = false;
 					yes = 'n';
 				}
 			}
@@ -281,7 +286,7 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 	SPtr<SceneGraph> graph;
 	SPtr<PhysicalObject> tempObj;
 
-	if (!levelOn()) {
+	if (!isEnabled()) {
 		return;
 	}
 	else if (action == GLFW_PRESS) {
@@ -353,7 +358,7 @@ void LevelEditor::onMouseMotionEvent(double xPos, double yPos) {
 	prevPoint[0] = xPos;
 	prevPoint[1] = yPos;
 
-	if (!levelOn()) {
+	if (!isEnabled()) {
 		return;
 	}
 	else if (editState == TRANSLATE) {
@@ -372,7 +377,7 @@ void LevelEditor::onMouseMotionEvent(double xPos, double yPos) {
  * add stuff to them depending on mode
  */
 void LevelEditor::transform(glm::vec3 trans) {
-	if (!levelOn()) {
+	if (!isEnabled()) {
 		return;
 	}
 	else if (!currentObj) {
@@ -403,8 +408,8 @@ void LevelEditor::quickSwitch(int arrow) {
 	
 }
 
-bool LevelEditor::levelOn() {
-	return on;
+bool LevelEditor::isEnabled() {
+	return enabled;
 }
 
 SPtr<PhysicalObject> LevelEditor::getCurObj() {

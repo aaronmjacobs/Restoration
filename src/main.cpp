@@ -18,6 +18,8 @@
 
 // ***************************** Temporary
 
+#include "Skybox.h"
+#include "SkyboxMaterial.h"
 #include "FollowGeometry.h"
 #include "AniMesh.h"
 #include "AniModel.h"
@@ -146,6 +148,20 @@ void load() {
    fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
 }
 
+void loadSkyboxes() {
+   // TODO Move to load from serialized data
+   SPtr<Loader> loader = Loader::getInstance();
+   SPtr<ShaderProgram> program = loader->loadShaderProgram(nullptr, "skybox");
+   SPtr<Material> material = std::make_shared<SkyboxMaterial>("skybox", program, scene->getCamera().lock());
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
+   SPtr<Model> model = std::make_shared<Model>(material, mesh);
+   SPtr<Skybox> skyboxDark = std::make_shared<Skybox>(model, "arrakis");
+   SPtr<Skybox> skyboxLight = std::make_shared<Skybox>(model, "crater");
+
+   scene->setDarkSkybox(skyboxDark);
+   scene->setLightSkybox(skyboxLight);
+}
+
 /*void test() {
    SPtr<SceneGraph> graph = scene->getSceneGraph();
 
@@ -252,6 +268,8 @@ int main(int argc, char *argv[]) {
    // Load the scene
    load();
    scene->setAudio(audio);
+
+   loadSkyboxes();
 
    physTest();
 

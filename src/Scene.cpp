@@ -31,6 +31,22 @@ Json::Value Scene::serialize() const {
    return root;
 }
 
+SPtr<Skybox> Scene::getLightSkybox() {
+   return lightSkybox;
+}
+
+void Scene::setLightSkybox(SPtr<Skybox> lightSkybox) {
+   this->lightSkybox = lightSkybox;
+}
+
+SPtr<Skybox> Scene::getDarkSkybox() {
+   return darkSkybox;
+}
+
+void Scene::setDarkSkybox(SPtr<Skybox> darkSkybox) {
+   this->darkSkybox = darkSkybox;
+}
+
 SPtr<SceneGraph> Scene::getSceneGraph() {
    return sceneGraph;
 }

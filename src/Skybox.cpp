@@ -6,111 +6,99 @@
 #include "ShaderProgram.h"
 #include "Skybox.h"
 
-struct SkyImgInfo {
+struct ImgInfo {
    int w;
    int h;
    int comp;
    unsigned char *pixels;
 };
 
-Skybox::Skybox(SPtr<Model> model, const std::string &xpos, const std::string &xneg, const std::string &ypos, const std::string &yneg,
-   const std::string &zpos, const std::string &zneg, const std::string &skydir)
-   : model(model) {
+Skybox::Skybox(SPtr<Model> model, const std::string &name)
+: model(model) {
+   const std::string &path = "data/textures/skyboxes/";
 
+   // Grab the required uniform from the skybox model's shader
    SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
    uSkybox = shaderProgram->getUniform("uSkybox");
-   //aSkyboxCoord = shaderProgram->getAttribute("aSkyboxCoord");
 
-   FILE *file;
-   SkyImgInfo xp, xn, yp, yn, zp, zn;
+   // Load the skybox
+   loadCubemap(path + name + "/", &skyboxID);
 
-   //Generate 6 skybox ids to reference the images that will be loaded.
-   //glGenTextures(SKYBOX_NUM_TEXTURES, &(skybox_id));
+   // Load the ambient map
+   loadCubemap(path + name + "/ambient/", &ambientMapID);
+}
 
-   glGenTextures(1, &skybox_id);
-   glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_id);
+void Skybox::loadCubemap(const std::string &path, GLuint *id) {
+   const std::string &rightName = "right.png";
+   const std::string &leftName = "left.png";
+   const std::string &upName = "up.png";
+   const std::string &downName = "down.png";
+   const std::string &backName = "back.png";
+   const std::string &frontName = "front.png";
 
-   file = fopen((skydir + xpos).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + xpos).c_str());
-   xp.pixels = stbi_load_from_file(file, &(xp.w), &(xp.h), &(xp.comp), 0);
-   fclose(file);
+   // Generate the cubemap
+   glGenTextures(1, id);
+   glBindTexture(GL_TEXTURE_CUBE_MAP, *id);
 
-   file = fopen((skydir + xneg).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + xneg).c_str());
-   xn.pixels = stbi_load_from_file(file, &(xn.w), &(xn.h), &(xn.comp), 0);
-   fclose(file);
+   // Load the images
+   ImgInfo right = loadImage(path + rightName);
+   ImgInfo left = loadImage(path + leftName);
+   ImgInfo up = loadImage(path + upName);
+   ImgInfo down = loadImage(path + downName);
+   ImgInfo back = loadImage(path + backName);
+   ImgInfo front = loadImage(path + frontName);
 
-   file = fopen((skydir + ypos).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + ypos).c_str());
-   yp.pixels = stbi_load_from_file(file, &(yp.w), &(yp.h), &(yp.comp), 0);
-   fclose(file);
-
-   file = fopen((skydir + yneg).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + yneg).c_str());
-   yn.pixels = stbi_load_from_file(file, &(yn.w), &(yn.h), &(yn.comp), 0);
-   fclose(file);
-
-   file = fopen((skydir + zpos).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + zpos).c_str());
-   zp.pixels = stbi_load_from_file(file, &(zp.w), &(zp.h), &(zp.comp), 0);
-   fclose(file);
-
-   file = fopen((skydir + zneg).c_str(), "rb");
-   ASSERT(file, "Null skybox file %s", (skydir + zneg).c_str());
-   zn.pixels = stbi_load_from_file(file, &(zn.w), &(zn.h), &(zn.comp), 0);
-   fclose(file);
-
-   // Set up handling for the texture cubemap for when too near/too far away from image. 
+   // Set up handling for the texture cubemap for when too near/too far away from image.
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-   if (xp.comp == 3 && xn.comp == 3 && yp.comp == 3 && yn.comp == 3 && zp.comp == 3 && zn.comp == 3) {
-      glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, xp.w, xp.h, 0, GL_RGB, GL_UNSIGNED_BYTE, xp.pixels);
-      glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, xn.w, xn.h, 0, GL_RGB, GL_UNSIGNED_BYTE, xn.pixels);
-      glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, yp.w, yp.h, 0, GL_RGB, GL_UNSIGNED_BYTE, yp.pixels);
-      glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, yn.w, yn.h, 0, GL_RGB, GL_UNSIGNED_BYTE, yn.pixels);
-      glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGB, zp.w, zp.h, 0, GL_RGB, GL_UNSIGNED_BYTE, zp.pixels);
-      glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, zn.w, zn.h, 0, GL_RGB, GL_UNSIGNED_BYTE, zn.pixels);
-   }
-   
-   // Free all of the raw pointers for no memory leaks.
-   stbi_image_free(xp.pixels);
-   stbi_image_free(xn.pixels);
-   stbi_image_free(yp.pixels);
-   stbi_image_free(yn.pixels);
-   stbi_image_free(zp.pixels);
-   stbi_image_free(zn.pixels);
-    
+   // Send the image data to the GPU
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, right.w, right.h, 0, GL_RGB, GL_UNSIGNED_BYTE, right.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, left.w, left.h, 0, GL_RGB, GL_UNSIGNED_BYTE, left.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, up.w, up.h, 0, GL_RGB, GL_UNSIGNED_BYTE, up.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, down.w, down.h, 0, GL_RGB, GL_UNSIGNED_BYTE, down.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGB, back.w, back.h, 0, GL_RGB, GL_UNSIGNED_BYTE, back.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, front.w, front.h, 0, GL_RGB, GL_UNSIGNED_BYTE, front.pixels);
+
+   // Free the image data
+   stbi_image_free(right.pixels);
+   stbi_image_free(left.pixels);
+   stbi_image_free(up.pixels);
+   stbi_image_free(down.pixels);
+   stbi_image_free(back.pixels);
+   stbi_image_free(front.pixels);
+
    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
+ImgInfo Skybox::loadImage(const std::string &fileName) {
+   ImgInfo image;
+
+   FILE *file = fopen(fileName.c_str(), "rb");
+   ASSERT(file, "Unable to load image: %s", fileName.c_str());
+   image.pixels = stbi_load_from_file(file, &image.w, &image.h, &image.comp, 0);
+   ASSERT(image.comp == 3, "Invalid image composition value: %d", image.comp);
+   fclose(file);
+
+   return image;
+}
+
 void Skybox::renderSkybox() {
+   // Enable the skybox shader program
+   model->getMaterial()->getShaderProgram()->use();
+
    glDisable(GL_DEPTH_TEST);
-
-   SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
-   shaderProgram->use();
-
    glEnable(GL_TEXTURE_CUBE_MAP);
-   glActiveTexture(GL_TEXTURE0 + skybox_id);
-   glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_id);
-
-   glUniform1i(uSkybox, skybox_id);
-   /*glEnableVertexAttribArray(aSkyboxCoord);
-   glBindBuffer(GL_ARRAY_BUFFER, model->getMesh()->getTBO());
-   glVertexAttribPointer(aSkyboxCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);*/
+   glActiveTexture(GL_TEXTURE0 + skyboxID);
+   glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxID);
+   glUniform1i(uSkybox, skyboxID);
 
    model->draw();
 
    glDisable(GL_TEXTURE_CUBE_MAP);
    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
    glEnable(GL_DEPTH_TEST);
-}
-
-void Skybox::releaseSkybox()
-{
-   glDisable(GL_TEXTURE_CUBE_MAP);
-   /* Create once working. */
 }

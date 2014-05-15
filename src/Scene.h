@@ -14,10 +14,13 @@ class Camera;
 class Light;
 class SceneGraph;
 class ShaderProgram;
+class Skybox;
 
 class Scene : public Saveable, public TickListener {
 protected:
    SPtr<SceneGraph> sceneGraph;
+   SPtr<Skybox> lightSkybox;
+   SPtr<Skybox> darkSkybox;
    WPtr<Camera> camera;
    WPtr<Player> player;
    std::list<WPtr<Light>> lights;
@@ -55,6 +58,14 @@ public:
    bool isInEditMode() {
       return editMode;
    }
+
+   SPtr<Skybox> getLightSkybox();
+
+   void setLightSkybox(SPtr<Skybox> lightSkybox);
+
+   SPtr<Skybox> getDarkSkybox();
+
+   void setDarkSkybox(SPtr<Skybox> darkSkybox);
 
    SPtr<SceneGraph> getSceneGraph();
 

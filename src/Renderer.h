@@ -19,8 +19,6 @@ protected:
    MatrixStack modelMatrixStack;
 
    UPtr<FrameBuffer> fb;
-   UPtr<Skybox> skybox;
-   UPtr<Skybox> skyboxLight;
    UPtr<Model> plane;
 
    /**

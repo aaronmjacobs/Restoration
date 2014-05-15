@@ -43,13 +43,6 @@ void Renderer::prepare(SPtr<Scene> scene) {
    SPtr<Loader> loader = Loader::getInstance();
    Json::Value root;
 
-   SPtr<ShaderProgram> program = loader->loadShaderProgram(nullptr, "skybox");
-   SPtr<Material> material = std::make_shared<SkyboxMaterial>("skybox", program, scene->getCamera().lock());
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
-   SPtr<Model> model = std::make_shared<Model>(material, mesh);
-   skybox = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/arrakis/"));
-   skyboxLight = UPtr<Skybox>(new Skybox(model, "right.png", "left.png", "up.png", "down.png", "back.png", "front.png", "data/textures/skyboxes/storm/"));
-
    SPtr<ShaderProgram> fboProgram = loader->loadShaderProgram(nullptr, "fbo");
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
    SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
@@ -173,8 +166,8 @@ void Renderer::render(Scene &scene) {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   skyboxLight->renderSkybox();
-   skyboxLight->releaseSkybox();
+   scene.getLightSkybox()->renderSkybox();
+
    scene.getSceneGraph()->forEach(drawLight);
 
    // Do any post processing on the light world buffer
@@ -182,8 +175,7 @@ void Renderer::render(Scene &scene) {
    // Render each item in the scene (to color buffer)
    prepareDarkDraw();
 
-   skybox->renderSkybox();
-   skybox->releaseSkybox();
+   scene.getDarkSkybox()->renderSkybox();
 
    scene.getSceneGraph()->forEach(drawDark);
 

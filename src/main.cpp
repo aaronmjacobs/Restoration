@@ -118,7 +118,7 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 
 void load() {
    SPtr<Loader> loader = Loader::getInstance();
-   scene = loader->loadScene("level1");
+   scene = loader->loadScene("testScene");
    levelEdit = std::make_shared<LevelEditor>(scene);
 
    /*SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());

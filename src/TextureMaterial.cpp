@@ -18,7 +18,7 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
    
    // Generate Texture ID, get the attribute and uniforms for texture.
    uTexture = shaderProgram->getUniform("uTexture");
-   //uAmbientMap = shaderProgram->getUniform("uAmbientMap");
+   uAmbientMap = shaderProgram->getUniform("uAmbientMap");
    aTexCoord = shaderProgram->getAttribute("aTexCoord");
    createTexture();
 }
@@ -133,8 +133,11 @@ void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh){
    glUniform1f(uShininess, shininess);
 
    if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {
-      renderData.getGLuint("ambientMapID");
-      //glUniform1i(uAmbientMap, ambientMapID); // TODO How to get access to ID?
+      GLuint ambientMapID = renderData.getGLuint("ambientMapID");
+      glUniform1i(uAmbientMap, ambientMapID);
+
+      glActiveTexture(GL_TEXTURE0 + ambientMapID);
+      glBindTexture(GL_TEXTURE_CUBE_MAP, ambientMapID);
    }
 }
 

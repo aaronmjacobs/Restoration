@@ -88,12 +88,6 @@ void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh){
    glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-   // TODO
-   ambient = glm::vec3(0.35, 0.41, 0.47);
-   if (renderData.getRenderState() & DARKWORLD_STATE) {
-      ambient = glm::vec3(0.42, 0.35, 0.28);
-   }
-
    /* Phong Shading */
    glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
    glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));

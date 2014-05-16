@@ -39,7 +39,7 @@ void main() {
     toLight = normalize(toLight);
     float nDotL = dot(lNormal, toLight);
     float diffuseAmount = max(nDotL, 0.0);
-  
+
     // Specular light
     float specularAmount = 0.0;
     if (nDotL >= 0.0) {
@@ -47,7 +47,7 @@ void main() {
       vec3 reflection = normalize(2.0 * nDotL * lNormal - toLight);
       specularAmount = pow(max(dot(toCamera, reflection), 0.0), uMaterial.shininess);
     }
-  
+
     // Falloff
     float falloff = 1.0 / (uLights[i].constFalloff
                           + uLights[i].linearFalloff * lightDistance

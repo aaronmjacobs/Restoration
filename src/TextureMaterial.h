@@ -30,17 +30,6 @@ public:
                    const std::string &textureFileName);
 
    /**
-   * Give the texture id from the framebuffer and let keep phong parameters.
-   */
-   TextureMaterial(SPtr<FrameBuffer> frameBuffer,
-                   SPtr<ShaderProgram> shaderProgram,
-                   const glm::vec3 &ambient,
-                   const glm::vec3 &diffuse,
-                   const glm::vec3 &specular,
-                   const glm::vec3 &emission,
-                   float shininess);
-
-   /**
     * Delete the texture.
     */
    virtual ~TextureMaterial();

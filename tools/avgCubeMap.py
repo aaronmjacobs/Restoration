@@ -17,6 +17,7 @@ def readSkyboxImages(skybox_dir):
     # Check if there's a backslash on the end of the input folder. Remove it.
     if skybox_dir[-1] == '//':
         skybox_dir = skybox_dir[:-1]
+    skybox_dir = skybox_dir + "/ambient"
 
     im_back = Image.open(skybox_path + skybox_dir + "/back.png");
     im_front = Image.open(skybox_path + skybox_dir + "/front.png");
@@ -54,6 +55,3 @@ if __name__ == '__main__':
     skybox_dir = raw_input('Input skybox folder name\n');
     #print skybox_dir;
     readSkyboxImages(skybox_dir)
-
-#im = Image.open("data/textures/skyboxes/crater");
-#im.rotate(45).show()

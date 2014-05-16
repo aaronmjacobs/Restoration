@@ -26,7 +26,7 @@ Json::Value SkyboxMaterial::serialize() const {
    return root;
 }
 
-void SkyboxMaterial::apply(SPtr<Mesh> mesh) {
+void SkyboxMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    shaderProgram->use();
 
    SPtr<Camera> cam = camera.lock();

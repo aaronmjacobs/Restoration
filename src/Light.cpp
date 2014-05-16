@@ -54,7 +54,7 @@ void Light::draw(ShaderProgram &program, const unsigned int lightIndex) {
    glUniform1f(uLightSquare, squareFalloff);
 }
 
-void Light::draw(unsigned int renderState) {
+void Light::draw(const RenderData &renderData) {
 }
 
 void Light::tick(const float dt) {

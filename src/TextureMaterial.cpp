@@ -1,6 +1,7 @@
 #include "FancyAssert.h"
 #include "lib/stb_image.h"
 #include "Mesh.h"
+#include "RenderState.h"
 #include "TextureMaterial.h"
 
 const std::string TextureMaterial::CLASS_NAME = "TextureMaterial";
@@ -17,6 +18,7 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
    
    // Generate Texture ID, get the attribute and uniforms for texture.
    uTexture = shaderProgram->getUniform("uTexture");
+   //uAmbientMap = shaderProgram->getUniform("uAmbientMap");
    aTexCoord = shaderProgram->getAttribute("aTexCoord");
    createTexture();
 }
@@ -111,7 +113,7 @@ void TextureMaterial::createTexture(){
 }
 
 /* Current functionality for single texture only. Not multitexturing. */
-void TextureMaterial::apply(SPtr<Mesh> mesh){
+void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh){
    shaderProgram->use();
 
    /* Texture Shading */
@@ -120,7 +122,7 @@ void TextureMaterial::apply(SPtr<Mesh> mesh){
    glBindTexture(GL_TEXTURE_2D, texture_id);
    glUniform1i(uTexture, texture_id);
    glEnableVertexAttribArray(aTexCoord);
-   glBindBuffer(GL_ARRAY_BUFFER, mesh->getTBO());
+   glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
    /* Phong Shading */
@@ -129,6 +131,11 @@ void TextureMaterial::apply(SPtr<Mesh> mesh){
    glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
    glUniform3fv(uEmission, 1, glm::value_ptr(emission));
    glUniform1f(uShininess, shininess);
+
+   if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {
+      renderData.getGLuint("ambientMapID");
+      //glUniform1i(uAmbientMap, ambientMapID); // TODO How to get access to ID?
+   }
 }
 
 void TextureMaterial::disable(){

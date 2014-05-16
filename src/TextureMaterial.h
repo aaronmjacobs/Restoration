@@ -10,7 +10,7 @@ private:
 
 protected:
    GLuint texture_id;
-   GLint uTexture, aTexCoord;
+   GLint uTexture, uAmbientMap, aTexCoord;
 
    const std::string textureFileName;
 
@@ -53,7 +53,7 @@ public:
     */
    virtual Json::Value serialize() const;
 
-   virtual void apply(SPtr<Mesh> mesh);
+   virtual void apply(const RenderData &renderData, const Mesh &mesh);
 
    virtual void disable();
 };

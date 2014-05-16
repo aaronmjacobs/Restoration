@@ -125,7 +125,7 @@ Json::Value Mesh::serialize() const {
    return root;
 }
 
-GLuint Mesh::getTBO() {
+GLuint Mesh::getTBO() const {
    ASSERT(hasTextureBufferObject, "Mesh doesn't have texture coordinates: %s", fileName.c_str());
    return tbo;
 }

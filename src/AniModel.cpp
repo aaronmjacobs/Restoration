@@ -24,11 +24,11 @@ Json::Value AniModel::serialize() const {
    return root;
 }
 
-void AniModel::draw() {
+void AniModel::draw(const RenderData &renderData) {
    SPtr<ShaderProgram> shaderProgram = material->getShaderProgram();
 
    // Apply the material properties (and enable the shader)
-   material->apply(mesh);
+   material->apply(renderData, *mesh);
    aniMesh->updateAnimation();
 
    // Send the bones

@@ -40,7 +40,7 @@ public:
    /**
     * Draws the model.
     */
-   virtual void draw();
+   virtual void draw(const RenderData &renderData);
 };
 
 #endif

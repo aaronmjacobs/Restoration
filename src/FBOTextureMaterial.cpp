@@ -16,7 +16,7 @@ FBOTextureMaterial::FBOTextureMaterial(const std::string &jsonFileName,
 FBOTextureMaterial::~FBOTextureMaterial() {
 }
 
-void FBOTextureMaterial::apply(SPtr<Mesh> mesh) {
+void FBOTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    shaderProgram->use();
 
    /* Texture Shading */
@@ -27,7 +27,7 @@ void FBOTextureMaterial::apply(SPtr<Mesh> mesh) {
    glUniform1i(uTexture, texture_id);
 
    glEnableVertexAttribArray(aTexCoord);
-   glBindBuffer(GL_ARRAY_BUFFER, mesh->getTBO());
+   glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 

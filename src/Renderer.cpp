@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "Model.h"
 #include "Renderer.h"
+#include "RenderData.h"
 #include "RenderState.h"
 #include "Scene.h"
 #include "SceneGraph.h"
@@ -55,17 +56,15 @@ void Renderer::onWindowSizeChange(int width, int height) {
 
 namespace {
 
+RenderData _renderData;
+
+void setRenderData(RenderData &data) {
+   _renderData = data;
+}
+
 // Function that draws a SceneObject
-void drawStencil(SceneObject &obj) {
-   obj.draw(STENCIL_STATE);
-}
-
-void drawLight(SceneObject &obj) {
-   obj.draw(LIGHTWORLD_STATE);
-}
-
-void drawDark(SceneObject &obj) {
-   obj.draw(DARKWORLD_STATE);
+void draw(SceneObject &obj) {
+   obj.draw(_renderData);
 }
 
 } // namespace
@@ -81,6 +80,8 @@ void Renderer::prepareStencilDraw() {
    glStencilMask(0xFF); // stencil buffer free to write
    glClear(GL_STENCIL_BUFFER_BIT);  // first clear stencil buffer by writing default stencil value (0) to all of stencil buffer.
    //now draw stencil shape at stencil shape pixel locations in stencil buffer replace stencil buffer values to ref = 1
+
+   renderData.setRenderState(STENCIL_STATE);
 }
 
 void Renderer::prepareLightDraw() {
@@ -96,11 +97,15 @@ void Renderer::prepareLightDraw() {
    // and write actual content to depth and color buffer only at stencil shape locations.
    glStencilFunc(GL_EQUAL, 1, 0xFF);
    fb->applyFBO();
+
+   renderData.setRenderState(LIGHTWORLD_STATE);
 }
 
 void Renderer::prepareDarkDraw() {
    glDisable(GL_STENCIL_TEST);
    fb->disableFBO();
+
+   renderData.setRenderState(DARKWORLD_STATE);
 }
 
 void Renderer::render(Scene &scene) {
@@ -158,7 +163,8 @@ void Renderer::render(Scene &scene) {
 
    // Render items to the stencil buffer
    prepareStencilDraw();
-   scene.getSceneGraph()->forEach(drawStencil);
+   setRenderData(renderData);
+   scene.getSceneGraph()->forEach(draw);
 
    // Render each item in the scene (to frame buffer object) - clear color should be transparent
    prepareLightDraw();
@@ -166,18 +172,20 @@ void Renderer::render(Scene &scene) {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   scene.getLightSkybox()->renderSkybox();
+   scene.getLightSkybox()->renderSkybox(renderData);
 
-   scene.getSceneGraph()->forEach(drawLight);
+   setRenderData(renderData);
+   scene.getSceneGraph()->forEach(draw);
 
    // Do any post processing on the light world buffer
 
    // Render each item in the scene (to color buffer)
    prepareDarkDraw();
 
-   scene.getDarkSkybox()->renderSkybox();
+   scene.getDarkSkybox()->renderSkybox(renderData);
 
-   scene.getSceneGraph()->forEach(drawDark);
+   setRenderData(renderData);
+   scene.getSceneGraph()->forEach(draw);
 
    glEnable(GL_STENCIL_TEST);
    glStencilFunc(GL_EQUAL, 1, 0xFF);
@@ -189,7 +197,7 @@ void Renderer::render(Scene &scene) {
    GLint uProjMatrix = program->getUniform("uProjMatrix");
    glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
    glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
-   plane->draw();
+   plane->draw(renderData);
 
    glDisable(GL_STENCIL_TEST);
 }

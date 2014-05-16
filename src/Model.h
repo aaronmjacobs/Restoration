@@ -7,6 +7,7 @@
 
 class Material;
 class Mesh;
+class RenderData;
 
 /**
  * A three dimensional model, composed of a set of vertices / normals (mesh) and
@@ -45,7 +46,7 @@ public:
    /**
     * Draws the model.
     */
-   virtual void draw();
+   virtual void draw(const RenderData &renderData);
 
    /**
     * Gets the model's material.

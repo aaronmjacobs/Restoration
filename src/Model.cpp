@@ -3,6 +3,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Model.h"
+#include "RenderData.h"
 
 const std::string Model::CLASS_NAME = "Model";
 
@@ -31,9 +32,9 @@ Json::Value Model::serialize() const {
    return root;
 }
 
-void Model::draw() {
+void Model::draw(const RenderData &renderData) {
    // Apply the material properties (and enable the shader)
-   material->apply(mesh);
+   material->apply(renderData, *mesh);
 
    SPtr<ShaderProgram> shaderProgram = material->getShaderProgram();
 

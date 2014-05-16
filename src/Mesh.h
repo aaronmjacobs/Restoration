@@ -62,28 +62,28 @@ public:
    /**
     * Gets the vertex buffer object handle.
     */
-   GLuint getVBO() {
+   GLuint getVBO() const {
      return vbo;
    }
 
    /**
     * Gets the normal buffer object handle.
     */
-   GLuint getNBO() {
+   GLuint getNBO() const {
      return nbo;
    }
 
    /**
     * Gets the index buffer object handle.
     */
-   GLuint getIBO() {
+   GLuint getIBO() const {
      return ibo;
    }
 
    /**
     * Gets the texture buffer object handle.
     */
-   GLuint getTBO();
+   GLuint getTBO() const;
 
    /**
     * Gets the number of vertex indices.

@@ -20,7 +20,15 @@ protected:
 public:
    Skybox(SPtr<Model> model, const std::string &path);
 
-   void renderSkybox();
+   void renderSkybox(RenderData &renderData);
+
+   GLuint getSkyboxID() {
+      return skyboxID;
+   }
+
+   GLuint getAmbientMapID() {
+      return ambientMapID;
+   }
 };
 
 #endif

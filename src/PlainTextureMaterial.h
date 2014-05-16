@@ -28,7 +28,7 @@ public:
    */
    virtual Json::Value serialize() const;
 
-   virtual void apply(SPtr<Mesh> mesh);
+   virtual void apply(const RenderData &renderData, const Mesh &mesh);
 };
 
 #endif

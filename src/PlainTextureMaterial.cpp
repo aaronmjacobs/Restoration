@@ -48,7 +48,7 @@ void PlainTextureMaterial::createTexture() {
    stbi_image_free(data);
 }
 
-void PlainTextureMaterial::apply(SPtr<Mesh> mesh) {
+void PlainTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    shaderProgram->use();
 
    /* Texture Shading */
@@ -57,7 +57,7 @@ void PlainTextureMaterial::apply(SPtr<Mesh> mesh) {
    glBindTexture(GL_TEXTURE_2D, texture_id);
    glUniform1i(uTexture, texture_id);
    glEnableVertexAttribArray(aTexCoord);
-   glBindBuffer(GL_ARRAY_BUFFER, mesh->getTBO());
+   glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 

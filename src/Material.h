@@ -1,6 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+#include "RenderData.h"
 #include "Saveable.h"
 #include "ShaderProgram.h"
 #include "Types.h"
@@ -42,7 +43,7 @@ public:
    /**
     * Applies the properties of the material to the shader.
     */
-   virtual void apply(SPtr<Mesh> mesh) = 0;
+   virtual void apply(const RenderData &renderData, const Mesh &mesh) = 0;
 };
 
 #endif

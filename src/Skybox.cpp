@@ -86,7 +86,7 @@ ImgInfo Skybox::loadImage(const std::string &fileName) {
    return image;
 }
 
-void Skybox::renderSkybox() {
+void Skybox::renderSkybox(RenderData &renderData) {
    // Enable the skybox shader program
    model->getMaterial()->getShaderProgram()->use();
 
@@ -96,9 +96,12 @@ void Skybox::renderSkybox() {
    glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxID);
    glUniform1i(uSkybox, skyboxID);
 
-   model->draw();
+   model->draw(renderData);
 
    glDisable(GL_TEXTURE_CUBE_MAP);
    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
    glEnable(GL_DEPTH_TEST);
+
+   // Set the ambient map
+   renderData.set("ambientMapID", ambientMapID);
 }

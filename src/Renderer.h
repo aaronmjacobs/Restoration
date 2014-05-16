@@ -4,6 +4,7 @@
 #include "FrameBuffer.h"
 #include "GLMIncludes.h"
 #include "MatrixStack.h"
+#include "RenderData.h"
 
 class Scene;
 class Skybox;
@@ -17,6 +18,8 @@ protected:
     * Matrix stack of the model matrix.
     */
    MatrixStack modelMatrixStack;
+
+   RenderData renderData;
 
    UPtr<FrameBuffer> fb;
    UPtr<Model> plane;

@@ -46,7 +46,7 @@ public:
     */
    void draw(ShaderProgram &program, const unsigned int lightIndex);
 
-   virtual void draw(unsigned int renderState);
+   virtual void draw(const RenderData &renderData);
 
    /**
     * Steps |dt| seconds through time.

@@ -18,13 +18,13 @@ Json::Value FollowGeometry::serialize() const {
    return root;
 }
 
-void FollowGeometry::draw(unsigned int renderState) {
+void FollowGeometry::draw(const RenderData &renderData) {
    SPtr<SceneObject> sTarget = target.lock();
    if (sTarget) {
       setPosition(sTarget->getPosition());
    }
 
-   Geometry::draw(renderState);
+   Geometry::draw(renderData);
 }
 
 void FollowGeometry::tick(const float dt) {

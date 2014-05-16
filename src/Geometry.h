@@ -42,7 +42,7 @@ public:
    /**
     * Draws the geometry in the scene.
     */
-   virtual void draw(unsigned int renderState);
+   virtual void draw(const RenderData &renderData);
 };
 
 #endif

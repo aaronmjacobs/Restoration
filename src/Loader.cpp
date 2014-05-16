@@ -7,6 +7,7 @@
 #include "Geometry.h"
 #include "IOUtils.h"
 #include "lib/json/json.h"
+#include "lib/stb_image.h"
 #include "Light.h"
 #include "Loader.h"
 #include "Magus.h"
@@ -217,6 +218,13 @@ SceneObjectData Loader::loadSceneObjectData(const Json::Value &root) {
  ** Public loaders **
  ********************/
 
+struct ImgInfo {
+   int w;
+   int h;
+   int comp;
+   unsigned char *pixels;
+};
+
 const aiScene* Loader::loadAssimpScene(const std::string &fileName) {
    // Make sure the file exists and can be read
    std::ifstream ifile(fileName);
@@ -229,6 +237,92 @@ const aiScene* Loader::loadAssimpScene(const std::string &fileName) {
    ASSERT(scene, "Unable to import scene: %s", fileName.c_str());
 
    return scene;
+}
+
+ImgInfo loadImage(const std::string &fileName) {
+   ImgInfo imageInfo;
+
+   FILE *file = fopen(fileName.c_str(), "rb");
+   ASSERT(file, "Unable to load image: %s", fileName.c_str());
+   imageInfo.pixels = stbi_load_from_file(file, &imageInfo.w, &imageInfo.h, &imageInfo.comp, 0);
+   ASSERT(imageInfo.comp == 3 || imageInfo.comp == 4, "Invalid image composition value: %d", imageInfo.comp);
+   fclose(file);
+
+   return imageInfo;
+}
+
+GLuint Loader::loadTexture(const std::string &fileName) {
+   GLuint textureID;
+   glGenTextures(1, &textureID);
+   glBindTexture(GL_TEXTURE_2D, textureID);
+
+   // Load the image
+   ImgInfo imageInfo = loadImage(fileName);
+
+   if (imageInfo.comp == 4) {
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageInfo.w, imageInfo.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageInfo.pixels);
+   } else if (imageInfo.comp == 3) {
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageInfo.w, imageInfo.h, 0, GL_RGB, GL_UNSIGNED_BYTE, imageInfo.pixels);
+   } else {
+      ASSERT(false, "Composition of image is not 3 or 4");
+   }
+
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glBindTexture(GL_TEXTURE_2D, 0);
+
+   stbi_image_free(imageInfo.pixels);
+
+   return textureID;
+}
+
+GLuint Loader::loadCubemap(const std::string &path) {
+   const std::string &rightName = "right.png";
+   const std::string &leftName = "left.png";
+   const std::string &upName = "up.png";
+   const std::string &downName = "down.png";
+   const std::string &backName = "back.png";
+   const std::string &frontName = "front.png";
+
+   // Generate the cubemap
+   GLuint cubemapID;
+   glGenTextures(1, &cubemapID);
+   glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapID);
+
+   // Load the images
+   ImgInfo right = loadImage(path + rightName);
+   ImgInfo left = loadImage(path + leftName);
+   ImgInfo up = loadImage(path + upName);
+   ImgInfo down = loadImage(path + downName);
+   ImgInfo back = loadImage(path + backName);
+   ImgInfo front = loadImage(path + frontName);
+
+   // Set up handling for the texture cubemap for when too near/too far away from image.
+   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+   // Send the image data to the GPU
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGB, right.w, right.h, 0, GL_RGB, GL_UNSIGNED_BYTE, right.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGB, left.w, left.h, 0, GL_RGB, GL_UNSIGNED_BYTE, left.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGB, up.w, up.h, 0, GL_RGB, GL_UNSIGNED_BYTE, up.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGB, down.w, down.h, 0, GL_RGB, GL_UNSIGNED_BYTE, down.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGB, back.w, back.h, 0, GL_RGB, GL_UNSIGNED_BYTE, back.pixels);
+   glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGB, front.w, front.h, 0, GL_RGB, GL_UNSIGNED_BYTE, front.pixels);
+
+   // Free the image data
+   stbi_image_free(right.pixels);
+   stbi_image_free(left.pixels);
+   stbi_image_free(up.pixels);
+   stbi_image_free(down.pixels);
+   stbi_image_free(back.pixels);
+   stbi_image_free(front.pixels);
+
+   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+   return cubemapID;
 }
 
 SPtr<Camera> Loader::loadCamera(SPtr<Scene> scene, const Json::Value &root) {

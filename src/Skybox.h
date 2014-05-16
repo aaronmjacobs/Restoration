@@ -6,16 +6,12 @@
 #include <string>
 
 class Model;
-struct ImgInfo;
 
 class Skybox {
 protected:
-   GLuint skyboxID, ambientMapID;
+   GLuint skyboxID, ambientMapID, ambientGlobalID;
    GLint uSkybox;
    SPtr<Model> model;
-
-   void loadCubemap(const std::string &path, GLuint *id);
-   ImgInfo loadImage(const std::string &fileName);
 
 public:
    Skybox(SPtr<Model> model, const std::string &path);

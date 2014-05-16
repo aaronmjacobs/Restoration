@@ -5,11 +5,8 @@
 #include "FrameBuffer.h"
 
 class TextureMaterial : public PhongMaterial {
-private:
-   void createTexture();
-
 protected:
-   GLuint texture_id;
+   GLuint textureID;
    GLint uTexture, uAmbientMap, aTexCoord;
 
    const std::string textureFileName;

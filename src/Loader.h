@@ -1,6 +1,7 @@
 #ifndef LOADER_H
 #define LOADER_H
 
+#include "GLIncludes.h"
 #include "GLMIncludes.h"
 #include "Types.h"
 
@@ -87,6 +88,8 @@ public:
     * Loads am assimp scene with an importer from the specified file.
     */
    const aiScene* loadAssimpScene(const std::string &fileName);
+   GLuint loadTexture(const std::string &fileName);
+   GLuint loadCubemap(const std::string &fileName);
 
    SPtr<Camera> loadCamera(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Character> loadCharacter(SPtr<Scene> scene, const Json::Value &root);

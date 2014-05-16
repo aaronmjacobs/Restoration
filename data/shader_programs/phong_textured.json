@@ -76,6 +76,7 @@
       "uProjMatrix",
       "uViewMatrix",
       "uTexture",
-      "uAmbientMap"
+      "uAmbientMap",
+      "uAmbientGlobal"
    ]
 }

@@ -18,6 +18,7 @@ uniform Material uMaterial;
 uniform vec3 uCameraPos;
 uniform sampler2D uTexture;
 uniform samplerCube uAmbientMap;
+uniform sampler2D uAmbientGlobal;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
@@ -26,7 +27,9 @@ varying vec2 vTexCoord;
 void main() {
   vec3 lNormal = normalize(vNormal);
   vec3 ambient = textureCube(uAmbientMap, lNormal).rgb;
-  
+  vec3 ambientGlobal = texture2D(uAmbientGlobal, vec2(0,0)).rgb;
+  vec3 surfaceColor = texture2D(uTexture, vTexCoord).rgb;
+
   vec3 finalColor = vec3(0.0, 0.0, 0.0);
   for (int i = 0; i < uNumLights; ++i) {
 
@@ -49,12 +52,12 @@ void main() {
     float falloff = 1.0 / (uLights[i].constFalloff
                           + uLights[i].linearFalloff * lightDistance
                           + uLights[i].squareFalloff * lightDistance * lightDistance);
-  
-    finalColor += ((texture2D(uTexture, vTexCoord).rgb * diffuseAmount
-                  + uMaterial.specular * specularAmount) * falloff
-                  + ambient) * uLights[i].color;
+
+    finalColor += (surfaceColor * diffuseAmount + uMaterial.specular * specularAmount)
+               * falloff * uLights[i].color;
   }
-  
+
+  finalColor += surfaceColor * ((ambient + ambientGlobal) * 0.5) * 0.5;
   finalColor += uMaterial.emission;
 
   gl_FragColor = vec4(finalColor.rgb, 1);

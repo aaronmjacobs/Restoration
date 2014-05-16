@@ -31,9 +31,9 @@
             "@class" : "Light",
             "renderState" : 6,
             "color" : {
-               "r" : 0.3000000119209290,
-               "g" : 0.3000000119209290,
-               "b" : 0.3000000119209290
+               "r" : 0.2,
+               "g" : 0.2,
+               "b" : 0.2
             },
             "constFalloff" : 0.001,
             "linearFalloff" : 0.001,
@@ -87,24 +87,24 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 1,
+            "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "text",
                "mesh" : {
                   "@class" : "Mesh",
-                  "fileName" : "data/meshes/sphere.obj"
+                  "fileName" : "data/meshes/enemyFull.obj"
                }
             },
-            "name" : "test2",
+            "name" : "",
             "orientation" : {
-               "w" : 0.7071067690849304,
-               "x" : 0.7071067690849304,
+               "w" : 0.0,
+               "x" : 0.0,
                "y" : 0.0,
                "z" : 0.0
             },
             "position" : {
-               "x" : 5.0,
+               "x" : -10.0,
                "y" : 0.0,
                "z" : 0.0
             },

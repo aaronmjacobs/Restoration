@@ -1,14 +1,14 @@
 {
    "@class" : "TextureMaterial",
    "ambient" : {
-      "b" : 0.2000000029802322,
+      "b" : 0.0,
       "g" : 0.0,
-      "r" : 0.1299999952316284
+      "r" : 0.0
    },
    "diffuse" : {
-      "b" : 0.4000000059604645,
+      "b" : 0.0,
       "g" : 0.0,
-      "r" : 0.2599999904632568
+      "r" : 0.0
    },
    "emission" : {
       "b" : 0.0,
@@ -18,9 +18,9 @@
    "shaderProgram" : "phong_textured",
    "shininess" : 300.0,
    "specular" : {
-      "b" : 0.4000000059604645,
-      "g" : 0.4000000059604645,
-      "r" : 0.4000000059604645
+      "b" : 0.2,
+      "g" : 0.2,
+      "r" : 0.2
    },
-   "texture" : "data/textures/insidePill.png"
+   "texture" : "data/textures/pillar.png"
 }

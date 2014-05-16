@@ -29,6 +29,9 @@ Skybox::Skybox(SPtr<Model> model, const std::string &name)
 
    // Load the ambient map
    ambientMapID = loader->loadCubemap(path + name + "/ambient/");
+
+   // Load the ambient global color
+   ambientGlobalID = loader->loadTexture(path + name + "/ambient/global.png");
 }
 
 void Skybox::renderSkybox(RenderData &renderData) {
@@ -47,6 +50,7 @@ void Skybox::renderSkybox(RenderData &renderData) {
    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
    glEnable(GL_DEPTH_TEST);
 
-   // Set the ambient map
+   // Set the ambient map and global ambient color
    renderData.set("ambientMapID", ambientMapID);
+   renderData.set("ambientGlobalID", ambientGlobalID);
 }

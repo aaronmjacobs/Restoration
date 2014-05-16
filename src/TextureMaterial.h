@@ -7,7 +7,7 @@
 class TextureMaterial : public PhongMaterial {
 protected:
    GLuint textureID;
-   GLint uTexture, uAmbientMap, aTexCoord;
+   GLint uTexture, uAmbientMap, uAmbientGlobal, aTexCoord;
 
    const std::string textureFileName;
 

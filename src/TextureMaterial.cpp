@@ -19,6 +19,7 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
    // Generate Texture ID, get the attribute and uniforms for texture.
    uTexture = shaderProgram->getUniform("uTexture");
    uAmbientMap = shaderProgram->getUniform("uAmbientMap");
+   uAmbientGlobal = shaderProgram->getUniform("uAmbientGlobal");
    aTexCoord = shaderProgram->getAttribute("aTexCoord");
 
    SPtr<Loader> loader = Loader::getInstance();
@@ -115,10 +116,15 @@ void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh){
 
    if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {
       GLuint ambientMapID = renderData.getGLuint("ambientMapID");
-      glUniform1i(uAmbientMap, ambientMapID);
+      GLuint ambientGlobalID = renderData.getGLuint("ambientGlobalID");
 
       glActiveTexture(GL_TEXTURE0 + ambientMapID);
       glBindTexture(GL_TEXTURE_CUBE_MAP, ambientMapID);
+      glUniform1i(uAmbientMap, ambientMapID);
+
+      glActiveTexture(GL_TEXTURE0 + ambientGlobalID);
+      glBindTexture(GL_TEXTURE_2D, ambientGlobalID);
+      glUniform1i(uAmbientGlobal, ambientGlobalID);
    }
 }
 

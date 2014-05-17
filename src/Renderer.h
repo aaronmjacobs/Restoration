@@ -55,6 +55,8 @@ public:
     */
    void onWindowSizeChange(int width, int height);
 
+   void onMonitorChange();
+
    /**
     * Prepares the renderer for use, making any necessary OpenGL calls.
     */

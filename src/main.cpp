@@ -219,6 +219,10 @@ void physTest() {
    graph->addPhys(geometry);
 }
 
+void monitorCallback(GLFWmonitor *monitor, int event) {
+   renderer.onMonitorChange();
+}
+
 } // namespace
 
 int main(int argc, char *argv[]) {
@@ -245,6 +249,7 @@ int main(int argc, char *argv[]) {
    // Set the OpenGL context, and window callbacks
    glfwMakeContextCurrent(window);
    glfwSetWindowSizeCallback(window, windowSizeCallback);
+   glfwSetMonitorCallback(monitorCallback);
    glfwSetWindowFocusCallback(window, focusCallback);
    glfwSetKeyCallback(window, keyCallback);
    glfwSetMouseButtonCallback(window, mouseClickCallback);

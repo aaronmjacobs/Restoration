@@ -252,6 +252,10 @@ ImgInfo loadImage(const std::string &fileName) {
 }
 
 GLuint Loader::loadTexture(const std::string &fileName) {
+   if (textureMap.count(fileName)) {
+      return textureMap[fileName];
+   }
+
    GLuint textureID;
    glGenTextures(1, &textureID);
    glBindTexture(GL_TEXTURE_2D, textureID);
@@ -273,6 +277,7 @@ GLuint Loader::loadTexture(const std::string &fileName) {
 
    stbi_image_free(imageInfo.pixels);
 
+   textureMap[fileName] = textureID;
    return textureID;
 }
 
@@ -610,7 +615,7 @@ SPtr<Player> Loader::loadPlayer(SPtr<Scene> scene, const Json::Value &root) {
    glm::vec3 velocity = loadVec3(root["velocity"]);
 
    check("Player", root, "acceleration");
-   glm::vec3 acceleration = loadVec3("acceleration");
+   glm::vec3 acceleration = loadVec3(root["acceleration"]);
 
    // Character
    check("Player", root, "health");
@@ -764,11 +769,6 @@ SPtr<ShaderProgram> Loader::loadShaderProgram(SPtr<Scene> scene, const std::stri
 }
 
 SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName) {
-   TextureMaterialMap::iterator it = textureMaterialMap.find(fileName);
-   if (it != textureMaterialMap.end()) {
-      return it->second;
-   }
-
    Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<TextureMaterial>(fileName));
 
    PhongMaterialData data = loadPhongMaterialData(scene, root);
@@ -778,8 +778,6 @@ SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::
    std::string textureFileName = root["texture"].asString();
 
    SPtr<TextureMaterial> textureMaterial = std::make_shared<TextureMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess, textureFileName);
-
-   textureMaterialMap[fileName] = textureMaterial;
 
    return textureMaterial;
 }

@@ -3,6 +3,8 @@
 
 #define MAX_BONES 64
 
+#define MAX_ANIMATIONS 10
+
 #include "Mesh.h"
 #include <assimp/scene.h>
 #include <assimp/Importer.hpp>
@@ -15,7 +17,20 @@ private:
    Assimp::Importer importer;
    const aiScene *scene;
 
+   //list of scenes
+   std::vector<const aiScene*> scenes;
+
+   //list of importers
+   Assimp::Importer importers[MAX_ANIMATIONS];
+
+   //joint buffer object and weight buffer object
    GLuint jbo, wbo;
+
+   //maps animation name to index
+   std::map <std::string, int> aniMap;
+
+   //holds current animation index and number of indicies
+   int aniMode, numModes = 0;
 
    //The start time for the animation
    float startTime;
@@ -57,14 +72,18 @@ public:
     * Constructs a mesh from the model file with the given file name, allocating
     * the required GL buffers.
     */
-   AniMesh(const std::string &fileName);
+   AniMesh(const std::string &fileName, const std::string &aniName);
 
    /**
     * Deallocates the GL buffers.
     */
    virtual ~AniMesh();
 
-   void loadAnimation();
+   void loadAnimation(const std::string &fileName, const std::string &aniName);
+
+   void hardApplyAnimation(const std::string &aniName);
+
+   void softApplyAnimation(const std::string &aniName);
    
    virtual void updateAnimation();
 

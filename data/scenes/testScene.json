@@ -113,35 +113,6 @@
                "y" : 1.0,
                "z" : 1.0
             }
-         },
-         {
-            "@class" : "Scenery",
-            "renderState" : 2,
-            "model" : {
-               "@class" : "Model",
-               "material" : "testMaterial",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/cube.obj"
-               }
-            },
-            "name" : "cube",
-            "orientation" : {
-               "w" : 0.7071067690849304,
-               "x" : 0.7071067690849304,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 0.0,
-               "y" : 5.0,
-               "z" : 0.0
-            },
-            "scale" : {
-               "x" : 0.5,
-               "y" : 0.5,
-               "z" : 0.5
-            }
          }
       ]
    }

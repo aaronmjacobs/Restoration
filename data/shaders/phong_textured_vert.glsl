@@ -7,9 +7,11 @@ uniform mat4 uNormalMatrix;
 
 attribute vec3 aPosition;
 attribute vec3 aNormal;
+attribute vec2 aTexCoord;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
+varying vec2 vTexCoord;
 
 void main() {
    // Transforms
@@ -21,4 +23,7 @@ void main() {
    vec4 lNormal = vec4(aNormal.xyz, 0.0);
    lNormal = uNormalMatrix * lNormal;
    vNormal = lNormal.xyz;
+
+   //Texturing
+   vTexCoord = aTexCoord;
 }

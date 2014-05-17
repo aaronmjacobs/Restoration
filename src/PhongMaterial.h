@@ -9,24 +9,13 @@ class PhongMaterial : public Material {
 protected:
    glm::vec3 ambient, diffuse, specular, emission;
    float shininess;
-   GLint uAmbient, uDiffuse, uSpecular, uEmission, uShininess;
+   GLint uAmbient, uDiffuse, uSpecular, uEmission, uShininess, uAmbientMap, uAmbientGlobal;
 
 public:
    static const std::string CLASS_NAME;
 
    PhongMaterial(const std::string &jsonFileName,
                  SPtr<ShaderProgram> shaderProgram,
-                 const glm::vec3 &ambient,
-                 const glm::vec3 &diffuse,
-                 const glm::vec3 &specular,
-                 const glm::vec3 &emission,
-                 float shininess);
-
-   /**
-   * Constructor used to set up material without json file.
-   * EX: Render to texture using Frame Buffer Object.
-   */
-   PhongMaterial(SPtr<ShaderProgram> shaderProgram,
                  const glm::vec3 &ambient,
                  const glm::vec3 &diffuse,
                  const glm::vec3 &specular,

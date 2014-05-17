@@ -1,5 +1,6 @@
 #include "IOUtils.h"
 #include "PhongMaterial.h"
+#include "RenderState.h"
 
 const std::string PhongMaterial::CLASS_NAME = "PhongMaterial";
 
@@ -10,15 +11,9 @@ PhongMaterial::PhongMaterial(const std::string &jsonFileName, SPtr<ShaderProgram
    uSpecular = shaderProgram->getUniform("uMaterial.specular");
    uEmission = shaderProgram->getUniform("uMaterial.emission");
    uShininess = shaderProgram->getUniform("uMaterial.shininess");
-}
 
-PhongMaterial::PhongMaterial(SPtr<ShaderProgram> shaderProgram, const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const glm::vec3 &emission, float shininess)
-: Material(shaderProgram), ambient(ambient), diffuse(diffuse), specular(specular), emission(emission), shininess(shininess) {
-   uAmbient = shaderProgram->getUniform("uMaterial.ambient");
-   uDiffuse = shaderProgram->getUniform("uMaterial.diffuse");
-   uSpecular = shaderProgram->getUniform("uMaterial.specular");
-   uEmission = shaderProgram->getUniform("uMaterial.emission");
-   uShininess = shaderProgram->getUniform("uMaterial.shininess");
+   uAmbientMap = shaderProgram->getUniform("uAmbientMap");
+   uAmbientGlobal = shaderProgram->getUniform("uAmbientGlobal");
 }
 
 PhongMaterial::~PhongMaterial() {
@@ -74,4 +69,17 @@ void PhongMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
    glUniform3fv(uEmission, 1, glm::value_ptr(emission));
    glUniform1f(uShininess, shininess);
+
+   if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {
+      GLuint ambientMapID = renderData.getGLuint("ambientMapID");
+      GLuint ambientGlobalID = renderData.getGLuint("ambientGlobalID");
+
+      glActiveTexture(GL_TEXTURE0 + ambientMapID);
+      glBindTexture(GL_TEXTURE_CUBE_MAP, ambientMapID);
+      glUniform1i(uAmbientMap, ambientMapID);
+
+      glActiveTexture(GL_TEXTURE0 + ambientGlobalID);
+      glBindTexture(GL_TEXTURE_2D, ambientGlobalID);
+      glUniform1i(uAmbientGlobal, ambientGlobalID);
+   }
 }

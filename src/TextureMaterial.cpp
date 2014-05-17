@@ -18,8 +18,6 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
    
    // Generate Texture ID, get the attribute and uniforms for texture.
    uTexture = shaderProgram->getUniform("uTexture");
-   uAmbientMap = shaderProgram->getUniform("uAmbientMap");
-   uAmbientGlobal = shaderProgram->getUniform("uAmbientGlobal");
    aTexCoord = shaderProgram->getAttribute("aTexCoord");
 
    SPtr<Loader> loader = Loader::getInstance();
@@ -77,7 +75,7 @@ Json::Value TextureMaterial::serialize() const {
 
 /* Current functionality for single texture only. Not multitexturing. */
 void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh){
-   shaderProgram->use();
+   PhongMaterial::apply(renderData, mesh);
 
    /* Texture Shading */
    glEnable(GL_TEXTURE_2D);
@@ -87,26 +85,6 @@ void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh){
    glEnableVertexAttribArray(aTexCoord);
    glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-   /* Phong Shading */
-   glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
-   glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));
-   glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
-   glUniform3fv(uEmission, 1, glm::value_ptr(emission));
-   glUniform1f(uShininess, shininess);
-
-   if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {
-      GLuint ambientMapID = renderData.getGLuint("ambientMapID");
-      GLuint ambientGlobalID = renderData.getGLuint("ambientGlobalID");
-
-      glActiveTexture(GL_TEXTURE0 + ambientMapID);
-      glBindTexture(GL_TEXTURE_CUBE_MAP, ambientMapID);
-      glUniform1i(uAmbientMap, ambientMapID);
-
-      glActiveTexture(GL_TEXTURE0 + ambientGlobalID);
-      glBindTexture(GL_TEXTURE_2D, ambientGlobalID);
-      glUniform1i(uAmbientGlobal, ambientGlobalID);
-   }
 }
 
 void TextureMaterial::disable(){

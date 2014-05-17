@@ -70,6 +70,7 @@ void draw(SceneObject &obj) {
 } // namespace
 
 void Renderer::prepareStencilDraw() {
+   fb->applyFBO();
    glEnable(GL_STENCIL_TEST);
    // disable color and depth buffers
    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
@@ -96,7 +97,6 @@ void Renderer::prepareLightDraw() {
    // stencil test: only pass stencil test at stencilValue == 1 (Assuming depth test would pass.)
    // and write actual content to depth and color buffer only at stencil shape locations.
    glStencilFunc(GL_EQUAL, 1, 0xFF);
-   fb->applyFBO();
 
    renderData.setRenderState(LIGHTWORLD_STATE);
 }
@@ -169,7 +169,7 @@ void Renderer::render(Scene &scene) {
    // Render each item in the scene (to frame buffer object) - clear color should be transparent
    prepareLightDraw();
 
-   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    scene.getLightSkybox()->renderSkybox(renderData);
@@ -178,7 +178,8 @@ void Renderer::render(Scene &scene) {
    scene.getSceneGraph()->forEach(draw);
 
    // Do any post processing on the light world buffer
-
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glEnable(GL_BLEND);
    // Render each item in the scene (to color buffer)
    prepareDarkDraw();
 
@@ -187,10 +188,6 @@ void Renderer::render(Scene &scene) {
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
 
-   glEnable(GL_STENCIL_TEST);
-   glStencilFunc(GL_EQUAL, 1, 0xFF);
-
-
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
    program->use();
@@ -198,6 +195,5 @@ void Renderer::render(Scene &scene) {
    glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
    glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
    plane->draw(renderData);
-
-   glDisable(GL_STENCIL_TEST);
+   glDisable(GL_BLEND);
 }

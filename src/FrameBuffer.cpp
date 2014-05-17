@@ -43,8 +43,8 @@ void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight) {
    // Create Renderbuffer Object to hold depth
    glGenRenderbuffers(1, &fBRender);
    glBindRenderbuffer(GL_RENDERBUFFER, fBRender);
-   glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, textureWidth, textureWidth);
-   glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, fBRender);
+   glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, textureWidth, textureWidth);
+   glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, fBRender);
 
    glBindTexture(GL_TEXTURE_2D, 0);
 

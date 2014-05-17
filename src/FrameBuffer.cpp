@@ -3,27 +3,39 @@
 
 #include <iostream>
 
-FrameBuffer::FrameBuffer() {
+FrameBuffer::FrameBuffer()
+: bufferObjectsGenerated(false) {
    // Create FrameBufferObject
    glGenFramebuffers(1, &fBObject);
 }
 
 FrameBuffer::~FrameBuffer() {
    //Delete resources
-   glDeleteTextures(1, &fBTexture);
-   glDeleteRenderbuffers(1, &fBRender);
+   if (bufferObjectsGenerated) {
+      glDeleteTextures(1, &fBTexture);
+      glDeleteRenderbuffers(1, &fBRender);
+   }
 
    //Bind 0, which means render to back buffer, as a result, fb is unbound
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
    glDeleteFramebuffers(1, &fBObject);
 }
 
+void FrameBuffer::setupToTexture2D() {
+   // Determine the texture size from the viewport
+   GLint viewport[4];
+   glGetIntegerv(GL_VIEWPORT, viewport);
+   setupToTexture2D(viewport[2], viewport[3]);
+}
+
 void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight) {
    // Get and save the texture size so that we know how big it is when we apply it as a texture.
-   this->textureWidth = textureWidth;
-   this->textureHeight = textureHeight;
-
    glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
+
+   if (bufferObjectsGenerated) {
+      glDeleteTextures(1, &fBTexture);
+      glDeleteRenderbuffers(1, &fBRender);
+   }
 
    // Create texture to hold color buffer
    glGenTextures(1, &fBTexture);
@@ -48,34 +60,14 @@ void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight) {
 
    glBindTexture(GL_TEXTURE_2D, 0);
 
+   bufferObjectsGenerated = true;
+
    checkFBOStatus();
 }
 
 void FrameBuffer::checkFBOStatus() {
    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
    ASSERT(status == GL_FRAMEBUFFER_COMPLETE, "Could not setup FrameBufferObject. Error #%d\n", status);
-}
-
-void FrameBuffer::applyRenderToTextureFBO() {
-   // Get the current viewport size so that when we change it to what the texture
-   // size is, we can change it back.
-   GLint m_viewport[4];
-   glGetIntegerv(GL_VIEWPORT, m_viewport);
-
-   // Save this in the Framebuffer variables so that we can access it form renderer class.
-   this->originalWidth = m_viewport[2];
-   this->originalHeight = m_viewport[3];
-
-   // Bind the Framebuffer so that we say, "Render to the frame buffer, NOT the actual window.
-   glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
-   //glViewport(0, 0, (GLsizei)textureWidth, (GLsizei)textureHeight);
-   //glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-   //set up the texture unit so that this is the active texture we're going to be using.
-   /*glEnable(GL_TEXTURE_2D);
-   glActiveTexture(GL_TEXTURE0 + fBTexture);
-   glBindTexture(GL_TEXTURE_2D, fBTexture);*/
 }
 
 void FrameBuffer::applyFBO() {

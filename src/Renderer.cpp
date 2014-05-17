@@ -36,10 +36,8 @@ void Renderer::prepare(SPtr<Scene> scene) {
    // Create frame buffer
    fb = UPtr<FrameBuffer>(new FrameBuffer);
 
-   // TODO
-   GLint m_viewport[4];
-   glGetIntegerv(GL_VIEWPORT, m_viewport);
-   fb->setupToTexture2D(m_viewport[2], m_viewport[3]);
+   // Prepare the frame buffer
+   fb->setupToTexture2D();
 
    SPtr<Loader> loader = Loader::getInstance();
    Json::Value root;
@@ -51,7 +49,15 @@ void Renderer::prepare(SPtr<Scene> scene) {
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
-   //fb->setupToTexture2D(width, height); // TODO State cleanup
+   if (fb) {
+      fb->setupToTexture2D();
+   }
+}
+
+void Renderer::onMonitorChange() {
+   if (fb) {
+      fb->setupToTexture2D();
+   }
 }
 
 namespace {

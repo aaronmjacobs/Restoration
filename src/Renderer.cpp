@@ -56,6 +56,75 @@ void Renderer::onWindowSizeChange(int width, int height) {
 
 namespace {
 
+struct Plane {
+   float a, b, c, d;
+};
+
+enum Halfspace {
+   NEGATIVE = -1,
+   ON_PLANE = 0,
+   POSITIVE = 1,
+};
+
+Plane planes[6];
+
+Halfspace classifyPoint(const Plane & plane, const glm::vec3 &point) {
+   float side = plane.a*point.x + plane.b*point.y +plane.c*point.z + plane.d;
+   if (side < 0)
+      return NEGATIVE;
+   else if (side > 0)
+      return POSITIVE;
+   else
+      return ON_PLANE;
+}
+
+void normalizePlane(Plane &plane) {
+   float size;
+
+   size = sqrtf(powf(plane.a, 2.f) + powf(plane.b, 2.f) + powf(plane.c, 2.f));
+
+   plane.a /= size;
+   plane.b /= size;
+   plane.c /= size;
+   plane.d /= size;
+}
+
+/*float distanceToPoint(glm::vec3 objPos) {
+   return plan
+}*/
+
+void updatePlanes(glm::mat4 viewProj, bool normalize) {
+   const float *matrix = glm::value_ptr(viewProj);
+   int t;
+   for (int i = 0; i < 6; i++) {
+      t = i*5;
+      planes[i].a = matrix[12] + matrix[0+t];
+      planes[i].a = matrix[13] + matrix[1+t];
+      planes[i].a = matrix[14] + matrix[2+t];
+      planes[i].a = matrix[15] + matrix[3+t];
+      i++;
+      planes[i].a = matrix[12] - matrix[0+t];
+      planes[i].a = matrix[13] - matrix[1+t];
+      planes[i].a = matrix[14] - matrix[2+t];
+      planes[i].a = matrix[15] - matrix[3+t];
+   }
+   if (normalize) {
+      for (int i = 0; i < 6; i++) {
+         normalizePlane(planes[i]);
+      }
+   }
+}
+
+bool checkInFrustum(glm::vec3 objPos) {
+   for (int i = 0; i < 6; i++) {
+      if (classifyPoint(planes[i], objPos) <= 0) {
+         return false;
+      }
+   }
+
+   return true;
+}
+
 RenderData _renderData;
 
 void setRenderData(RenderData &data) {
@@ -64,7 +133,13 @@ void setRenderData(RenderData &data) {
 
 // Function that draws a SceneObject
 void draw(SceneObject &obj) {
-   obj.draw(_renderData);
+   glm::vec3 objectPos = obj.getPosition();
+
+   //if (checkInFrustum(objectPos)) {
+      obj.draw(_renderData);
+   //}
+
+   std::cout << obj.getName() << ": " << checkInFrustum(obj.getPosition()) << std::endl;
 }
 
 } // namespace
@@ -160,6 +235,9 @@ void Renderer::render(Scene &scene) {
          ++lightIndex;
       }
    }
+
+   // Update view frustum culling planes. True or false for normalizing planes
+   updatePlanes(camera->getProjectionMatrix() * camera->getViewMatrix(), true);
 
    // Render items to the stencil buffer
    prepareStencilDraw();

@@ -90,10 +90,10 @@
             "renderState" : 6,
             "model" : {
                "@class" : "Model",
-               "material" : "text",
+               "material" : "enemySmall",
                "mesh" : {
                   "@class" : "Mesh",
-                  "fileName" : "data/meshes/enemyFull.obj"
+                  "fileName" : "data/meshes/enemy_small.obj"
                }
             },
             "name" : "",

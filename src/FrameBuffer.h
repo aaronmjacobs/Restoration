@@ -37,6 +37,9 @@ public:
       return fBObject;
    }
 
+   GLuint getRBO() const {
+      return fBRender;
+   }
 protected:
    /* Create object to capture frame */
    GLuint fBObject;

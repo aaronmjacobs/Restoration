@@ -67,7 +67,8 @@ void PhongMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    glUniform3fv(uAmbient, 1, glm::value_ptr(ambient));
    glUniform3fv(uDiffuse, 1, glm::value_ptr(diffuse));
    glUniform3fv(uSpecular, 1, glm::value_ptr(specular));
-   glUniform3fv(uEmission, 1, glm::value_ptr(emission));
+   glm::vec3 selectHighlight = isSelected() ? glm::vec3(0.5f) : glm::vec3(0.0f);
+   glUniform3fv(uEmission, 1, glm::value_ptr(emission + selectHighlight));
    glUniform1f(uShininess, shininess);
 
    if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {

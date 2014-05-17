@@ -15,6 +15,8 @@ protected:
     */
    SPtr<ShaderProgram> shaderProgram;
 
+   bool selected;
+
 public:
    static const std::string CLASS_NAME;
    static const std::string FOLDER_NAME;
@@ -25,12 +27,6 @@ public:
    Material(const std::string &jsonFileName, SPtr<ShaderProgram> shaderProgram);
 
    /**
-   * Constructs a material with the given shader program. Used for creating material without json file.
-   * EX: Render to texture via Frame Buffer Object.
-   */
-   Material(SPtr<ShaderProgram> shaderProgram);
-
-   /**
     * Does cleanup.
     */
    virtual ~Material();
@@ -39,6 +35,14 @@ public:
     * Gets the shader program used by this material.
     */
    SPtr<ShaderProgram> getShaderProgram();
+
+   bool isSelected() {
+      return selected;
+   }
+
+   void setSelected(bool selected) {
+      this->selected = selected;
+   }
 
    /**
     * Applies the properties of the material to the shader.

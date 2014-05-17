@@ -170,7 +170,10 @@ void physTest() {
    graph->addPhys(physTwo);
 
    SPtr<Material> aniMaterial = loader->loadMaterial(scene, "animMaterial");
-   SPtr<AniMesh> aniMesh = std::make_shared<AniMesh>("data/meshes/dancingTube.dae");
+   SPtr<AniMesh> aniMesh = std::make_shared<AniMesh>("data/meshes/dancingCylinder_dance1.dae", "dance1");
+   aniMesh->loadAnimation("data/meshes/dancingCylinder_dance2.dae", "dance2");
+   aniMesh->hardApplyAnimation("dance2");
+   aniMesh->softApplyAnimation("dance1");
    SPtr<AniModel> aniModel = std::make_shared<AniModel>(aniMaterial, aniMesh);
    SPtr<Geometry> geometry = std::make_shared<Geometry>(scene, aniModel);
    geometry->setPosition(glm::vec3(3.0f, 0.0f, 0.0f));

@@ -51,7 +51,7 @@ public:
     */
    virtual ~Mesh();
 
-    /**
+   /**
     * Serializes the object to JSON.
     */
    virtual Json::Value serialize() const;

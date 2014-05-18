@@ -118,17 +118,17 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 
 void load() {
    SPtr<Loader> loader = Loader::getInstance();
-   scene = loader->loadScene("testScene");
+   scene = loader->loadScene("level1");
    levelEdit = std::make_shared<LevelEditor>(scene);
 
    /*SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
    scene->addTickListener(cameraController);
    scene->addInputListener(cameraController);*/
 
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
+   /*SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
    SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
-   SPtr<Player> player = std::make_shared<Player>(scene, model);
+   SPtr<Player> player = std::make_shared<Player>(scene, model, "player");
    player->setPosition(glm::vec3(0.0f, 15.0f, 0.0f));
    player->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
    scene->setPlayer(player);
@@ -140,7 +140,7 @@ void load() {
    SPtr<FollowGeometry> sphere = std::make_shared<FollowGeometry>(scene, sphereModel, player);
    sphere->setRenderState(STENCIL_STATE);
    sphere->setScale(glm::vec3(3.0f));
-   scene->getSceneGraph()->add(sphere);
+   scene->getSceneGraph()->add(sphere);*/
 
    followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock(), 10.0f, -0.2f, -1.45f);
    scene->addTickListener(followCameraController);
@@ -210,13 +210,17 @@ void physTest() {
    graph->addPhys(physOne);
    graph->addPhys(physTwo);*/
 
-   SPtr<Material> aniMaterial = loader->loadMaterial(scene, "animMaterial");
+   /*SPtr<Material> aniMaterial = loader->loadMaterial(scene, "animMaterial");
    SPtr<AniMesh> aniMesh = std::make_shared<AniMesh>("data/meshes/dancingTube.dae");
    SPtr<AniModel> aniModel = std::make_shared<AniModel>(aniMaterial, aniMesh);
    SPtr<Scenery> geometry = std::make_shared<Scenery>(scene, aniModel);
    geometry->setPosition(glm::vec3(20.5f, 5.0f, 0.0f));
    geometry->scaleBy(glm::vec3(0.75f, 0.53f, 0.75f));
-   graph->addPhys(geometry);
+   graph->addPhys(geometry);*/
+}
+
+void monitorCallback(GLFWmonitor *monitor, int event) {
+   renderer.onMonitorChange();
 }
 
 } // namespace
@@ -245,6 +249,7 @@ int main(int argc, char *argv[]) {
    // Set the OpenGL context, and window callbacks
    glfwMakeContextCurrent(window);
    glfwSetWindowSizeCallback(window, windowSizeCallback);
+   glfwSetMonitorCallback(monitorCallback);
    glfwSetWindowFocusCallback(window, focusCallback);
    glfwSetKeyCallback(window, keyCallback);
    glfwSetMouseButtonCallback(window, mouseClickCallback);
@@ -270,8 +275,6 @@ int main(int argc, char *argv[]) {
    scene->setAudio(audio);
 
    loadSkyboxes();
-
-   physTest();
 
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare(scene);

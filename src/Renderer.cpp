@@ -36,10 +36,8 @@ void Renderer::prepare(SPtr<Scene> scene) {
    // Create frame buffer
    fb = UPtr<FrameBuffer>(new FrameBuffer);
 
-   // TODO
-   GLint m_viewport[4];
-   glGetIntegerv(GL_VIEWPORT, m_viewport);
-   fb->setupToTexture2D(m_viewport[2], m_viewport[3]);
+   // Prepare the frame buffer
+   fb->setupToTexture2D();
 
    SPtr<Loader> loader = Loader::getInstance();
    Json::Value root;
@@ -51,10 +49,125 @@ void Renderer::prepare(SPtr<Scene> scene) {
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
-   //fb->setupToTexture2D(width, height); // TODO State cleanup
+   if (fb) {
+      fb->setupToTexture2D();
+   }
+}
+
+void Renderer::onMonitorChange() {
+   if (fb) {
+      fb->setupToTexture2D();
+   }
 }
 
 namespace {
+
+struct Plane {
+   float a, b, c, d;
+};
+
+enum Halfspace {
+   NEGATIVE = -1,
+   ON_PLANE = 0,
+   POSITIVE = 1,
+};
+
+Plane planes[6];
+
+Halfspace classifyPoint(const Plane & plane, const glm::vec3 &point) {
+   float side = plane.a * point.x + plane.b * point.y + plane.c * point.z + plane.d;
+   if (side < 0)
+      return NEGATIVE;
+   else if (side > 0)
+      return POSITIVE;
+   else
+      return ON_PLANE;
+}
+
+Halfspace classifyBounds(const Plane &plane, const BoundingBox &bounds) {
+   if (classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMin, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMin, bounds.zMax)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMax, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMax, bounds.zMax)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMin, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMin, bounds.zMax)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMax, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMax, bounds.zMax)) >= 0) {
+      return POSITIVE;
+   }
+   return NEGATIVE;
+}
+
+void normalizePlane(Plane &plane) {
+   float size;
+
+   size = sqrtf(powf(plane.a, 2.f) + powf(plane.b, 2.f) + powf(plane.c, 2.f));
+
+   plane.a /= size;
+   plane.b /= size;
+   plane.c /= size;
+   plane.d /= size;
+}
+
+int coord(int col, int row) {
+   return (col - 1) + (row - 1) * 4;
+}
+
+void updatePlanes(glm::mat4 viewProj, bool normalize) {
+   const float *matrix = glm::value_ptr(viewProj);
+
+   // Left
+   planes[0].a = matrix[coord(4,1)] + matrix[coord(1,1)];
+   planes[0].b = matrix[coord(4,2)] + matrix[coord(1,2)];
+   planes[0].c = matrix[coord(4,3)] + matrix[coord(1,3)];
+   planes[0].d = matrix[coord(4,4)] + matrix[coord(1,4)];
+
+   // Right
+   planes[1].a = matrix[coord(4,1)] - matrix[coord(1,1)];
+   planes[1].b = matrix[coord(4,2)] - matrix[coord(1,2)];
+   planes[1].c = matrix[coord(4,3)] - matrix[coord(1,3)];
+   planes[1].d = matrix[coord(4,4)] - matrix[coord(1,4)];
+
+   // Top
+   planes[2].a = matrix[coord(4,1)] - matrix[coord(2,1)];
+   planes[2].b = matrix[coord(4,2)] - matrix[coord(2,2)];
+   planes[2].c = matrix[coord(4,3)] - matrix[coord(2,3)];
+   planes[2].d = matrix[coord(4,4)] - matrix[coord(2,4)];
+
+   // Bottom
+   planes[3].a = matrix[coord(4,1)] + matrix[coord(2,1)];
+   planes[3].b = matrix[coord(4,2)] + matrix[coord(2,2)];
+   planes[3].c = matrix[coord(4,3)] + matrix[coord(2,3)];
+   planes[3].d = matrix[coord(4,4)] + matrix[coord(2,4)];
+
+   // Near
+   planes[4].a = matrix[coord(4,1)] + matrix[coord(3,1)];
+   planes[4].b = matrix[coord(4,2)] + matrix[coord(3,2)];
+   planes[4].c = matrix[coord(4,3)] + matrix[coord(3,3)];
+   planes[4].d = matrix[coord(4,4)] + matrix[coord(3,4)];
+
+   // Far
+   planes[5].a = matrix[coord(4,1)] - matrix[coord(3,1)];
+   planes[5].b = matrix[coord(4,2)] - matrix[coord(3,2)];
+   planes[5].c = matrix[coord(4,3)] - matrix[coord(3,3)];
+   planes[5].d = matrix[coord(4,4)] - matrix[coord(3,4)];
+
+   if (normalize) {
+      for (int i = 0; i < 6; i++) {
+         normalizePlane(planes[i]);
+      }
+   }
+}
+
+bool checkInFrustum(const SceneObject &obj) {
+   for (int i = 0; i < 6; i++) {
+      if (classifyBounds(planes[i], obj.getBounds()) <= 0) {
+         return false;
+      }
+   }
+
+   return true;
+}
 
 RenderData _renderData;
 
@@ -64,12 +177,16 @@ void setRenderData(RenderData &data) {
 
 // Function that draws a SceneObject
 void draw(SceneObject &obj) {
-   obj.draw(_renderData);
+   // View frustum culling
+   if (checkInFrustum(obj)) {
+      obj.draw(_renderData);
+   }
 }
 
 } // namespace
 
 void Renderer::prepareStencilDraw() {
+   fb->applyFBO();
    glEnable(GL_STENCIL_TEST);
    // disable color and depth buffers
    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
@@ -96,7 +213,6 @@ void Renderer::prepareLightDraw() {
    // stencil test: only pass stencil test at stencilValue == 1 (Assuming depth test would pass.)
    // and write actual content to depth and color buffer only at stencil shape locations.
    glStencilFunc(GL_EQUAL, 1, 0xFF);
-   fb->applyFBO();
 
    renderData.setRenderState(LIGHTWORLD_STATE);
 }
@@ -161,6 +277,9 @@ void Renderer::render(Scene &scene) {
       }
    }
 
+   // Update view frustum culling planes. True or false for normalizing planes
+   updatePlanes(camera->getProjectionMatrix() * camera->getViewMatrix(), true);
+
    // Render items to the stencil buffer
    prepareStencilDraw();
    setRenderData(renderData);
@@ -169,7 +288,7 @@ void Renderer::render(Scene &scene) {
    // Render each item in the scene (to frame buffer object) - clear color should be transparent
    prepareLightDraw();
 
-   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    scene.getLightSkybox()->renderSkybox(renderData);
@@ -178,7 +297,8 @@ void Renderer::render(Scene &scene) {
    scene.getSceneGraph()->forEach(draw);
 
    // Do any post processing on the light world buffer
-
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glEnable(GL_BLEND);
    // Render each item in the scene (to color buffer)
    prepareDarkDraw();
 
@@ -187,10 +307,6 @@ void Renderer::render(Scene &scene) {
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
 
-   glEnable(GL_STENCIL_TEST);
-   glStencilFunc(GL_EQUAL, 1, 0xFF);
-
-
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
    program->use();
@@ -198,6 +314,5 @@ void Renderer::render(Scene &scene) {
    glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
    glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
    plane->draw(renderData);
-
-   glDisable(GL_STENCIL_TEST);
+   glDisable(GL_BLEND);
 }

@@ -1,9 +1,12 @@
+#include "AniMesh.h"
+#include "AniModel.h"
 #include "Camera.h"
 #include "Character.h"
 #include "Corona.h"
 #include "Enemy.h"
 #include "FancyAssert.h"
 #include "FlatSceneGraph.h"
+#include "FollowGeometry.h"
 #include "Geometry.h"
 #include "IOUtils.h"
 #include "lib/json/json.h"
@@ -87,7 +90,11 @@ bool Loader::isCamera(const std::string &className) {
 }
 
 bool Loader::isGeometry(const std::string &className) {
-   return className == Geometry::CLASS_NAME || isPhysicalObject(className);
+   return className == Geometry::CLASS_NAME || isPhysicalObject(className) || isFollowGeometry(className);
+}
+
+bool Loader::isFollowGeometry(const std::string &className) {
+   return className == FollowGeometry::CLASS_NAME;
 }
 
 bool Loader::isPhysicalObject(const std::string &className) {
@@ -120,6 +127,22 @@ bool Loader::isMagus(const std::string &className) {
 
 bool Loader::isCorona(const std::string &className) {
    return className == Corona::CLASS_NAME;
+}
+
+bool Loader::isMesh(const std::string &className) {
+   return className == Mesh::CLASS_NAME || isAniMesh(className);
+}
+
+bool Loader::isAniMesh(const std::string &className) {
+   return className == AniMesh::CLASS_NAME;
+}
+
+bool Loader::isModel(const std::string &className) {
+   return className == Model::CLASS_NAME || isAniModel(className);
+}
+
+bool Loader::isAniModel(const std::string &className) {
+   return className == AniModel::CLASS_NAME;
 }
 
 /**********************************
@@ -330,6 +353,30 @@ GLuint Loader::loadCubemap(const std::string &path) {
    return cubemapID;
 }
 
+SPtr<AniMesh> Loader::loadAniMesh(const Json::Value &root) {
+   check("AniMesh", root, "fileName");
+   std::string fileName = root["fileName"].asString();
+
+   AniMeshMap::iterator it = aniMeshMap.find(fileName);
+   if (it != aniMeshMap.end()) {
+      return it->second;
+   }
+
+   SPtr<AniMesh> aniMesh(std::make_shared<AniMesh>(fileName));
+   aniMeshMap[fileName] = aniMesh;
+
+   return aniMesh;
+}
+
+SPtr<AniModel> Loader::loadAniModel(SPtr<Scene> scene, const Json::Value &root) {
+   check("AniModel", root, "material");
+   SPtr<Material> material = loadMaterial(scene, root["material"].asString());
+   check("AniModel", root, "mesh");
+   SPtr<AniMesh> mesh = loadAniMesh(root["mesh"]);
+
+   return std::make_shared<AniModel>(material, mesh);
+}
+
 SPtr<Camera> Loader::loadCamera(SPtr<Scene> scene, const Json::Value &root) {
    // SceneObject
    SceneObjectData data = loadSceneObjectData(root);
@@ -413,8 +460,9 @@ SPtr<Enemy> Loader::loadEnemy(SPtr<Scene> scene, const Json::Value &root) {
    return SPtr<Enemy>();
 }
 
-SPtr<FlatSceneGraph> Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
+void Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
    SPtr<FlatSceneGraph> graph = std::make_shared<FlatSceneGraph>(scene);
+   scene->setSceneGraph(graph);
 
    bool cameraLoaded = false;
 
@@ -452,8 +500,34 @@ SPtr<FlatSceneGraph> Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::V
    }
 
    ASSERT(cameraLoaded, "No camera loaded for scene graph");
+}
 
-   return graph;
+SPtr<FollowGeometry> Loader::loadFollowGeometry(SPtr<Scene> scene, const Json::Value &root) {
+   check("FollowGeometry", root, "@class");
+   std::string className = root["@class"].asString();
+
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("FollowGeometry", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   // FollowGeometry
+   check("FollowGeometry", root, "target");
+   std::string targetName = root["target"].asString();
+
+   WPtr<SceneObject> wTarget = scene->getSceneGraph()->find(targetName);
+   SPtr<SceneObject> target = wTarget.lock();
+   ASSERT(target, "Target not yet loaded: %s", targetName.c_str());
+
+   SPtr<FollowGeometry> follow = std::make_shared<FollowGeometry>(scene, model, target, data.name);
+   follow->setPosition(data.position);
+   follow->setOrientation(data.orientation);
+   follow->setScale(data.scale);
+   follow->setRenderState(data.renderState);
+
+   return follow;
 }
 
 SPtr<Geometry> Loader::loadGeometry(SPtr<Scene> scene, const Json::Value &root) {
@@ -462,6 +536,8 @@ SPtr<Geometry> Loader::loadGeometry(SPtr<Scene> scene, const Json::Value &root) 
 
    if (isPhysicalObject(className)) {
       return loadPhysicalObject(scene, root);
+   } else if (isFollowGeometry(className)) {
+      return loadFollowGeometry(scene, root);
    }
 
    ASSERT(false, "Invalid class name for Geometry: %s", className.c_str());
@@ -558,6 +634,13 @@ SPtr<Mesh> Loader::loadMesh(const Json::Value &root) {
 }
 
 SPtr<Model> Loader::loadModel(SPtr<Scene> scene, const Json::Value &root) {
+   check("Model", root, "@class");
+   std::string className = root["@class"].asString();
+
+   if (isAniModel(className)) {
+      return loadAniModel(scene, root);
+   }
+
    check("Model", root, "material");
    SPtr<Material> material = loadMaterial(scene, root["material"].asString());
    check("Model", root, "mesh");
@@ -643,23 +726,21 @@ SPtr<Scene> Loader::loadScene(const std::string &fileName) {
 
    // Loads the scene graph, including the camera, any lights, and any shader program
    check("Scene", root, "graph");
-   SPtr<SceneGraph> graph = loadSceneGraph(scene, root["graph"]);
-   scene->setSceneGraph(graph);
+   loadSceneGraph(scene, root["graph"]);
 
    return scene;
 }
 
-SPtr<SceneGraph> Loader::loadSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
+void Loader::loadSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
    check("SceneGraph", root, "@class");
    std::string className = root["@class"].asString();
 
    if (className == FlatSceneGraph::CLASS_NAME) {
-      return loadFlatSceneGraph(scene, root);
+      loadFlatSceneGraph(scene, root);
+      return;
    }
 
-   ASSERT(false, "Invalid class name for SceneGraph: %s", className.c_str());   
-
-   return SPtr<SceneGraph>();
+   ASSERT(false, "Invalid class name for SceneGraph: %s", className.c_str());
 }
 
 SPtr<SceneObject> Loader::loadSceneObject(SPtr<Scene> scene, const Json::Value &root) {

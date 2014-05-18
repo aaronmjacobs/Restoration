@@ -1,7 +1,6 @@
 #ifndef PHYSICAL_OBJECT_H
 #define PHYSICAL_OBJECT_H
 
-#include "BoundingBox.h"
 #include "Geometry.h"
 
 class Corona;
@@ -10,9 +9,6 @@ class Player;
 class Scenery;
 
 class PhysicalObject : public Geometry {
-protected:
-   BoundingBox bounds;
-
 public:
    static const std::string CLASS_NAME;
 
@@ -24,10 +20,7 @@ public:
     */
    virtual Json::Value serialize() const;
 
-   BoundingBox getBounds() const;
    bool collidesWith(const PhysicalObject &other) const;
-   float height() const;
-   float width() const;
 
    virtual void collideWith(PhysicalObject &other) = 0;
    virtual void collideWith(Scenery &other) = 0;

@@ -5,7 +5,7 @@
 #include <assimp/postprocess.h>
 #include <fstream>
 
-#include <iostream>
+const std::string AniMesh::CLASS_NAME = "AniMesh";
 
 AniMesh::AniMesh(const std::string &fileName)
 : Mesh(fileName) {
@@ -87,6 +87,15 @@ AniMesh::AniMesh(const std::string &fileName)
 }
 
 AniMesh::~AniMesh() {
+}
+
+Json::Value AniMesh::serialize() const {
+   Json::Value root = Mesh::serialize();
+
+   // Class name
+   root["@class"] = CLASS_NAME;
+
+   return root;
 }
 
 void AniMesh::loadAnimation() {

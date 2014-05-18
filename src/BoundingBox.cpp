@@ -1,6 +1,10 @@
 #include "BoundingBox.h"
 #include "FancyAssert.h"
 
+BoundingBox::BoundingBox()
+: xMin(0.0f), xMax(0.0f), yMin(0.0f), yMax(0.0f), zMin(0.0f), zMax(0.0f) {
+}
+
 BoundingBox::BoundingBox(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax)
    : xMin(xMin), xMax(xMax), yMin(yMin), yMax(yMax), zMin(zMin), zMax(zMax) {
 }

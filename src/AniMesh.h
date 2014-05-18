@@ -53,6 +53,8 @@ private:
    int findPosition(float aniTime, const aiNodeAnim *aniNode);
 
 public:
+   static const std::string CLASS_NAME;
+
    /**
     * Constructs a mesh from the model file with the given file name, allocating
     * the required GL buffers.
@@ -63,6 +65,11 @@ public:
     * Deallocates the GL buffers.
     */
    virtual ~AniMesh();
+
+   /**
+    * Serializes the object to JSON.
+    */
+   virtual Json::Value serialize() const;
 
    void loadAnimation();
    

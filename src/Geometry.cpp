@@ -2,12 +2,13 @@
 #include "Geometry.h"
 #include "Material.h"
 #include "MatrixStack.h"
+#include "Mesh.h"
 #include "Model.h"
 
 const std::string Geometry::CLASS_NAME = "Geometry";
 
 Geometry::Geometry(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-   : SceneObject(scene, name) {
+   : SceneObject(scene, name, *model->getMesh()->getBounds()) {
    ASSERT(model, "Model is null");
    this->model = model;
 }

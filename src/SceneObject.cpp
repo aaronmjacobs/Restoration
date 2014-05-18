@@ -3,8 +3,8 @@
 
 const std::string SceneObject::CLASS_NAME = "SceneObject";
 
-SceneObject::SceneObject(SPtr<Scene> const scene, const std::string &name) :
-   scene(WPtr<Scene>(scene)), name(name), markedForRemoval(false) {
+SceneObject::SceneObject(SPtr<Scene> const scene, const std::string &name, const BoundingBox bounds) :
+   scene(WPtr<Scene>(scene)), name(name), markedForRemoval(false), bounds(bounds) {
    scale = glm::vec3(1.0f);
    renderState = LIGHTWORLD_STATE | DARKWORLD_STATE;
 }
@@ -57,6 +57,10 @@ glm::quat SceneObject::getOrientation() {
 
 glm::vec3 SceneObject::getScale() {
    return scale;
+}
+
+BoundingBox SceneObject::getBounds() const {
+   return BoundingBox(bounds, position, scale);
 }
 
 void SceneObject::setPosition(const glm::vec3 &position) {

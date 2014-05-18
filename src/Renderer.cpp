@@ -75,13 +75,27 @@ enum Halfspace {
 Plane planes[6];
 
 Halfspace classifyPoint(const Plane & plane, const glm::vec3 &point) {
-   float side = plane.a*point.x + plane.b*point.y +plane.c*point.z + plane.d;
+   float side = plane.a * point.x + plane.b * point.y + plane.c * point.z + plane.d;
    if (side < 0)
       return NEGATIVE;
    else if (side > 0)
       return POSITIVE;
    else
       return ON_PLANE;
+}
+
+Halfspace classifyBounds(const Plane &plane, const BoundingBox &bounds) {
+   if (classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMin, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMin, bounds.zMax)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMax, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMax, bounds.zMax)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMin, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMin, bounds.zMax)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMax, bounds.zMin)) >= 0
+       || classifyPoint(plane, glm::vec3(bounds.xMax, bounds.yMax, bounds.zMax)) >= 0) {
+      return POSITIVE;
+   }
+   return NEGATIVE;
 }
 
 void normalizePlane(Plane &plane) {
@@ -145,9 +159,9 @@ void updatePlanes(glm::mat4 viewProj, bool normalize) {
    }
 }
 
-bool checkInFrustum(glm::vec3 objPos) {
+bool checkInFrustum(const SceneObject &obj) {
    for (int i = 0; i < 6; i++) {
-      if (classifyPoint(planes[i], objPos) <= 0) {
+      if (classifyBounds(planes[i], obj.getBounds()) <= 0) {
          return false;
       }
    }
@@ -163,13 +177,10 @@ void setRenderData(RenderData &data) {
 
 // Function that draws a SceneObject
 void draw(SceneObject &obj) {
-   glm::vec3 objectPos = obj.getPosition();
-
-   if (checkInFrustum(objectPos)) {
+   // View frustum culling
+   if (checkInFrustum(obj)) {
       obj.draw(_renderData);
    }
-
-   //std::cout << obj.getName() << ": " << checkInFrustum(obj.getPosition()) << std::endl;
 }
 
 } // namespace

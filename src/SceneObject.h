@@ -1,6 +1,7 @@
 #ifndef SCENE_OBJECT_H
 #define SCENE_OBJECT_H
 
+#include "BoundingBox.h"
 #include "GLMIncludes.h"
 #include "RenderData.h"
 #include "RenderState.h"
@@ -19,13 +20,14 @@ protected:
    glm::vec3 position;
    glm::quat orientation;
    glm::vec3 scale;
+   BoundingBox bounds;
    unsigned int renderState;
    bool markedForRemoval;
 
 public:
    static const std::string CLASS_NAME;
 
-   SceneObject(SPtr<Scene> const scene, const std::string &name = "");
+   SceneObject(SPtr<Scene> const scene, const std::string &name = "", const BoundingBox bounds = BoundingBox());
 
    virtual ~SceneObject();
 
@@ -45,6 +47,8 @@ public:
    glm::quat getOrientation();
 
    glm::vec3 getScale();
+
+   BoundingBox getBounds() const;
 
    void setPosition(const glm::vec3 &position);
 

@@ -60,11 +60,12 @@ const float FOV = glm::radians(80.0f);
 SPtr<Audio> audio;
 SPtr<Scene> scene;
 Renderer renderer;
-SPtr<Light> light;
 SPtr<LevelEditor> levelEdit;
 
 SPtr<FirstPersonCameraController> fpCameraController;
 SPtr<FollowCameraController> followCameraController;
+
+void loadLevel(const std::string &name);
 
 void errorCallback(int error, const char* description) {
    ASSERT(false, "Error %d: %s", error, description);
@@ -85,6 +86,11 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
          scene->addInputListener(fpCameraController);
          scene->addTickListener(fpCameraController);
       }
+   }
+
+   if (action == GLFW_PRESS && key == GLFW_KEY_M) {
+      printf("Switching level\n");
+      loadLevel("level1");
    }
 
    levelEdit->onKeyEvent(key, action);
@@ -116,42 +122,10 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
    renderer.onWindowSizeChange(width, height);
 }
 
-void load() {
-   SPtr<Loader> loader = Loader::getInstance();
-   scene = loader->loadScene("level1");
-   levelEdit = std::make_shared<LevelEditor>(scene);
-
-   /*SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
-   scene->addTickListener(cameraController);
-   scene->addInputListener(cameraController);*/
-
-   /*SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
-   SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
-   SPtr<Model> model = std::make_shared<Model>(material, mesh);
-   SPtr<Player> player = std::make_shared<Player>(scene, model, "player");
-   player->setPosition(glm::vec3(0.0f, 15.0f, 0.0f));
-   player->setAcceleration(glm::vec3(0.0f, -9.8f, 0.0f));
-   scene->setPlayer(player);
-   scene->getSceneGraph()->addPhys(player);
-
-   SPtr<Mesh> sphereMesh = std::make_shared<Mesh>("data/meshes/sphere.obj");
-   SPtr<Material> sphereMaterial = loader->loadMaterial(scene, "otherMaterial");
-   SPtr<Model> sphereModel = std::make_shared<Model>(sphereMaterial, sphereMesh);
-   SPtr<FollowGeometry> sphere = std::make_shared<FollowGeometry>(scene, sphereModel, player);
-   sphere->setRenderState(STENCIL_STATE);
-   sphere->setScale(glm::vec3(3.0f));
-   scene->getSceneGraph()->add(sphere);*/
-
-   followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock(), 10.0f, -0.2f, -1.45f);
-   scene->addTickListener(followCameraController);
-
-   fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
-}
-
-void loadSkyboxes() {
+void loadSkyboxes(SPtr<Scene> scene) {
    // TODO Move to load from serialized data
-   SPtr<Loader> loader = Loader::getInstance();
-   SPtr<ShaderProgram> program = loader->loadShaderProgram(nullptr, "skybox");
+   Loader& loader = Loader::getInstance();
+   SPtr<ShaderProgram> program = loader.loadShaderProgram(nullptr, "skybox");
    SPtr<Material> material = std::make_shared<SkyboxMaterial>("skybox", program, scene->getCamera().lock());
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cube.obj");
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
@@ -162,40 +136,48 @@ void loadSkyboxes() {
    scene->setLightSkybox(skyboxLight);
 }
 
-/*void test() {
-   SPtr<SceneGraph> graph = scene->getSceneGraph();
+void loadLevel(const std::string &name) {
+   int windowWidth = WIDTH, windowHeight = HEIGHT;
+   if (scene) {
+      SPtr<Camera> camera = scene->getCamera().lock();
+      if (camera) {
+         windowWidth = camera->getWindowWidth();
+         windowHeight = camera->getWindowHeight();
+      }
+   }
 
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
-   SPtr<Loader> loader = Loader::getInstance();
-   SPtr<Material> material2 = loader->loadMaterial(scene, "otherMaterial");
-   //IOUtils::save(*material2, "testMaterial2");
+   // Clear the old level
+   scene.reset();
+   Loader::resetSingleton();
 
-   SPtr<Model> model = std::make_shared<Model>(material2, mesh);
+   // Load the new level
+   Loader& loader = Loader::getInstance();
+   scene = loader.loadScene(name);
 
-   SPtr<Scenery> scenery = std::make_shared<Scenery>(scene, model, "derp");
-   scenery->translateBy(glm::vec3(-3.0f, 0.0f, 0.0f));
-   scenery->rotateBy(glm::angleAxis(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
+   // Attach the level editor
+   levelEdit = std::make_shared<LevelEditor>(scene);
 
-   graph->add(scenery);
+   // Create the camera controllers
+   followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock(), 10.0f, -0.2f, -1.45f);
+   scene->addTickListener(followCameraController);
+   fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
 
-   SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
-   scene->addTickListener(cameraController);
-   scene->addInputListener(cameraController);
+   // Load the skyboxes (TODO: move to be serialized)
+   loadSkyboxes(scene);
 
-   light = std::make_shared<Light>(scene, glm::vec3(0.3f), 0.1f, 0.005f, 0.001f);
-   light->setPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
-   scene->addLight(light);
-   graph->add(light);
+   // Attach the audio system
+   scene->setAudio(audio);
 
-   //IOUtils::save(*scene, "testScene2");
-}*/
+   // Send initial window size callback (to let camera build perspecitve matrix)
+   windowSizeCallback(NULL, windowWidth, windowHeight);
+}
 
 void physTest() {
    SPtr<SceneGraph> graph = scene->getSceneGraph();
 
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/cello_and_stand.obj");
-   SPtr<Loader> loader = Loader::getInstance();
-   SPtr<Material> material = loader->loadMaterial(scene, "otherMaterial");
+   Loader& loader = Loader::getInstance();
+   SPtr<Material> material = loader.loadMaterial(scene, "otherMaterial");
 
    SPtr<Model> model = std::make_shared<Model>(material, mesh);
 
@@ -270,19 +252,11 @@ int main(int argc, char *argv[]) {
    audio->systemInit();
    audio->loadSound("Restoration_5_4.ogg", true);
 
-   // Load the scene
-   load();
-   scene->setAudio(audio);
-
-   loadSkyboxes();
-
    // Prepare for rendering (sets up OpenGL stuff)
-   renderer.prepare(scene);
-   
-   // Send initial window size callback (to let camera build perspecitve matrix)
-   windowSizeCallback(NULL, WIDTH, HEIGHT);
+   renderer.prepare();
 
-   audio->loadSound("win.wav", false);
+   // Load the scene
+   loadLevel("level1");
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 

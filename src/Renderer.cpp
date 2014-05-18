@@ -21,7 +21,7 @@ Renderer::Renderer() {
 Renderer::~Renderer() {
 }
 
-void Renderer::prepare(SPtr<Scene> scene) {
+void Renderer::prepare() {
    // Set the clear (background) color.
    glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -39,10 +39,10 @@ void Renderer::prepare(SPtr<Scene> scene) {
    // Prepare the frame buffer
    fb->setupToTexture2D();
 
-   SPtr<Loader> loader = Loader::getInstance();
+   Loader& loader = Loader::getInstance();
    Json::Value root;
 
-   SPtr<ShaderProgram> fboProgram = loader->loadShaderProgram(nullptr, "fbo");
+   SPtr<ShaderProgram> fboProgram = loader.loadShaderProgram(nullptr, "fbo");
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
    SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
    plane = UPtr<Model>(new Model(fboMaterial, planeMesh));

@@ -60,7 +60,7 @@ public:
    /**
     * Prepares the renderer for use, making any necessary OpenGL calls.
     */
-   void prepare(SPtr<Scene> scene);
+   void prepare();
 
    /**
     * Renders the given scene.

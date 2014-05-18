@@ -15,6 +15,7 @@ protected:
 
 public:
    Skybox(SPtr<Model> model, const std::string &path);
+   virtual ~Skybox();
 
    void renderSkybox(RenderData &renderData);
 

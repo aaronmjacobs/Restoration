@@ -56,7 +56,7 @@ typedef std::map<std::string, GLuint> TextureMap;
  */
 class Loader {
 protected:
-   static SPtr<Loader> instance;
+   static UPtr<Loader> instance;
    Assimp::Importer assimpImporter;
    AniMeshMap aniMeshMap;
    MeshMap meshMap;
@@ -89,7 +89,7 @@ protected:
    SceneObjectData loadSceneObjectData(const Json::Value &root);
 
 public:
-   static SPtr<Loader> getInstance();
+   static Loader& getInstance();
    static void resetSingleton();
 
    virtual ~Loader();

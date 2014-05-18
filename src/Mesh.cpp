@@ -10,8 +10,8 @@ const std::string Mesh::CLASS_NAME = "Mesh";
 Mesh::Mesh(const std::string &fileName)
    : fileName(fileName) {
    // Load the mesh from the file
-   SPtr<Loader> loader = Loader::getInstance();
-   const aiScene* scene = loader->loadAssimpScene(fileName);
+   Loader& loader = Loader::getInstance();
+   const aiScene* scene = loader.loadAssimpScene(fileName);
    ASSERT(scene->mNumMeshes > 0, "No meshes in scene: %s", fileName.c_str());
 
    // TODO Support multiple meshes
@@ -112,6 +112,9 @@ Mesh::~Mesh() {
    glDeleteBuffers(1, &vbo);
    glDeleteBuffers(1, &nbo);
    glDeleteBuffers(1, &ibo);
+   if (hasTextureBufferObject) {
+      glDeleteBuffers(1, &tbo);
+   }
 }
 
 Json::Value Mesh::serialize() const {

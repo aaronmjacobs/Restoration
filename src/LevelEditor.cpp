@@ -303,9 +303,9 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 			std::cout << "Creating new object" << std::endl;
 
 			SPtr<Mesh> mesh = std::make_shared<Mesh>(curObjFile);
-			SPtr<Loader> loader = Loader::getInstance();
+			Loader& loader = Loader::getInstance();
 			//printf("a\n");
-			SPtr<Material> material2 = loader->loadMaterial(s, "otherMaterial");
+			SPtr<Material> material2 = loader.loadMaterial(s, "otherMaterial");
 			//printf("b\n");
 			SPtr<Model> model = std::make_shared<Model>(material2, mesh);
 			//printf("c\n");

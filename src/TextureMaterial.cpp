@@ -20,8 +20,8 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
    uTexture = shaderProgram->getUniform("uTexture");
    aTexCoord = shaderProgram->getAttribute("aTexCoord");
 
-   SPtr<Loader> loader = Loader::getInstance();
-   textureID = loader->loadTexture(textureFileName);
+   Loader& loader = Loader::getInstance();
+   textureID = loader.loadTexture(textureFileName);
 }
 
 TextureMaterial::~TextureMaterial() {

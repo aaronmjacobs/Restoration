@@ -51,19 +51,18 @@ struct SceneObjectData {
 
 } // namespace
 
-SPtr<Loader> Loader::instance;
+UPtr<Loader> Loader::instance;
 
-SPtr<Loader> Loader::getInstance() {
+Loader& Loader::getInstance() {
    if (!instance) {
       resetSingleton();
    }
 
-   return instance;
+   return *instance;
 }
 
 void Loader::resetSingleton() {
-   // Can't use make_shared due to protected constructor
-   instance = SPtr<Loader>(new Loader);
+   instance = UPtr<Loader>(new Loader);
 }
 
 Loader::Loader() {

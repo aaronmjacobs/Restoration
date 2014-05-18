@@ -22,16 +22,22 @@ Skybox::Skybox(SPtr<Model> model, const std::string &name)
    SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
    uSkybox = shaderProgram->getUniform("uSkybox");
 
-   SPtr<Loader> loader = Loader::getInstance();
+   Loader& loader = Loader::getInstance();
 
    // Load the skybox
-   skyboxID = loader->loadCubemap(path + name + "/");
+   skyboxID = loader.loadCubemap(path + name + "/");
 
    // Load the ambient map
-   ambientMapID = loader->loadCubemap(path + name + "/ambient/");
+   ambientMapID = loader.loadCubemap(path + name + "/ambient/");
 
    // Load the ambient global color
-   ambientGlobalID = loader->loadTexture(path + name + "/ambient/global.png");
+   ambientGlobalID = loader.loadTexture(path + name + "/ambient/global.png");
+}
+
+Skybox::~Skybox() {
+   glDeleteTextures(1, &skyboxID);
+   glDeleteTextures(1, &ambientMapID);
+   glDeleteTextures(1, &ambientGlobalID);
 }
 
 void Skybox::renderSkybox(RenderData &renderData) {

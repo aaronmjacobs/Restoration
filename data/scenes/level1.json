@@ -173,6 +173,76 @@
             "squareFalloff" : 0.0007999999797903001
          },
          {
+            "@class" : "Player",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.800000190734863,
+               "z" : 0.0
+            },
+            "health" : 10,
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/cube.obj"
+               }
+            },
+            "name" : "player",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 15.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
+            "@class" : "FollowGeometry",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/sphere.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "renderState" : 1,
+            "scale" : {
+               "x" : 3.0,
+               "y" : 3.0,
+               "z" : 3.0
+            },
+            "target" : "player"
+         },
+         {
             "@class" : "Scenery",
             "renderState" : 6,
             "model" : {

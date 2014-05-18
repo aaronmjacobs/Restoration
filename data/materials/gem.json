@@ -15,7 +15,7 @@
       "g" : 0.0,
       "r" : 0.0
    },
-   "shaderProgram" : "tex_phong",
+   "shaderProgram" : "phong_textured",
    "shininess" : 1.0,
    "specular" : {
       "b" : 0.5,

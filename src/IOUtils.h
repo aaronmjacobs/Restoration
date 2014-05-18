@@ -12,6 +12,11 @@
 namespace IOUtils {
 
 /**
+ * Determines if the file with the given name can be read.
+ */
+bool canRead(const std::string &fileName);
+
+/**
  * Reads the entire contents of the text file with the given name.
  */
 std::string readFromFile(const std::string& fileName);

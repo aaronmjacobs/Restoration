@@ -7,6 +7,8 @@
 #include "ShaderProgram.h"
 #include "Skybox.h"
 
+const std::string Skybox::CLASS_NAME = "Skybox";
+
 struct ImgInfo {
    int w;
    int h;
@@ -15,7 +17,7 @@ struct ImgInfo {
 };
 
 Skybox::Skybox(SPtr<Model> model, const std::string &name)
-: model(model) {
+: model(model), name(name) {
    const std::string &path = "data/textures/skyboxes/";
 
    // Grab the required uniform from the skybox model's shader
@@ -38,6 +40,18 @@ Skybox::~Skybox() {
    glDeleteTextures(1, &skyboxID);
    glDeleteTextures(1, &ambientMapID);
    glDeleteTextures(1, &ambientGlobalID);
+}
+
+Json::Value Skybox::serialize() const {
+   Json::Value root;
+
+   root["@class"] = CLASS_NAME;
+
+   root["name"] = name;
+
+   root["model"] = model->serialize();
+
+   return root;
 }
 
 void Skybox::renderSkybox(RenderData &renderData) {

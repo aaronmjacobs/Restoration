@@ -1,12 +1,23 @@
 {
    "@class" : "Scene",
+   "darkSkybox" : {
+      "@class" : "Skybox",
+      "model" : {
+         "@class" : "Model",
+         "material" : "skybox",
+         "mesh" : {
+            "@class" : "Mesh",
+            "fileName" : "data/meshes/cube.obj"
+         }
+      },
+      "name" : "arrakis"
+   },
    "graph" : {
       "@class" : "FlatSceneGraph",
       "objects" : [
          {
             "@class" : "Camera",
-            "renderState" : 0,
-            "fov" : 1.4,
+            "fov" : 1.399999976158142,
             "name" : "camera",
             "orientation" : {
                "w" : 1.0,
@@ -14,22 +25,22 @@
                "y" : 0.0,
                "z" : 0.0
             },
-            "phi" : -0.2,
+            "phi" : -0.2000000029802322,
             "position" : {
                "x" : 0.0,
-               "y" : 10.0,
+               "y" : 13.33808994293213,
                "z" : 10.0
             },
+            "renderState" : 0,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
                "z" : 1.0
             },
-            "theta" : -1.45
+            "theta" : -1.450000047683716
          },
          {
             "@class" : "Light",
-            "renderState" : 0,
             "color" : {
                "b" : 0.3000000119209290,
                "g" : 0.3000000119209290,
@@ -49,6 +60,7 @@
                "y" : 20.0,
                "z" : 20.0
             },
+            "renderState" : 0,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -58,7 +70,6 @@
          },
          {
             "@class" : "Light",
-            "renderState" : 0,
             "color" : {
                "b" : 0.3000000119209290,
                "g" : 0.3000000119209290,
@@ -78,6 +89,7 @@
                "y" : 20.0,
                "z" : 20.0
             },
+            "renderState" : 0,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -87,7 +99,6 @@
          },
          {
             "@class" : "Light",
-            "renderState" : 0,
             "color" : {
                "b" : 0.3000000119209290,
                "g" : 0.3000000119209290,
@@ -107,6 +118,7 @@
                "y" : 20.0,
                "z" : 20.0
             },
+            "renderState" : 0,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -116,7 +128,6 @@
          },
          {
             "@class" : "Light",
-            "renderState" : 0,
             "color" : {
                "b" : 0.3000000119209290,
                "g" : 0.3000000119209290,
@@ -136,6 +147,7 @@
                "y" : 20.0,
                "z" : 20.0
             },
+            "renderState" : 0,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -145,7 +157,6 @@
          },
          {
             "@class" : "Light",
-            "renderState" : 0,
             "color" : {
                "b" : 0.3000000119209290,
                "g" : 0.3000000119209290,
@@ -165,6 +176,7 @@
                "y" : 20.0,
                "z" : 20.0
             },
+            "renderState" : 0,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -197,7 +209,7 @@
             },
             "position" : {
                "x" : 0.0,
-               "y" : 15.0,
+               "y" : 13.39274024963379,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -231,7 +243,7 @@
             },
             "position" : {
                "x" : 0.0,
-               "y" : 0.0,
+               "y" : 13.39274024963379,
                "z" : 0.0
             },
             "renderState" : 1,
@@ -244,7 +256,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "insidePill",
@@ -265,6 +276,7 @@
                "y" : 1.249999880790710,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 0.9950060844421387,
                "y" : 1.0,
@@ -273,7 +285,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -294,6 +305,7 @@
                "y" : -0.4923341870307922,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 25.43659782409668,
                "y" : 1.630897641181946,
@@ -302,7 +314,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -323,6 +334,7 @@
                "y" : -0.4989840686321259,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 32.428222656250,
                "y" : 1.604612112045288,
@@ -331,7 +343,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -350,8 +361,9 @@
             "position" : {
                "x" : -67.47937774658203,
                "y" : -0.4763767719268799,
-               "z" : -2.093613147735596e-006
+               "z" : -2.093613147735596e-06
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 34.22055053710938,
                "y" : 1.568866133689880,
@@ -360,7 +372,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -378,18 +389,18 @@
             },
             "position" : {
                "x" : 101.8519134521484,
-               "y" : -0.3747252225875855,
+               "y" : -0.3747252225875854,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
-               "x" : 87.34756469726563,
+               "x" : 87.34756469726562,
                "y" : 1.707828640937805,
                "z" : 1.0
             }
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "aquaduct",
@@ -410,6 +421,7 @@
                "y" : 1.468471288681030,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -418,7 +430,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "aquaduct",
@@ -439,6 +450,7 @@
                "y" : 1.468476295471191,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -447,7 +459,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "aquaduct",
@@ -468,6 +479,7 @@
                "y" : 1.468482255935669,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -476,7 +488,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "aquaduct",
@@ -497,6 +508,7 @@
                "y" : 1.468482613563538,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -505,7 +517,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "aquaduct",
@@ -526,6 +537,7 @@
                "y" : 1.468482255935669,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.025372505187988,
                "y" : 1.0,
@@ -534,7 +546,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -552,9 +563,10 @@
             },
             "position" : {
                "x" : -53.67719650268555,
-               "y" : 0.4173500537872315,
+               "y" : 0.4173500537872314,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 17.19815444946289,
                "y" : 2.796378135681152,
@@ -563,7 +575,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -584,6 +595,7 @@
                "y" : 2.828063011169434,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 7.645871639251709,
                "y" : 4.403746128082275,
@@ -592,7 +604,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -613,6 +624,7 @@
                "y" : 0.9036573171615601,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.172153234481812,
                "y" : 0.6715965270996094,
@@ -621,7 +633,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -642,6 +653,7 @@
                "y" : 0.9025223255157471,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 0.6810734868049622,
@@ -650,7 +662,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "arch",
@@ -671,6 +682,7 @@
                "y" : 0.9814111590385437,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.047374844551086,
@@ -679,7 +691,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -700,6 +711,7 @@
                "y" : 14.12915515899658,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 13.39143466949463,
                "y" : 1.979930400848389,
@@ -708,7 +720,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -726,9 +737,10 @@
             },
             "position" : {
                "x" : 2.991172075271606,
-               "y" : -0.4226223230361939,
+               "y" : -0.4226223230361938,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 6.013144493103027,
                "y" : 1.795855402946472,
@@ -737,7 +749,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "insidePill",
@@ -758,6 +769,7 @@
                "y" : 0.8557797074317932,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.036940217018127,
@@ -766,7 +778,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "insidePill",
@@ -787,6 +798,7 @@
                "y" : 0.7557796835899353,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.044756412506104,
@@ -795,7 +807,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillEnd",
@@ -816,6 +827,7 @@
                "y" : 0.5033434629440308,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.067200422286987,
@@ -824,7 +836,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -845,6 +856,7 @@
                "y" : 1.211670875549316,
                "z" : 4.549999237060547
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 0.7044355869293213,
                "y" : 0.5123147368431091,
@@ -853,7 +865,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -874,6 +885,7 @@
                "y" : 0.9616710543632507,
                "z" : -4.449998855590820
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 0.6862074136734009,
                "y" : 0.5369770526885986,
@@ -882,7 +894,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -903,15 +914,15 @@
                "y" : 1.111670970916748,
                "z" : -4.599999427795410
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 0.6584570407867432,
-               "y" : 0.3397101759910584,
+               "y" : 0.3397101759910583,
                "z" : 1.0
             }
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -930,17 +941,17 @@
             "position" : {
                "x" : -32.98874664306641,
                "y" : 1.161670923233032,
-               "z" : 4.299998283386231
+               "z" : 4.299998283386230
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 0.7133393883705139,
-               "y" : 0.3329829871654511,
+               "y" : 0.3329829871654510,
                "z" : 1.0
             }
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -961,6 +972,7 @@
                "y" : 11.32666969299316,
                "z" : 4.199997901916504
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 2.613743066787720,
                "y" : 1.0,
@@ -969,7 +981,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -987,9 +998,10 @@
             },
             "position" : {
                "x" : -31.53814697265625,
-               "y" : 7.824966430664063,
+               "y" : 7.824966430664062,
                "z" : 4.049997329711914
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 2.613742828369141,
                "y" : 1.0,
@@ -998,7 +1010,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -1019,15 +1030,15 @@
                "y" : 0.6797850728034973,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
-               "x" : 2.476847648620606,
+               "x" : 2.476847648620605,
                "y" : 5.352778911590576,
                "z" : 1.0
             }
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -1048,6 +1059,7 @@
                "y" : 1.029785156250,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.795855402946472,
                "y" : 3.733451843261719,
@@ -1056,7 +1068,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -1077,6 +1088,7 @@
                "y" : 1.179785013198853,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 2.317928791046143,
                "y" : 2.737568616867065,
@@ -1085,7 +1097,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -1106,6 +1117,7 @@
                "y" : 1.206884384155273,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.596598982810974,
                "y" : 1.323427438735962,
@@ -1114,7 +1126,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "arch",
@@ -1135,6 +1146,7 @@
                "y" : 1.696312189102173,
                "z" : 6.450006484985352
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.505181789398193,
@@ -1143,7 +1155,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "arch",
@@ -1164,15 +1175,15 @@
                "y" : 1.388362169265747,
                "z" : 5.750003814697266
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
-               "y" : 1.534656167030335,
+               "y" : 1.534656167030334,
                "z" : 1.0
             }
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "arch",
@@ -1193,6 +1204,7 @@
                "y" : 1.338362216949463,
                "z" : 5.750003814697266
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.524381399154663,
@@ -1201,7 +1213,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 2,
             "model" : {
                "@class" : "Model",
                "material" : "arch",
@@ -1219,9 +1230,10 @@
             },
             "position" : {
                "x" : 41.40956497192383,
-               "y" : 2.110512256622315,
+               "y" : 2.110512256622314,
                "z" : -5.756387710571289
             },
+            "renderState" : 2,
             "scale" : {
                "x" : 1.0,
                "y" : 1.513533592224121,
@@ -1230,7 +1242,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 2,
             "model" : {
                "@class" : "Model",
                "material" : "arch",
@@ -1247,10 +1258,11 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : 54.11428833007813,
+               "x" : 54.11428833007812,
                "y" : 2.060512304306030,
                "z" : -4.781160354614258
             },
+            "renderState" : 2,
             "scale" : {
                "x" : 1.0,
                "y" : 1.505421042442322,
@@ -1259,7 +1271,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 2,
             "model" : {
                "@class" : "Model",
                "material" : "arch",
@@ -1280,15 +1291,15 @@
                "y" : 2.112057209014893,
                "z" : -5.217506408691406
             },
+            "renderState" : 2,
             "scale" : {
                "x" : 1.0,
                "y" : 1.477455019950867,
-               "z" : 0.9950061440467835
+               "z" : 0.9950061440467834
             }
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1309,6 +1320,7 @@
                "y" : 1.897929906845093,
                "z" : -5.341896057128906
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -1317,7 +1329,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1338,6 +1349,7 @@
                "y" : 2.051588773727417,
                "z" : -5.298415184020996
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -1346,7 +1358,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1367,6 +1378,7 @@
                "y" : 1.951588869094849,
                "z" : -5.674139976501465
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 0.9974999427795410,
                "y" : 1.0,
@@ -1375,7 +1387,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1396,6 +1407,7 @@
                "y" : 1.951588869094849,
                "z" : -5.757061958312988
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -1404,7 +1416,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1425,6 +1436,7 @@
                "y" : 1.255538702011108,
                "z" : 4.900000572204590
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -1433,7 +1445,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1454,6 +1465,7 @@
                "y" : 1.305538654327393,
                "z" : 4.850000381469727
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -1462,7 +1474,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1483,6 +1494,7 @@
                "y" : 1.605554938316345,
                "z" : 5.949998855590820
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 0.9995761513710022,
@@ -1491,7 +1503,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "pillar",
@@ -1512,6 +1523,7 @@
                "y" : 1.605538368225098,
                "z" : 6.000004768371582
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
@@ -1520,7 +1532,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -1541,6 +1552,7 @@
                "y" : 21.58709526062012,
                "z" : 6.299998760223389
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 37.36373138427734,
                "y" : 1.0,
@@ -1549,7 +1561,6 @@
          },
          {
             "@class" : "Scenery",
-            "renderState" : 6,
             "model" : {
                "@class" : "Model",
                "material" : "gem",
@@ -1570,12 +1581,54 @@
                "y" : 1.556846261024475,
                "z" : 0.0
             },
+            "renderState" : 6,
             "scale" : {
                "x" : 1.0,
                "y" : 1.0,
                "z" : 1.0
             }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "AniModel",
+               "material" : "animMaterial",
+               "mesh" : {
+                  "@class" : "AniMesh",
+                  "fileName" : "data/meshes/dancingTube.dae"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 20.50,
+               "y" : 5.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 0.750,
+               "y" : 0.5299999713897705,
+               "z" : 0.750
+            }
          }
       ]
+   },
+   "lightSkybox" : {
+      "@class" : "Skybox",
+      "model" : {
+         "@class" : "Model",
+         "material" : "skybox",
+         "mesh" : {
+            "@class" : "Mesh",
+            "fileName" : "data/meshes/cube.obj"
+         }
+      },
+      "name" : "crater"
    }
 }

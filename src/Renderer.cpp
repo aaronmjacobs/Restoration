@@ -256,24 +256,26 @@ void Renderer::render(Scene &scene) {
       GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");
       glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
-      // Number of lights
-      GLuint uNumLights = shaderProgram->getUniform("uNumLights");
-      glUniform1i(uNumLights, numLights);
+      if (shaderProgram->hasUniform("uNumLights")) {
+         // Number of lights
+         GLuint uNumLights = shaderProgram->getUniform("uNumLights");
+         glUniform1i(uNumLights, numLights);
 
-      // Camera position
-      GLint uCameraPos = shaderProgram->getUniform("uCameraPos");
-      glUniform3fv(uCameraPos, 1, glm::value_ptr(cameraPos));
+         // Camera position
+         GLint uCameraPos = shaderProgram->getUniform("uCameraPos");
+         glUniform3fv(uCameraPos, 1, glm::value_ptr(cameraPos));
 
-      // Lights
-      lightIndex = 0;
-      for (WPtr<Light> wLight : scene.getLights()) {
-         SPtr<Light> light = wLight.lock();
-         if (!light) {
-            continue;
+         // Lights
+         lightIndex = 0;
+         for (WPtr<Light> wLight : scene.getLights()) {
+            SPtr<Light> light = wLight.lock();
+            if (!light) {
+               continue;
+            }
+
+            light->draw(*shaderProgram, lightIndex);
+            ++lightIndex;
          }
-
-         light->draw(*shaderProgram, lightIndex);
-         ++lightIndex;
       }
    }
 

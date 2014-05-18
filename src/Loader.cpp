@@ -27,6 +27,8 @@
 #include "Scenery.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+#include "Skybox.h"
+#include "SkyboxMaterial.h"
 #include "TextureMaterial.h"
 
 #include <assimp/postprocess.h>
@@ -610,6 +612,8 @@ SPtr<Material> Loader::loadMaterial(SPtr<Scene> scene, const std::string &fileNa
       return loadPhongMaterial(scene, fileName);
    } else if (className == TextureMaterial::CLASS_NAME) {
       return loadTextureMaterial(scene, fileName);
+   } else if (className == SkyboxMaterial::CLASS_NAME) {
+      return loadSkyboxMaterial(scene, fileName);
    }
    
    ASSERT(false, "Invalid class name for Material: %s", className.c_str());
@@ -726,6 +730,15 @@ SPtr<Scene> Loader::loadScene(const std::string &fileName) {
    // Loads the scene graph, including the camera, any lights, and any shader program
    check("Scene", root, "graph");
    loadSceneGraph(scene, root["graph"]);
+
+   // Load the skyboxes
+   check("Scene", root, "lightSkybox");
+   SPtr<Skybox> lightSkybox = loadSkybox(scene, root["lightSkybox"]);
+   check("Scene", root, "darkSkybox");
+   SPtr<Skybox> darkSkybox = loadSkybox(scene, root["darkSkybox"]);
+
+   scene->setLightSkybox(lightSkybox);
+   scene->setDarkSkybox(darkSkybox);
 
    return scene;
 }
@@ -846,6 +859,26 @@ SPtr<ShaderProgram> Loader::loadShaderProgram(SPtr<Scene> scene, const std::stri
    }
 
    return shaderProgram;
+}
+
+SPtr<Skybox> Loader::loadSkybox(SPtr<Scene> scene, const Json::Value &root) {
+   check("Skybox", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   check("Skybox", root, "name");
+   std::string name = root["name"].asString();
+
+   return std::make_shared<Skybox>(model, name);
+}
+
+SPtr<SkyboxMaterial> Loader::loadSkyboxMaterial(SPtr<Scene> scene, const std::string &fileName) {
+   Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<SkyboxMaterial>(fileName));
+
+   // Shader program
+   check("SkyboxMaterial", root, "shaderProgram");
+   SPtr<ShaderProgram> shaderProgram = loadShaderProgram(scene, root["shaderProgram"].asString());
+
+   return std::make_shared<SkyboxMaterial>(fileName, shaderProgram, scene->getCamera().lock());
 }
 
 SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName) {

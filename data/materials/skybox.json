@@ -1,4 +1,4 @@
 {
    "@class" : "SkyboxMaterial",
-   "shaderProgram" : "skybox",
+   "shaderProgram" : "skybox"
 }

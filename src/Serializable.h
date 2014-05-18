@@ -5,9 +5,12 @@
 
 class Serializable {
 public:
-   const std::string CLASS_NAME;
+   const std::string CLASS_NAME = "Serializable";
 
    Serializable() {
+   }
+
+   virtual ~Serializable() {
    }
 
    /**

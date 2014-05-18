@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "SceneGraph.h"
 #include "ShaderProgram.h"
+#include "Skybox.h"
 
 const std::string Scene::CLASS_NAME = "Scene";
 const std::string Scene::FOLDER_NAME = "scenes";
@@ -25,6 +26,10 @@ Json::Value Scene::serialize() const {
    if (sceneGraph) {
       root["graph"] = sceneGraph->serialize();
    }
+
+   // Skyboxes
+   root["lightSkybox"] = lightSkybox->serialize();
+   root["darkSkybox"] = darkSkybox->serialize();
 
    // Camera, lights, and shader programs determined on reload
 

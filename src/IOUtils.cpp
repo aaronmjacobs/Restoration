@@ -9,6 +9,14 @@ namespace IOUtils {
 Json::Reader jsonReader;
 Json::StyledWriter jsonWriter;
 
+bool canRead(const std::string &fileName) {
+   std::ifstream in(fileName);
+   bool canRead = in ? true : false;
+   in.close();
+
+   return canRead;
+}
+
 std::string readFromFile(const std::string& fileName) {
    std::ifstream in(fileName);
    ASSERT(in, "Unable to open file for reading: %s", fileName.c_str());

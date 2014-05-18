@@ -37,7 +37,7 @@
             },
             "constFalloff" : 0.001,
             "linearFalloff" : 0.001,
-            "name" : "",
+            "name" : "light",
             "orientation" : {
                "w" : 1.0,
                "x" : 0.0,
@@ -67,7 +67,7 @@
                   "fileName" : "data/meshes/back_inside.obj"
                }
             },
-            "name" : "test",
+            "name" : "pillar",
             "orientation" : {
                "w" : 0.0,
                "x" : 0.0,
@@ -96,7 +96,7 @@
                   "fileName" : "data/meshes/enemy_small.obj"
                }
             },
-            "name" : "",
+            "name" : "enemy",
             "orientation" : {
                "w" : 0.0,
                "x" : 0.0,

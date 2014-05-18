@@ -95,25 +95,49 @@ void normalizePlane(Plane &plane) {
    plane.d /= size;
 }
 
-/*float distanceToPoint(glm::vec3 objPos) {
-   return plan
-}*/
+int coord(int col, int row) {
+   return (col - 1) + (row - 1) * 4;
+}
 
 void updatePlanes(glm::mat4 viewProj, bool normalize) {
    const float *matrix = glm::value_ptr(viewProj);
-   int t;
-   for (int i = 0; i < 6; i++) {
-      t = i*5;
-      planes[i].a = matrix[12] + matrix[0+t];
-      planes[i].a = matrix[13] + matrix[1+t];
-      planes[i].a = matrix[14] + matrix[2+t];
-      planes[i].a = matrix[15] + matrix[3+t];
-      i++;
-      planes[i].a = matrix[12] - matrix[0+t];
-      planes[i].a = matrix[13] - matrix[1+t];
-      planes[i].a = matrix[14] - matrix[2+t];
-      planes[i].a = matrix[15] - matrix[3+t];
-   }
+
+   // Left
+   planes[0].a = matrix[coord(4,1)] + matrix[coord(1,1)];
+   planes[0].b = matrix[coord(4,2)] + matrix[coord(1,2)];
+   planes[0].c = matrix[coord(4,3)] + matrix[coord(1,3)];
+   planes[0].d = matrix[coord(4,4)] + matrix[coord(1,4)];
+
+   // Right
+   planes[1].a = matrix[coord(4,1)] - matrix[coord(1,1)];
+   planes[1].b = matrix[coord(4,2)] - matrix[coord(1,2)];
+   planes[1].c = matrix[coord(4,3)] - matrix[coord(1,3)];
+   planes[1].d = matrix[coord(4,4)] - matrix[coord(1,4)];
+
+   // Top
+   planes[2].a = matrix[coord(4,1)] - matrix[coord(2,1)];
+   planes[2].b = matrix[coord(4,2)] - matrix[coord(2,2)];
+   planes[2].c = matrix[coord(4,3)] - matrix[coord(2,3)];
+   planes[2].d = matrix[coord(4,4)] - matrix[coord(2,4)];
+
+   // Bottom
+   planes[3].a = matrix[coord(4,1)] + matrix[coord(2,1)];
+   planes[3].b = matrix[coord(4,2)] + matrix[coord(2,2)];
+   planes[3].c = matrix[coord(4,3)] + matrix[coord(2,3)];
+   planes[3].d = matrix[coord(4,4)] + matrix[coord(2,4)];
+
+   // Near
+   planes[4].a = matrix[coord(4,1)] + matrix[coord(3,1)];
+   planes[4].b = matrix[coord(4,2)] + matrix[coord(3,2)];
+   planes[4].c = matrix[coord(4,3)] + matrix[coord(3,3)];
+   planes[4].d = matrix[coord(4,4)] + matrix[coord(3,4)];
+
+   // Far
+   planes[5].a = matrix[coord(4,1)] - matrix[coord(3,1)];
+   planes[5].b = matrix[coord(4,2)] - matrix[coord(3,2)];
+   planes[5].c = matrix[coord(4,3)] - matrix[coord(3,3)];
+   planes[5].d = matrix[coord(4,4)] - matrix[coord(3,4)];
+
    if (normalize) {
       for (int i = 0; i < 6; i++) {
          normalizePlane(planes[i]);
@@ -141,11 +165,11 @@ void setRenderData(RenderData &data) {
 void draw(SceneObject &obj) {
    glm::vec3 objectPos = obj.getPosition();
 
-   //if (checkInFrustum(objectPos)) {
+   if (checkInFrustum(objectPos)) {
       obj.draw(_renderData);
-   //}
+   }
 
-   std::cout << obj.getName() << ": " << checkInFrustum(obj.getPosition()) << std::endl;
+   //std::cout << obj.getName() << ": " << checkInFrustum(obj.getPosition()) << std::endl;
 }
 
 } // namespace

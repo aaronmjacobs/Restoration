@@ -1,55 +1,19 @@
-// Fancy assertions
-#include "FancyAssert.h"
-
-// OpenGL / GLFW
-#include "GLIncludes.h"
-
-// GLM
-#include "GLMIncludes.h"
-
 #include "audio/Audio.h"
-#include "FlatSceneGraph.h"
-#include "Loader.h"
-#include "Renderer.h"
-#include "Scene.h"
-#include "SceneGraph.h"
-#include "SceneObject.h"
-#include "Types.h"
-
-// ***************************** Temporary
-
-#include "Skybox.h"
-#include "SkyboxMaterial.h"
-#include "FollowGeometry.h"
-#include "AniMesh.h"
-#include "AniModel.h"
-#include "Light.h"
-#include "Mesh.h"
-#include "Material.h"
-#include "Model.h"
-#include "Geometry.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
-#include "PhongMaterial.h"
 #include "Camera.h"
+#include "FancyAssert.h"
 #include "FirstPersonCameraController.h"
 #include "FollowCameraController.h"
+#include "GLIncludes.h"
+#include "GLMIncludes.h"
 #include "IOUtils.h"
 #include "LevelEditor.h"
+#include "Loader.h"
 #include "Player.h"
+#include "Renderer.h"
+#include "Scene.h"
+#include "Types.h"
 
-#include "MovableObject.h"
-#include "PhysicalObject.h"
-#include "Scenery.h"
-
-#include "RenderState.h"
-
-// ***************************** Temporary
-
-// STL
-#include <cerrno>
 #include <iostream>
-#include <fstream>
 #include <string>
 
 namespace {

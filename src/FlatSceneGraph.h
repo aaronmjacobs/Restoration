@@ -38,6 +38,8 @@ public:
     * Goes through each phys object and finds the first thing the mouse collides with
 	*/
    virtual SPtr<PhysicalObject> mouseCollides(double xPos, double yPos);
+
+   virtual void printVec(glm::vec3 ray);
 };
 
 #endif

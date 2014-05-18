@@ -46,6 +46,13 @@ void LevelEditor::onKeyEvent(int key, int action) {
       if (key == GLFW_KEY_GRAVE_ACCENT) {
          enabled = !enabled;
 
+		 if (!enabled) {
+			 for (int i = 0; i < numObjs; i++) {
+				 currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+			 }
+			 numObjs = 0;
+		 }
+
          SPtr<Scene> sScene = scene.lock();
          if (sScene) {
             sScene->setEditMode(enabled);
@@ -209,13 +216,17 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			quickSwitch(key);
 		}*/
 		else if (key == GLFW_KEY_Z) {
-			if (currentObj) {
-				currentObj->markForRemoval();
-				currentObj.reset();
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->markForRemoval();
+				currentObjs[i].reset();
 			}
+			numObjs = 0;
 		}
 		else if (key == GLFW_KEY_X) {
-			currentObj = NULL;
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+			}
+			numObjs = 0;
 		}
 		else if (key == GLFW_KEY_PERIOD) {
 			//save here
@@ -233,6 +244,12 @@ void LevelEditor::onKeyEvent(int key, int action) {
 		}
 		else if (key == GLFW_KEY_L) {
 			//load here
+		}
+		else if (key == GLFW_KEY_LEFT_CONTROL) {
+			ctrlDown = true;
+		}
+		else if (key == GLFW_KEY_SPACE) {
+			spaceDown = true;
 		}
 		//OBJ FILE STUFF
 		else if (key == GLFW_KEY_0)
@@ -269,6 +286,12 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			transBack = false;
 		else if (key == GLFW_KEY_LEFT_BRACKET)
 			transFront = false;
+		else if (key == GLFW_KEY_LEFT_CONTROL) {
+			ctrlDown = false;
+		}
+		else if (key == GLFW_KEY_SPACE) {
+			spaceDown = false;
+		}
 	}
 }
 
@@ -285,8 +308,9 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 	glm::vec4 viewP;
 	SPtr<SceneGraph> graph;
 	SPtr<PhysicalObject> tempObj;
+	bool unselected = false;
 
-	if (!isEnabled()) {
+	if (!isEnabled() || spaceDown) {
 		return;
 	}
 	else if (action == GLFW_PRESS) {
@@ -333,9 +357,18 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 			}
 
 			newObj->setPosition(pos);
-			currentObj = newObj;
 			s->getSceneGraph()->addPhys(newObj);
-			editState = TRANSLATE;
+
+			//numObjs = 0;
+			if (numObjs < MAXOBJS) {
+				currentObjs[numObjs] = newObj;
+				currentObjs[numObjs++]->getModel()->getMaterial()->setSelected(true);
+			}
+			else
+				std::cout << "Too many objects in buffer" << std::endl;
+
+			if (!ctrlDown)
+				editState = TRANSLATE;
 			//}
 			//else {
 			//	printf("no specified object to place");
@@ -343,8 +376,33 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 		}
 		else {
 			tempObj = graph->mouseCollides(prevPoint[0], prevPoint[1]);
-			if (tempObj != NULL) {
-				currentObj = tempObj;
+			if (tempObj) {
+				if (!ctrlDown) {
+					for (int i = 0; i < numObjs; i++) {
+						currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+					}
+					numObjs = 0;
+				}
+
+				for (int i = 0; i < numObjs; i++) {
+					if (unselected)
+						currentObjs[i - 1] = currentObjs[i];
+					else if (tempObj == currentObjs[i]) {
+						unselected = true;
+						currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+					}
+				}
+
+				if (unselected) {
+					numObjs--;
+					unselected = false;
+				}
+				else if (numObjs < MAXOBJS) {
+					currentObjs[numObjs] = tempObj;
+					currentObjs[numObjs++]->getModel()->getMaterial()->setSelected(true);
+				}
+				else
+					std::cout << "Too many objects in buffer" << std::endl;
 			}
 			//printf("%f %f\n", prevPoint[0], prevPoint[1]);
 		}
@@ -358,7 +416,7 @@ void LevelEditor::onMouseMotionEvent(double xPos, double yPos) {
 	prevPoint[0] = xPos;
 	prevPoint[1] = yPos;
 
-	if (!isEnabled()) {
+	if (!isEnabled() || spaceDown) {
 		return;
 	}
 	else if (editState == TRANSLATE) {
@@ -380,16 +438,20 @@ void LevelEditor::transform(glm::vec3 trans) {
 	if (!isEnabled()) {
 		return;
 	}
-	else if (!currentObj) {
+	else if (numObjs == 0) {
 		printf("no current object selected\n");
 	}
 	else {
 		saved = false;
 		if (editState == TRANSLATE) {
-			currentObj->translateBy(trans);
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->translateBy(trans);
+			}
 		}
 		else if (editState == SCALE) {
-			currentObj->scaleBy(trans);
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->scaleBy(trans);
+			}
 		}
 		else if (editState == ROTATE) {
 

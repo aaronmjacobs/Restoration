@@ -101,7 +101,7 @@ SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 	glm::vec4 viewP;
 
 	double minDist = 0.0, newDist = 0.0;
-   bool minDistSet = false;
+    bool minDistSet = false;
 
 	SPtr<Scene> s = scene.lock();
 	if (!s) {
@@ -128,20 +128,28 @@ SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 		objRay = objPos - near;
 		glm::vec3 rayIntersect = glm::normalize(mouseRay) * glm::length(objRay) + c->getPosition();
 
-		/*std::cout << "Ray: " << std::endl;
-		printVec(rayIntersect);
-		std::cout << "Position: " << std::endl;
+		/*std::cout << "objRay: " << std::endl;
+		printVec(objRay);
+		std::cout << "objPos: " << std::endl;
 		printVec(objPos);
+		std::cout << "mouseRay" << std::endl;
+		printVec(mouseRay);
 		std::cout << std::endl;*/
 
 		if ((physObject->getBounds()).contains(rayIntersect)) {
-			printf("hi\n");
-			if (!minDistSet|| (newDist = glm::length(objRay)) < minDist) {
-            minDistSet = true;
+			printf("objRay len : %f\n", glm::length(objRay));
+			if (!minDistSet|| glm::length(objRay) < minDist) {
+				newDist = glm::length(objRay);
+				printf("newDist len : %f\n", glm::length(newDist));
+				minDistSet = true;
 				minDist = newDist;
 				obj = physObject;
 			}
 		}
 	}
 	return obj;
+}
+
+void FlatSceneGraph::printVec(glm::vec3 ray) {
+	std::cout << "x : " << ray.x << " y: " << ray.y << " z: " << ray.z << std::endl;
 }

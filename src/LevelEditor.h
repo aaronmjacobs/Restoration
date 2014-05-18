@@ -14,19 +14,21 @@
 #define FORE 1
 #define BACK 2
 
+#define MAXOBJS 20
+
 class Scene;
 
 class LevelEditor : public InputListener, public TickListener {
 private:
    WPtr<Scene> scene;
 
-	bool saved = true, enabled = false, big = false, precision = false;
+    bool saved = true, enabled = false, big = false, precision = false, ctrlDown = false, spaceDown = false;
 	bool transUp = false, transDown = false, transRight = false, transLeft = false, transBack = false, transFront = false;
 	bool transX = false, transY = false, transZ = false;
 
-	int editState = TRANSLATE, stageState = MAIN, keepTransforming = 0;
+	int editState = TRANSLATE, stageState = MAIN, keepTransforming = 0, numObjs = 0;
 
-	SPtr<PhysicalObject> currentObj = NULL, placeObj = NULL;
+	SPtr<PhysicalObject> currentObj = NULL, placeObj = NULL, currentObjs[20];
 
 	double prevPoint[2];
 

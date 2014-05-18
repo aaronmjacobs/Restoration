@@ -88,7 +88,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
       }
    }
 
-   if (action == GLFW_PRESS && key == GLFW_KEY_M) {
+   if (action == GLFW_PRESS && key == GLFW_KEY_L) {
       std::cout << "Which level would you like to load?: ";
       std::string levelName;
       std::cin >> levelName;

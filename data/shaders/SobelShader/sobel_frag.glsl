@@ -1,7 +1,7 @@
 /* sobel_frag.glsl         */
 /* Partial Author : Cameron Nouri  
    SEE README for thanks*/
-
+z
 uniform sampler2D uTexUnit;
 
 varying vec2 vTexCoord;

@@ -363,9 +363,48 @@ SPtr<AniMesh> Loader::loadAniMesh(const Json::Value &root) {
       return it->second;
    }
 
-   SPtr<AniMesh> aniMesh(std::make_shared<AniMesh>(fileName));
-   aniMeshMap[fileName] = aniMesh;
+   //check("AniMesh", root, "defaultAnimation");
+   //std::string defaultAnimation = root["defaultAnimation"].asString();
 
+   SPtr<AniMesh> aniMesh;
+   check("AniMesh", root, "animations");
+   Json::Value animations = root["animations"];
+   ASSERT(animations.isArray(), "animations should be an array");
+
+   // Load the first (default) animation
+   for (int i = 0; i < animations.size(); ++i) {
+      Json::Value animation = animations[i];
+      check("AniMesh", animation, "default");
+      bool isDefault = animation["default"].asBool();
+      if (isDefault) {
+         check("AniMesh", animation, "name");
+         std::string name = animation["name"].asString();
+
+         check("AniMesh", animation, "file");
+         std::string file = animation["file"].asString();
+
+         aniMesh = SPtr<AniMesh>(std::make_shared<AniMesh>(file, name));
+         break;
+      }
+   }
+
+   // Load the other animations
+   for (int i = 0; i < animations.size(); ++i) {
+      Json::Value animation = animations[i];
+      check("AniMesh", animation, "default");
+      bool isDefault = animation["default"].asBool();
+      if (!isDefault) {
+         check("AniMesh", animation, "name");
+         std::string name = animation["name"].asString();
+
+         check("AniMesh", animation, "file");
+         std::string file = animation["file"].asString();
+
+         aniMesh->loadAnimation(file, name);
+      }
+   }
+
+   aniMeshMap[fileName] = aniMesh;
    return aniMesh;
 }
 

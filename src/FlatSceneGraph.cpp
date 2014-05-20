@@ -137,10 +137,10 @@ SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 		std::cout << std::endl;*/
 
 		if ((physObject->getBounds()).contains(rayIntersect)) {
-			printf("objRay len : %f\n", glm::length(objRay));
+			//printf("objRay len : %f\n", glm::length(objRay));
 			if (!minDistSet|| glm::length(objRay) < minDist) {
 				newDist = glm::length(objRay);
-				printf("newDist len : %f\n", glm::length(newDist));
+				//printf("newDist len : %f\n", glm::length(newDist));
 				minDistSet = true;
 				minDist = newDist;
 				obj = physObject;

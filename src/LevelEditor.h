@@ -9,6 +9,7 @@
 #define SCALE 1
 #define ROTATE 2
 #define CREATE 3
+#define PASTE 4
 
 #define MAIN 0
 #define FORE 1
@@ -26,10 +27,10 @@ private:
 	bool transUp = false, transDown = false, transRight = false, transLeft = false, transBack = false, transFront = false;
 	bool transX = false, transY = false, transZ = false;
 
-	int editState = TRANSLATE, stageState = MAIN, keepTransforming = 0, numObjs = 0;
+	int editState = TRANSLATE, stageState = MAIN, keepTransforming = 0, numObjs = 0, copyObjs = 0;
 
-	SPtr<PhysicalObject> currentObj = NULL, placeObj = NULL, currentObjs[20];
-
+	SPtr<PhysicalObject> currentObj = NULL, placeObj = NULL, currentObjs[MAXOBJS], copyBuf[MAXOBJS];
+	glm::vec3 copyObjPos[MAXOBJS], copyAvg;
 	double prevPoint[2];
 
 	std::string curObjFile = "data/meshes/block.obj";

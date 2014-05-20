@@ -282,6 +282,8 @@ void Renderer::render(Scene &scene) {
    // Update view frustum culling planes. True or false for normalizing planes
    updatePlanes(camera->getProjectionMatrix() * camera->getViewMatrix(), true);
 
+#ifndef NO_FBO
+
    // Render items to the stencil buffer
    prepareStencilDraw();
    setRenderData(renderData);
@@ -298,6 +300,8 @@ void Renderer::render(Scene &scene) {
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
 
+#endif
+
    // Do any post processing on the light world buffer
    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    glEnable(GL_BLEND);
@@ -309,6 +313,8 @@ void Renderer::render(Scene &scene) {
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
 
+#ifndef NO_FBO
+
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
    program->use();
@@ -317,4 +323,6 @@ void Renderer::render(Scene &scene) {
    glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
    plane->draw(renderData);
    glDisable(GL_BLEND);
+
+#endif
 }

@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#ifndef NO_FBO
+
 FrameBuffer::FrameBuffer()
 : bufferObjectsGenerated(false) {
    // Create FrameBufferObject
@@ -42,7 +44,7 @@ void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight) {
    glBindTexture(GL_TEXTURE_2D, fBTexture);
 
    // Setup the texture parameters. How big the texture image will be, etc.
-   // NULL on glTexImage2D means to reserve texture memory. 
+   // NULL on glTexImage2D means to reserve texture memory.
    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -77,3 +79,29 @@ void FrameBuffer::applyFBO() {
 void FrameBuffer::disableFBO() {
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+#else
+
+FrameBuffer::FrameBuffer()
+: bufferObjectsGenerated(false) {
+}
+
+FrameBuffer::~FrameBuffer() {
+}
+
+void FrameBuffer::setupToTexture2D() {
+}
+
+void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight) {
+}
+
+void FrameBuffer::checkFBOStatus() {
+}
+
+void FrameBuffer::applyFBO() {
+}
+
+void FrameBuffer::disableFBO() {
+}
+
+#endif

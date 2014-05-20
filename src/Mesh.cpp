@@ -87,7 +87,7 @@ Mesh::Mesh(const std::string &fileName)
       float *texCoords = new float[mesh->mNumVertices * 2];
       for (unsigned int k = 0; k < mesh->mNumVertices; ++k) {
          texCoords[k * 2] = mesh->mTextureCoords[0][k].x;
-         texCoords[k * 2 + 1] = mesh->mTextureCoords[0][k].y;
+         texCoords[k * 2 + 1] = 1.0f - mesh->mTextureCoords[0][k].y;
       }
 
       glGenBuffers(1, &tbo);

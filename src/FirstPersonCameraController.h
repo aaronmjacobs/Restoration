@@ -1,6 +1,7 @@
 #ifndef FIRST_PERSON_CAMERA_CONTROLLER_H
 #define FIRST_PERSON_CAMERA_CONTROLLER_H
 
+#include "CameraController.h"
 #include "GLIncludes.h"
 #include "InputListener.h"
 #include "TickListener.h"
@@ -11,11 +12,10 @@ class Camera;
 /**
  * Controls a camera (to be a first person perspective) from user input events.
  */
-class FirstPersonCameraController : public InputListener, public TickListener {
+class FirstPersonCameraController : public CameraController, public InputListener, public TickListener {
 private:
    const static float MOUSE_SCALE;
    const static float MOVEMENT_SCALE;
-   WPtr<Camera> camera;
    bool forward, backward, left, right;
    bool leftMouse;
    double mouseX, mouseY;

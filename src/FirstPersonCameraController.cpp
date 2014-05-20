@@ -5,9 +5,8 @@ const float FirstPersonCameraController::MOUSE_SCALE = 0.005f;
 const float FirstPersonCameraController::MOVEMENT_SCALE = 10.0f;
 
 FirstPersonCameraController::FirstPersonCameraController(SPtr<Camera> camera)
-   : camera(WPtr<Camera>(camera)) {
+   : CameraController(camera) {
    forward = backward = left = right = leftMouse = false;
-   mouseX = mouseY = 0.0;
 }
 
 FirstPersonCameraController::~FirstPersonCameraController() {
@@ -45,13 +44,15 @@ void FirstPersonCameraController::onMouseButtonEvent(int button, int action) {
 }
 
 void FirstPersonCameraController::onMouseMotionEvent(double xPos, double yPos) {
-   SPtr<Camera> sCamera = camera.lock();
+   if (enabled) {
+      SPtr<Camera> sCamera = camera.lock();
 
-   // Update camera orientation
-   if (leftMouse && sCamera) {
-      float dPhi = -(yPos - mouseY) * MOUSE_SCALE;
-      float dTheta = (xPos - mouseX) * MOUSE_SCALE;
-      sCamera->rotateBy(dPhi, dTheta);
+      // Update camera orientation
+      if (leftMouse && sCamera) {
+         float dPhi = -(yPos - mouseY) * MOUSE_SCALE;
+         float dTheta = (xPos - mouseX) * MOUSE_SCALE;
+         sCamera->rotateBy(dPhi, dTheta);
+      }
    }
 
    mouseX = xPos;
@@ -59,6 +60,10 @@ void FirstPersonCameraController::onMouseMotionEvent(double xPos, double yPos) {
 }
 
 void FirstPersonCameraController::tick(const float dt) {
+   if (!enabled) {
+      return;
+   }
+
    SPtr<Camera> sCamera = camera.lock();
    if (!sCamera) {
       return;

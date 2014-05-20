@@ -3,13 +3,17 @@
 #include "SceneObject.h"
 
 FollowCameraController::FollowCameraController(SPtr<Camera> camera, SPtr<SceneObject> objectToFollow, float zDist, float phi, float theta)
-: camera(camera), objectToFollow(objectToFollow), zDist(zDist), phi(phi), theta(theta) {
+: CameraController(camera), objectToFollow(objectToFollow), zDist(zDist), phi(phi), theta(theta) {
 }
 
 FollowCameraController::~FollowCameraController() {
 }
 
 void FollowCameraController::tick(const float dt) {
+   if (!enabled) {
+      return;
+   }
+
    SPtr<Camera> sCamera = camera.lock();
    SPtr<SceneObject> sObjectToFollow = objectToFollow.lock();
    if (!sCamera || !sObjectToFollow) {

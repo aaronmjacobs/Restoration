@@ -18,21 +18,15 @@ void main() {
    v_blurTexCoords[5] = vTexCoord + vec2(0.0,  0.008);
    v_blurTexCoords[6] = vTexCoord + vec2(0.0,  0.012);
    v_blurTexCoords[7] = vTexCoord + vec2(0.0,  0.016);
-   
-   
-   
-   v_blurTexCoords[8] = vTexCoord + vec2(-0.016,  0.0);   
+
+   v_blurTexCoords[8] = vTexCoord + vec2(-0.016,  0.0);
    v_blurTexCoords[9] = vTexCoord + vec2(-0.012, 0.0);
    v_blurTexCoords[10] = vTexCoord + vec2(-0.008, 0.0);
    v_blurTexCoords[11] = vTexCoord + vec2(-0.004,  0.0);
    v_blurTexCoords[12] = vTexCoord + vec2(0.004,  0.0);
    v_blurTexCoords[13] = vTexCoord + vec2(0.008,  0.0);
    v_blurTexCoords[14] = vTexCoord + vec2(0.012,  0.0);
-   v_blurTexCoords[15] = vTexCoord + vec2(0.016,  0.0);   
-   
+   v_blurTexCoords[15] = vTexCoord + vec2(0.016,  0.0);
 
-   
-
-   
    gl_Position = uProjMatrix *  vec4(aPosition.xyz, 1.0);
 }

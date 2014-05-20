@@ -42,8 +42,8 @@ void Renderer::prepare() {
    Loader& loader = Loader::getInstance();
    Json::Value root;
 
-   SPtr<ShaderProgram> fboProgram = loader.loadShaderProgram(nullptr, "fbo");
-   SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
+   SPtr<ShaderProgram> fboProgram = loader.loadShaderProgram(nullptr, "fbo_blur");
+   SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo_blur", fboProgram, *fb);
    SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
    plane = UPtr<Model>(new Model(fboMaterial, planeMesh));
 }

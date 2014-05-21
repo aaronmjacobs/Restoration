@@ -318,6 +318,13 @@ void Renderer::render(Scene &scene) {
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
    program->use();
+
+   // Set the width and height of the viewport (for blurring)
+   GLint uViewportWidth = program->getUniform("uViewportWidth");
+   GLint uViewportHeight = program->getUniform("uViewportHeight");
+   glUniform1i(uViewportWidth, fb->getWidth());
+   glUniform1i(uViewportHeight, fb->getHeight());
+
    plane->draw(renderData);
 
 #endif

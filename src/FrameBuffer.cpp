@@ -6,7 +6,7 @@
 #ifndef NO_FBO
 
 FrameBuffer::FrameBuffer()
-: bufferObjectsGenerated(false) {
+: bufferObjectsGenerated(false), fbWidth(0), fbHeight(0) {
    // Create FrameBufferObject
    glGenFramebuffers(1, &fBObject);
 }
@@ -31,6 +31,9 @@ void FrameBuffer::setupToTexture2D() {
 }
 
 void FrameBuffer::setupToTexture2D(int textureWidth, int textureHeight) {
+   fbWidth = textureWidth;
+   fbHeight = textureHeight;
+
    // Get and save the texture size so that we know how big it is when we apply it as a texture.
    glBindFramebuffer(GL_FRAMEBUFFER, fBObject);
 

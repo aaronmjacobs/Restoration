@@ -4,7 +4,7 @@
    "shaders" : [
       {
          "@class" : "Shader",
-         "fileName" : "data/shaders/fbo_blur_vert.glsl",
+         "fileName" : "data/shaders/fbo_vert.glsl",
          "type" : "vertex"
       },
       {
@@ -14,7 +14,6 @@
       }
    ],
    "uniforms" : [
-      "uTexture",
-      "uProjMatrix"
+      "uTexture"
    ]
 }

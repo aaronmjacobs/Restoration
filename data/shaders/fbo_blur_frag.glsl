@@ -3,34 +3,42 @@
 uniform sampler2D uTexture;
 
 varying vec2 vTexCoord;
-varying vec2 v_blurTexCoords[16];
+
+const float BLUR = 2.0;
+const float BLUR_SIZE_H = BLUR / 1280.0;
+const float BLUR_SIZE_V = BLUR / 720.0;
+const int SPAN = 2;
+const float SATURATION = 1.0;
+const float EXPOSURE = 2.3;
 
 void main() {
-   vec4 finalColor = vec4(0.0, 0.0, 0.0, 0.0);
+   vec4 sum = vec4(0.0);
 
-   /* Y blur */
-   finalColor += texture2D(uTexture, v_blurTexCoords[0]) * 0.115876621105;
-   finalColor += texture2D(uTexture, v_blurTexCoords[1]) * 0.147308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[2]) * 0.185876621105;
-   finalColor += texture2D(uTexture, v_blurTexCoords[3]) * 0.227308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[4]) * 0.227308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[5]) * 0.185876621105;
-   finalColor += texture2D(uTexture, v_blurTexCoords[6]) * 0.147308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[7]) * 0.115876621105;
+   // Don't post process any invisible pixels (waste of time)
+   vec4 textureColor = texture2D(uTexture, vTexCoord);
+   if (textureColor.a == 0.0) {
+      discard;
+   }
 
-   /* X blur */
-   finalColor += texture2D(uTexture, v_blurTexCoords[8]) * 0.115876621105;
-   finalColor += texture2D(uTexture, v_blurTexCoords[9]) * 0.147308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[10]) * 0.185876621105;
-   finalColor += texture2D(uTexture, v_blurTexCoords[11]) * 0.227308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[12]) * 0.227308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[13]) * 0.185876621105;
-   finalColor += texture2D(uTexture, v_blurTexCoords[14]) * 0.147308056121;
-   finalColor += texture2D(uTexture, v_blurTexCoords[15]) * 0.115876621105;
+   // Generate a blurred pixel
+   int count = 0;
+   for (int x = -SPAN; x <= SPAN; x++) {
+      for (int y = -SPAN; y <= SPAN; y++) {
+         if (length(vec2(float(x), float(y))) < SPAN) {
+            vec2 diff = vec2(x * BLUR_SIZE_H, y * BLUR_SIZE_V);
+            sum += texture2D(uTexture, vTexCoord + diff);
+            ++count;
+         }
+      }
+   }
+   sum /= count;
 
-   finalColor /= 6.0;
-   finalColor += texture2D(uTexture, vTexCoord);
-   finalColor -= vec4(0.15, 0.15, 0.15, 0.0);
+   // Account for saturation and exposure of the blurred pixel
+   float avg = (sum.r + sum.g + sum.b + sum.a) / 4.0;
+   vec4 sumOffset = sum - vec4(avg);
+   sum = vec4(avg) + sumOffset * SATURATION;
+   sum *= EXPOSURE;
 
-   gl_FragColor = vec4(finalColor);
+   // Multiply the pixel by its blurred value
+   gl_FragColor = textureColor * sum;
 }

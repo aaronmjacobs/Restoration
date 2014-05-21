@@ -318,11 +318,9 @@ void Renderer::render(Scene &scene) {
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
    program->use();
-   GLint uProjMatrix = program->getUniform("uProjMatrix");
-   glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
    plane->draw(renderData);
-   glDisable(GL_BLEND);
 
 #endif
+
+   glDisable(GL_BLEND);
 }

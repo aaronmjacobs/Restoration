@@ -81,6 +81,10 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
     character.setVelocity(velocityChange);
 }
 
+void CollisionHandler::handleCollision(Scenery &scenery, Character &character) {
+   handleCollision(character, scenery);
+}
+
 /*
 void CollisionHandler::handleCollision(movingPlatform &movingPlatform, Scenery &scenery) {
     //Reverse moving direction

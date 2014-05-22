@@ -20,6 +20,10 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   virtual bool canMove() {
+      return false;
+   }
+
    bool collidesWith(const PhysicalObject &other) const;
 
    virtual void collideWith(PhysicalObject &other) = 0;

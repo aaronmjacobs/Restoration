@@ -33,6 +33,7 @@ public:
     void handleCollision(Player &player, Corona &corona);
     void handleCollision(Enemy &enemy1, Enemy &enemy2);
     void handleCollision(Character &character, Scenery &scenery);
+    void handleCollision(Scenery &scenery, Character &character);
    /* void handleCollision(movingPlatform &movingPlatform, Platform &platform);
     void handleCollision(Bullet &bullet, Platform &platform);
     void handleCollision(PlayerBullet &pBullet, Enemy &enemy);

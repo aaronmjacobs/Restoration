@@ -54,6 +54,10 @@ void FlatSceneGraph::tick(const float dt) {
 
    // Check collisions for each object in the scene
    for (SPtr<PhysicalObject> physObject : physObjects) {
+      if (!physObject->canMove()) {
+         continue;
+      }
+
       for (SPtr<PhysicalObject> other : physObjects) {
          // Don't check for collisions between the same object
          if (physObject == other) {

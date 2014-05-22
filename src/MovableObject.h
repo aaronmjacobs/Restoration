@@ -19,6 +19,10 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   virtual bool canMove() {
+      return true;
+   }
+
    glm::vec3 getVelocity();
    glm::vec3 getAcceleration();
    void setVelocity(const glm::vec3 &vel);

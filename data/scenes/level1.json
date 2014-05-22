@@ -27,8 +27,8 @@
             },
             "phi" : -0.2000000029802322,
             "position" : {
-               "x" : 0.0,
-               "y" : 13.33808994293213,
+               "x" : 18.10123062133789,
+               "y" : 13.42826175689697,
                "z" : 10.0
             },
             "renderState" : 0,
@@ -208,8 +208,8 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : 0.0,
-               "y" : 13.39274024963379,
+               "x" : 18.41666030883789,
+               "y" : 13.42848110198975,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -242,8 +242,8 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : 0.0,
-               "y" : 13.39274024963379,
+               "x" : 18.41666030883789,
+               "y" : 13.42848110198975,
                "z" : 0.0
             },
             "renderState" : 1,
@@ -1595,7 +1595,19 @@
                "material" : "animMaterial",
                "mesh" : {
                   "@class" : "AniMesh",
-                  "fileName" : "data/meshes/dancingTube.dae"
+                  "animations" : [
+                     {
+                        "default" : true,
+                        "file" : "data/meshes/dancingCylinder_dance1.dae",
+                        "name" : "dance1"
+                     },
+                     {
+                        "default" : false,
+                        "file" : "data/meshes/dancingCylinder_dance2.dae",
+                        "name" : "dance2"
+                     }
+                  ],
+                  "fileName" : "data/meshes/dancingCylinder_dance1.dae"
                }
             },
             "name" : "",

@@ -42,8 +42,8 @@ void Renderer::prepare() {
    Loader& loader = Loader::getInstance();
    Json::Value root;
 
-   SPtr<ShaderProgram> fboProgram = loader.loadShaderProgram(nullptr, "fbo");
-   SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo", fboProgram, *fb);
+   SPtr<ShaderProgram> fboProgram = loader.loadShaderProgram(nullptr, "fbo_blur");
+   SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo_blur", fboProgram, *fb);
    SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
    plane = UPtr<Model>(new Model(fboMaterial, planeMesh));
 }
@@ -282,6 +282,8 @@ void Renderer::render(Scene &scene) {
    // Update view frustum culling planes. True or false for normalizing planes
    updatePlanes(camera->getProjectionMatrix() * camera->getViewMatrix(), true);
 
+#ifndef NO_FBO
+
    // Render items to the stencil buffer
    prepareStencilDraw();
    setRenderData(renderData);
@@ -298,6 +300,8 @@ void Renderer::render(Scene &scene) {
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
 
+#endif
+
    // Do any post processing on the light world buffer
    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    glEnable(GL_BLEND);
@@ -309,12 +313,21 @@ void Renderer::render(Scene &scene) {
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
 
+#ifndef NO_FBO
+
    // Draw light scene as textured quad over the dark scene with alpha blending enabled
    SPtr<ShaderProgram> program = plane->getMaterial()->getShaderProgram();
    program->use();
-   GLint uProjMatrix = program->getUniform("uProjMatrix");
-   glm::mat4 orthographic = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-   glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(orthographic));
+
+   // Set the width and height of the viewport (for blurring)
+   GLint uViewportWidth = program->getUniform("uViewportWidth");
+   GLint uViewportHeight = program->getUniform("uViewportHeight");
+   glUniform1i(uViewportWidth, fb->getWidth());
+   glUniform1i(uViewportHeight, fb->getHeight());
+
    plane->draw(renderData);
+
+#endif
+
    glDisable(GL_BLEND);
 }

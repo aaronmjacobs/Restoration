@@ -16,6 +16,8 @@ protected:
 
    bool bufferObjectsGenerated;
 
+   int fbWidth, fbHeight;
+
 public:
    /* Create the Frame Buffer Object to be used in a scene.  *
     * MUST call a setup function from FrameBuffer to setup   *
@@ -51,6 +53,14 @@ public:
 
    GLuint getRBO() const {
       return fBRender;
+   }
+
+   int getWidth() {
+      return fbWidth;
+   }
+
+   int getHeight() {
+      return fbHeight;
    }
 
 };

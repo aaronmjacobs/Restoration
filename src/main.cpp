@@ -40,18 +40,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
       glfwSetWindowShouldClose(window, GL_TRUE);
    }
 
-   if (action == GLFW_PRESS && key == GLFW_KEY_GRAVE_ACCENT) {
-      if (scene->isInEditMode()) {
-         scene->removeInputListener(fpCameraController);
-         scene->removeTickListener(fpCameraController);
-         scene->addTickListener(followCameraController);
-      } else {
-         scene->removeTickListener(followCameraController);
-         scene->addInputListener(fpCameraController);
-         scene->addTickListener(fpCameraController);
-      }
-   }
-
    if (action == GLFW_PRESS && key == GLFW_KEY_L) {
       std::cout << "Which level would you like to load?: ";
       std::string levelName;
@@ -61,6 +49,11 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
    levelEdit->onKeyEvent(key, action);
    scene->onKeyEvent(key, action);
+
+   if (action == GLFW_PRESS && key == GLFW_KEY_GRAVE_ACCENT) {
+      fpCameraController->setEnabled(scene->isInEditMode());
+      followCameraController->setEnabled(!scene->isInEditMode());
+   }
 }
 
 void mouseClickCallback(GLFWwindow *window, int button, int action, int mods) {
@@ -122,8 +115,11 @@ void loadLevel(const std::string &name) {
 
    // Create the camera controllers
    followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock(), 10.0f, -0.2f, -1.45f);
+   followCameraController->setEnabled(true);
    scene->addTickListener(followCameraController);
    fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
+   scene->addInputListener(fpCameraController);
+   scene->addTickListener(fpCameraController);
 
    // Attach the audio system
    scene->setAudio(audio);

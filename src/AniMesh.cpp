@@ -7,18 +7,10 @@
 
 const std::string AniMesh::CLASS_NAME = "AniMesh";
 
-AniMesh::AniMesh(const std::string &fileName)
-: Mesh(fileName) {
-   importer.SetPropertyInteger(AI_CONFIG_PP_LBW_MAX_WEIGHTS, 3);
-
-   // Make sure the file exists and can be read
-   std::ifstream ifile(fileName);
-   ASSERT(ifile, "Unable to open file: %s", fileName.c_str());
-   ifile.close();
-
-   scene = importer.ReadFile(fileName, aiProcess_GenSmoothNormals |
-                      aiProcess_Triangulate);
-   ASSERT(scene, "Unable to import scene: %s", fileName.c_str());
+AniMesh::AniMesh(const std::string &fileName, const std::string &aniName)
+: Mesh(fileName), numModes(0), aniMode(0) {
+   loadAnimation(fileName, aniName);
+   const aiScene* scene = scenes[0];
 
    convertToGlmMat(&rootInverseTransform, scene->mRootNode->mTransformation.Inverse());
 
@@ -95,20 +87,56 @@ Json::Value AniMesh::serialize() const {
    // Class name
    root["@class"] = CLASS_NAME;
 
+   Json::Value animations;
+   for (std::map<std::string, int>::const_iterator itr = aniMap.begin();
+        itr != aniMap.end(); ++itr) {
+      Json::Value animation;
+      // The first loaded animation is the default
+      animation["default"] = itr->second == 0;
+      animation["name"] = itr->first;
+      ASSERT(aniFileMap.count(itr->first), "No file name for animation: %s", itr->first.c_str());
+      animation["file"] = aniFileMap.at(itr->first);
+
+      animations.append(animation);
+   }
+   root["animations"] = animations;
+
    return root;
 }
 
-void AniMesh::loadAnimation() {
+void AniMesh::loadAnimation(const std::string &fileName, const std::string &aniName) {
+   importers[numModes].SetPropertyInteger(AI_CONFIG_PP_LBW_MAX_WEIGHTS, 3);
 
+   std::ifstream ifile(fileName);
+   ASSERT(ifile, "Unable to open file: %s", fileName.c_str());
+   ifile.close();
+
+   const aiScene *scene = importers[numModes].ReadFile(fileName, aiProcess_GenSmoothNormals |
+      aiProcess_Triangulate);
+
+   ASSERT(scene, "Unable to import scene: %s", fileName.c_str());
+
+   scenes.push_back(scene);
+   aniMap[aniName] = numModes++;
+   aniFileMap[aniName] = fileName;
+}
+
+void AniMesh::hardApplyAnimation(const std::string &aniName) {
+   aniMode = aniMap[aniName];
+   startTime = glfwGetTime();
+}
+
+void AniMesh::softApplyAnimation(const std::string &aniName) {
+   aniMode = aniMap[aniName];
 }
 
 void AniMesh::updateAnimation() {
    float curTime = glfwGetTime() - startTime;
-   float tps = (float)(scene->mAnimations[0]->mTicksPerSecond);
+   float tps = (float)(scenes[aniMode]->mAnimations[0]->mTicksPerSecond);
    if (tps == 0.0f) tps = 25.0f;
-   float aniTime = fmod(curTime * tps, scene->mAnimations[0]->mDuration);
+   float aniTime = fmod(curTime * tps, scenes[aniMode]->mAnimations[0]->mDuration);
    glm::mat4 id = glm::mat4(1.0f);
-   updateMatrices(aniTime, scene->mRootNode, id);
+   updateMatrices(aniTime, scenes[aniMode]->mRootNode, id);
 }
 
 void AniMesh::updateMatrices(float aniTime, const aiNode* curNode, glm::mat4 parTransform) {
@@ -116,13 +144,13 @@ void AniMesh::updateMatrices(float aniTime, const aiNode* curNode, glm::mat4 par
    convertToGlmMat(&nodeTransform, curNode->mTransformation);
 
    int boneNum;
-   for (boneNum = 0; boneNum < scene->mMeshes[0]->mNumBones && scene->mMeshes[0]->mBones[boneNum]->mName != curNode->mName; boneNum++) {}
+   for (boneNum = 0; boneNum < scenes[aniMode]->mMeshes[0]->mNumBones && scenes[aniMode]->mMeshes[0]->mBones[boneNum]->mName != curNode->mName; boneNum++) {}
 
    const aiNodeAnim* aniNode = NULL;
 
-   for (int i = 0; i < scene->mAnimations[0]->mNumChannels; i++) {
-      if (scene->mAnimations[0]->mChannels[i]->mNodeName == curNode->mName) {
-         aniNode = scene->mAnimations[0]->mChannels[i];
+   for (int i = 0; i < scenes[aniMode]->mAnimations[0]->mNumChannels; i++) {
+      if (scenes[aniMode]->mAnimations[0]->mChannels[i]->mNodeName == curNode->mName) {
+         aniNode = scenes[aniMode]->mAnimations[0]->mChannels[i];
       }
    }
 
@@ -139,7 +167,7 @@ void AniMesh::updateMatrices(float aniTime, const aiNode* curNode, glm::mat4 par
 
    glm::mat4 totalTransform = parTransform * nodeTransform;
 
-   if (scene->mMeshes[0]->mNumBones != boneNum) {
+   if (scenes[aniMode]->mMeshes[0]->mNumBones != boneNum) {
       boneTransforms[boneNum] = rootInverseTransform * totalTransform * boneOffset[boneNum];
    }
 

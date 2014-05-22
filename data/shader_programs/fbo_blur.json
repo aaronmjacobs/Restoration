@@ -9,11 +9,13 @@
       },
       {
          "@class" : "Shader",
-         "fileName" : "data/shaders/fbo_frag.glsl",
+         "fileName" : "data/shaders/fbo_blur_frag.glsl",
          "type" : "fragment"
       }
    ],
    "uniforms" : [
-      "uTexture"
+      "uTexture",
+      "uViewportWidth",
+      "uViewportHeight"
    ]
 }

@@ -68,7 +68,7 @@ protected:
          initChildren();
       }
 
-      if (children[0]) {
+      if (hasChildren()) {
          // Add element to child
          insertIntoChild(element);
       } else {
@@ -161,7 +161,7 @@ public:
    }
 
    bool hasChildren() {
-      return children[0];
+      return !!children[0];
    }
 
    SPtr<Octree<T>> getChild(size_t octant) {

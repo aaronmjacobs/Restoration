@@ -29,11 +29,16 @@ Json::Value FlatSceneGraph::serialize() const {
 
 
 #include "UniformGrid.h"
-
+UniformGrid<SPtr<SceneObject>> grid(8, 1, glm::vec2(-100.0f, -100.0f), glm::vec2(100.0f, 100.0f));
+bool first = true;
 void FlatSceneGraph::tick(const float dt) {
-   UniformGrid<SPtr<SceneObject>> grid(8, 1, glm::vec2(-100.0f, -100.0f), glm::vec2(100.0f, 100.0f));
-   for (SPtr<SceneObject> obj : objects) {
-      grid.insert(obj);
+   if (first) {
+      first = false;
+      for (SPtr<SceneObject> obj : objects) {
+         grid.insert(obj);
+      }
+   } else {
+      grid.update();
    }
 
 

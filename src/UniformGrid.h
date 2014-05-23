@@ -67,11 +67,23 @@ public:
 
    void update() {
       for (typename std::vector<GridElement<T>>::iterator itr = gridElements.begin(); itr != gridElements.end();) {
+         // Erase any elements that should be removed
          if (itr->element->shouldBeRemoved()) {
             itr = gridElements.erase(itr);
-         } else {
-            ++itr;
+            continue;
          }
+
+         // TODO Determine all indices
+         glm::vec3 elementPos = itr->element->getBounds().center();
+         size_t index = getNodeIndex(glm::vec2(elementPos.x, elementPos.y));
+
+         // Sort the indices into ascending order
+         std::sort(itr->nodes.begin(), itr->nodes.end());
+         if (itr->nodes[0] != index) {
+            printf("Different nodes!\n");
+         }
+
+         ++itr;
       }
    }
 };

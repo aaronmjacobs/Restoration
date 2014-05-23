@@ -27,7 +27,16 @@ Json::Value FlatSceneGraph::serialize() const {
    return root;
 }
 
+
+#include "UniformGrid.h"
+
 void FlatSceneGraph::tick(const float dt) {
+   UniformGrid<SPtr<SceneObject>> grid(8, 1, glm::vec2(-100.0f, -100.0f), glm::vec2(100.0f, 100.0f));
+   for (SPtr<SceneObject> obj : objects) {
+      grid.insert(obj);
+   }
+
+
    // Tick each object in the scene
    std::vector<SPtr<SceneObject>>::iterator itr = objects.begin();
    while (itr != objects.end()) {

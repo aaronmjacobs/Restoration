@@ -29,7 +29,7 @@ Json::Value FlatSceneGraph::serialize() const {
 
 void FlatSceneGraph::tick(const float dt) {
    // Tick each object in the scene
-   std::list<SPtr<SceneObject>>::iterator itr = objects.begin();
+   std::vector<SPtr<SceneObject>>::iterator itr = objects.begin();
    while (itr != objects.end()) {
       if ((*itr)->shouldBeRemoved()) {
          // If an object should be removed, remove it
@@ -42,7 +42,7 @@ void FlatSceneGraph::tick(const float dt) {
    }
 
    // Take out any phys items that should be removed
-   std::list<SPtr<PhysicalObject>>::iterator physItr = physObjects.begin();
+   std::vector<SPtr<PhysicalObject>>::iterator physItr = physObjects.begin();
    while (physItr != physObjects.end()) {
       if ((*physItr)->shouldBeRemoved()) {
          SceneGraph::removePhys(*physItr);
@@ -99,7 +99,7 @@ void FlatSceneGraph::forEachPhys(void (*function)(PhysicalObject &obj)) {
 }
 
 SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
-	SPtr<PhysicalObject> obj = NULL;
+	SPtr<PhysicalObject> obj;
 	glm::mat4 view, proj;
 	glm::vec3 objPos, near, far, objRay, mouseRay, mousePos;
 	glm::vec4 viewP;
@@ -125,21 +125,12 @@ SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 	mousePos.z = 1.0;
 	far = glm::unProject(mousePos, view, proj, viewP);
 	mouseRay = far - near;
-	//printf("here?\n");
 	for (SPtr<PhysicalObject> physObject : physObjects) {
-		//printf("just making sure, should be 3 or 4 in a row\n");
 		objPos = physObject->getPosition();
 		objRay = objPos - near;
 		glm::vec3 rayIntersect = glm::normalize(mouseRay) * glm::length(objRay) + c->getPosition();
 
-		/*std::cout << "Ray: " << std::endl;
-		printVec(rayIntersect);
-		std::cout << "Position: " << std::endl;
-		printVec(objPos);
-		std::cout << std::endl;*/
-
 		if ((physObject->getBounds()).contains(rayIntersect)) {
-			printf("hi\n");
 			if (!minDistSet|| (newDist = glm::length(objRay)) < minDist) {
             minDistSet = true;
 				minDist = newDist;

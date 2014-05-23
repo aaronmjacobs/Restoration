@@ -18,6 +18,9 @@ public:
    float height() const;
    float width() const;
    float depth() const;
+   glm::vec3 min() const;
+   glm::vec3 max() const;
+   glm::vec3 center() const;
 };
 
 #endif

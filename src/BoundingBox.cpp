@@ -51,3 +51,17 @@ float BoundingBox::width() const {
 float BoundingBox::depth() const {
    return zMax - zMin;
 }
+
+glm::vec3 BoundingBox::min() const {
+   return glm::vec3(xMin, yMin, zMin);
+}
+
+glm::vec3 BoundingBox::max() const {
+   return glm::vec3(xMax, yMax, zMax);
+}
+
+glm::vec3 BoundingBox::center() const {
+   return glm::vec3(xMin + width() / 2.0f,
+                    yMin + height() / 2.0f,
+                    zMin + depth() / 2.0f);
+}

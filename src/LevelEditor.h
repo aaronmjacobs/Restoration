@@ -15,7 +15,7 @@
 #define FORE 1
 #define BACK 2
 
-#define MAXOBJS 20
+#define MAXOBJS 50
 
 class Scene;
 

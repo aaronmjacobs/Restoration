@@ -118,7 +118,7 @@ void windowSizeCallback(GLFWwindow* window, int width, int height) {
 
 void load() {
    SPtr<Loader> loader = Loader::getInstance();
-   scene = loader->loadScene("level1");
+   scene = loader->loadScene("mainLevel");
    levelEdit = std::make_shared<LevelEditor>(scene);
 
    /*SPtr<FirstPersonCameraController> cameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
@@ -268,7 +268,7 @@ int main(int argc, char *argv[]) {
 
    audio = std::make_shared<Audio>();
    audio->systemInit();
-   audio->loadSound("Restoration_5_4.ogg", true);
+   //audio->loadSound("Restoration_5_4.ogg", true);
 
    // Load the scene
    load();

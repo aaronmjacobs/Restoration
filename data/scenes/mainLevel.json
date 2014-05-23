@@ -1,0 +1,4829 @@
+{
+   "@class" : "Scene",
+   "graph" : {
+      "@class" : "FlatSceneGraph",
+      "objects" : [
+         {
+            "@class" : "Camera",
+            "fov" : 1.399999976158142,
+            "name" : "camera",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "phi" : -0.02500085532665253,
+            "position" : {
+               "x" : 606.9410400390625,
+               "y" : -10.95462989807129,
+               "z" : 35.27429580688477
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "theta" : -1.999998688697815
+         },
+         {
+            "@class" : "Light",
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -50.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -100.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 50.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Light",
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 100.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Player",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.800000190734863,
+               "z" : 0.0
+            },
+            "health" : 10,
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/cube.obj"
+               }
+            },
+            "name" : "player",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 471.5755004882813,
+               "y" : 1.332400798797607,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.795855402946472,
+               "y" : 1.628893971443176,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
+            "@class" : "FollowGeometry",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/sphere.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 471.5755004882813,
+               "y" : 1.332400798797607,
+               "z" : 0.0
+            },
+            "renderState" : 1,
+            "scale" : {
+               "x" : 3.0,
+               "y" : 3.0,
+               "z" : 3.0
+            },
+            "target" : "player"
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/aquaduct.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -93.56745147705078,
+               "y" : 1.111900806427002,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/aquaduct.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -99.80222320556641,
+               "y" : 1.111900806427002,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -96.85733032226563,
+               "y" : -1.914777040481567,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -85.78774261474609,
+               "y" : -1.908037662506104,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -74.73543548583984,
+               "y" : -1.935192942619324,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -52.58435821533203,
+               "y" : -1.941049575805664,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -41.51477050781250,
+               "y" : -1.93431019783020,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -30.46246337890625,
+               "y" : -1.961465358734131,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -19.39290237426758,
+               "y" : -1.954725980758667,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 20.39198303222656,
+               "y" : -1.942889213562012,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.941927433013916,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 13.77246093750,
+               "y" : -1.999628543853760,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 2.720129728317261,
+               "y" : -1.972473263740540,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -8.349433898925781,
+               "y" : -1.979212641716003,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 69.06608581542969,
+               "y" : 1.473396778106690,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.924004554748535,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 57.99629211425781,
+               "y" : -2.033342599868774,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.909193515777588,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 46.94398498535156,
+               "y" : -2.006187438964844,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 32.62443161010742,
+               "y" : -2.012926816940308,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.253547668457031,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 113.3201904296875,
+               "y" : 1.322194457054138,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 6.547584056854248,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 102.2506256103516,
+               "y" : 4.965459823608398,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 6.563994407653809,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 91.19831848144531,
+               "y" : 8.142611503601074,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 6.262849807739258,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 80.12873077392578,
+               "y" : 4.985872268676758,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 6.235794544219971,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 157.5677032470703,
+               "y" : -2.055748462677002,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 146.4981536865234,
+               "y" : -2.062487840652466,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 3.229841709136963,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 121.4762268066406,
+               "y" : 1.257927656173706,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 3.130577564239502,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 201.8412322998047,
+               "y" : -2.074318885803223,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 190.7716674804688,
+               "y" : -2.081058263778687,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 179.7193603515625,
+               "y" : -2.053902864456177,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 168.6497802734375,
+               "y" : -2.060642242431641,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 246.1073303222656,
+               "y" : -2.081290006637573,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 235.0377655029297,
+               "y" : -2.088029384613037,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 223.9854583740234,
+               "y" : -2.060874223709106,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 212.9158782958984,
+               "y" : -2.067613601684570,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 290.3765563964844,
+               "y" : -2.076603174209595,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 279.3069763183594,
+               "y" : -2.083342552185059,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 268.2546691894531,
+               "y" : -2.056187391281128,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 257.1854858398438,
+               "y" : -2.062926769256592,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 324.6178894042969,
+               "y" : 0.6093353033065796,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.523012638092041,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 318.4471130371094,
+               "y" : 0.6025959253311157,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.326259613037109,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 312.5935363769531,
+               "y" : -2.070247888565064,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 301.5239562988281,
+               "y" : -2.076987266540527,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -52.73084640502930,
+               "y" : 0.8106949329376221,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.930793762207031,
+               "y" : 1.904538750648499,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -43.99731063842773,
+               "y" : 4.081905364990234,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.585229873657227,
+               "y" : 1.878539323806763,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -33.46447753906250,
+               "y" : 6.181913375854492,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.585229873657227,
+               "y" : 1.878539323806763,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -63.65286636352539,
+               "y" : -1.926071047782898,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -25.95727920532227,
+               "y" : -0.5873230099678040,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.977409601211548,
+               "y" : 6.960967063903809,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -23.76043128967285,
+               "y" : -0.05716064199805260,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.977409601211548,
+               "y" : 4.824734687805176,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -21.54163932800293,
+               "y" : 0.4128873348236084,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.977409601211548,
+               "y" : 2.895986557006836,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 129.1672668457031,
+               "y" : 1.257532835006714,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 3.130577564239502,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 137.0977325439453,
+               "y" : 1.257531881332398,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 3.130577564239502,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 179.7423400878906,
+               "y" : -0.3878598809242249,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.280570745468140,
+               "y" : 8.893364906311035,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 188.6757659912109,
+               "y" : 0.3818594813346863,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 8.013193130493164,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 186.0618438720703,
+               "y" : 2.901459693908691,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.846363544464111,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 183.0641937255859,
+               "y" : 5.501459121704102,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 3.083043098449707,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 165.2911071777344,
+               "y" : 2.695128679275513,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.280570745468140,
+               "y" : 6.575042247772217,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 170.9134521484375,
+               "y" : 3.256905078887940,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.012525558471680,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 177.2489166259766,
+               "y" : 0.5184142589569092,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 177.3187408447266,
+               "y" : 7.920083999633789,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.012525558471680,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 167.8860778808594,
+               "y" : 5.619400024414063,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 199.0582885742188,
+               "y" : 3.077069759368897,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.280570745468140,
+               "y" : 10.53446769714356,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 196.7165374755859,
+               "y" : 13.49751758575440,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 196.9548187255859,
+               "y" : 5.347942352294922,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 3.083043098449707,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 223.8631439208984,
+               "y" : 0.5109022855758667,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 229.1828613281250,
+               "y" : 3.241887569427490,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 234.8949584960938,
+               "y" : 2.923817634582520,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 4.441854953765869,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 240.6568908691406,
+               "y" : 2.644923686981201,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 6.890771389007568,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 246.1420440673828,
+               "y" : -0.9458965063095093,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 11.90080165863037,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 256.9562988281250,
+               "y" : 8.586850166320801,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 268.0234985351563,
+               "y" : 8.593588829040527,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 279.0758056640625,
+               "y" : 8.566433906555176,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 290.5686950683594,
+               "y" : 3.983321905136108,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 281.4944763183594,
+               "y" : 6.333324909210205,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 285.7142639160156,
+               "y" : 0.5833188891410828,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 335.8012390136719,
+               "y" : -2.108581781387329,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 343.9711303710938,
+               "y" : -2.101842403411865,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 7.244749546051025,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 357.9227294921875,
+               "y" : -2.128997564315796,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 368.9923095703125,
+               "y" : -2.122258186340332,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 380.1397094726563,
+               "y" : -2.122642278671265,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 391.2092895507813,
+               "y" : -13.26593589782715,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 402.2615966796875,
+               "y" : -13.29309177398682,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 413.3311767578125,
+               "y" : -13.28635215759277,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 312.5723571777344,
+               "y" : 0.5707978606224060,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 312.4682312011719,
+               "y" : 3.145678997039795,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 6.738657474517822,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 309.9472961425781,
+               "y" : 5.455696105957031,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 329.5819702148438,
+               "y" : 5.521187782287598,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 332.2028808593750,
+               "y" : 3.211174964904785,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 6.738657474517822,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 335.7561645507813,
+               "y" : 0.6363058090209961,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 352.8470764160156,
+               "y" : 8.248086929321289,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 363.9166564941406,
+               "y" : 8.254826545715332,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 357.9051208496094,
+               "y" : 2.902113437652588,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 368.9747009277344,
+               "y" : 2.908852815628052,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 346.717285156250,
+               "y" : -2.084137439727783,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.5715332031250,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 371.5627441406250,
+               "y" : 2.377214193344116,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 6.960114002227783,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 371.5050659179688,
+               "y" : 10.68794727325440,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.458259582519531,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 380.0161437988281,
+               "y" : -14.52259063720703,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 10.51708889007568,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 424.3663330078125,
+               "y" : -13.30222511291504,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 461.9177856445313,
+               "y" : -13.32938098907471,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 472.9873657226563,
+               "y" : -13.32264137268066,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 424.2959594726563,
+               "y" : -10.67389583587647,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 426.8371276855469,
+               "y" : -8.268041610717773,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 433.1341247558594,
+               "y" : -4.718028068542481,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 426.9354553222656,
+               "y" : -0.8680282235145569,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 424.4676208496094,
+               "y" : 1.531971573829651,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 440.5119934082031,
+               "y" : -4.765744686126709,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 403.1536560058594,
+               "y" : 3.321378231048584,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 414.1888122558594,
+               "y" : 3.305505275726318,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 391.8970031738281,
+               "y" : 5.604508876800537,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 452.997558593750,
+               "y" : -4.862611770629883,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 448.7214965820313,
+               "y" : -10.24637508392334,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.373686552047730,
+               "y" : 2.391258001327515,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 484.0301818847656,
+               "y" : -13.31206989288330,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 495.0997619628906,
+               "y" : -13.30533027648926,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 506.1309509277344,
+               "y" : -13.27855396270752,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 509.3524780273438,
+               "y" : -13.27181434631348,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.984414815902710,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 459.3567504882813,
+               "y" : -2.512999057769775,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.763112545013428,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 474.8261108398438,
+               "y" : -2.506259441375732,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 5.796459197998047,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 485.9689025878906,
+               "y" : -2.495688199996948,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 497.0385131835938,
+               "y" : -2.488948583602905,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 508.0696411132813,
+               "y" : -2.462172269821167,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 511.9080810546875,
+               "y" : -13.60114574432373,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 4.497797966003418,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 514.4847412109375,
+               "y" : -13.89556980133057,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 6.628680229187012,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 517.1218261718750,
+               "y" : -14.17294025421143,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 519.7513427734375,
+               "y" : -14.42299556732178,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 10.55688381195068,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 522.4021606445313,
+               "y" : -14.15536212921143,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 525.0559692382813,
+               "y" : -14.15536212921143,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 527.4616699218750,
+               "y" : -14.15536212921143,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 522.272949218750,
+               "y" : -4.956789970397949,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 4.497797966003418,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 524.8496093750,
+               "y" : -5.251214027404785,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 6.628680229187012,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 527.4866943359375,
+               "y" : -5.528584480285645,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 543.0622558593750,
+               "y" : -13.23523330688477,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.984414815902710,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 545.6178588867188,
+               "y" : -13.56456470489502,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 4.497797966003418,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 548.1945190429688,
+               "y" : -13.85898876190186,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 6.628680229187012,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 550.8316040039063,
+               "y" : -14.13635921478272,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 553.4611206054688,
+               "y" : -14.38641452789307,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 10.55688381195068,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 556.1119384765625,
+               "y" : -14.11878108978272,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 558.7657470703125,
+               "y" : -14.11878108978272,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 561.1714477539063,
+               "y" : -14.11878108978272,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 555.9827270507813,
+               "y" : -4.920201301574707,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 4.497797966003418,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 558.5593872070313,
+               "y" : -5.214626789093018,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 6.628680229187012,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 561.1964721679688,
+               "y" : -5.491998195648193,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 539.8254394531250,
+               "y" : -13.25361824035645,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 10.90832233428955,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 539.1682128906250,
+               "y" : -8.468837738037109,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 539.1932373046875,
+               "y" : 0.1579436957836151,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 2.452091932296753,
+               "y" : 8.706944465637207,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 572.3975219726563,
+               "y" : -13.23009300231934,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 583.4671020507813,
+               "y" : -13.22335338592529,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 594.5098876953125,
+               "y" : -13.21278190612793,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 605.5794677734375,
+               "y" : -13.20604228973389,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 616.6107177734375,
+               "y" : -13.17926597595215,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 627.6961059570313,
+               "y" : -13.18009281158447,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 638.7656860351563,
+               "y" : -13.17335319519043,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 649.8084716796875,
+               "y" : -13.16278171539307,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 660.8780517578125,
+               "y" : -13.15604209899902,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 671.9093017578125,
+               "y" : -13.12926578521729,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 682.9867553710938,
+               "y" : -13.14413070678711,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 694.0563354492188,
+               "y" : -13.13739109039307,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 705.099121093750,
+               "y" : -13.12681961059570,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 716.1687011718750,
+               "y" : -13.12007999420166,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 727.1999511718750,
+               "y" : -13.09330368041992,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 738.2853393554688,
+               "y" : -13.09413051605225,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/block.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 749.3549194335938,
+               "y" : -13.08739089965820,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 9.894170761108398,
+               "y" : 2.403259277343750,
+               "z" : 1.0
+            }
+         }
+      ]
+   }
+}

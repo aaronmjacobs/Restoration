@@ -27,6 +27,10 @@ void FollowCameraController::tick(const float dt) {
    glm::vec3 move = glm::normalize(toObject) * moveLen;
 
    glm::vec3 newCameraPos(cameraPos + (move * dt));
+   if (glm::distance(objectPos, newCameraPos) > glm::distance(objectPos, cameraPos)) {
+      // Function will diverge, cap it.
+      newCameraPos = cameraPos + ((glm::normalize(move) * glm::distance(objectPos, cameraPos) * 0.75f) * dt);
+   }
    newCameraPos.z = zDist;
 
    sCamera->setRotation(phi, theta);

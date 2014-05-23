@@ -81,8 +81,8 @@ protected:
       // TODO Use allocator to avoid a large number of heap allocations?
 
       // Create children
-      for (size_t i = 0; i < NUM_CHILDREN; ++i) {
-         children[i] = SPtr<Octree<T>>(new Octree<T>(MAX_ELEMENTS, determineBounds(i)));
+      for (size_t octant = 0; octant < NUM_CHILDREN; ++octant) {
+         children[octant] = SPtr<Octree<T>>(new Octree<T>(MAX_ELEMENTS, determineBounds(octant)));
       }
 
       // Copy each element into a child
@@ -95,48 +95,19 @@ protected:
    }
 
    void insertIntoChild(T element) {
-      BoundingBox elementBounds = element->getBounds();
-      glm::vec3 treeCenter = bounds->center();
-      glm::vec3 elementCenter = elementBounds.center();
+      glm::vec3 elementCenter = element->getBounds().center();
 
-      if (elementCenter.x < treeCenter.x) {
-         if (elementCenter.y < treeCenter.y) {
-            if (elementCenter.z < treeCenter.z) {
-               children[0]->add(element);
-            } else {
-               children[1]->add(element);
-            }
-         } else {
-            if (elementCenter.z < treeCenter.z) {
-               children[2]->add(element);
-            } else {
-               children[3]->add(element);
-            }
-         }
-      } else {
-         if (elementCenter.y < treeCenter.y) {
-            if (elementCenter.z < treeCenter.z) {
-               children[4]->add(element);
-            } else {
-               children[5]->add(element);
-            }
-         } else {
-            if (elementCenter.z < treeCenter.z) {
-               children[6]->add(element);
-            } else {
-               children[7]->add(element);
-            }
-         }
-      }
+      size_t octant = getOctantContainingPoint(elementCenter);
+      children[octant]->add(element);
    }
 
-   BoundingBox determineBounds(size_t index) {
+   BoundingBox determineBounds(size_t octant) {
       float minX, maxX, minY, maxY, minZ, maxZ;
       glm::vec3 parentMin = bounds->min();
       glm::vec3 parentMax = bounds->max();
       glm::vec3 parentCenter = bounds->center();
 
-      if (index & 4) {
+      if (octant & 4) {
          // Positive x
          minX = parentCenter.x;
          maxX = parentMax.x;
@@ -146,7 +117,7 @@ protected:
          maxX = parentCenter.x;
       }
 
-      if (index & 2) {
+      if (octant & 2) {
          // Positive y
          minY = parentCenter.y;
          maxY = parentMax.y;
@@ -156,7 +127,7 @@ protected:
          maxY = parentCenter.y;
       }
 
-      if (index & 1) {
+      if (octant & 1) {
          // Positive z
          minZ = parentCenter.z;
          maxZ = parentMax.z;
@@ -167,6 +138,15 @@ protected:
       }
 
       return BoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
+   }
+
+   size_t getOctantContainingPoint(const glm::vec3& point) const {
+      glm::vec3 center = bounds->center();
+      size_t oct = 0;
+      if(point.x >= center.x) oct |= 4;
+      if(point.y >= center.y) oct |= 2;
+      if(point.z >= center.z) oct |= 1;
+      return oct;
    }
 
 public:
@@ -184,8 +164,8 @@ public:
       return children[0];
    }
 
-   SPtr<Octree<T>> getChild(size_t index) {
-      return children[index];
+   SPtr<Octree<T>> getChild(size_t octant) {
+      return children[octant];
    }
 
    std::vector<T>& getElements() {

@@ -48,45 +48,6 @@ SPtr<BoundingBox> calcBounds(const std::vector<T> &objects) {
    return std::make_shared<BoundingBox>(min.x, max.x, min.y, max.y, min.z, max.z);
 }
 
-BoundingBox determineBounds(const BoundingBox &parent, size_t index) {
-   float minX, maxX, minY, maxY, minZ, maxZ;
-   glm::vec3 parentMin = parent.min();
-   glm::vec3 parentMax = parent.max();
-   glm::vec3 parentCenter = parent.center();
-
-   if (index & 4) {
-      // Positive x
-      minX = parentCenter.x;
-      maxX = parentMax.x;
-   } else {
-      // Negative x
-      minX = parentMin.x;
-      maxX = parentCenter.x;
-   }
-
-   if (index & 2) {
-      // Positive y
-      minY = parentCenter.y;
-      maxY = parentMax.y;
-   } else {
-      // Negative y
-      minY = parentMin.y;
-      maxY = parentCenter.y;
-   }
-
-   if (index & 1) {
-      // Positive z
-      minZ = parentCenter.z;
-      maxZ = parentMax.z;
-   } else {
-      // Negative z
-      minZ = parentMin.z;
-      maxZ = parentCenter.z;
-   }
-
-   return BoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
-}
-
 } // namespace
 
 template <class T>
@@ -121,7 +82,7 @@ protected:
 
       // Create children
       for (size_t i = 0; i < NUM_CHILDREN; ++i) {
-         children[i] = SPtr<Octree<T>>(new Octree<T>(MAX_ELEMENTS, determineBounds(*bounds, i)));
+         children[i] = SPtr<Octree<T>>(new Octree<T>(MAX_ELEMENTS, determineBounds(i)));
       }
 
       // Copy each element into a child
@@ -169,6 +130,45 @@ protected:
       }
    }
 
+   BoundingBox determineBounds(size_t index) {
+      float minX, maxX, minY, maxY, minZ, maxZ;
+      glm::vec3 parentMin = bounds->min();
+      glm::vec3 parentMax = bounds->max();
+      glm::vec3 parentCenter = bounds->center();
+
+      if (index & 4) {
+         // Positive x
+         minX = parentCenter.x;
+         maxX = parentMax.x;
+      } else {
+         // Negative x
+         minX = parentMin.x;
+         maxX = parentCenter.x;
+      }
+
+      if (index & 2) {
+         // Positive y
+         minY = parentCenter.y;
+         maxY = parentMax.y;
+      } else {
+         // Negative y
+         minY = parentMin.y;
+         maxY = parentCenter.y;
+      }
+
+      if (index & 1) {
+         // Positive z
+         minZ = parentCenter.z;
+         maxZ = parentMax.z;
+      } else {
+         // Negative z
+         minZ = parentMin.z;
+         maxZ = parentCenter.z;
+      }
+
+      return BoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
+   }
+
 public:
    explicit Octree(const unsigned int maxElements, const std::vector<T> &elements)
    : MAX_ELEMENTS(maxElements), bounds(calcBounds(elements)) {
@@ -178,6 +178,18 @@ public:
    }
 
    virtual ~Octree() {
+   }
+
+   bool hasChildren() {
+      return children[0];
+   }
+
+   SPtr<Octree<T>> getChild(size_t index) {
+      return children[index];
+   }
+
+   std::vector<T>& getElements() {
+      return elements;
    }
 };
 

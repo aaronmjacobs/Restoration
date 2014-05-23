@@ -3,15 +3,17 @@
 
 #include "FancyAssert.h"
 
-#include <vector>
+#include <list>
 
 template<class T>
 class PoolAllocator {
 protected:
-   std::vector<T> allocated;
-   std::vector<T> freed;
+   static PoolAllocator<T> instance;
+   std::list<T> allocated;
+   std::list<T> freed;
 
 public:
+   static PoolAllocator<T>& getInstance();
    PoolAllocator(const size_t initialSize = 0)
    : freed(initialSize) {
    }
@@ -28,7 +30,6 @@ public:
          return element;
       }
 
-      printf("Allocating\n");
       // Allocate a new object
       T element;
       allocated.push_back(element);
@@ -44,5 +45,13 @@ public:
       }
    }
 };
+
+template<class T>
+PoolAllocator<T> PoolAllocator<T>::instance;
+
+template<class T>
+PoolAllocator<T>& PoolAllocator<T>::getInstance() {
+   return instance;
+}
 
 #endif

@@ -15,6 +15,7 @@ public:
 
    bool collidesWith(const BoundingBox &other) const;
    bool contains(const glm::vec3 &point) const;
+   bool completelyContains(const BoundingBox &other) const;
    float height() const;
    float width() const;
    float depth() const;

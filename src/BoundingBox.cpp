@@ -40,6 +40,10 @@ bool BoundingBox::contains(const glm::vec3 &point) const {
        && zMin <= point.z && point.z <= zMax;
 }
 
+bool BoundingBox::completelyContains(const BoundingBox &other) const {
+   return contains(other.min()) && contains(other.max());
+}
+
 float BoundingBox::height() const {
    return yMax - yMin;
 }

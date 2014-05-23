@@ -45,7 +45,7 @@ SPtr<BoundingBox> calcBounds(const std::vector<T> &objects) {
       }
    }
 
-   return std::make_shared<BoundingBox>(min.x, max.x, min.y, max.y, min.z, max.z);
+   return std::make_shared<BoundingBox>(min.x - 1.0f, max.x + 1.0f, min.y - 1.0f, max.y + 1.0f, min.z - 1.0f, max.z + 1.0f);
 }
 
 } // namespace
@@ -54,12 +54,13 @@ template <class T>
 class Octree {
 protected:
    const unsigned int MAX_ELEMENTS;
+   const unsigned int level;
    SPtr<BoundingBox> bounds;
    SPtr<Octree<T>> children[NUM_CHILDREN];
    std::vector<T> elements;
 
-   explicit Octree(const unsigned int maxElements, const BoundingBox &bounds)
-   : MAX_ELEMENTS(maxElements), bounds(std::make_shared<BoundingBox>(bounds)) {
+   explicit Octree(const unsigned int maxElements, const unsigned int level, const BoundingBox &bounds)
+   : MAX_ELEMENTS(maxElements), level(level), bounds(std::make_shared<BoundingBox>(bounds)) {
    }
 
    void add(T element) {
@@ -82,23 +83,36 @@ protected:
 
       // Create children
       for (size_t octant = 0; octant < NUM_CHILDREN; ++octant) {
-         children[octant] = SPtr<Octree<T>>(new Octree<T>(MAX_ELEMENTS, determineBounds(octant)));
+         children[octant] = SPtr<Octree<T>>(new Octree<T>(MAX_ELEMENTS, level + 1, determineBounds(octant)));
       }
 
-      // Copy each element into a child
-      for (T element : elements) {
-         insertIntoChild(element);
-      }
+      // If an element fits completely into a child, move it to the child. Otherwise, keep it in the parent.
+      for (typename std::vector<T>::iterator itr = elements.begin(); itr != elements.end();) {
+         glm::vec3 elementCenter = (*itr)->getBounds().center();
+         size_t octant = getOctantContainingPoint(elementCenter);
 
-      // Clear the elements of this tree
-      elements.clear();
+         if (fitsInsideChild(*itr, octant)) {
+            children[octant]->add(*itr);
+            itr = elements.erase(itr);
+         } else {
+            ++itr;
+         }
+      }
    }
 
    void insertIntoChild(T element) {
       glm::vec3 elementCenter = element->getBounds().center();
 
       size_t octant = getOctantContainingPoint(elementCenter);
-      children[octant]->add(element);
+      if (fitsInsideChild(element, octant)) {
+         children[octant]->add(element);
+      } else {
+         elements.push_back(element);
+      }
+   }
+
+   inline bool fitsInsideChild(T element, size_t octant) {
+      return children[octant]->bounds->completelyContains(element->getBounds());
    }
 
    BoundingBox determineBounds(size_t octant) {
@@ -151,7 +165,7 @@ protected:
 
 public:
    explicit Octree(const unsigned int maxElements, const std::vector<T> &elements)
-   : MAX_ELEMENTS(maxElements), bounds(calcBounds(elements)) {
+   : MAX_ELEMENTS(maxElements), bounds(calcBounds(elements)), level(0) {
       for (T element : elements) {
          add(element);
       }

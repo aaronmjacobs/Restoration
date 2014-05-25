@@ -33,31 +33,15 @@ Json::Value Magus::serialize() const {
 }
 
 void Magus::tick(const float dt) {
-    if (wantsToGoLeft) {
-        position += glm::vec3(-HOVER_SPEED * dt, 0.0f, 0.0f);
-    }
-    if (wantsToGoRight) {
-        position += glm::vec3(HOVER_SPEED * dt, 0.0f, 0.0f);
-    }
+   if (!isAlive()) {
+      markForRemoval();
+      return;
+   }
+
+   // TODO AI
     
-    if (wantsToGoUp) {
-        position += glm::vec3(0.0f, HOVER_SPEED * dt, 0.0f);
-    }
-    
-    if (wantsToGoDown && !onGround) {
-        position += glm::vec3(0.0f, -HOVER_SPEED * dt, 0.0f);
-    }
-    
-    if (wantsToAttack) {
-        // TODO Handle attack logic
-    }
-    
-    position += velocity * dt + 0.5f * acceleration * dt * dt;
-    velocity += acceleration * dt;
-    
-    if (getHealth() <= 0) {
-        markForRemoval();
-    }
+   position += velocity * dt + 0.5f * acceleration * dt * dt;
+   velocity += acceleration * dt;
 }
 
 int Magus::getAttackPower() {
@@ -65,20 +49,7 @@ int Magus::getAttackPower() {
 }
 
 void Magus::reverseMovement() {
-    if (wantsToGoLeft) {
-        wantsToGoLeft = false;
-        wantsToGoRight = true;
-    } else {
-        wantsToGoLeft = true;
-        wantsToGoRight = false;
-    }
-    if (wantsToGoUp) {
-        wantsToGoUp = false;
-        wantsToGoDown = true;
-    } else {
-        wantsToGoUp = true;
-        wantsToGoDown = false;
-    }
+   velocity.x *= -1.0f;
 }
 
 #define COLLISION_CLASS_NAME Magus

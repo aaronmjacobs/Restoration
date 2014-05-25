@@ -46,3 +46,7 @@ void SkyboxMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(viewMatrix));
    glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(projMatrix));
 }
+
+void SkyboxMaterial::disable() {
+   shaderProgram->disable();
+}

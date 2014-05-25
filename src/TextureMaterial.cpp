@@ -74,11 +74,10 @@ Json::Value TextureMaterial::serialize() const {
 }
 
 /* Current functionality for single texture only. Not multitexturing. */
-void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh){
+void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    PhongMaterial::apply(renderData, mesh);
 
    /* Texture Shading */
-   glEnable(GL_TEXTURE_2D);
    glActiveTexture(GL_TEXTURE0 + textureID);
    glBindTexture(GL_TEXTURE_2D, textureID);
    glUniform1i(uTexture, textureID);
@@ -91,5 +90,5 @@ void TextureMaterial::disable(){
    glDisableVertexAttribArray(shaderProgram->getAttribute("aPosition"));
    glDisableVertexAttribArray(shaderProgram->getAttribute("aNormal"));
    glDisableVertexAttribArray(shaderProgram->getAttribute("aTexCoord"));
-   glDisable(GL_TEXTURE_2D);
+   shaderProgram->disable();
 }

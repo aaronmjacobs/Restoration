@@ -84,3 +84,7 @@ void PhongMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
       glUniform1i(uAmbientGlobal, ambientGlobalID);
    }
 }
+
+void PhongMaterial::disable() {
+   shaderProgram->disable();
+}

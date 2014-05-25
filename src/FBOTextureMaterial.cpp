@@ -16,21 +16,6 @@ FBOTextureMaterial::FBOTextureMaterial(const std::string &jsonFileName,
 FBOTextureMaterial::~FBOTextureMaterial() {
 }
 
-void FBOTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
-   shaderProgram->use();
-
-   /* Texture Shading */
-   glEnable(GL_TEXTURE_2D);
-   glActiveTexture(GL_TEXTURE0 + texture_id);
-   glBindTexture(GL_TEXTURE_2D, texture_id);
-
-   glUniform1i(uTexture, texture_id);
-
-   glEnableVertexAttribArray(aTexCoord);
-   glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
-   glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
-}
-
 Json::Value FBOTextureMaterial::serialize() const {
    Json::Value root;
 
@@ -41,4 +26,23 @@ Json::Value FBOTextureMaterial::serialize() const {
    root["shaderProgram"] = shaderProgram->getJsonFileName();
 
    return root;
+}
+
+void FBOTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
+   shaderProgram->use();
+
+   /* Texture Shading */
+   glActiveTexture(GL_TEXTURE0 + texture_id);
+   glBindTexture(GL_TEXTURE_2D, texture_id);
+
+   glUniform1i(uTexture, texture_id);
+
+   glEnableVertexAttribArray(aTexCoord);
+   glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
+   glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+}
+
+void FBOTextureMaterial::disable() {
+   glDisableVertexAttribArray(aTexCoord);
+   shaderProgram->disable();
 }

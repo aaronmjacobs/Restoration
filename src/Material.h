@@ -48,6 +48,8 @@ public:
     * Applies the properties of the material to the shader.
     */
    virtual void apply(const RenderData &renderData, const Mesh &mesh) = 0;
+
+   virtual void disable() = 0;
 };
 
 #endif

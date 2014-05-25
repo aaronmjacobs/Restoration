@@ -35,7 +35,6 @@ Json::Value Model::serialize() const {
 void Model::draw(const RenderData &renderData) {
    // Apply the material properties (and enable the shader)
    material->apply(renderData, *mesh);
-
    SPtr<ShaderProgram> shaderProgram = material->getShaderProgram();
 
    // Prepare the vertex buffer object
@@ -67,7 +66,7 @@ void Model::draw(const RenderData &renderData) {
    }
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-   shaderProgram->disable(); // TODO Make call to material?
+   material->disable();
 }
 
 SPtr<Material> Model::getMaterial() {

@@ -17,8 +17,6 @@ protected:
    static const float HOVER_SPEED;
     static const int ATTACK_POWER;
 
-   bool wantsToGoLeft, wantsToGoRight, wantsToGoUp, wantsToGoDown, wantsToAttack;
-
 public:    
    static const std::string CLASS_NAME;
 

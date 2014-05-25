@@ -30,6 +30,8 @@ public:
    virtual Json::Value serialize() const;
 
    virtual void apply(const RenderData &renderData, const Mesh &mesh);
+
+   virtual void disable();
 };
 
 #endif

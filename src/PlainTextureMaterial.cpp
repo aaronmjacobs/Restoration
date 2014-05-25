@@ -1,5 +1,6 @@
 #include "FancyAssert.h"
 #include "lib/stb_image.h"
+#include "Loader.h"
 #include "Mesh.h"
 #include "PlainTextureMaterial.h"
 
@@ -12,53 +13,11 @@ PlainTextureMaterial::PlainTextureMaterial(const std::string &jsonFileName,
    uTexture = shaderProgram->getUniform("uTexture");
    aTexCoord = shaderProgram->getAttribute("aTexCoord");
 
-   createTexture();
+   Loader &loader =  Loader::getInstance();
+   texture_id = loader.loadTexture(textureFileName);
 }
 
 PlainTextureMaterial::~PlainTextureMaterial() {
-   glDeleteTextures(1, &texture_id);
-}
-
-void PlainTextureMaterial::createTexture() {
-   glGenTextures(1, &texture_id);
-   glBindTexture(GL_TEXTURE_2D, texture_id);
-
-   int x, y, comp;
-
-   // Call the stb_image function for width, height, data.
-   FILE *file = fopen(textureFileName.c_str(), "rb");
-   ASSERT(file, "Unable to open file: %s", textureFileName.c_str());
-   unsigned char *data = stbi_load_from_file(file, &x, &y, &comp, 0);
-   fclose(file);
-
-   if (comp == 4) {
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-   }
-   else if (comp == 3) {
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-   }
-   else {
-      ASSERT(false, "composition of image is not 3 or 4");
-   }
-
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glBindTexture(GL_TEXTURE_2D, 0);
-
-   stbi_image_free(data);
-}
-
-void PlainTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
-   shaderProgram->use();
-
-   /* Texture Shading */
-   glEnable(GL_TEXTURE_2D);
-   glActiveTexture(GL_TEXTURE0 + texture_id);
-   glBindTexture(GL_TEXTURE_2D, texture_id);
-   glUniform1i(uTexture, texture_id);
-   glEnableVertexAttribArray(aTexCoord);
-   glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
-   glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
 Json::Value PlainTextureMaterial::serialize() const {
@@ -74,4 +33,20 @@ Json::Value PlainTextureMaterial::serialize() const {
    root["texture"] = textureFileName;
 
    return root;
+}
+
+void PlainTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
+   shaderProgram->use();
+
+   /* Texture Shading */
+   glActiveTexture(GL_TEXTURE0 + texture_id);
+   glBindTexture(GL_TEXTURE_2D, texture_id);
+   glUniform1i(uTexture, texture_id);
+   glEnableVertexAttribArray(aTexCoord);
+   glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
+   glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+}
+
+void PlainTextureMaterial::disable() {
+   glDisableVertexAttribArray(aTexCoord);
 }

@@ -519,7 +519,7 @@ SPtr<Corona> Loader::loadCorona(SPtr<Scene> scene, const Json::Value &root) {
    glm::vec3 velocity = loadVec3(root["velocity"]);
 
    check("Corona", root, "acceleration");
-   glm::vec3 acceleration = loadVec3("acceleration");
+   glm::vec3 acceleration = loadVec3(root["acceleration"]);
 
    // Character
    check("Corona", root, "health");
@@ -749,7 +749,7 @@ SPtr<Magus> Loader::loadMagus(SPtr<Scene> scene, const Json::Value &root) {
    glm::vec3 velocity = loadVec3(root["velocity"]);
 
    check("Magus", root, "acceleration");
-   glm::vec3 acceleration = loadVec3("acceleration");
+   glm::vec3 acceleration = loadVec3(root["acceleration"]);
 
    // Character
    check("Magus", root, "health");

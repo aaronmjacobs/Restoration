@@ -188,7 +188,6 @@ int main(int argc, char *argv[]) {
    double lastTime = glfwGetTime();
    double accumulator = 0.0;
    const double dt = 1.0 / 60.0;
-
    // Game loop
    while (!glfwWindowShouldClose(window)) {
       // Calculate the frame time

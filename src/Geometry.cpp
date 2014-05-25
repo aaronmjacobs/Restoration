@@ -33,6 +33,10 @@ SPtr<Model> Geometry::getModel() {
 }
 
 void Geometry::draw(const RenderData &renderData) {
+   if (!(this->renderState & renderData.getRenderState())) {
+      return;
+   }
+
    // Set the shader program, and grab the matrix uniforms
    SPtr<ShaderProgram> shaderProgram = model->getMaterial()->getShaderProgram();
    shaderProgram->use();
@@ -54,7 +58,5 @@ void Geometry::draw(const RenderData &renderData) {
    glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
 
    // Draw the model
-   if (this->renderState & renderData.getRenderState()){
-      model->draw(renderData);
-   }
+   model->draw(renderData);
 }

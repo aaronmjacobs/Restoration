@@ -46,6 +46,13 @@ void LevelEditor::onKeyEvent(int key, int action) {
       if (key == GLFW_KEY_GRAVE_ACCENT) {
          enabled = !enabled;
 
+		 if (!enabled) {
+			 for (int i = 0; i < numObjs; i++) {
+				 currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+			 }
+			 numObjs = 0;
+		 }
+
          SPtr<Scene> sScene = scene.lock();
          if (sScene) {
             sScene->setEditMode(enabled);
@@ -74,7 +81,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
-					curTransformVec = glm::vec3(0.0, 0.35, 0.0);
+					curTransformVec = glm::vec3(0.0, 0.50, 0.0);
 				else
 					curTransformVec = glm::vec3(0.0, 0.05, 0.0);
 			}
@@ -90,7 +97,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
-					curTransformVec = glm::vec3(0.0, -0.35, 0.0);
+					curTransformVec = glm::vec3(0.0, -0.50, 0.0);
 				else
 					curTransformVec = glm::vec3(0.0, -0.05, 0.0);
 			}
@@ -106,7 +113,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
-					curTransformVec = glm::vec3(-0.35, 0.0, 0.0);
+					curTransformVec = glm::vec3(-0.50, 0.0, 0.0);
 				else
 					curTransformVec = glm::vec3(-0.05, 0.0, 0.0);
 			}
@@ -122,7 +129,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
-					curTransformVec = glm::vec3(0.35, 0.0, 0.0);
+					curTransformVec = glm::vec3(0.50, 0.0, 0.0);
 				else
 					curTransformVec = glm::vec3(0.05, 0.0, 0.0);
 			}
@@ -138,7 +145,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
-					curTransformVec = glm::vec3(0.0, 0.0, -0.35);
+					curTransformVec = glm::vec3(0.0, 0.0, -0.50);
 				else
 					curTransformVec = glm::vec3(0.0, 0.0, -0.05);
 			}
@@ -154,7 +161,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			//keepTransforming++;
 			if (editState == TRANSLATE) {
 				if (big)
-					curTransformVec = glm::vec3(0.0, 0.0, 0.35);
+					curTransformVec = glm::vec3(0.0, 0.0, 0.50);
 				else
 					curTransformVec = glm::vec3(0.0, 0.0, 0.05);
 			}
@@ -166,10 +173,15 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			}
 		}
 		else if (key == GLFW_KEY_P) {
-			if (!precision)
-				precision = true;
-			else
-				precision = false;
+			if (ctrlDown) {
+				editState = PASTE;
+			}
+			else {
+				if (!precision)
+					precision = true;
+				else
+					precision = false;
+			}
 		}
 		else if (key == GLFW_KEY_T) {
 			editState = TRANSLATE;
@@ -181,7 +193,24 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			editState = ROTATE;
 		}
 		else if (key == GLFW_KEY_C) {
-			editState = CREATE;
+			if (ctrlDown) {
+				//Copy curObjs into copy buffer
+				copyAvg = glm::vec3(0.0, 0.0, 0.0);
+				if (numObjs) {
+					for (int i = 0; i < numObjs; i++) {
+						copyBuf[i] = currentObjs[i];
+						copyObjPos[i] = currentObjs[i]->getPosition();
+						copyAvg += copyObjPos[i];
+					}
+					copyObjs = numObjs;
+					copyAvg /= copyObjs;
+					copyAvg.z = 0.0;
+				}
+				else
+					std::cout << "no objects to be copied" << std::endl;
+			}
+			else
+				editState = CREATE;
 		}
 		else if (key == GLFW_KEY_F) {
 			stageState = FORE;
@@ -209,13 +238,17 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			quickSwitch(key);
 		}*/
 		else if (key == GLFW_KEY_Z) {
-			if (currentObj) {
-				currentObj->markForRemoval();
-				currentObj.reset();
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->markForRemoval();
+				currentObjs[i].reset();
 			}
+			numObjs = 0;
 		}
 		else if (key == GLFW_KEY_X) {
-			currentObj = NULL;
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+			}
+			numObjs = 0;
 		}
 		else if (key == GLFW_KEY_PERIOD) {
 			//save here
@@ -233,6 +266,12 @@ void LevelEditor::onKeyEvent(int key, int action) {
 		}
 		else if (key == GLFW_KEY_L) {
 			//load here
+		}
+		else if (key == GLFW_KEY_LEFT_CONTROL) {
+			ctrlDown = true;
+		}
+		else if (key == GLFW_KEY_SPACE) {
+			spaceDown = true;
 		}
 		//OBJ FILE STUFF
 		else if (key == GLFW_KEY_0)
@@ -269,6 +308,12 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			transBack = false;
 		else if (key == GLFW_KEY_LEFT_BRACKET)
 			transFront = false;
+		else if (key == GLFW_KEY_LEFT_CONTROL) {
+			ctrlDown = false;
+		}
+		else if (key == GLFW_KEY_SPACE) {
+			spaceDown = false;
+		}
 	}
 }
 
@@ -285,8 +330,10 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 	glm::vec4 viewP;
 	SPtr<SceneGraph> graph;
 	SPtr<PhysicalObject> tempObj;
+	SPtr<Scenery> newObj;
+	bool unselected = false;
 
-	if (!isEnabled()) {
+	if (!isEnabled() || spaceDown) {
 		return;
 	}
 	else if (action == GLFW_PRESS) {
@@ -295,7 +342,26 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 			printf("bad scene\n");
 			return;
 		}
+		SPtr<Camera> camera = s->getCamera().lock();
+		if (!camera) {
+			return;
+		}
 		graph = s->getSceneGraph();
+
+		glm::vec3 pos(0.0f, 0.0f, -3.0f);
+		pos += camera->getPosition();
+
+		if (stageState == MAIN) {
+			pos.z = 0.0;
+		}
+		else if (stageState == FORE) {
+			if (pos.z < 0.0)
+				pos.z = -pos.z;
+		}
+		else if (stageState == BACK) {
+			if (pos.z > 0.0)
+				pos.z = -pos.z;
+		}
 
 		if (editState == CREATE) {
 			saved = false;
@@ -310,41 +376,73 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 			SPtr<Model> model = std::make_shared<Model>(material2, mesh);
 			//printf("c\n");
 
-			SPtr<Scenery> newObj = std::make_shared<Scenery>(s, model);
+			newObj = std::make_shared<Scenery>(s, model);
 
 			//tempObj = SPtr<PhysicalObject>(placeObj);
-			glm::vec3 pos(0.0f, 0.0f, -3.0f);
-			SPtr<Camera> camera = s->getCamera().lock();
-
-			if (camera) {
-				pos += camera->getPosition();
-			}
-
-			if (stageState == MAIN) {
-				pos.z = 0.0;
-			}
-			else if (stageState == FORE) {
-				if (pos.z < 0.0)
-					pos.z = -pos.z;
-			}
-			else if (stageState == BACK) {
-				if (pos.z > 0.0)
-					pos.z = -pos.z;
-			}
 
 			newObj->setPosition(pos);
-			currentObj = newObj;
 			s->getSceneGraph()->addPhys(newObj);
-			editState = TRANSLATE;
+
+			//numObjs = 0;
+			if (numObjs < MAXOBJS) {
+				currentObjs[numObjs] = newObj;
+				currentObjs[numObjs++]->getModel()->getMaterial()->setSelected(true);
+			}
+			else
+				std::cout << "Too many objects in buffer" << std::endl;
+
+			if (!ctrlDown)
+				editState = TRANSLATE;
 			//}
 			//else {
 			//	printf("no specified object to place");
 			//}
 		}
+		//MAKES A DIRECT COPY OF THE OBJECT(S), IF YOU
+		//CHANGE MODEL OR MATERIAL OF ONE, IT CHANGES
+		//THE OTHER
+		else if (editState == PASTE) {
+			for (int i = 0; i < copyObjs; i++) {
+				newObj = std::make_shared<Scenery>(s, copyBuf[i]->getModel());
+				currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+				newObj->getModel()->getMaterial()->setSelected(true);
+				newObj->setPosition(glm::vec3((copyObjPos[i].x - copyAvg.x) + camera->getPosition().x, 
+											  (copyObjPos[i].y - copyAvg.y) + camera->getPosition().y, copyObjPos[i].z));
+				newObj->setScale(currentObjs[i]->getScale());
+				s->getSceneGraph()->addPhys(newObj);
+				currentObjs[i] = newObj;
+			}
+			editState = TRANSLATE;
+		}
 		else {
 			tempObj = graph->mouseCollides(prevPoint[0], prevPoint[1]);
-			if (tempObj != NULL) {
-				currentObj = tempObj;
+			if (tempObj) {
+				if (!ctrlDown) {
+					for (int i = 0; i < numObjs; i++) {
+						currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+					}
+					numObjs = 0;
+				}
+
+				for (int i = 0; i < numObjs; i++) {
+					if (unselected)
+						currentObjs[i - 1] = currentObjs[i];
+					else if (tempObj == currentObjs[i]) {
+						unselected = true;
+						currentObjs[i]->getModel()->getMaterial()->setSelected(false);
+					}
+				}
+
+				if (unselected) {
+					numObjs--;
+					unselected = false;
+				}
+				else if (numObjs < MAXOBJS) {
+					currentObjs[numObjs] = tempObj;
+					currentObjs[numObjs++]->getModel()->getMaterial()->setSelected(true);
+				}
+				else
+					std::cout << "Too many objects in buffer" << std::endl;
 			}
 			//printf("%f %f\n", prevPoint[0], prevPoint[1]);
 		}
@@ -358,7 +456,7 @@ void LevelEditor::onMouseMotionEvent(double xPos, double yPos) {
 	prevPoint[0] = xPos;
 	prevPoint[1] = yPos;
 
-	if (!isEnabled()) {
+	if (!isEnabled() || spaceDown) {
 		return;
 	}
 	else if (editState == TRANSLATE) {
@@ -380,16 +478,20 @@ void LevelEditor::transform(glm::vec3 trans) {
 	if (!isEnabled()) {
 		return;
 	}
-	else if (!currentObj) {
+	else if (numObjs == 0) {
 		printf("no current object selected\n");
 	}
 	else {
 		saved = false;
 		if (editState == TRANSLATE) {
-			currentObj->translateBy(trans);
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->translateBy(trans);
+			}
 		}
 		else if (editState == SCALE) {
-			currentObj->scaleBy(trans);
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->scaleBy(trans);
+			}
 		}
 		else if (editState == ROTATE) {
 

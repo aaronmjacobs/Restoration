@@ -174,7 +174,7 @@ int main(int argc, char *argv[]) {
    // Load the audio system
    audio = std::make_shared<Audio>();
    audio->systemInit();
-   audio->loadSound("Restoration_5_4.ogg", true);
+   //audio->loadSound("Restoration_5_4.ogg", true);
 
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();

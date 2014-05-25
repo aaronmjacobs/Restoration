@@ -45,9 +45,14 @@ void main() {
     }
   
     // Falloff
-    float falloff = 1.0 / (uLights[i].constFalloff
-                          + uLights[i].linearFalloff * lightDistance
-                          + uLights[i].squareFalloff * lightDistance * lightDistance);
+    float falloff;
+      if (uLights[i].linearFalloff == 0.0) {
+        falloff = 1.0;
+      } else {
+        falloff = 1.0 / (uLights[i].constFalloff
+                    + uLights[i].linearFalloff * lightDistance
+                    + uLights[i].squareFalloff * lightDistance * lightDistance);
+      }
   
     finalColor += ((texture2D(uTexture, vTexCoord).rgb * diffuseAmount
                   + uMaterial.specular * specularAmount) * falloff

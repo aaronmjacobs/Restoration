@@ -48,9 +48,14 @@ void main() {
       }
 
       // Falloff
-      float falloff = 1.0 / (uLights[i].constFalloff
+      float falloff;
+      if (uLights[i].linearFalloff == 0.0) {
+        falloff = 1.0;
+      } else {
+        falloff = 1.0 / (uLights[i].constFalloff
                     + uLights[i].linearFalloff * lightDistance
                     + uLights[i].squareFalloff * lightDistance * lightDistance);
+      }
 
       finalColor += (surfaceColor * diffuseAmount
                   + uMaterial.specular * specularAmount)

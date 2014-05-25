@@ -14,17 +14,17 @@ Json::Value Vis::serialize() const {
 
    root["@class"] = CLASS_NAME;
 
-   //root["attackPower"] = attackPower;
+   root["attackPower"] = attackPower;
 
    return root;
 }
 
-void Vis::removeVis() {
-   markForRemoval();
-}
-
 int Vis::getAttackPower() {
    return attackPower;
+}
+
+void Vis::setAttackPower(int attackPower) {
+   this->attackPower = attackPower;
 }
 
 //Set velocity when attacking with Player. Direction is based on velocity

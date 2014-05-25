@@ -21,9 +21,9 @@ public:
     */
    virtual Json::Value serialize() const;
 
-   void removeVis();
-
    int getAttackPower();
+
+   void setAttackPower(int attackPower);
 
    virtual void tick(const float dt);
 };

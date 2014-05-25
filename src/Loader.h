@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 
+class Aegrum;
 class aiScene;
 class AniMesh;
 class AniModel;
@@ -20,6 +21,7 @@ class FlatSceneGraph;
 class FollowGeometry;
 class Geometry;
 class GridSceneGraph;
+class Justitia;
 class Light;
 class Magus;
 class Material;
@@ -38,6 +40,7 @@ class ShaderProgram;
 class Skybox;
 class SkyboxMaterial;
 class TextureMaterial;
+class Vis;
 
 namespace Json {
 class Value;
@@ -82,6 +85,9 @@ protected:
    bool isEnemy(const std::string &className);
    bool isMagus(const std::string &className);
    bool isCorona(const std::string &className);
+   bool isVis(const std::string &className);
+   bool isJustitia(const std::string &className);
+   bool isAegrum(const std::string &className);
    bool isMesh(const std::string &className);
    bool isAniMesh(const std::string &className);
    bool isModel(const std::string &className);
@@ -104,6 +110,7 @@ public:
    GLuint loadTexture(const std::string &fileName);
    GLuint loadCubemap(const std::string &fileName);
 
+   SPtr<Aegrum> loadAegrum(SPtr<Scene> scene, const Json::Value &root);
    SPtr<AniMesh> loadAniMesh(const Json::Value &root);
    SPtr<AniModel> loadAniModel(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Camera> loadCamera(SPtr<Scene> scene, const Json::Value &root);
@@ -114,6 +121,7 @@ public:
    void loadGridSceneGraph(SPtr<Scene> scene, const Json::Value &root);
    SPtr<FollowGeometry> loadFollowGeometry(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Geometry> loadGeometry(SPtr<Scene> scene, const Json::Value &root);
+   SPtr<Justitia> loadJustitia(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Light> loadLight(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Magus> loadMagus(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Material> loadMaterial(SPtr<Scene> scene, const std::string &fileName);
@@ -132,6 +140,7 @@ public:
    SPtr<Skybox> loadSkybox(SPtr<Scene> scene, const Json::Value &root);
    SPtr<SkyboxMaterial> loadSkyboxMaterial(SPtr<Scene> scene, const std::string &fileName);
    SPtr<TextureMaterial> loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName);
+   SPtr<Vis> loadVis(SPtr<Scene> scene, const Json::Value &root);
 };
 
 #endif

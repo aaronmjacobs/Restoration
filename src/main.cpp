@@ -180,7 +180,7 @@ int main(int argc, char *argv[]) {
    renderer.prepare();
 
    // Load the scene
-   loadLevel("level1");
+   loadLevel("mainlevel");
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 

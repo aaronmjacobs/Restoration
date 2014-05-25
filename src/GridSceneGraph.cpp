@@ -7,7 +7,7 @@
 const std::string GridSceneGraph::CLASS_NAME = "GridSceneGraph";
 
 GridSceneGraph::GridSceneGraph(SPtr<Scene> scene)
-: SceneGraph(scene), staticPhysObjects(8, 2, glm::vec2(-100.0f, -100.0f), glm::vec2(100.0f, 100.0f)), movablePhysObjects(8, 2, glm::vec2(-100.0f, -100.0f), glm::vec2(100.0f, 100.0f)), staticObjectsNeedUpdate(false) {
+: SceneGraph(scene), staticPhysObjects(50, 2, glm::vec2(-100.0f, 800.0f), glm::vec2(100.0f, 100.0f)), movablePhysObjects(50, 2, glm::vec2(-100.0f, 800.0f), glm::vec2(100.0f, 100.0f)), staticObjectsNeedUpdate(false) {
 }
 
 GridSceneGraph::~GridSceneGraph() {

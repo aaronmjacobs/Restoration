@@ -36,6 +36,11 @@ Json::Value Scene::serialize() const {
    return root;
 }
 
+void Scene::setEditMode(bool editMode) {
+   this->editMode = editMode;
+   sceneGraph->staticObjectsModified();
+}
+
 SPtr<Skybox> Scene::getLightSkybox() {
    return lightSkybox;
 }

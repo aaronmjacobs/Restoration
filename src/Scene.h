@@ -51,9 +51,7 @@ public:
     */
    virtual Json::Value serialize() const;
 
-   void setEditMode(bool editMode) {
-      this->editMode = editMode;
-   }
+   void setEditMode(bool editMode);
 
    bool isInEditMode() {
       return editMode;

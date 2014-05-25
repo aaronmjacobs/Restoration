@@ -31,6 +31,7 @@ public:
    SceneGraph(SPtr<Scene> scene);
    virtual ~SceneGraph();
 
+   virtual void staticObjectsModified();
    virtual void add(SPtr<SceneObject> sceneObject);
    virtual void addPhys(SPtr<PhysicalObject> physObject);
    WPtr<SceneObject> find(const std::string &name);

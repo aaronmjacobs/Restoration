@@ -6,6 +6,8 @@
 #include "Enemy.h"
 #include "FancyAssert.h"
 #include "FlatSceneGraph.h"
+#include "GLIncludes.h"
+#include "GridSceneGraph.h"
 #include "FollowGeometry.h"
 #include "Geometry.h"
 #include "IOUtils.h"
@@ -72,6 +74,10 @@ Loader::Loader() {
 }
 
 Loader::~Loader() {
+   // Clear any loaded textures
+   for (TextureMap::iterator itr = textureMap.begin(); itr != textureMap.end(); ++itr) {
+      glDeleteTextures(1, &itr->second);
+   }
 }
 
 void Loader::check(const std::string &type, const Json::Value &container, const std::string &key) {
@@ -542,6 +548,48 @@ void Loader::loadFlatSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
    ASSERT(cameraLoaded, "No camera loaded for scene graph");
 }
 
+void Loader::loadGridSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
+   SPtr<GridSceneGraph> graph = std::make_shared<GridSceneGraph>(scene);
+   scene->setSceneGraph(graph);
+
+   bool cameraLoaded = false;
+
+   // Load each object
+   check("FlatSceneGraph", root, "objects");
+   Json::Value objectsVal = root["objects"];
+   ASSERT(objectsVal.isArray(), "objects should be an array");
+   for (int i = 0; i < objectsVal.size(); ++i) {
+      Json::Value objectVal = objectsVal[i];
+      check("FlatSceneGraph", objectVal, "@class");
+      std::string className = objectVal["@class"].asString();
+
+      if (isPhysicalObject(className)) {
+         SPtr<PhysicalObject> physObj = loadPhysicalObject(scene, objectVal);
+         graph->addPhys(physObj);
+      } else {
+         SPtr<SceneObject> sceneObject;
+         if (isLight(className)) {
+            SPtr<Light> light = loadLight(scene, objectVal);
+            scene->addLight(light);
+            sceneObject = light;
+         } else if (isCamera(className)) {
+            ASSERT(!cameraLoaded, "Camera already loaded for scene graph");
+            cameraLoaded = true;
+
+            SPtr<Camera> camera = loadCamera(scene, objectVal);
+            scene->setCamera(camera);
+            sceneObject = camera;
+         } else {
+            sceneObject = loadSceneObject(scene, objectVal);
+         }
+
+         graph->add(sceneObject);
+      }
+   }
+
+   ASSERT(cameraLoaded, "No camera loaded for scene graph");
+}
+
 SPtr<FollowGeometry> Loader::loadFollowGeometry(SPtr<Scene> scene, const Json::Value &root) {
    check("FollowGeometry", root, "@class");
    std::string className = root["@class"].asString();
@@ -788,6 +836,9 @@ void Loader::loadSceneGraph(SPtr<Scene> scene, const Json::Value &root) {
 
    if (className == FlatSceneGraph::CLASS_NAME) {
       loadFlatSceneGraph(scene, root);
+      return;
+   } else if (className == GridSceneGraph::CLASS_NAME) {
+      loadGridSceneGraph(scene, root);
       return;
    }
 

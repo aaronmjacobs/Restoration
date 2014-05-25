@@ -39,7 +39,6 @@ Skybox::Skybox(SPtr<Model> model, const std::string &name)
 Skybox::~Skybox() {
    glDeleteTextures(1, &skyboxID);
    glDeleteTextures(1, &ambientMapID);
-   glDeleteTextures(1, &ambientGlobalID);
 }
 
 Json::Value Skybox::serialize() const {

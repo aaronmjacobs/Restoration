@@ -13,7 +13,7 @@
       "name" : "arrakis"
    },
    "graph" : {
-      "@class" : "FlatSceneGraph",
+      "@class" : "GridSceneGraph",
       "objects" : [
          {
             "@class" : "Camera",

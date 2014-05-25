@@ -25,7 +25,7 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
 }
 
 TextureMaterial::~TextureMaterial() {
-   glDeleteTextures(1, &textureID);
+   // No need to delete the textureID, as it is owned by the loader instance
 }
 
 Json::Value TextureMaterial::serialize() const {

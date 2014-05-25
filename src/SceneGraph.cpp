@@ -13,6 +13,9 @@ SceneGraph::SceneGraph(SPtr<Scene> scene)
 SceneGraph::~SceneGraph() {
 }
 
+void SceneGraph::staticObjectsModified() {
+}
+
 void SceneGraph::add(SPtr<SceneObject> sceneObject) {
    const std::string &objectName = sceneObject->getName();
 

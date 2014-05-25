@@ -1,23 +1,26 @@
-#ifndef FLAT_SCENE_GRAPH_H
-#define FLAT_SCENE_GRAPH_H
+#ifndef GRID_SCENE_GRAPH_H
+#define GRID_SCENE_GRAPH_H
 
-#include "SceneGraph.h"
-#include "GLIncludes.h"
 #include "Camera.h"
+#include "GLIncludes.h"
+#include "SceneGraph.h"
 #include "TickListener.h"
+#include "UniformGrid.h"
 
 #include <vector>
 
-class FlatSceneGraph : public SceneGraph {
+class GridSceneGraph : public SceneGraph {
 private:
    std::vector<SPtr<SceneObject>> objects;
-   std::vector<SPtr<PhysicalObject>> physObjects;
+   UniformGrid<SPtr<PhysicalObject>> staticPhysObjects;
+   UniformGrid<SPtr<PhysicalObject>> movablePhysObjects;
+   bool staticObjectsNeedUpdate;
 
 public:
    static const std::string CLASS_NAME;
 
-   FlatSceneGraph(SPtr<Scene> scene);
-   virtual ~FlatSceneGraph();
+   GridSceneGraph(SPtr<Scene> scene);
+   virtual ~GridSceneGraph();
 
    /**
     * Serializes the object to JSON.
@@ -29,6 +32,7 @@ public:
     */
    virtual void tick(const float dt);
 
+   virtual void staticObjectsModified();
    virtual void add(SPtr<SceneObject> sceneObject);
    virtual void addPhys(SPtr<PhysicalObject> physObject);
    virtual void forEach(void (*function)(SceneObject &obj));
@@ -36,7 +40,7 @@ public:
 
    /**
     * Goes through each phys object and finds the first thing the mouse collides with
-	*/
+    */
    virtual SPtr<PhysicalObject> mouseCollides(double xPos, double yPos);
 };
 

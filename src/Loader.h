@@ -19,6 +19,7 @@ class Enemy;
 class FlatSceneGraph;
 class FollowGeometry;
 class Geometry;
+class GridSceneGraph;
 class Light;
 class Magus;
 class Material;
@@ -110,6 +111,7 @@ public:
    SPtr<Corona> loadCorona(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Enemy> loadEnemy(SPtr<Scene> scene, const Json::Value &root);
    void loadFlatSceneGraph(SPtr<Scene> scene, const Json::Value &root);
+   void loadGridSceneGraph(SPtr<Scene> scene, const Json::Value &root);
    SPtr<FollowGeometry> loadFollowGeometry(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Geometry> loadGeometry(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Light> loadLight(SPtr<Scene> scene, const Json::Value &root);

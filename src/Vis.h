@@ -21,6 +21,10 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   virtual bool shouldBeSerialized() {
+      return false;
+   }
+
    int getAttackPower();
 
    void setAttackPower(int attackPower);

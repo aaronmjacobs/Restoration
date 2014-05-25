@@ -13,6 +13,10 @@ public:
    virtual ~Serializable() {
    }
 
+   virtual bool shouldBeSerialized() {
+      return true;
+   }
+
    /**
     * Serializes the object to JSON.
     */

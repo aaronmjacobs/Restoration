@@ -24,7 +24,9 @@ Json::Value GridSceneGraph::serialize() const {
 
    Json::Value objectsVal;
    for (SPtr<SceneObject> object : objects) {
-      objectsVal.append(object->serialize());
+      if (object->shouldBeSerialized()) {
+         objectsVal.append(object->serialize());
+      }
    }
    root["objects"] = objectsVal;
 

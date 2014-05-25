@@ -7,7 +7,8 @@
 //
 
 #include "GLIncludes.h"
-#include "Enemy.h"
+
+#include "CollisionsIncludes.h"
 
 const std::string Enemy::CLASS_NAME = "Enemy";
 
@@ -24,12 +25,4 @@ Json::Value Enemy::serialize() const {
    root["@class"] = CLASS_NAME;
 
    return root;
-}
-
-void Enemy::reverseMovement() {
-    //Nothing in here
-}
-
-void Enemy::platformReaction() {
-    //Nothing in here
 }

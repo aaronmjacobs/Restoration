@@ -1,8 +1,4 @@
-#include "Corona.h"
-#include "Magus.h"
-#include "Player.h"
-#include "Scene.h"
-#include "Scenery.h"
+#include "CollisionsIncludes.h"
 
 const std::string Scenery::CLASS_NAME = "Scenery";
 
@@ -25,34 +21,5 @@ void Scenery::tick(const float dt) {
     //Do nothing, it's just scenery
 }
 
-void Scenery::collideWith(PhysicalObject &other) {
-   other.collideWith(*this);
-}
-
-void Scenery::collideWith(Scenery &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Scenery::collideWith(Player &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Scenery::collideWith(Magus &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Scenery::collideWith(Corona &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
+#define COLLISION_CLASS_NAME Scenery
+#include "CollisionsBoilerplateCpp.h"

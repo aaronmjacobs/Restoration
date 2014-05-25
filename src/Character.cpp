@@ -1,4 +1,4 @@
-#include "Character.h"
+#include "CollisionsIncludes.h"
 
 const std::string Character::CLASS_NAME = "Character";
 

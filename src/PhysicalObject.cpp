@@ -1,6 +1,4 @@
-#include "Mesh.h"
-#include "Model.h"
-#include "PhysicalObject.h"
+#include "CollisionsIncludes.h"
 
 const std::string PhysicalObject::CLASS_NAME = "PhysicalObject";
 

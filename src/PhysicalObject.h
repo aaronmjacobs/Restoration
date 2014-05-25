@@ -3,10 +3,16 @@
 
 #include "Geometry.h"
 
-class Corona;
-class Magus;
-class Player;
+class MovableObject;
 class Scenery;
+class Character;
+class Enemy;
+class Vis;
+class Player;
+class Magus;
+class Corona;
+class Justitia;
+class Aegrum;
 
 class PhysicalObject : public Geometry {
 public:
@@ -26,11 +32,8 @@ public:
 
    bool collidesWith(const PhysicalObject &other) const;
 
-   virtual void collideWith(PhysicalObject &other) = 0;
-   virtual void collideWith(Scenery &other) = 0;
-   virtual void collideWith(Player &other) = 0;
-   virtual void collideWith(Magus &other) = 0;
-   virtual void collideWith(Corona &other) = 0;
+#define COLLISION_PURE_VIRTUAL
+#include "CollisionsBoilerplateH.h"
 };
 
 #endif

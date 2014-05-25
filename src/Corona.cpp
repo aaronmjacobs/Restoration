@@ -6,11 +6,9 @@
 //  Copyright (c) 2014 Restoration Team. All rights reserved.
 //
 
-#include "Corona.h"
 #include "GLIncludes.h"
-#include "Magus.h"
-#include "Player.h"
-#include "Scene.h"
+
+#include "CollisionsIncludes.h"
 
 const std::string Corona::CLASS_NAME = "Corona";
 
@@ -79,35 +77,8 @@ void Corona::platformReaction() {
     }
 }
 
-void Corona::collideWith(PhysicalObject &other) {
-   other.collideWith(*this);
-}
+#define COLLISION_CLASS_NAME Corona
+#include "CollisionsBoilerplateCpp.h"
 
-void Corona::collideWith(Scenery &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
 
-void Corona::collideWith(Player &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Corona::collideWith(Magus &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Corona::collideWith(Corona &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
 

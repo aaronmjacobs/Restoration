@@ -1,11 +1,16 @@
 #include "CollisionHandler.h"
-#include "MovableObject.h"
 #include "Scene.h"
+#include "MovableObject.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Magus.h"
 #include "Corona.h"
 #include "Scenery.h"
+
+#define COLLISION_REVERSE_FUNCTION(FIRST_CLASS, SECOND_CLASS) \
+void CollisionHandler::handleCollision(SECOND_CLASS &second, FIRST_CLASS &first) {\
+   handleCollision(first, second);\
+}
 
 CollisionHandler::CollisionHandler(Scene &scene)
    : scene(scene) {
@@ -14,34 +19,19 @@ CollisionHandler::CollisionHandler(Scene &scene)
 CollisionHandler::~CollisionHandler() {
 }
 
-void handleCollision(PhysicalObject &first, PhysicalObject &second) {
+void CollisionHandler::handleCollision(PhysicalObject &first, PhysicalObject &second) {
    // Default handler, does nothing
 }
 
-void CollisionHandler::handleCollision(Scenery &first, PhysicalObject &second) {
-   // TODO Handle collision between an arbitrary immobile object, and an arbitrary mobile object
-}
-
-void CollisionHandler::handleCollision(MovableObject &first, MovableObject &second) {
-   std::cout << "Colliding" << std::endl;
-    
-    
-}
-
-void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
-    std::cout << "Colliding with an enemy" << std::endl;
-}
-
 void CollisionHandler::handleCollision(Player &player, Magus &magus) {
-    player.Character::setHealth(player.getHealth() - magus.getAttackPower());
+    player.setHealth(player.getHealth() - magus.getAttackPower());
 }
 
 void CollisionHandler::handleCollision(Player &player, Corona &corona) {
-    player.Character::setHealth(player.getHealth() - corona.getAttackPower());
+    player.setHealth(player.getHealth() - corona.getAttackPower());
     corona.reverseMovement();
     //Add enemy logic for backing off after hurting you
 }
-
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
     //Reverse direction
@@ -81,32 +71,4 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
     character.setVelocity(velocityChange);
 }
 
-void CollisionHandler::handleCollision(Scenery &scenery, Character &character) {
-   handleCollision(character, scenery);
-}
-
-/*
-void CollisionHandler::handleCollision(movingPlatform &movingPlatform, Scenery &scenery) {
-    //Reverse moving direction
-}
-
-void CollisionHandler::handleCollision(Bullet &bullet, Scenery &scenery) {
-    //Remove bullet from scene, both for players and enemies
-}
-
-//Maybe combine these two, just have the bullet class have a damage associated with it
-void CollisionHandler::handleCollision(PlayerBullet &pBullet, Enemy &enemy) {
-    enemy.Character::setHealth(enemy.getHealth() - 1);
-    //Change with bullet damage
-    //mark for removal thingie
-}
-
-void CollisionHandler::handleCollision(EnemyBullet &eBullet, Player &player) {
-    player.Character::setHealth(player.getHealth() - 2);
-    //change with enemy class done
-}
-
-//Incase we want to do a shiny collision explosion
-void CollisionHandler::handleCollision(PlayerBullet &pBullet, EnemyBullet &eBullet) {
-    
-}*/
+COLLISION_REVERSE_FUNCTION(Character, Scenery)

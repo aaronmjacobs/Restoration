@@ -3,8 +3,6 @@
 
 #include "PhysicalObject.h"
 
-class Scene;
-
 class Scenery : public PhysicalObject {
 public:
    static const std::string CLASS_NAME;
@@ -22,11 +20,7 @@ public:
     */
    virtual void tick(const float dt);
 
-   virtual void collideWith(PhysicalObject &other);
-   virtual void collideWith(Scenery &other);
-   virtual void collideWith(Player &other);
-   virtual void collideWith(Magus &other);
-   virtual void collideWith(Corona &other);
+#include "CollisionsBoilerplateH.h"
 };
 
 #endif

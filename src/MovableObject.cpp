@@ -1,5 +1,4 @@
-#include "MovableObject.h"
-#include "Scene.h"
+#include "CollisionsIncludes.h"
 
 const std::string MovableObject::CLASS_NAME = "MovableObject";
 

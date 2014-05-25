@@ -11,11 +11,6 @@
 
 #include "Enemy.h"
 
-class Corona;
-class Player;
-class PhysicalObject;
-class Scenery;
-
 class Magus : public Enemy {
 protected:
    static const int BASE_HEALTH;
@@ -41,11 +36,7 @@ public:
 
    virtual void reverseMovement();
 
-   virtual void collideWith(PhysicalObject &other);
-   virtual void collideWith(Scenery &other);
-   virtual void collideWith(Player &other);
-   virtual void collideWith(Magus &other);
-   virtual void collideWith(Corona &other);
+#include "CollisionsBoilerplateH.h"
 };
 
 #endif /* defined(MAGUS_H) */

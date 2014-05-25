@@ -1,9 +1,6 @@
 #include "GLIncludes.h"
-#include "Corona.h"
-#include "Magus.h"
-#include "Player.h"
-#include "Scene.h"
-#include "Scenery.h"
+
+#include "CollisionsIncludes.h"
 
 const std::string Player::CLASS_NAME = "Player";
 
@@ -79,34 +76,5 @@ void Player::tick(const float dt) {
    velocity += acceleration * dt;
 }
 
-void Player::collideWith(PhysicalObject &other) {
-   other.collideWith(*this);
-}
-
-void Player::collideWith(Scenery &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Player::collideWith(Player &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Player::collideWith(Magus &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
-
-void Player::collideWith(Corona &other) {
-   SPtr<Scene> sScene = scene.lock();
-   if (sScene) {
-      sScene->getCollisionHanlder().handleCollision(*this, other);
-   }
-}
+#define COLLISION_CLASS_NAME Player
+#include "CollisionsBoilerplateCpp.h"

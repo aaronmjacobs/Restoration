@@ -4,7 +4,8 @@
 #include "Character.h"
 #include "InputListener.h"
 
-class Scenery;
+class Corona;
+class Magus;
 
 class Player : public Character, public InputListener {
 protected:
@@ -33,11 +34,7 @@ public:
 
    virtual void tick(const float dt);
 
-   virtual void collideWith(PhysicalObject &other);
-   virtual void collideWith(Scenery &other);
-   virtual void collideWith(Player &other);
-   virtual void collideWith(Magus &other);
-   virtual void collideWith(Corona &other);
+#include "CollisionsBoilerplateH.h"
 };
 
 #endif

@@ -45,18 +45,19 @@ void GridSceneGraph::tick(const float dt) {
       }
    }
 
+   // Remove any objects that should be removed, and update the positions
+   // of objects in the scene
    if (staticObjectsNeedUpdate) {
       staticObjectsNeedUpdate = false;
       staticPhysObjects.update();
    }
    movablePhysObjects.update();
 
+   // Check collisions for each object in the scene
    std::vector<GridNode<SPtr<PhysicalObject>>>& staticNodes = staticPhysObjects.getNodes();
    std::vector<GridNode<SPtr<PhysicalObject>>>& movableNodes = movablePhysObjects.getNodes();
-
    std::vector<GridElement<SPtr<PhysicalObject>>>& movableElements = movablePhysObjects.getElements();
 
-   // Check collisions for each object in the scene
    for (GridElement<SPtr<PhysicalObject>> physElement : movableElements) {
       for (size_t nodeIndex : physElement.nodes) {
          for (SPtr<PhysicalObject> other : staticNodes[nodeIndex].elements) {

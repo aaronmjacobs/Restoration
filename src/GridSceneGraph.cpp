@@ -168,8 +168,9 @@ SPtr<PhysicalObject> GridSceneGraph::mouseCollides(double xPos, double yPos) {
 		glm::vec3 rayIntersect = glm::normalize(mouseRay) * glm::length(objRay) + c->getPosition();
 
 		if ((physElement.element->getBounds()).contains(rayIntersect)) {
-			if (!minDistSet|| (newDist = glm::length(objRay)) < minDist) {
-            minDistSet = true;
+			if (!minDistSet|| glm::length(objRay) < minDist) {
+				newDist = glm::length(objRay);
+				minDistSet = true;
 				minDist = newDist;
 				obj = physElement.element;
 			}

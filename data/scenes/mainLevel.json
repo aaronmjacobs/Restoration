@@ -139,6 +139,42 @@
             "target" : "player"
          },
          {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "AniModel",
+               "material" : "animMaterial",
+               "mesh" : {
+                  "@class" : "AniMesh",
+                  "animations" : [
+                     {
+                        "default" : true,
+                        "file" : "data/meshes/seraCrystal.dae",
+                        "name" : "button"
+                     }
+                  ],
+                  "fileName" : "data/meshes/seraCrystal.dae"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -85.0,
+               "y" : 6.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
             "@class" : "Magus",
             "acceleration" : {
                "x" : 0.0,

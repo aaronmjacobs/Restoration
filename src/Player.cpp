@@ -79,7 +79,7 @@ void Player::onMouseButtonEvent(int button, int action) {
       SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, model);
       justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE);
       justitia->setPosition(justitiaPos);
-      justitia->setVelocity(playerToMouse * justitiaSpeed);
+      justitia->setVelocity(playerToMouse * justitiaSpeed + velocity);
       sScene->getSceneGraph()->addPhys(justitia);
    }
 }

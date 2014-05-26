@@ -9,7 +9,6 @@ const int Justitia::ATTACK_POWER = 2;
 // Put health in the creation of Magus, and damage
 Justitia::Justitia(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Vis(scene, model, ATTACK_POWER, name) {
-   startTime = glfwGetTime();
 }
 
 Justitia::~Justitia() {
@@ -24,11 +23,6 @@ Json::Value Justitia::serialize() const {
 }
 
 void Justitia::tick(const float dt) {
-   if (glfwGetTime() - startTime > LIFE_SECONDS) {
-      markForRemoval();
-      return;
-   }
-
    Vis::tick(dt);
 }
 

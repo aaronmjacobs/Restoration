@@ -7,7 +7,9 @@
 
 class Vis : public MovableObject {
 protected:
+   const float LIFE_SECONDS = 2.0f;
    int attackPower;
+   float lifeTime;
 
 public:
    static const std::string CLASS_NAME;
@@ -24,6 +26,8 @@ public:
    virtual bool shouldBeSerialized() {
       return false;
    }
+
+   virtual void tick(const float dt);
 
    int getAttackPower();
 

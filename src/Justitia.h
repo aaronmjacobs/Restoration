@@ -8,8 +8,6 @@
 class Justitia : public Vis {
 protected:
    static const int ATTACK_POWER;
-   const double LIFE_SECONDS = 2.0;
-   double startTime;
 
 public:
    static const std::string CLASS_NAME;

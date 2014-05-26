@@ -25,6 +25,8 @@ public:
    virtual Json::Value serialize() const;
     
    virtual void reverseMovement() = 0;
+
+   virtual int getAttackPower() = 0;
 };
 
 #endif /* defined(ENEMY_H) */

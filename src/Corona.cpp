@@ -33,28 +33,13 @@ Json::Value Corona::serialize() const {
 }
 
 void Corona::tick(const float dt) {
-    if (wantsToGoLeft) {
-        position += glm::vec3(-WALK_SPEED * dt, 0.0f, 0.0f);
-    }
-    if (wantsToGoRight) {
-        position += glm::vec3(WALK_SPEED * dt, 0.0f, 0.0f);
-    }
-    
-    if (wantsToJump && onGround) {
-        onGround = false;
-        velocity += glm::vec3(0.0f, JUMP_FORCE, 0.0f) * dt;
-    }
-    
-    if (wantsToAttack) {
-        // TODO Handle attack logic
-    }
-    
-    position += velocity * dt + 0.5f * acceleration * dt * dt;
-    velocity += acceleration * dt;
-    
-    if (getHealth() <= 0) {
-        markForRemoval();
-    }
+   if (!isAlive()) {
+      markForRemoval();
+      return;
+   }
+
+   position += velocity * dt + 0.5f * acceleration * dt * dt;
+   velocity += acceleration * dt;
 }
 
 int Corona::getAttackPower() {
@@ -62,13 +47,7 @@ int Corona::getAttackPower() {
 }
 
 void Corona::reverseMovement() {
-    if (wantsToGoLeft) {
-        wantsToGoLeft = false;
-        wantsToGoRight = true;
-    } else {
-        wantsToGoLeft = true;
-        wantsToGoRight = false;
-    }
+   velocity.x *= -1.0f;
 }
 
 void Corona::platformReaction() {

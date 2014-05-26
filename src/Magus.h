@@ -15,7 +15,7 @@ class Magus : public Enemy {
 protected:
    static const int BASE_HEALTH;
    static const float HOVER_SPEED;
-    static const int ATTACK_POWER;
+   static const int ATTACK_POWER;
 
 public:    
    static const std::string CLASS_NAME;

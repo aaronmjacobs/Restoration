@@ -34,9 +34,9 @@ void CollisionHandler::handleCollision(Player &player, Corona &corona) {
 }
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
-    //Reverse direction
-    enemy1.reverseMovement();
-    enemy2.reverseMovement();
+   //Reverse direction
+   enemy1.reverseMovement();
+   enemy2.reverseMovement();
 }
 
 void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {

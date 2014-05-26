@@ -38,6 +38,8 @@ public:
    void handleCollision(Enemy &enemy1, Enemy &enemy2);
    void handleCollision(Character &character, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Character, Scenery)
+   void handleCollision(Obex &obex, Scenery &scenery);
+   COLLISION_REVERSE_DECLARATION(Obex, Scenery)
    void handleCollision(Vis &vis, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Vis, Scenery)
 };

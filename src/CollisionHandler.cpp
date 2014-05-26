@@ -85,6 +85,15 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
 
 COLLISION_REVERSE_FUNCTION(Character, Scenery)
 
+void CollisionHandler::handleCollision(Obex &obex, Scenery &scenery) {
+
+
+   Character& obexCharacter = obex;
+   handleCollision(obexCharacter, scenery);
+}
+
+COLLISION_REVERSE_FUNCTION(Obex, Scenery)
+
 void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
    vis.markForRemoval();
 }

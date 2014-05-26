@@ -39,36 +39,49 @@ void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
    enemy2.reverseMovement();
 }
 
-void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
-    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
-    float collisionWidth = collision.width();
-    float collisionHeight = collision.height();
-    glm::vec3 movementChange = glm::vec3(0.0f);
-    glm::vec3 velocityChange = glm::vec3(0.0f);
-    
-    if (collisionWidth <= collisionHeight) {
-        if (character.getPosition().x > scenery.getPosition().x) {
-            //Hit from the right
-            movementChange = glm::vec3(collisionWidth, 0.0f, 0.0f);
-        } else {
-            //Hit from the left
-            movementChange = glm::vec3(-collisionWidth, 0.0f, 0.0f);
-        }
-        velocityChange = glm::vec3(0.0f, character.getVelocity().y, 0.0f);
-    } else {
-        if (character.getPosition().y > scenery.getPosition().y) {
-            //Hit from above
-            movementChange = glm::vec3(0.0f, collisionHeight, 0.0f);
-            
-            character.setOnGround();
-        } else {
-            //Hit from below
-            movementChange = glm::vec3(0.0f, -collisionHeight, 0.0f);
-        }
-        velocityChange = glm::vec3(character.getVelocity().x, 0.0f, 0.0f);
-    }
-    character.translateBy(movementChange);
-    character.setVelocity(velocityChange);
+void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
+   float collisionWidth = collision.width();
+   float collisionHeight = collision.height();
+   glm::vec3 characterPos = character.getPosition();
+   glm::vec3 sceneryPos = scenery.getPosition();
+   glm::vec3 characterVel = character.getVelocity();
+   glm::vec3 characterMove(0.0f);
+
+   if (collisionWidth <= collisionHeight) {
+      // Treat the collision in x
+      if (characterPos.x >= sceneryPos.x) {
+         // Character is to the right
+         characterMove.x = collisionWidth;
+         if (characterVel.x < 0.0f) {
+            characterVel.x = 0.0f;
+         }
+      } else {
+         // Character is to the left
+         characterMove.x = -collisionWidth;
+         if (characterVel.x > 0.0f) {
+            characterVel.x = 0.0f;
+         }
+      }
+   } else {
+      // Treat the collision in y
+      if (characterPos.y >= sceneryPos.y) {
+         // Character is above
+         characterMove.y = collisionHeight;
+         character.setOnGround();
+         if (characterVel.y < 0.0f) {
+            characterVel.y = 0.0f;
+         }
+      } else {
+         // Character is below
+         characterMove.y = -collisionHeight;
+         if (characterVel.y > 0.0f) {
+            characterVel.y = 0.0f;
+         }
+      }
+   }
+
+   character.translateBy(characterMove);
+   character.setVelocity(characterVel);
 }
 
 COLLISION_REVERSE_FUNCTION(Character, Scenery)

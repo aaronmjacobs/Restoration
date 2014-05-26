@@ -46,14 +46,5 @@ void Corona::reverseMovement() {
    velocity.x *= -1.0f;
 }
 
-void Corona::platformReaction() {
-    if(!onGround) {
-        //////fiiiiinnnniiisssshhhhh
-    }
-}
-
 #define COLLISION_CLASS_NAME Corona
 #include "CollisionsBoilerplateCpp.h"
-
-
-

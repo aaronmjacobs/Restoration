@@ -1,17 +1,9 @@
-//
-//  Corona.h
-//  Restoration
-//
-//  Created by Nathan Farnum on 5/10/14.
-//  Copyright (c) 2014 Restoration Team. All rights reserved.
-//
-
-#ifndef CORONA_H
-#define CORONA_H
+#ifndef VAGUS_H
+#define VAGUS_H
 
 #include "Enemy.h"
 
-class Corona : public Enemy {
+class Vagus : public Enemy {
 protected:
    static const int BASE_HEALTH;
    static const float WALK_SPEED;
@@ -21,8 +13,8 @@ protected:
 public:
    static const std::string CLASS_NAME;
 
-   Corona(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
-   virtual ~Corona();
+   Vagus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
+   virtual ~Vagus();
 
    /**
     * Serializes the object to JSON.
@@ -38,4 +30,4 @@ public:
 #include "CollisionsBoilerplateH.h"
 };
 
-#endif /* defined(CORONA_H) */
+#endif

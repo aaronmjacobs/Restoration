@@ -1,12 +1,5 @@
 #include "CollisionHandler.h"
-#include "Scene.h"
-#include "MovableObject.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Magus.h"
-#include "Corona.h"
-#include "Scenery.h"
-#include "Vis.h"
+#include "CollisionsIncludes.h"
 
 #define COLLISION_REVERSE_FUNCTION(FIRST_CLASS, SECOND_CLASS) \
 void CollisionHandler::handleCollision(SECOND_CLASS &second, FIRST_CLASS &first) {\

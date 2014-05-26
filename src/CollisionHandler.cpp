@@ -61,9 +61,9 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
       if (characterPos.y >= sceneryPos.y) {
          // Character is above
          characterMove.y = collisionHeight;
-         character.setOnGround();
          if (characterVel.y < 0.0f) {
             characterVel.y = 0.0f;
+            character.setOnGround();
          }
       } else {
          // Character is below

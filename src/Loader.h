@@ -28,6 +28,7 @@ class Material;
 class Mesh;
 class Model;
 class MovableObject;
+class Obex;
 class Player;
 class PhongMaterial;
 class PhysicalObject;
@@ -41,6 +42,8 @@ class SimpleMaterial;
 class Skybox;
 class SkyboxMaterial;
 class TextureMaterial;
+class Turris;
+class Vagus;
 class Vis;
 
 namespace Json {
@@ -86,6 +89,9 @@ protected:
    bool isEnemy(const std::string &className);
    bool isMagus(const std::string &className);
    bool isCorona(const std::string &className);
+   bool isObex(const std::string &className);
+   bool isTurris(const std::string &className);
+   bool isVagus(const std::string &className);
    bool isVis(const std::string &className);
    bool isJustitia(const std::string &className);
    bool isAegrum(const std::string &className);
@@ -129,6 +135,7 @@ public:
    SPtr<Mesh> loadMesh(const Json::Value &root);
    SPtr<Model> loadModel(SPtr<Scene> scene, const Json::Value &root);
    SPtr<MovableObject> loadMovableObject(SPtr<Scene> scene, const Json::Value &root);
+   SPtr<Obex> loadObex(SPtr<Scene> scene, const Json::Value &root);
    SPtr<PhongMaterial> loadPhongMaterial(SPtr<Scene> scene, const std::string &fileName);
    SPtr<PhysicalObject> loadPhysicalObject(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Player> loadPlayer(SPtr<Scene> scene, const Json::Value &root);
@@ -142,6 +149,8 @@ public:
    SPtr<Skybox> loadSkybox(SPtr<Scene> scene, const Json::Value &root);
    SPtr<SkyboxMaterial> loadSkyboxMaterial(SPtr<Scene> scene, const std::string &fileName);
    SPtr<TextureMaterial> loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName);
+   SPtr<Turris> loadTurris(SPtr<Scene> scene, const Json::Value &root);
+   SPtr<Vagus> loadVagus(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Vis> loadVis(SPtr<Scene> scene, const Json::Value &root);
 };
 

@@ -21,6 +21,8 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   virtual void draw(const RenderData &renderData);
+
    virtual void tick(const float dt);
 
    virtual int getAttackPower();

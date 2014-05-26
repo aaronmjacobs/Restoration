@@ -2,15 +2,9 @@
 #include "Mesh.h"
 #include "Model.h"
 #include "Particle.h"
-
-/*
-
-SPtr<Particle> particle = std::make_shared<Particle>(scene);
-particle->setPosition(glm::vec3(18.0f, 15.0f, 0.0f));
-particle->scaleBy(glm::vec3(5.0f));
-scene->getSceneGraph()->add(particle);
-
-*/
+#include "Scene.h"
+#include "SceneGraph.h"
+#include <random>
 
 SPtr<Model> Particle::particleModel;
 
@@ -21,11 +15,35 @@ void Particle::initialize(SPtr<Scene> scene) {
    particleModel = std::make_shared<Model>(material, mesh);
 }
 
+void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, double duration, float spread) {
+   std::default_random_engine generator;
+   std::uniform_real_distribution<float> distribution(-1.f, 1.f);
+
+   for (int i = 0; i < numParts; i++) {
+      SPtr<Particle> particle = std::make_shared<Particle>(scene);
+
+      if (gravityOn) {
+         particle->acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
+      }
+      else {
+         particle->acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
+      }
+
+      //Spread & Velocity 
+      particle->velocity = glm::vec3(velocity.x + spread*distribution(generator), velocity.y + spread*distribution(generator), velocity.z + spread*distribution(generator));
+
+      particle->setPosition(glm::vec3(position.x, position.y, position.z));
+      particle->scaleBy(glm::vec3(size));
+      
+      particle->endTime = duration + glfwGetTime();
+      scene->getSceneGraph()->add(particle);
+   }
+}
+
 const std::string Particle::CLASS_NAME = "Particle";
 
 Particle::Particle(SPtr<Scene> scene, const std::string &name)
 :  Geometry(scene, particleModel, name) {
-   acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
 }
 
 Particle::~Particle() {
@@ -37,8 +55,10 @@ Json::Value Particle::serialize() const {
 }
 
 void Particle::tick(const float dt) {
-   // Do stuff here
-
    position += velocity * dt + 0.5f * acceleration * dt * dt;
    velocity += acceleration * dt;
+
+   if(glfwGetTime() > endTime) {
+      markForRemoval();
+   }
 }

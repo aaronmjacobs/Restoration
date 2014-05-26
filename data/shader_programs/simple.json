@@ -1,0 +1,21 @@
+{
+   "@class" : "ShaderProgram",
+   "attributes" : [ "aPosition" ],
+   "shaders" : [
+      {
+         "@class" : "Shader",
+         "fileName" : "data/shaders/simple_vert.glsl",
+         "type" : "vertex"
+      },
+      {
+         "@class" : "Shader",
+         "fileName" : "data/shaders/simple_frag.glsl",
+         "type" : "fragment"
+      }
+   ],
+   "uniforms" : [
+      "uModelMatrix",
+      "uProjMatrix",
+      "uViewMatrix"
+   ]
+}

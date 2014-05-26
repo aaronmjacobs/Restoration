@@ -42,7 +42,12 @@ void Geometry::draw(const RenderData &renderData) {
    shaderProgram->use();
 
    GLint uModelMatrix = shaderProgram->getUniform("uModelMatrix");
-   GLint uNormalMatrix = shaderProgram->getUniform("uNormalMatrix");
+   GLint uNormalMatrix = 0;
+   bool hasNormalMatrix = false;
+   if (shaderProgram->hasUniform("uNormalMatrix")) {
+      hasNormalMatrix = true;
+      uNormalMatrix = shaderProgram->getUniform("uNormalMatrix");
+   }
 
    // Transform the model matrix
    glm::mat4 transMatrix = glm::translate(position);
@@ -50,12 +55,13 @@ void Geometry::draw(const RenderData &renderData) {
    glm::mat4 scaleMatrix = glm::scale(scale);
    glm::mat4 modelMatrix = transMatrix * rotMatrix * scaleMatrix;
 
-   // Calculate the normal matrix
-   glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
-
    // Update the uniforms
    glUniformMatrix4fv(uModelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-   glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
+   if (hasNormalMatrix) {
+      // Calculate the normal matrix
+      glm::mat4 normal = glm::transpose(glm::inverse(modelMatrix));
+      glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normal));
+   }
 
    // Draw the model
    model->draw(renderData);

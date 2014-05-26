@@ -1,0 +1,4 @@
+{
+   "@class" : "SimpleMaterial",
+   "shaderProgram" : "simple"
+}

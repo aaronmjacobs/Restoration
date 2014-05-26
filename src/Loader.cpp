@@ -31,6 +31,7 @@
 #include "Scenery.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+#include "SimpleMaterial.h"
 #include "Skybox.h"
 #include "SkyboxMaterial.h"
 #include "TextureMaterial.h"
@@ -778,6 +779,8 @@ SPtr<Material> Loader::loadMaterial(SPtr<Scene> scene, const std::string &fileNa
       return loadTextureMaterial(scene, fileName);
    } else if (className == SkyboxMaterial::CLASS_NAME) {
       return loadSkyboxMaterial(scene, fileName);
+   } else if (className == SimpleMaterial::CLASS_NAME) {
+      return loadSimpleMaterial(scene, fileName);
    }
    
    ASSERT(false, "Invalid class name for Material: %s", className.c_str());
@@ -1026,6 +1029,16 @@ SPtr<ShaderProgram> Loader::loadShaderProgram(SPtr<Scene> scene, const std::stri
    }
 
    return shaderProgram;
+}
+
+SPtr<SimpleMaterial> Loader::loadSimpleMaterial(SPtr<Scene> scene, const std::string &fileName) {
+   Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<SimpleMaterial>(fileName));
+
+   // Shader program
+   check("SimpleMaterial", root, "shaderProgram");
+   SPtr<ShaderProgram> shaderProgram = loadShaderProgram(scene, root["shaderProgram"].asString());
+
+   return std::make_shared<SimpleMaterial>(fileName, shaderProgram);
 }
 
 SPtr<Skybox> Loader::loadSkybox(SPtr<Scene> scene, const Json::Value &root) {

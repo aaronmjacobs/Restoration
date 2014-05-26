@@ -37,6 +37,7 @@ class SceneObject;
 class Scenery;
 class Shader;
 class ShaderProgram;
+class SimpleMaterial;
 class Skybox;
 class SkyboxMaterial;
 class TextureMaterial;
@@ -137,6 +138,7 @@ public:
    SPtr<Scenery> loadScenery(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Shader> loadShader(const Json::Value &root);
    SPtr<ShaderProgram> loadShaderProgram(SPtr<Scene> scene, const std::string &fileName);
+   SPtr<SimpleMaterial> loadSimpleMaterial(SPtr<Scene> scene, const std::string &fileName);
    SPtr<Skybox> loadSkybox(SPtr<Scene> scene, const Json::Value &root);
    SPtr<SkyboxMaterial> loadSkyboxMaterial(SPtr<Scene> scene, const std::string &fileName);
    SPtr<TextureMaterial> loadTextureMaterial(SPtr<Scene> scene, const std::string &fileName);

@@ -23,7 +23,7 @@ class LevelEditor : public InputListener, public TickListener {
 private:
    WPtr<Scene> scene;
 
-    bool saved = true, enabled = false, big = false, precision = false, ctrlDown = false, spaceDown = false;
+    bool saved = true, enabled = false, big = false, precision = false, ctrlDown = false, spaceDown = false, list1 = true;
 	bool transUp = false, transDown = false, transRight = false, transLeft = false, transBack = false, transFront = false;
 	bool transX = false, transY = false, transZ = false;
 
@@ -33,6 +33,9 @@ private:
 	glm::vec3 copyObjPos[MAXOBJS], copyAvg;
 	double prevPoint[2];
 
+	std::string objFiles1[10];
+	std::string objFiles2[10];
+	std::string *curFileList = objFiles1;
 	std::string curObjFile = "data/meshes/block.obj";
 	glm::vec3 curTransformVec = glm::vec3(0.0, 0.0, 0.0);
 public:

@@ -15,7 +15,7 @@ void Particle::initialize(SPtr<Scene> scene) {
    particleModel = std::make_shared<Model>(material, mesh);
 }
 
-void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, double duration, float spread) {
+void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread) {
    std::default_random_engine generator;
    std::uniform_real_distribution<float> distribution(-1.f, 1.f);
 
@@ -35,7 +35,7 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
       particle->setPosition(glm::vec3(position.x, position.y, position.z));
       particle->scaleBy(glm::vec3(size));
       
-      particle->endTime = duration + glfwGetTime();
+      particle->duration = duration;
       scene->getSceneGraph()->add(particle);
    }
 }
@@ -58,7 +58,8 @@ void Particle::tick(const float dt) {
    position += velocity * dt + 0.5f * acceleration * dt * dt;
    velocity += acceleration * dt;
 
-   if(glfwGetTime() > endTime) {
+   duration -= dt;
+   if (duration < 0.0f) {
       markForRemoval();
    }
 }

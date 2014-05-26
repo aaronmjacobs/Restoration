@@ -52,11 +52,29 @@ void Player::onMouseMotionEvent(double xPos, double yPos) {
 }
 
 void Player::tick(const float dt) {
-   if (wantsToGoLeft) {
-      position += glm::vec3(-WALK_SPEED * dt, 0.0f, 0.0f);
+   if (!isAlive()) {
+      markForRemoval();
+      return;
    }
-   if (wantsToGoRight) {
-      position += glm::vec3(WALK_SPEED * dt, 0.0f, 0.0f);
+
+   // Kinetic friction
+   if (onGround) {
+      velocity.x *= 0.85f;
+   }
+
+   // Air resistance
+   velocity.x *= 0.95f;
+
+   // Static friction
+   if (glm::abs(velocity.x) < 0.05f) {
+      velocity.x = 0.0f;
+   }
+
+   if (wantsToGoLeft && velocity.x > -WALK_SPEED) {
+      velocity.x = -WALK_SPEED;
+   }
+   if (wantsToGoRight && velocity.x < WALK_SPEED) {
+      velocity.x = WALK_SPEED;
    }
 
    if (wantsToJump && onGround) {
@@ -67,10 +85,6 @@ void Player::tick(const float dt) {
    if (wantsToAttack) {
       // TODO Handle attack logic
    }
-    
-    if (getHealth() <= 0) {
-        markForRemoval();
-    }
 
    position += velocity * dt + 0.5f * acceleration * dt * dt;
    velocity += acceleration * dt;

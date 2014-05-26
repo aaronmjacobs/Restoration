@@ -179,6 +179,86 @@
             }
          },
          {
+            "@class" : "Turris",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.800000190734863,
+               "z" : 0.0
+            },
+            "health" : 3,
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -80.0,
+               "y" : 3.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 4.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
+            "@class" : "Vagus",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.800000190734863,
+               "z" : 0.0
+            },
+            "health" : 3,
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -75.0,
+               "y" : 3.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 4.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
             "@class" : "Corona",
             "acceleration" : {
                "x" : 0.0,

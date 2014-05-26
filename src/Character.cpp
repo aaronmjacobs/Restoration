@@ -20,6 +20,21 @@ Json::Value Character::serialize() const {
    return root;
 }
 
+void Character::draw(const RenderData &renderData) {
+   glm::vec3 front = glm::normalize(getVelocity());
+   if (glm::length(front) > 0.0001f) {
+      glm::vec3 rest(0.0f, 0.0f, 1.0f);
+      float angle = glm::acos(glm::dot(front, rest));
+      if (front.x < 0.0f) {
+         angle *= -1.0f;
+      }
+
+      setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 1.0f, 0.0f)));
+   }
+
+   MovableObject::draw(renderData);
+}
+
 int Character::getHealth() {
    return health;
 }

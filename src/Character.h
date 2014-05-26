@@ -19,6 +19,8 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   virtual void draw(const RenderData &renderData);
+
    int getHealth();
    bool isOnGround();
    bool isAlive();

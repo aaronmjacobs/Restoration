@@ -1,19 +1,10 @@
 #ifndef COLLISION_HANDLER_H
 #define COLLISION_HANDLER_H
 
+#include "CollisionsDeclarations.h"
 #include "Types.h"
 
 class PhysicalObject;
-class Scene;
-class Scenery;
-class Player;
-class Enemy;
-class Character;
-class MovableObject;
-class Magus;
-class Corona;
-class Vis;
-
 class Scene;
 
 /*

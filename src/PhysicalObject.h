@@ -2,17 +2,7 @@
 #define PHYSICAL_OBJECT_H
 
 #include "Geometry.h"
-
-class MovableObject;
-class Scenery;
-class Character;
-class Enemy;
-class Vis;
-class Player;
-class Magus;
-class Corona;
-class Justitia;
-class Aegrum;
+#include "CollisionsDeclarations.h"
 
 class PhysicalObject : public Geometry {
 public:

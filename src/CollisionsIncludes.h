@@ -10,8 +10,11 @@
 #include "Justitia.h"
 #include "Magus.h"
 #include "MovableObject.h"
+#include "Obex.h"
 #include "Player.h"
 #include "Scenery.h"
+#include "Turris.h"
+#include "Vagus.h"
 #include "Vis.h"
 
 #endif

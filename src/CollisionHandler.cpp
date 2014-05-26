@@ -1,12 +1,5 @@
 #include "CollisionHandler.h"
-#include "Scene.h"
-#include "MovableObject.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Magus.h"
-#include "Corona.h"
-#include "Scenery.h"
-#include "Vis.h"
+#include "CollisionsIncludes.h"
 
 #define COLLISION_REVERSE_FUNCTION(FIRST_CLASS, SECOND_CLASS) \
 void CollisionHandler::handleCollision(SECOND_CLASS &second, FIRST_CLASS &first) {\
@@ -68,9 +61,9 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
       if (characterPos.y >= sceneryPos.y) {
          // Character is above
          characterMove.y = collisionHeight;
-         character.setOnGround();
          if (characterVel.y < 0.0f) {
             characterVel.y = 0.0f;
+            character.setOnGround();
          }
       } else {
          // Character is below

@@ -74,6 +74,7 @@ enum Halfspace {
 
 Plane planes[6];
 
+//Returns which halfspace a point is on in reference to a plane
 Halfspace classifyPoint(const Plane & plane, const glm::vec3 &point) {
    float side = plane.a * point.x + plane.b * point.y + plane.c * point.z + plane.d;
    if (side < 0)
@@ -84,6 +85,7 @@ Halfspace classifyPoint(const Plane & plane, const glm::vec3 &point) {
       return ON_PLANE;
 }
 
+//Returns which halfspace a bounding box is on in reference to a plane, added by Aaron after he made the bounding box viewable by this
 Halfspace classifyBounds(const Plane &plane, const BoundingBox &bounds) {
    if (classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMin, bounds.zMin)) >= 0
        || classifyPoint(plane, glm::vec3(bounds.xMin, bounds.yMin, bounds.zMax)) >= 0
@@ -98,6 +100,7 @@ Halfspace classifyBounds(const Plane &plane, const BoundingBox &bounds) {
    return NEGATIVE;
 }
 
+//Normalizes a plane
 void normalizePlane(Plane &plane) {
    float size;
 
@@ -109,14 +112,30 @@ void normalizePlane(Plane &plane) {
    plane.d /= size;
 }
 
+//Helper function by Aaron to visualize the matrix numbers
 int coord(int col, int row) {
    return (col - 1) + (row - 1) * 4;
 }
 
+//Updates the planes for culling based on the currect view-proj matrix
 void updatePlanes(glm::mat4 viewProj, bool normalize) {
    const float *matrix = glm::value_ptr(viewProj);
+   int sign = 1, t = 1;
 
-   // Left
+   for (int i = 0; i < 6; i++) {
+      t = i/2 + 1;
+
+      planes[i].a = matrix[coord(4,1)] + sign * matrix[coord(t, 1)];
+      planes[i].b = matrix[coord(4,2)] + sign * matrix[coord(t, 2)];
+      planes[i].c = matrix[coord(4,3)] + sign * matrix[coord(t, 3)];
+      planes[i].d = matrix[coord(4,4)] + sign * matrix[coord(t, 4)];
+      if ((i % 2) == 0 ) {
+         sign *= -1;
+      }
+
+   }
+
+   /*// Left
    planes[0].a = matrix[coord(4,1)] + matrix[coord(1,1)];
    planes[0].b = matrix[coord(4,2)] + matrix[coord(1,2)];
    planes[0].c = matrix[coord(4,3)] + matrix[coord(1,3)];
@@ -151,6 +170,25 @@ void updatePlanes(glm::mat4 viewProj, bool normalize) {
    planes[5].b = matrix[coord(4,2)] - matrix[coord(3,2)];
    planes[5].c = matrix[coord(4,3)] - matrix[coord(3,3)];
    planes[5].d = matrix[coord(4,4)] - matrix[coord(3,4)];
+   */
+
+   /*
+    t = i/2 + 1;
+    planes[i].a = matrix[coord(4,1)] + matrix[coord(t, 1)];
+    planes[i].b = matrix[coord(4,2)] + matrix[coord(t, 2)];
+    planes[i].c = matrix[coord(4,3)] + matrix[coord(t, 3)];
+    planes[i].d = matrix[coord(4,4)] + matrix[coord(t, 4)];
+    
+    i++;
+
+    planes[i].a = matrix[coord(4,1)] - matrix[coord(t, 1)];
+    planes[i].b = matrix[coord(4,2)] - matrix[coord(t, 2)];
+    planes[i].c = matrix[coord(4,3)] - matrix[coord(t, 3)];
+    planes[i].d = matrix[coord(4,4)] - matrix[coord(t, 4)];
+
+////////////
+
+    */
 
    if (normalize) {
       for (int i = 0; i < 6; i++) {
@@ -159,6 +197,7 @@ void updatePlanes(glm::mat4 viewProj, bool normalize) {
    }
 }
 
+//Return if the object is in the view frustum
 bool checkInFrustum(const SceneObject &obj) {
    for (int i = 0; i < 6; i++) {
       if (classifyBounds(planes[i], obj.getBounds()) <= 0) {

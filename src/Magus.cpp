@@ -33,15 +33,9 @@ Json::Value Magus::serialize() const {
 }
 
 void Magus::tick(const float dt) {
-   if (!isAlive()) {
-      markForRemoval();
-      return;
-   }
-
    // TODO AI
     
-   position += velocity * dt + 0.5f * acceleration * dt * dt;
-   velocity += acceleration * dt;
+   Enemy::tick(dt);
 }
 
 int Magus::getAttackPower() {

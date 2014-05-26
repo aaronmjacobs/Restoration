@@ -21,6 +21,8 @@ public:
 
    virtual void draw(const RenderData &renderData);
 
+   virtual void tick(const float dt);
+
    int getHealth();
    bool isOnGround();
    bool isAlive();

@@ -26,8 +26,3 @@ int Vis::getAttackPower() {
 void Vis::setAttackPower(int attackPower) {
    this->attackPower = attackPower;
 }
-
-//Set velocity when attacking with Player. Direction is based on velocity
-void Vis::tick(const float dt) {
-   position += velocity * dt;
-}

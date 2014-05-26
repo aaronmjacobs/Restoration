@@ -35,6 +35,15 @@ void Character::draw(const RenderData &renderData) {
    MovableObject::draw(renderData);
 }
 
+void Character::tick(const float dt) {
+   if (!isAlive()) {
+      markForRemoval();
+      return;
+   }
+
+   MovableObject::tick(dt);
+}
+
 int Character::getHealth() {
    return health;
 }

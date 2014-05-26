@@ -52,11 +52,6 @@ void Player::onMouseMotionEvent(double xPos, double yPos) {
 }
 
 void Player::tick(const float dt) {
-   if (!isAlive()) {
-      markForRemoval();
-      return;
-   }
-
    // Kinetic friction
    if (onGround) {
       velocity.x *= 0.85f;
@@ -86,8 +81,7 @@ void Player::tick(const float dt) {
       // TODO Handle attack logic
    }
 
-   position += velocity * dt + 0.5f * acceleration * dt * dt;
-   velocity += acceleration * dt;
+   Character::tick(dt);
 }
 
 #define COLLISION_CLASS_NAME Player

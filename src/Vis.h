@@ -28,8 +28,6 @@ public:
    int getAttackPower();
 
    void setAttackPower(int attackPower);
-
-   virtual void tick(const float dt);
 };
 
 #endif

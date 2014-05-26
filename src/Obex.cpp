@@ -24,6 +24,11 @@ Json::Value Obex::serialize() const {
    return root;
 }
 
+void Obex::draw(const RenderData &renderData) {
+   // Skip the character draw, so the orientation doesn't change
+   MovableObject::draw(renderData);
+}
+
 void Obex::tick(const float dt) {
    // TODO AI
 

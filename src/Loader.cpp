@@ -22,6 +22,7 @@
 #include "Mesh.h"
 #include "Model.h"
 #include "MovableObject.h"
+#include "Obex.h"
 #include "PhongMaterial.h"
 #include "PhysicalObject.h"
 #include "Player.h"
@@ -35,6 +36,8 @@
 #include "Skybox.h"
 #include "SkyboxMaterial.h"
 #include "TextureMaterial.h"
+#include "Turris.h"
+#include "Vagus.h"
 #include "Vis.h"
 
 #include <assimp/postprocess.h>
@@ -129,7 +132,7 @@ bool Loader::isPlayer(const std::string &className) {
 }
 
 bool Loader::isEnemy(const std::string &className) {
-   return className == Enemy::CLASS_NAME || isMagus(className) || isCorona(className);
+   return className == Enemy::CLASS_NAME || isMagus(className) || isCorona(className) || isObex(className) || isTurris(className) || isVagus(className);
 }
 
 bool Loader::isMagus(const std::string &className) {
@@ -138,6 +141,18 @@ bool Loader::isMagus(const std::string &className) {
 
 bool Loader::isCorona(const std::string &className) {
    return className == Corona::CLASS_NAME;
+}
+
+bool Loader::isObex(const std::string &className) {
+   return className == Obex::CLASS_NAME;
+}
+
+bool Loader::isTurris(const std::string &className) {
+   return className == Turris::CLASS_NAME;
+}
+
+bool Loader::isVagus(const std::string &className) {
+   return className == Vagus::CLASS_NAME;
 }
 
 bool Loader::isVis(const std::string &className) {
@@ -546,6 +561,12 @@ SPtr<Enemy> Loader::loadEnemy(SPtr<Scene> scene, const Json::Value &root) {
       return loadMagus(scene, root);
    } else if (isCorona(className)) {
       return loadCorona(scene, root);
+   } else if (isObex(className)) {
+      return loadObex(scene, root);
+   } else if (isTurris(className)) {
+      return loadTurris(scene, root);
+   } else if (isVagus(className)) {
+      return loadVagus(scene, root);
    }
 
    ASSERT(false, "Invalid class name for Enemy: %s", className.c_str());
@@ -832,6 +853,37 @@ SPtr<MovableObject> Loader::loadMovableObject(SPtr<Scene> scene, const Json::Val
    return SPtr<MovableObject>();
 }
 
+SPtr<Obex> Loader::loadObex(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Obex", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   // MovableObject
+   check("Obex", root, "velocity");
+   glm::vec3 velocity = loadVec3(root["velocity"]);
+
+   check("Obex", root, "acceleration");
+   glm::vec3 acceleration = loadVec3(root["acceleration"]);
+
+   // Character
+   check("Obex", root, "health");
+   int health = root["health"].asInt();
+
+   SPtr<Obex> obex = std::make_shared<Obex>(scene, model, data.name);
+   obex->setPosition(data.position);
+   obex->setOrientation(data.orientation);
+   obex->setScale(data.scale);
+   obex->setRenderState(data.renderState);
+   obex->setVelocity(velocity);
+   obex->setAcceleration(acceleration);
+   obex->setHealth(health);
+
+   return obex;
+}
+
 SPtr<PhongMaterial> Loader::loadPhongMaterial(SPtr<Scene> scene, const std::string &fileName) {
    Json::Value root = IOUtils::readJsonFile(IOUtils::getPath<PhongMaterial>(fileName));
 
@@ -1073,6 +1125,68 @@ SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::
    SPtr<TextureMaterial> textureMaterial = std::make_shared<TextureMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess, textureFileName);
 
    return textureMaterial;
+}
+
+SPtr<Turris> Loader::loadTurris(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Turris", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   // MovableObject
+   check("Turris", root, "velocity");
+   glm::vec3 velocity = loadVec3(root["velocity"]);
+
+   check("Turris", root, "acceleration");
+   glm::vec3 acceleration = loadVec3(root["acceleration"]);
+
+   // Character
+   check("Turris", root, "health");
+   int health = root["health"].asInt();
+
+   SPtr<Turris> turris = std::make_shared<Turris>(scene, model, data.name);
+   turris->setPosition(data.position);
+   turris->setOrientation(data.orientation);
+   turris->setScale(data.scale);
+   turris->setRenderState(data.renderState);
+   turris->setVelocity(velocity);
+   turris->setAcceleration(acceleration);
+   turris->setHealth(health);
+
+   return turris;
+}
+
+SPtr<Vagus> Loader::loadVagus(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Vagus", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   // MovableObject
+   check("Vagus", root, "velocity");
+   glm::vec3 velocity = loadVec3(root["velocity"]);
+
+   check("Vagus", root, "acceleration");
+   glm::vec3 acceleration = loadVec3(root["acceleration"]);
+
+   // Character
+   check("Vagus", root, "health");
+   int health = root["health"].asInt();
+
+   SPtr<Vagus> vagus = std::make_shared<Vagus>(scene, model, data.name);
+   vagus->setPosition(data.position);
+   vagus->setOrientation(data.orientation);
+   vagus->setScale(data.scale);
+   vagus->setRenderState(data.renderState);
+   vagus->setVelocity(velocity);
+   vagus->setAcceleration(acceleration);
+   vagus->setHealth(health);
+
+   return vagus;
 }
 
 SPtr<Vis> Loader::loadVis(SPtr<Scene> scene, const Json::Value &root) {

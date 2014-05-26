@@ -41,6 +41,8 @@ void Character::tick(const float dt) {
       return;
    }
 
+   onGround = false;
+
    MovableObject::tick(dt);
 }
 

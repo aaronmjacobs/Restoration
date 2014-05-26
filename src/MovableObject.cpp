@@ -48,6 +48,7 @@ void MovableObject::setAcceleration(const glm::vec3 &acc) {
 }
 
 void MovableObject::tick(const float dt) {
+   PhysicalObject::tick(dt);
    position += velocity * dt + 0.5f * acceleration * dt * dt;
    velocity += acceleration * dt;
 }

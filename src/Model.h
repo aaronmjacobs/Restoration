@@ -3,6 +3,7 @@
 
 #include "GLIncludes.h"
 #include "Serializable.h"
+#include "TickListener.h"
 #include "Types.h"
 
 class Material;
@@ -13,7 +14,7 @@ class RenderData;
  * A three dimensional model, composed of a set of vertices / normals (mesh) and
  * visual properties, along with the shader to draw it (material).
  */
-class Model : public Serializable {
+class Model : public Serializable, TickListener {
 protected:
    /**
     * The model's material (visual properties + shader).
@@ -47,6 +48,8 @@ public:
     * Draws the model.
     */
    virtual void draw(const RenderData &renderData);
+
+   virtual void tick(const float dt);
 
    /**
     * Gets the model's material.

@@ -41,6 +41,8 @@ public:
     * Draws the model.
     */
    virtual void draw(const RenderData &renderData);
+
+   virtual void tick(const float dt);
 };
 
 #endif

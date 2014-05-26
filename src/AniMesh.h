@@ -35,8 +35,8 @@ private:
    //holds current animation index and number of indicies
    int aniMode, numModes = 0;
 
-   //The start time for the animation
-   float startTime;
+   //The time for the animation
+   float animTime;
 
    //The root transformation for the skeleton
    glm::mat4 rootInverseTransform;
@@ -95,7 +95,7 @@ public:
 
    void softApplyAnimation(const std::string &aniName);
    
-   virtual void updateAnimation();
+   virtual void updateAnimation(const float dt);
 
    GLuint getJBO() {
       return jbo;

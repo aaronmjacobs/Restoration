@@ -18,7 +18,8 @@ Json::Value Scenery::serialize() const {
 }
 
 void Scenery::tick(const float dt) {
-    //Do nothing, it's just scenery
+   PhysicalObject::tick(dt);
+   // Do nothing, it's just scenery
 }
 
 #define COLLISION_CLASS_NAME Scenery

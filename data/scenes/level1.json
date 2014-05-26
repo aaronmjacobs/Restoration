@@ -228,7 +228,7 @@
             "@class" : "FollowGeometry",
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "simple",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/sphere.obj"

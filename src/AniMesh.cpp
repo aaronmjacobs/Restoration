@@ -75,7 +75,7 @@ AniMesh::AniMesh(const std::string &fileName, const std::string &aniName)
    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * vertBones.size(), joints, GL_STATIC_DRAW);
    delete[] joints;
 
-   startTime = glfwGetTime();
+   animTime = 0.0f;
 }
 
 AniMesh::~AniMesh() {
@@ -123,18 +123,18 @@ void AniMesh::loadAnimation(const std::string &fileName, const std::string &aniN
 
 void AniMesh::hardApplyAnimation(const std::string &aniName) {
    aniMode = aniMap[aniName];
-   startTime = glfwGetTime();
+   animTime = 0.0f;
 }
 
 void AniMesh::softApplyAnimation(const std::string &aniName) {
    aniMode = aniMap[aniName];
 }
 
-void AniMesh::updateAnimation() {
-   float curTime = glfwGetTime() - startTime;
+void AniMesh::updateAnimation(const float dt) {
+   animTime += dt;
    float tps = (float)(scenes[aniMode]->mAnimations[0]->mTicksPerSecond);
    if (tps == 0.0f) tps = 25.0f;
-   float aniTime = fmod(curTime * tps, scenes[aniMode]->mAnimations[0]->mDuration);
+   float aniTime = fmod(animTime * tps, scenes[aniMode]->mAnimations[0]->mDuration);
    glm::mat4 id = glm::mat4(1.0f);
    updateMatrices(aniTime, scenes[aniMode]->mRootNode, id);
 }

@@ -29,7 +29,6 @@ void AniModel::draw(const RenderData &renderData) {
 
    // Apply the material properties (and enable the shader)
    material->apply(renderData, *mesh);
-   aniMesh->updateAnimation();
 
    // Send the bones
    float *bones = aniMesh->getBones();
@@ -75,4 +74,8 @@ void AniModel::draw(const RenderData &renderData) {
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
    material->disable();
+}
+
+void AniModel::tick(const float dt) {
+   aniMesh->updateAnimation(dt);
 }

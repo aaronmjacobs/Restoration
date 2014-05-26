@@ -69,6 +69,9 @@ void Model::draw(const RenderData &renderData) {
    material->disable();
 }
 
+void Model::tick(const float dt) {
+}
+
 SPtr<Material> Model::getMaterial() {
    return material;
 }

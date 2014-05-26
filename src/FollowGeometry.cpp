@@ -36,6 +36,7 @@ void FollowGeometry::draw(const RenderData &renderData) {
 }
 
 void FollowGeometry::tick(const float dt) {
+   Geometry::tick(dt);
    SPtr<SceneObject> sTarget = target.lock();
    if (sTarget) {
       setPosition(sTarget->getPosition());

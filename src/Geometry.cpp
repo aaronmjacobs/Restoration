@@ -66,3 +66,7 @@ void Geometry::draw(const RenderData &renderData) {
    // Draw the model
    model->draw(renderData);
 }
+
+void Geometry::tick(const float dt) {
+   model->tick(dt);
+}

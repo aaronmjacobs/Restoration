@@ -82,9 +82,6 @@ void PhongMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
       glActiveTexture(GL_TEXTURE0 + ambientGlobalID);
       glBindTexture(GL_TEXTURE_2D, ambientGlobalID);
       glUniform1i(uAmbientGlobal, ambientGlobalID);
-   } else {
-      glUniform1i(uAmbientMap, 0);
-      glUniform1i(uAmbientGlobal, 0);
    }
 }
 

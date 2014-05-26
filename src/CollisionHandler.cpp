@@ -6,6 +6,7 @@
 #include "Magus.h"
 #include "Corona.h"
 #include "Scenery.h"
+#include "Vis.h"
 
 #define COLLISION_REVERSE_FUNCTION(FIRST_CLASS, SECOND_CLASS) \
 void CollisionHandler::handleCollision(SECOND_CLASS &second, FIRST_CLASS &first) {\
@@ -85,3 +86,9 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
 }
 
 COLLISION_REVERSE_FUNCTION(Character, Scenery)
+
+void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
+   vis.markForRemoval();
+}
+
+COLLISION_REVERSE_FUNCTION(Vis, Scenery)

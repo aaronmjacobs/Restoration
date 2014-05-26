@@ -14,6 +14,7 @@ protected:
    static const float JUMP_FORCE;
 
    bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
+   double lastMouseX, lastMouseY;
 
 public:
    static const std::string CLASS_NAME;

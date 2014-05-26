@@ -21,6 +21,7 @@ namespace {
 const int WIDTH = 1280, HEIGHT = 720;
 const float FOV = glm::radians(80.0f);
 
+GLFWwindow* window;
 SPtr<Audio> audio;
 SPtr<Scene> scene;
 Renderer renderer;
@@ -126,13 +127,17 @@ void loadLevel(const std::string &name) {
 
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, windowWidth, windowHeight);
+
+   // Send initial motion callback to get the mouse position
+   double xPos, yPos;
+   glfwGetCursorPos(window, &xPos, &yPos);
+   mouseMotionCallback(window, xPos, yPos);
 }
 
 } // namespace
 
 int main(int argc, char *argv[]) {
    // Initialize GLFW
-   GLFWwindow* window;
    glfwSetErrorCallback(errorCallback);
    ASSERT(glfwInit(), "Unable to init glfw");
 

@@ -12,6 +12,7 @@ class Character;
 class MovableObject;
 class Magus;
 class Corona;
+class Vis;
 
 class Scene;
 
@@ -46,6 +47,8 @@ public:
    void handleCollision(Enemy &enemy1, Enemy &enemy2);
    void handleCollision(Character &character, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Character, Scenery)
+   void handleCollision(Vis &vis, Scenery &scenery);
+   COLLISION_REVERSE_DECLARATION(Vis, Scenery)
 };
 
 #endif

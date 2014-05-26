@@ -196,6 +196,16 @@ glm::quat AniMesh::interpolateRotation(float aniTime, const aiNodeAnim* aniNode)
       float dt = aniNode->mRotationKeys[indx + 1].mTime - aniNode->mRotationKeys[indx].mTime;
       float amt = (aniTime - aniNode->mRotationKeys[indx].mTime) / dt;
 
+      const aiQuaternion& start = aniNode->mRotationKeys[indx].mValue;
+      const aiQuaternion& end = aniNode->mRotationKeys[indx + 1].mValue;
+      aiQuaternion mixed;
+
+      aiQuaternion::Interpolate(mixed, start, end, amt);
+      mixed = mixed.Normalize();
+
+      ret = glm::quat(mixed.w, mixed.x, mixed.y, mixed.z);
+
+      /*
       glm::quat q1 = glm::quat(aniNode->mRotationKeys[indx].mValue.w,
          aniNode->mRotationKeys[indx].mValue.x,
          aniNode->mRotationKeys[indx].mValue.y,
@@ -207,6 +217,7 @@ glm::quat AniMesh::interpolateRotation(float aniTime, const aiNodeAnim* aniNode)
          aniNode->mRotationKeys[indx + 1].mValue.z);
 
       ret = glm::mix(q1, q2, amt);
+      */
    }
    return ret;
 }

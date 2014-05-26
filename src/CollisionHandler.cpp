@@ -18,19 +18,19 @@ void CollisionHandler::handleCollision(PhysicalObject &first, PhysicalObject &se
 }
 
 void CollisionHandler::handleCollision(Player &player, Magus &magus) {
-    player.setHealth(player.getHealth() - magus.getAttackPower());
+    //player.setHealth(player.getHealth() - magus.getAttackPower());
 }
 
 void CollisionHandler::handleCollision(Player &player, Corona &corona) {
-    player.setHealth(player.getHealth() - corona.getAttackPower());
-    corona.reverseMovement();
+    //player.setHealth(player.getHealth() - corona.getAttackPower());
+    //corona.reverseMovement();
     //Add enemy logic for backing off after hurting you
 }
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
    //Reverse direction
-   enemy1.reverseMovement();
-   enemy2.reverseMovement();
+   //enemy1.reverseMovement();
+   //enemy2.reverseMovement();
 }
 
 void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
@@ -42,6 +42,11 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
    glm::vec3 characterMove(0.0f);
 
    if (collisionWidth <= collisionHeight) {
+      // Avoid getting stuck on edges
+      if (collisionHeight < 0.1f) {
+         return;
+      }
+
       // Treat the collision in x
       if (characterPos.x >= sceneryPos.x) {
          // Character is to the right

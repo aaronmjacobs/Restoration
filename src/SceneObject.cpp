@@ -60,7 +60,7 @@ glm::vec3 SceneObject::getScale() {
 }
 
 BoundingBox SceneObject::getBounds() const {
-   return BoundingBox(bounds, position, scale);
+   return BoundingBox(bounds, position, glm::abs(scale));
 }
 
 void SceneObject::setPosition(const glm::vec3 &position) {

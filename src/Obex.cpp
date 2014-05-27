@@ -8,9 +8,12 @@ const int Obex::BASE_HEALTH = 14;
 const float Obex::WALK_SPEED = 2.0f;
 const float Obex::JUMP_FORCE = 300.0f;
 const int Obex::ATTACK_POWER = 4;
+float Obex::ATTACK_TIME = 5.0f;
+glm::vec3 Obex::SAVED_VELOCITY = glm::vec3(0.0, 0.0, 0.0);
 
 Obex::Obex(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+
 }
 
 Obex::~Obex() {
@@ -32,7 +35,32 @@ void Obex::draw(const RenderData &renderData) {
 void Obex::tick(const float dt) {
    // TODO AI
 
+   if(ATTACK_TIME >= 4.0f) {
+
+   } else if (ATTACK_TIME == 0.0f){
+      
+   }
+   ATTACK_TIME += dt;
+
+
    Enemy::tick(dt);
+
+   /*printf("vel: %f\n", getVelocity().x);
+   printf("svel: %f\n", SAVED_VELOCITY.x);
+
+   if (ATTACK_TIME < 4.0f && getVelocity().x > 0.0f && getVelocity().y > 0.0f) {
+      setSavedVel(getVelocity());
+
+      printf("in1: %f\n", ATTACK_TIME);
+      setVelocity(glm::vec3(0.0f, 0.0f, 0.0f));
+   } else if (ATTACK_TIME >= 4.0f && getVelocity() != SAVED_VELOCITY) {
+      printf("in2: %f\n", ATTACK_TIME);
+      setVelocity(SAVED_VELOCITY);
+      reverseMovement();
+   }
+   ATTACK_TIME += dt;
+printf("vel2: %f\n\n", getVelocity().x);
+   Enemy::tick(dt);*/
 }
 
 int Obex::getAttackPower() {
@@ -41,6 +69,18 @@ int Obex::getAttackPower() {
 
 void Obex::reverseMovement() {
    velocity.x *= -1.0f;
+}
+
+float Obex::getAttackTime() {
+   return ATTACK_TIME;
+}
+
+void Obex::resetAttackTime() {
+   ATTACK_TIME = 0.0;
+}
+
+void Obex::setSavedVel(glm::vec3 svel) {
+   SAVED_VELOCITY = svel;
 }
 
 #define COLLISION_CLASS_NAME Obex

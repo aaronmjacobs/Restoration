@@ -29,11 +29,12 @@ void CollisionHandler::handleCollision(Player &player, Corona &corona) {
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
    //Reverse direction
-   //enemy1.reverseMovement();
-   //enemy2.reverseMovement();
+   enemy1.reverseMovement();
+   enemy2.reverseMovement();
 }
 
-void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
+void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
+   BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
    float collisionWidth = collision.width();
    float collisionHeight = collision.height();
    glm::vec3 characterPos = character.getPosition();
@@ -86,8 +87,10 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
 COLLISION_REVERSE_FUNCTION(Character, Scenery)
 
 void CollisionHandler::handleCollision(Obex &obex, Scenery &scenery) {
-
-
+   if (obex.getAttackTime() > 0.0) {
+      obex.resetAttackTime();
+      obex.reverseMovement();
+   }
    Character& obexCharacter = obex;
    handleCollision(obexCharacter, scenery);
 }
@@ -99,3 +102,41 @@ void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
 }
 
 COLLISION_REVERSE_FUNCTION(Vis, Scenery)
+
+void CollisionHandler::handleCollision(Corona &corona, Scenery &scenery) {
+   BoundingBox collision = BoundingBox(corona.getBounds(), scenery.getBounds());
+   float collisionWidth = collision.width();
+   float collisionHeight = collision.height();
+   glm::vec3 coronaPos = corona.getPosition();
+   glm::vec3 sceneryPos = scenery.getPosition();
+   glm::vec3 coronaVel = corona.getVelocity();
+   glm::vec3 coronaMove(0.0f);
+
+   if (collisionWidth <= collisionHeight) {
+      // Avoid getting stuck on edges
+      if (collisionHeight < 0.1f) {
+         return;
+      }
+
+      // Treat the collision in x
+      if (coronaPos.x >= sceneryPos.x) {
+         // Character is to the right
+         coronaMove.x = collisionWidth;
+         if (coronaVel.x < 0.0f) {
+            corona.reverseMovement();
+         }
+      } else {
+         // Character is to the left
+         coronaMove.x = -collisionWidth;
+         if (coronaVel.x > 0.0f) {
+            corona.reverseMovement();
+         }
+      }
+   }
+   Character& coronaCharacter = corona;
+   handleCollision(coronaCharacter, scenery);
+
+}
+
+COLLISION_REVERSE_FUNCTION(Corona, Scenery)
+

@@ -53,12 +53,10 @@ void Magus::tick(const float dt) {
             } else if(ATTACK_TIME > 0) {
                //Continue attacking
             } else {
-               //Move around
-               evasiveManuevers(playerPos - position);
                ATTACK_TIME = 6.0f;
 
                float aegrumCreationDistance = 0.5f;
-               float aegrumSpeed = 10.0f;
+               float aegrumSpeed = 7.0f;
                glm::vec3 aegrumPos = position + shootVec * aegrumCreationDistance;
 
                Loader &loader = Loader::getInstance();
@@ -84,6 +82,9 @@ void Magus::tick(const float dt) {
                }
                aegrum->setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f)));
                sScene->getSceneGraph()->addPhys(aegrum);
+
+               //Move around
+               evasiveManuevers(playerPos - position);
 
             }
 

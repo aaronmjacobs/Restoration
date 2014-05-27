@@ -140,10 +140,10 @@ void Player::tick(const float dt) {
    }
 
    //Invincibility frames
-   if (INVINC_FRAMES > 0) {
+   if (INVINC_FRAMES > 0.0f) {
       INVINC_FRAMES -= dt;
    }
-   printf("INVINC_FRAMES: %f | health: %d\n", INVINC_FRAMES, health);
+
    Character::tick(dt);
 }
 
@@ -156,9 +156,9 @@ void Player::setInvFrames(float time) {
 }
 
 void Player::setHealth(int health) {
-   printf("-INVINC_FRAMES: %f\n", INVINC_FRAMES);
    if (INVINC_FRAMES <= 0.0f) {
       Character::setHealth(health);
+      printf("Health: %d\n", health);
    }
 }
 

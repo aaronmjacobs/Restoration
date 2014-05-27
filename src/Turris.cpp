@@ -25,6 +25,11 @@ Json::Value Turris::serialize() const {
    return root;
 }
 
+void Turris::draw(const RenderData &renderData) {
+   // Skip the character draw, so the orientation doesn't change
+   MovableObject::draw(renderData);
+}
+
 void Turris::tick(const float dt) {
    // TODO AI
    setVelocity(glm::vec3(0.0f, 0.0f, 0.0f));

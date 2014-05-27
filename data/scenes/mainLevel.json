@@ -75,7 +75,7 @@
                "y" : -9.800000190734863,
                "z" : 0.0
             },
-            "health" : 6,
+            "health" : 10,
             "model" : {
                "@class" : "Model",
                "material" : "block",
@@ -99,7 +99,7 @@
             "renderState" : 6,
             "scale" : {
                "x" : 1.0,
-               "y" : 1.020893454551697,
+               "y" : 2.0,
                "z" : 1.0
             },
             "velocity" : {
@@ -232,9 +232,9 @@
             },
             "name" : "",
             "orientation" : {
-               "w" : 0.7071067690849304,
+               "w" : 1.0,
                "x" : 0.0,
-               "y" : 0.7071067690849304,
+               "y" : 0.0,
                "z" : 0.0
             },
             "position" : {
@@ -304,7 +304,7 @@
             "health" : 3,
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "pillar",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"

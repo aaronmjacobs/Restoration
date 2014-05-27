@@ -18,7 +18,6 @@ void CollisionHandler::handleCollision(PhysicalObject &first, PhysicalObject &se
 }
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
-   printf("!health: %d\n", player.getHealth());
    player.setHealth(player.getHealth() - enemy.getAttackPower());
    if (player.getInvFrames() <= 0.0f) {
       player.setInvFrames(2.0f);

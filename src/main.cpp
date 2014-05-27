@@ -14,6 +14,8 @@
 #include "Scene.h"
 #include "Types.h"
 
+#include "Enemy.h"
+
 #include <iostream>
 #include <string>
 
@@ -183,7 +185,15 @@ int main(int argc, char *argv[]) {
    // Load the audio system
    audio = std::make_shared<Audio>();
    audio->systemInit();
-   //audio->loadSound("Restoration_5_4.ogg", true);
+   audio->loadSound("Restoration_5_4.ogg", true);
+   audio->loadSound("jumpGrunt1.wav", false);
+   audio->loadSound("jumpGrunt2.wav", false);
+   audio->loadSound("jumpGrunt3.wav", false);
+   audio->loadSound("sillyVictory.wav", false);
+   audio->loadSound("dead.ogg", false);
+   audio->loadSound("ow.ogg", false);
+   audio->loadSound("pew.ogg", false);
+   audio->loadSound("hit.wav", false);
 
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();
@@ -192,6 +202,8 @@ int main(int argc, char *argv[]) {
    loadLevel("mainlevel");
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
+
+   bool playedWonSound = false;
 
    // Timing values
    double lastTime = glfwGetTime();
@@ -210,6 +222,11 @@ int main(int argc, char *argv[]) {
          scene->tick(dt);
          levelEdit->tick(dt);
          accumulator -= dt;
+      }
+
+      if (!playedWonSound && Enemy::numEnemies == 0) {
+         playedWonSound = true;
+         audio->signalSound("sillyVictory.wav");
       }
 
       // Render the scene

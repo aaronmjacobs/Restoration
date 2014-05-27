@@ -17,11 +17,11 @@ const std::string Magus::CLASS_NAME = "Magus";
 const int Magus::BASE_HEALTH = 7;
 const float Magus::HOVER_SPEED = 4.0f;
 const int Magus::ATTACK_POWER = 1;
-float Magus::ATTACK_TIME = 6.0f;
 
 //Put health in the creation of Magus, and damage
 Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+   ATTACK_TIME = 1.5f;
 }
 
 Magus::~Magus() {
@@ -53,7 +53,7 @@ void Magus::tick(const float dt) {
             } else if(ATTACK_TIME > 0) {
                //Continue attacking
             } else {
-               ATTACK_TIME = 6.0f;
+               ATTACK_TIME = 1.5f;
 
                float aegrumCreationDistance = 0.5f;
                float aegrumSpeed = 7.0f;
@@ -85,6 +85,13 @@ void Magus::tick(const float dt) {
 
                //Move around
                evasiveManuevers(playerPos - position);
+
+               SPtr<Scene> sScene = scene.lock();
+               if (sScene) {
+                  SPtr<Audio> audio = sScene->getAudio();
+
+                  audio->signalSound("hit.wav");
+               }
 
             }
 

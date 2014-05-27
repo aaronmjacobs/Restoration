@@ -8,10 +8,10 @@ const std::string Turris::CLASS_NAME = "Turris";
 
 const int Turris::BASE_HEALTH = 14;
 const int Turris::ATTACK_POWER = 4;
-float Turris::ATTACK_TIME = 5.0f;
 
 Turris::Turris(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+   ATTACK_TIME = 2.0f;
 }
 
 Turris::~Turris() {
@@ -71,11 +71,18 @@ void Turris::tick(const float dt) {
                }
                aegrum->setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f)));
                sScene->getSceneGraph()->addPhys(aegrum);
+
+               SPtr<Scene> sScene = scene.lock();
+               if (sScene) {
+                  SPtr<Audio> audio = sScene->getAudio();
+
+                  audio->signalSound("hit.wav");
+               }
             }
 
          }
       }
-      ATTACK_TIME = 5.0f;
+      ATTACK_TIME = 2.0f;
    }
    ATTACK_TIME -= dt;
 

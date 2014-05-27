@@ -2,7 +2,7 @@
 #include "FirstPersonCameraController.h"
 
 const float FirstPersonCameraController::MOUSE_SCALE = 0.005f;
-const float FirstPersonCameraController::MOVEMENT_SCALE = 10.0f;
+const float FirstPersonCameraController::MOVEMENT_SCALE = 30.0f;
 
 FirstPersonCameraController::FirstPersonCameraController(SPtr<Camera> camera)
    : CameraController(camera) {

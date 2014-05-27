@@ -75,7 +75,7 @@ void Player::onMouseButtonEvent(int button, int action) {
       glm::vec3 playerToMouse = glm::normalize(glm::vec3(mouseRay.x - toPlayer.x, mouseRay.y - toPlayer.y, 0.0f));
 
       float justitiaCreationDistance = 0.5f;
-      float justitiaSpeed = 10.0f;
+      float justitiaSpeed = 15.0f;
       glm::vec3 justitiaPos = position + playerToMouse * justitiaCreationDistance;
 
       Loader &loader = Loader::getInstance();
@@ -100,6 +100,13 @@ void Player::onMouseButtonEvent(int button, int action) {
       }
       justitia->setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f)));
       sScene->getSceneGraph()->addPhys(justitia);
+
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         SPtr<Audio> audio = sScene->getAudio();
+
+         audio->signalSound("pew.ogg");
+      }
    }
 }
 
@@ -107,6 +114,8 @@ void Player::onMouseMotionEvent(double xPos, double yPos) {
    lastMouseX = xPos;
    lastMouseY = yPos;
 }
+
+bool playedIsDead = false;
 
 void Player::tick(const float dt) {
 
@@ -130,9 +139,34 @@ void Player::tick(const float dt) {
       velocity.x = WALK_SPEED;
    }
 
+   static int jumpIndex = 0;
    if (wantsToJump && onGround) {
       onGround = false;
       velocity += glm::vec3(0.0f, JUMP_FORCE, 0.0f) * dt;
+
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         SPtr<Audio> audio = sScene->getAudio();
+
+         if (jumpIndex == 0) {
+            audio->signalSound("jumpGrunt1.wav");
+         } else if (jumpIndex == 1) {
+            audio->signalSound("jumpGrunt2.wav");
+         } else if (jumpIndex == 2) {
+            audio->signalSound("jumpGrunt3.wav");
+         }
+
+         jumpIndex = (jumpIndex + 1) % 3;
+      }
+   }
+
+   if (!isAlive() && !playedIsDead) {
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         SPtr<Audio> audio = sScene->getAudio();
+
+         audio->signalSound("dead.ogg");
+      }
    }
 
    if (wantsToAttack) {

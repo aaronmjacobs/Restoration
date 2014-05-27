@@ -16,7 +16,7 @@ protected:
    static const int BASE_HEALTH;
    static const float HOVER_SPEED;
    static const int ATTACK_POWER;
-   static float ATTACK_TIME;
+   float ATTACK_TIME;
 
 public:    
    static const std::string CLASS_NAME;

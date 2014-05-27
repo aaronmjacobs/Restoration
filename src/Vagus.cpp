@@ -5,7 +5,7 @@
 const std::string Vagus::CLASS_NAME = "Vagus";
 
 const int Vagus::BASE_HEALTH = 14;
-const float Vagus::WALK_SPEED = 3.0f;
+const float Vagus::WALK_SPEED = 1.0f;
 const float Vagus::JUMP_FORCE = 300.0f;
 const int Vagus::ATTACK_POWER = 4;
 
@@ -33,7 +33,11 @@ void Vagus::tick(const float dt) {
        
          glm::vec3 chaseVec = glm::normalize(playerPos - position);
          if (glm::length(position - playerPos) < 20.0f) {
-            setVelocity(chaseVec * WALK_SPEED);
+            float speed = (20.0f - glm::length(position - playerPos)) * 0.75f;
+            if (speed > 10.0f) {
+               speed = 10.0f;
+            }
+            setVelocity(chaseVec * WALK_SPEED * speed);
          }
       }
    }

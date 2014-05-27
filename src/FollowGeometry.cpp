@@ -38,6 +38,9 @@ void FollowGeometry::draw(const RenderData &renderData) {
    setScale(glm::vec3(0.0f));
    if (Enemy::maxEnemies > 0) {
       float enemyPercent = 1.0f - (float)Enemy::numEnemies / Enemy::maxEnemies;
+      if (enemyPercent < 0.2f) {
+         enemyPercent = 0.2f;
+      }
       SPtr<Scene> sScene = scene.lock();
       if (!sScene) {
          return;
@@ -47,7 +50,7 @@ void FollowGeometry::draw(const RenderData &renderData) {
          return;
       }
       float playerHealthPercent = (float)player->getHealth() / Player::BASE_HEALTH;
-      setScale(glm::vec3(1.0f + enemyPercent * 10.0f * playerHealthPercent));
+      setScale(glm::vec3(enemyPercent * 5.0f * playerHealthPercent));
    }
 
    Geometry::draw(renderData);

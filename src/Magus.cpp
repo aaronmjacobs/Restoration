@@ -67,7 +67,7 @@ void Magus::tick(const float dt) {
                modelValue["material"] = "aegrum";
                Json::Value meshValue;
                meshValue["@class"] = "Mesh";
-               meshValue["fileName"] = "data/meshes/bullet.obj";
+               meshValue["fileName"] = "data/meshes/vis.obj";
                modelValue["mesh"] = meshValue;
                SPtr<Model> aegrumModel = loader.loadModel(sScene, modelValue);
 

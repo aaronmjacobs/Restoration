@@ -84,7 +84,7 @@ void Player::onMouseButtonEvent(int button, int action) {
       modelValue["material"] = "justitia";
       Json::Value meshValue;
       meshValue["@class"] = "Mesh";
-      meshValue["fileName"] = "data/meshes/bullet.obj";
+      meshValue["fileName"] = "data/meshes/vis.obj";
       modelValue["mesh"] = meshValue;
       SPtr<Model> justitiaModel = loader.loadModel(sScene, modelValue);
 

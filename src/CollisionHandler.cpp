@@ -192,11 +192,15 @@ COLLISION_REVERSE_FUNCTION(Corona, Scenery)
 
 void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
    enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
+   justitia.markForRemoval();
+   justitia.setAttackPower(0);
 }
 COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
 
 void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
    player.setHealth(player.getHealth() - aegrum.getAttackPower());
+   aegrum.markForRemoval();
+   aegrum.setAttackPower(0);
 }
 COLLISION_REVERSE_FUNCTION(Aegrum, Player)
 

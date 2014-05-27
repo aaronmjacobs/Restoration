@@ -27,6 +27,9 @@ void FollowCameraController::tick(const float dt) {
    toObject.z = 0.0f; // We don't want the camera to move in z
 
    float toObjectLen = glm::length(toObject);
+   if (toObjectLen == 0.0f) {
+      return;
+   }
    float moveLen = glm::max(toObjectLen, toObjectLen * toObjectLen);
    glm::vec3 move = glm::normalize(toObject) * moveLen;
 

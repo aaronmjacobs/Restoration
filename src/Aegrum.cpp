@@ -20,5 +20,20 @@ Json::Value Aegrum::serialize() const {
    return root;
 }
 
+void Aegrum::tick(const float dt) {
+   scale = glm::vec3(0.3f);
+   Vis::tick(dt);
+}
+
+void Aegrum::draw(const RenderData &renderData) {
+   if (renderData.getRenderState() == STENCIL_STATE) {
+      scale = glm::vec3(2.0f);
+   } else {
+      scale = glm::vec3(0.3f);
+   }
+
+   Vis::draw(renderData);
+}
+
 #define COLLISION_CLASS_NAME Aegrum
 #include "CollisionsBoilerplateCpp.h"

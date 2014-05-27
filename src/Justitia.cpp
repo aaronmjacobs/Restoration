@@ -23,14 +23,15 @@ Json::Value Justitia::serialize() const {
 }
 
 void Justitia::tick(const float dt) {
+   scale = glm::vec3(0.3f);
    Vis::tick(dt);
 }
 
 void Justitia::draw(const RenderData &renderData) {
    if (renderData.getRenderState() == STENCIL_STATE) {
-      scale = glm::vec3(4.0f);
+      scale = glm::vec3(2.0f);
    } else {
-      scale = glm::vec3(1.25f);
+      scale = glm::vec3(0.3f);
    }
 
    Vis::draw(renderData);

@@ -20,6 +20,13 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   /**
+    * Draws the geometry in the scene.
+    */
+   virtual void draw(const RenderData &renderData);
+
+   virtual void tick(const float dt);
+
 #include "CollisionsBoilerplateH.h"
 };
 

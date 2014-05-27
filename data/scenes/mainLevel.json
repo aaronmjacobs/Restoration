@@ -42,9 +42,9 @@
          {
             "@class" : "Light",
             "color" : {
-               "b" : 0.50,
-               "g" : 0.50,
-               "r" : 0.50
+               "b" : 0.80,
+               "g" : 0.80,
+               "r" : 0.80
             },
             "constFalloff" : 0.0,
             "linearFalloff" : 0.0,

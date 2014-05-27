@@ -7,6 +7,7 @@
 //
 
 #include "GLIncludes.h"
+#include "SceneGraph.h"
 
 #include "CollisionsIncludes.h"
 
@@ -41,7 +42,6 @@ void Magus::tick(const float dt) {
          glm::vec3 playerPos = player->getPosition();
          glm::vec3 shootVec = glm::normalize(playerPos - position);
          
-         printf("ATTACK_TIME %f\n", ATTACK_TIME);
          if (glm::length(position - playerPos) < 25.0f) {
 
             
@@ -54,7 +54,7 @@ void Magus::tick(const float dt) {
                evasiveManuevers(playerPos - position);
                ATTACK_TIME = 6.0f;
 
-               /*float aegrumCreationDistance = 0.5f;
+               float aegrumCreationDistance = 0.5f;
                float aegrumSpeed = 15.0f;
                glm::vec3 aegrumPos = position + shootVec * aegrumCreationDistance;
 
@@ -62,7 +62,7 @@ void Magus::tick(const float dt) {
                aegrum->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE);
                aegrum->setPosition(aegrumPos);
                aegrum->setVelocity(shootVec * aegrumSpeed + velocity);
-               sScene->getSceneGraph()->addPhys(aegrum);*/
+               sScene->getSceneGraph()->addPhys(aegrum);
 
             }
 

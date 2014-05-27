@@ -47,11 +47,13 @@ void Magus::tick(const float dt) {
 
             
             if (ATTACK_TIME < 2 && ATTACK_TIME > 0) {
+               //Chase a bit
                glm::vec3 chaseVec = glm::normalize(playerPos - position);
                setVelocity(chaseVec + chaseVec + chaseVec + chaseVec);
             } else if(ATTACK_TIME > 0) {
                //Continue attacking
             } else {
+               //Move around
                evasiveManuevers(playerPos - position);
                ATTACK_TIME = 6.0f;
 

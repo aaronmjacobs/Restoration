@@ -8,7 +8,8 @@ const int Obex::BASE_HEALTH = 14;
 const float Obex::WALK_SPEED = 2.0f;
 const float Obex::JUMP_FORCE = 300.0f;
 const int Obex::ATTACK_POWER = 4;
-float Obex::ATTACK_TIME = 5.0f;
+float Obex::ATTACK_TIME = 0.0f;
+bool Obex::STOPPED = true;
 glm::vec3 Obex::SAVED_VELOCITY = glm::vec3(0.0, 0.0, 0.0);
 
 Obex::Obex(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
@@ -35,13 +36,15 @@ void Obex::draw(const RenderData &renderData) {
 void Obex::tick(const float dt) {
    // TODO AI
 
-   if(ATTACK_TIME >= 4.0f) {
 
-   } else if (ATTACK_TIME == 0.0f){
-      
+   if(ATTACK_TIME <= 0.0f) {
+      setStoppedStatus(false);
+      velocity = SAVED_VELOCITY;
+   } else if (STOPPED) {
+      velocity = glm::vec3(0.0, 0.0, 0.0);
    }
-   ATTACK_TIME += dt;
-
+   ATTACK_TIME -= dt;
+  
 
    Enemy::tick(dt);
 
@@ -76,11 +79,19 @@ float Obex::getAttackTime() {
 }
 
 void Obex::resetAttackTime() {
-   ATTACK_TIME = 0.0;
+   ATTACK_TIME = 5.0;
 }
 
 void Obex::setSavedVel(glm::vec3 svel) {
    SAVED_VELOCITY = svel;
+}
+
+bool Obex::getStoppedStatus() {
+   return STOPPED;
+}
+
+void Obex::setStoppedStatus(bool status) {
+   STOPPED = status;
 }
 
 #define COLLISION_CLASS_NAME Obex

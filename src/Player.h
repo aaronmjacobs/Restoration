@@ -12,6 +12,7 @@ protected:
    static const int BASE_HEALTH;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
+   static float INVINC_FRAMES;
 
    bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
    double lastMouseX, lastMouseY;
@@ -34,6 +35,12 @@ public:
    virtual void onMouseMotionEvent(double xPos, double yPos);
 
    virtual void tick(const float dt);
+
+   virtual float getInvFrames();
+
+   virtual void setInvFrames(float time);
+
+   virtual void setHealth(int health);
 
 #include "CollisionsBoilerplateH.h"
 };

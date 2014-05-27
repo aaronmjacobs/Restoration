@@ -32,6 +32,7 @@ private:
 	SPtr<PhysicalObject> currentObj = NULL, placeObj = NULL, currentObjs[MAXOBJS], copyBuf[MAXOBJS];
 	glm::vec3 copyObjPos[MAXOBJS], copyAvg;
 	double prevPoint[2];
+	double rotate = 0.0;
 
 	std::string objFiles1[10];
 	std::string objFiles2[10];
@@ -71,6 +72,8 @@ public:
 	* Steps |dt| seconds through time.
 	*/
 	virtual void tick(const float dt);
+
+	virtual void printVec(glm::vec3 ray);
 };
 
 #endif

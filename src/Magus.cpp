@@ -7,6 +7,7 @@
 //
 
 #include "GLIncludes.h"
+#include "Loader.h"
 #include "SceneGraph.h"
 
 #include "CollisionsIncludes.h"
@@ -55,13 +56,31 @@ void Magus::tick(const float dt) {
                ATTACK_TIME = 6.0f;
 
                float aegrumCreationDistance = 0.5f;
-               float aegrumSpeed = 15.0f;
+               float aegrumSpeed = 10.0f;
                glm::vec3 aegrumPos = position + shootVec * aegrumCreationDistance;
 
-               SPtr<Aegrum> aegrum = std::make_shared<Aegrum>(sScene, model);
-               aegrum->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE);
+               Loader &loader = Loader::getInstance();
+               Json::Value modelValue;
+               modelValue["@class"] = "Model";
+               modelValue["material"] = "aegrum";
+               Json::Value meshValue;
+               meshValue["@class"] = "Mesh";
+               meshValue["fileName"] = "data/meshes/bullet.obj";
+               modelValue["mesh"] = meshValue;
+               SPtr<Model> aegrumModel = loader.loadModel(sScene, modelValue);
+
+               SPtr<Aegrum> aegrum = std::make_shared<Aegrum>(sScene, aegrumModel);
+               aegrum->setRenderState(LIGHTWORLD_STATE | DARKWORLD_STATE);
                aegrum->setPosition(aegrumPos);
                aegrum->setVelocity(shootVec * aegrumSpeed + velocity);
+               sScene->getSceneGraph()->addPhys(aegrum);
+
+               glm::vec3 nVel = glm::normalize(aegrum->getVelocity());
+               float angle = glm::acos(glm::dot(nVel, glm::vec3(1.0f, 0.0f, 0.0f)));
+               if (nVel.y < 0) {
+                  angle *= -1.0f;
+               }
+               aegrum->setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f)));
                sScene->getSceneGraph()->addPhys(aegrum);
 
             }

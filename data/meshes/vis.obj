@@ -1,6 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib justitia.mtl
+mtllib vis.mtl
 g default
 v 0.156572 -1.029125 -0.110456
 v 0.133188 -1.029125 -0.157770

@@ -26,7 +26,7 @@ LevelEditor::LevelEditor(SPtr<Scene> scene)
 	objFiles1[2] = "data/meshes/archGem_goal.obj";
 	objFiles1[3] = "data/meshes/back_inside.obj";
 	objFiles1[4] = "data/meshes/back_insideEnd.obj";
-	objFiles1[5] = "data/meshes/block.obj";
+	objFiles1[5] = "data/meshes/back_insideEnd.obj";
 	objFiles1[6] = "data/meshes/pillar.obj";
 	objFiles1[7] = "data/meshes/sand_background.obj";
 	objFiles1[8] = "data/meshes/structure_temple.obj";
@@ -247,13 +247,17 @@ void LevelEditor::onKeyEvent(int key, int action) {
 			else
 				big = false;
 		}
-		/*else if (key == GLFW_KEY_H) {
-			if (currentObj && editState == SCALE) {
-				glm::vec3 tempMir = currentObj->getScale();
-				tempMir.x = -tempMir.x;
-				currentObj->setScale(tempMir);
+		else if (key == GLFW_KEY_H) {
+			printf("hey\n");
+			for (int i = 0; i < numObjs; i++) {
+				currentObjs[i]->scaleBy(glm::vec3(-1.0, 1.0, 1.0));
 			}
-		}*/
+			/*if (currentObj && editState == SCALE) {
+				printf("hi\n");
+				currentObj->scaleBy(glm::vec3(-1.0, 1.0, 1.0));
+				printVec(currentObj->getScale());
+			}*/
+		}
 		/*else if (key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT) {
 			quickSwitch(key);
 		}*/
@@ -407,6 +411,7 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 			//tempObj = SPtr<PhysicalObject>(placeObj);
 
 			newObj->setPosition(pos);
+			//newObj->rotateBy(glm::vec3(rotate, 0.0, 0.0));
 			s->getSceneGraph()->addPhys(newObj);
 
 			//numObjs = 0;
@@ -586,4 +591,7 @@ void LevelEditor::tick(const float dt) {
 				transDown = false;
 		}
 	}
+}
+void LevelEditor::printVec(glm::vec3 ray) {
+	std::cout << "x : " << ray.x << " y: " << ray.y << " z: " << ray.z << std::endl;
 }

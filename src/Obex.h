@@ -9,6 +9,8 @@ protected:
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
    static const int ATTACK_POWER;
+   static float ATTACK_TIME;
+   static glm::vec3 SAVED_VELOCITY;
 
 public:
    static const std::string CLASS_NAME;
@@ -28,6 +30,12 @@ public:
    virtual int getAttackPower();
 
    virtual void reverseMovement();
+
+   virtual float getAttackTime();
+
+   virtual void resetAttackTime();
+
+   virtual void setSavedVel(glm::vec3 svel);
 
 #include "CollisionsBoilerplateH.h"
 };

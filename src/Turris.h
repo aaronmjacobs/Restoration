@@ -7,6 +7,7 @@ class Turris : public Enemy {
 protected:
    static const int BASE_HEALTH;
    static const int ATTACK_POWER;
+   static float ATTACK_TIME;
 
 public:
    static const std::string CLASS_NAME;

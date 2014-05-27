@@ -696,9 +696,20 @@ SPtr<Geometry> Loader::loadGeometry(SPtr<Scene> scene, const Json::Value &root) 
       return loadFollowGeometry(scene, root);
    }
 
-   ASSERT(false, "Invalid class name for Geometry: %s", className.c_str());
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
 
-   return SPtr<Geometry>();
+   // Geometry
+   check("Geometry", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   SPtr<Geometry> geometry = std::make_shared<Geometry>(scene, model, data.name);
+   geometry->setPosition(data.position);
+   geometry->setOrientation(data.orientation);
+   geometry->setScale(data.scale);
+   geometry->setRenderState(data.renderState);
+
+   return geometry;
 }
 
 SPtr<Justitia> Loader::loadJustitia(SPtr<Scene> scene, const Json::Value &root) {

@@ -8,6 +8,7 @@
 #include "IOUtils.h"
 #include "LevelEditor.h"
 #include "Loader.h"
+#include "Particle.h"
 #include "Player.h"
 #include "Renderer.h"
 #include "Scene.h"
@@ -124,6 +125,9 @@ void loadLevel(const std::string &name) {
 
    // Attach the audio system
    scene->setAudio(audio);
+
+   // Prepare particle effects
+   Particle::initialize(scene);
 
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, windowWidth, windowHeight);

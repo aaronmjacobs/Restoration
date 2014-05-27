@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "GLIncludes.h"
+#include "Loader.h"
 #include "SceneGraph.h"
 
 #include "CollisionsIncludes.h"
@@ -74,13 +75,30 @@ void Player::onMouseButtonEvent(int button, int action) {
       glm::vec3 playerToMouse = glm::normalize(glm::vec3(mouseRay.x - toPlayer.x, mouseRay.y - toPlayer.y, 0.0f));
 
       float justitiaCreationDistance = 0.5f;
-      float justitiaSpeed = 15.0f;
+      float justitiaSpeed = 10.0f;
       glm::vec3 justitiaPos = position + playerToMouse * justitiaCreationDistance;
 
-      SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, model);
+      Loader &loader = Loader::getInstance();
+      Json::Value modelValue;
+      modelValue["@class"] = "Model";
+      modelValue["material"] = "justitia";
+      Json::Value meshValue;
+      meshValue["@class"] = "Mesh";
+      meshValue["fileName"] = "data/meshes/bullet.obj";
+      modelValue["mesh"] = meshValue;
+      SPtr<Model> justitiaModel = loader.loadModel(sScene, modelValue);
+
+      SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, justitiaModel);
       justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE);
       justitia->setPosition(justitiaPos);
       justitia->setVelocity(playerToMouse * justitiaSpeed + velocity);
+
+      glm::vec3 nVel = glm::normalize(justitia->getVelocity());
+      float angle = glm::acos(glm::dot(nVel, glm::vec3(1.0f, 0.0f, 0.0f)));
+      if (nVel.y < 0) {
+         angle *= -1.0f;
+      }
+      justitia->setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f)));
       sScene->getSceneGraph()->addPhys(justitia);
    }
 }

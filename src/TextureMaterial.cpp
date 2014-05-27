@@ -90,5 +90,6 @@ void TextureMaterial::disable(){
    glDisableVertexAttribArray(shaderProgram->getAttribute("aPosition"));
    glDisableVertexAttribArray(shaderProgram->getAttribute("aNormal"));
    glDisableVertexAttribArray(shaderProgram->getAttribute("aTexCoord"));
-   shaderProgram->disable();
+
+   PhongMaterial::disable();
 }

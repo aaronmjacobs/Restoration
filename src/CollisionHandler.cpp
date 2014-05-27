@@ -18,7 +18,6 @@ void CollisionHandler::handleCollision(PhysicalObject &first, PhysicalObject &se
 }
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
-   printf("!health: %d\n", player.getHealth());
    player.setHealth(player.getHealth() - enemy.getAttackPower());
    if (player.getInvFrames() <= 0.0f) {
       player.setInvFrames(2.0f);
@@ -192,11 +191,15 @@ COLLISION_REVERSE_FUNCTION(Corona, Scenery)
 
 void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
    enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
+   justitia.markForRemoval();
+   justitia.setAttackPower(0);
 }
 COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
 
 void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
    player.setHealth(player.getHealth() - aegrum.getAttackPower());
+   aegrum.markForRemoval();
+   aegrum.setAttackPower(0);
 }
 COLLISION_REVERSE_FUNCTION(Aegrum, Player)
 

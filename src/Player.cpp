@@ -157,8 +157,10 @@ void Player::setInvFrames(float time) {
 
 void Player::setHealth(int health) {
    if (INVINC_FRAMES <= 0.0f) {
+      if (health != getHealth()) {
+         printf("Health: %d\n", health);
+      }
       Character::setHealth(health);
-      printf("Health: %d\n", health);
    }
 }
 

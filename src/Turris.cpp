@@ -43,7 +43,7 @@ void Turris::tick(const float dt) {
             glm::vec3 playerPos = player->getPosition();
             glm::vec3 shootVec = glm::normalize(playerPos - position);
 
-            if (glm::length(position - playerPos) < 15.0f) {
+            if (glm::length(position - playerPos) < 20.0f) {
                float aegrumCreationDistance = 0.5f;
                float aegrumSpeed = 15.0f;
                glm::vec3 aegrumPos = position + shootVec * aegrumCreationDistance;

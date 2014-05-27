@@ -12,6 +12,7 @@ protected:
    static float ATTACK_TIME;
    static glm::vec3 SAVED_VELOCITY;
    static bool STOPPED;
+   glm::vec3 moveVel;
 
 public:
    static const std::string CLASS_NAME;
@@ -41,6 +42,8 @@ public:
    virtual bool getStoppedStatus();
 
    virtual void setStoppedStatus(bool status);
+
+   virtual void setVelocity(const glm::vec3 &vel);
 
 #include "CollisionsBoilerplateH.h"
 };

@@ -36,8 +36,9 @@ void Obex::draw(const RenderData &renderData) {
 void Obex::tick(const float dt) {
    // TODO AI
 
-
    if(ATTACK_TIME <= 0.0f) {
+      resetAttackTime();
+      SAVED_VELOCITY *= -1.0f;
       setStoppedStatus(false);
       velocity = SAVED_VELOCITY;
    } else if (STOPPED) {
@@ -92,6 +93,11 @@ bool Obex::getStoppedStatus() {
 
 void Obex::setStoppedStatus(bool status) {
    STOPPED = status;
+}
+
+void Obex::setVelocity(const glm::vec3 &vel) {
+   Enemy::setVelocity(vel);
+   SAVED_VELOCITY = vel;
 }
 
 #define COLLISION_CLASS_NAME Obex

@@ -43,7 +43,7 @@ void Magus::tick(const float dt) {
          glm::vec3 playerPos = player->getPosition();
          glm::vec3 shootVec = glm::normalize(playerPos - position);
          
-         if (glm::length(position - playerPos) < 25.0f) {
+         if (glm::length(position - playerPos) < 30.0f) {
 
             
             if (ATTACK_TIME < 2 && ATTACK_TIME > 0) {

@@ -12,11 +12,17 @@
 
 const std::string Enemy::CLASS_NAME = "Enemy";
 
+int Enemy::numEnemies = 0;
+int Enemy::maxEnemies = 0;
+
 Enemy::Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, int attackPower, const std::string &name)
 : Character(scene, model, health, name) {
+   ++numEnemies;
+   ++maxEnemies;
 }
 
 Enemy::~Enemy() {
+   --numEnemies;
 }
 
 Json::Value Enemy::serialize() const {

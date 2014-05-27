@@ -25,7 +25,7 @@ public:
 
    glm::vec3 getVelocity();
    glm::vec3 getAcceleration();
-   void setVelocity(const glm::vec3 &vel);
+   virtual void setVelocity(const glm::vec3 &vel);
    void setAcceleration(const glm::vec3 &acc);
 
    virtual void tick(const float dt);

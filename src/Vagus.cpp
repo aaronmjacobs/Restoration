@@ -32,7 +32,7 @@ void Vagus::tick(const float dt) {
          glm::vec3 playerPos = player->getPosition();
        
          glm::vec3 chaseVec = glm::normalize(playerPos - position);
-         if (glm::length(position - playerPos) < 10.0f) {
+         if (glm::length(position - playerPos) < 20.0f) {
             setVelocity(chaseVec * WALK_SPEED);
          }
       }

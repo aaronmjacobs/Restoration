@@ -25,7 +25,20 @@ Json::Value Vagus::serialize() const {
 }
 
 void Vagus::tick(const float dt) {
-   // TODO AI
+   SPtr<Scene> sScene = scene.lock();
+   if (sScene) {
+      SPtr<Player> player = sScene->getPlayer().lock();
+      if (player) {
+         glm::vec3 playerPos = player->getPosition();
+       
+         glm::vec3 chaseVec = glm::normalize(playerPos - position);
+         if (glm::length(position - playerPos) < 10.0f) {
+            setVelocity(chaseVec);
+         }
+      }
+   }
+
+
 
    Enemy::tick(dt);
 }

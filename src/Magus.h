@@ -16,6 +16,7 @@ protected:
    static const int BASE_HEALTH;
    static const float HOVER_SPEED;
    static const int ATTACK_POWER;
+   static float ATTACK_TIME;
 
 public:    
    static const std::string CLASS_NAME;
@@ -33,6 +34,8 @@ public:
    virtual int getAttackPower();
 
    virtual void reverseMovement();
+
+   virtual void evasiveManuevers(glm::vec3 change);
 
 #include "CollisionsBoilerplateH.h"
 };

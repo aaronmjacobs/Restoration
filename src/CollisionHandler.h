@@ -42,6 +42,8 @@ public:
    COLLISION_REVERSE_DECLARATION(Obex, Scenery)
    void handleCollision(Vis &vis, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Vis, Scenery)
+   void handleCollision(Corona &corona, Scenery &scenery);
+   COLLISION_REVERSE_DECLARATION(Corona, Scenery)
 };
 
 #endif

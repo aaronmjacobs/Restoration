@@ -21,6 +21,26 @@ LevelEditor::LevelEditor(SPtr<Scene> scene)
 : scene(scene) {
 	prevPoint[0] = 0.0;
 	prevPoint[1] = 0.0;
+	objFiles1[0] = "data/meshes/block.obj";
+	objFiles1[1] = "data/meshes/aquaduct.obj";
+	objFiles1[2] = "data/meshes/archGem_goal.obj";
+	objFiles1[3] = "data/meshes/back_inside.obj";
+	objFiles1[4] = "data/meshes/back_insideEnd.obj";
+	objFiles1[5] = "data/meshes/block.obj";
+	objFiles1[6] = "data/meshes/pillar.obj";
+	objFiles1[7] = "data/meshes/sand_background.obj";
+	objFiles1[8] = "data/meshes/structure_temple.obj";
+	objFiles1[9] = "data/meshes/block.obj";
+	objFiles2[0] = "data/meshes/groundPath.obj";
+	objFiles2[1] = "data/meshes/groundPath.obj";
+	objFiles2[2] = "data/meshes/frontPath1.obj";
+	objFiles2[3] = "data/meshes/frontPath2.obj";
+	objFiles2[4] = "data/meshes/frontPath3.obj";
+	objFiles2[5] = "data/meshes/backPath1.obj";
+	objFiles2[6] = "data/meshes/backPath2.obj";
+	objFiles2[7] = "data/meshes/backPath3.obj";
+	objFiles2[8] = "data/meshes/sand_background.obj";
+	objFiles2[9] = "data/meshes/sand_background.obj";
 }
 
 /*
@@ -275,25 +295,31 @@ void LevelEditor::onKeyEvent(int key, int action) {
 		}
 		//OBJ FILE STUFF
 		else if (key == GLFW_KEY_0)
-			curObjFile = "data/meshes/block.obj";
+			curObjFile = curFileList[0];
 		else if (key == GLFW_KEY_1)
-			curObjFile = "data/meshes/aquaduct.obj";
+			curObjFile = curFileList[1];
 		else if (key == GLFW_KEY_2)
-			curObjFile = "data/meshes/archGem_goal.obj";
+			curObjFile = curFileList[2];
 		else if (key == GLFW_KEY_3)
-			curObjFile = "data/meshes/back_inside.obj";
+			curObjFile = curFileList[3];
 		else if (key == GLFW_KEY_4)
-			curObjFile = "data/meshes/back_insideEnd.obj";
-		/*else if (key == GLFW_KEY_5)
-			curObjFile = "data/meshes/desert_backdrop.obj";*/
+			curObjFile = curFileList[4];
+		else if (key == GLFW_KEY_5)
+			curObjFile = curFileList[5];
 		else if (key == GLFW_KEY_6)
-			curObjFile = "data/meshes/pillar.obj";
+			curObjFile = curFileList[6];
 		else if (key == GLFW_KEY_7)
-			curObjFile = "data/meshes/sand_background.obj";
+			curObjFile = curFileList[7];
 		else if (key == GLFW_KEY_8)
-			curObjFile = "data/meshes/structure_temple.obj";
+			curObjFile = curFileList[8];
 		else if (key == GLFW_KEY_9)
-			curObjFile = "data/meshes/block.obj";
+			curObjFile = curFileList[9];
+		else if (key == GLFW_KEY_EQUAL) {
+			if (list1)
+				curFileList = objFiles2;
+			else
+				curFileList = objFiles1;
+		}
 	}
 	else if (action == GLFW_RELEASE) {
 		if (key == GLFW_KEY_UP)

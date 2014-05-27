@@ -4,11 +4,44 @@
 
 #include <assimp/postprocess.h>
 #include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 const std::string AniMesh::CLASS_NAME = "AniMesh";
 
 AniMesh::AniMesh(const std::string &fileName, const std::string &aniName)
 : Mesh(fileName), numModes(0), aniMode(0) {
+   // 
+   float shapeMatVal[4][4];
+   std::string line;
+   std::ifstream file;
+   file.open(fileName);
+   while (std::getline(file, line)) {
+      if (line.find("<bind_shape_matrix>") != std::string::npos) {
+         std::istringstream lineStream(line);
+         std::getline(lineStream, line, '>');
+         for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++) {
+               lineStream >> shapeMatVal[i][j];
+            }
+         }
+         glm::mat4 bindShape(shapeMatVal[0][0], shapeMatVal[0][1], shapeMatVal[0][2], shapeMatVal[0][3],
+            shapeMatVal[1][0], shapeMatVal[1][1], shapeMatVal[1][2], shapeMatVal[1][3],
+            shapeMatVal[2][0], shapeMatVal[2][1], shapeMatVal[2][2], shapeMatVal[2][3],
+            shapeMatVal[3][0], shapeMatVal[3][1], shapeMatVal[3][2], shapeMatVal[3][3]);
+
+         glm::vec4 minVal = glm::vec4(bounds->xMin, bounds->yMin, bounds->zMin, 1.0f);
+         glm::vec4 maxVal = glm::vec4(bounds->xMax, bounds->yMax, bounds->zMax, 1.0f);
+
+         minVal = bindShape * minVal;
+         maxVal = bindShape * maxVal;
+
+         bounds = std::make_shared<BoundingBox>(minVal.x, maxVal.x, minVal.y, maxVal.y, minVal.z, maxVal.z);
+         break;
+      }
+   }
+//
    loadAnimation(fileName, aniName);
    const aiScene* scene = scenes[0];
 

@@ -32,6 +32,7 @@ class Mesh : public Serializable {
     */
    std::string fileName;
 
+protected:
    /**
     * Bounding box
     */

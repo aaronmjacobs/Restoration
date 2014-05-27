@@ -9,6 +9,7 @@ const std::string Player::CLASS_NAME = "Player";
 const int Player::BASE_HEALTH = 10;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 520.0f;
+float Player::INVINC_FRAMES = 0.0f;
 
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
    : Character(scene, model, BASE_HEALTH, name) {
@@ -90,6 +91,7 @@ void Player::onMouseMotionEvent(double xPos, double yPos) {
 }
 
 void Player::tick(const float dt) {
+
    // Kinetic friction
    if (onGround) {
       velocity.x *= 0.85f;
@@ -119,7 +121,27 @@ void Player::tick(const float dt) {
       // TODO Handle attack logic
    }
 
+   //Invincibility frames
+   if (INVINC_FRAMES > 0) {
+      INVINC_FRAMES -= dt;
+   }
+   printf("INVINC_FRAMES: %f | health: %d\n", INVINC_FRAMES, health);
    Character::tick(dt);
+}
+
+float Player::getInvFrames() {
+   return INVINC_FRAMES;
+}
+
+void Player::setInvFrames(float time) {
+   INVINC_FRAMES = time;
+}
+
+void Player::setHealth(int health) {
+   printf("-INVINC_FRAMES: %f\n", INVINC_FRAMES);
+   if (INVINC_FRAMES <= 0.0f) {
+      Character::setHealth(health);
+   }
 }
 
 #define COLLISION_CLASS_NAME Player

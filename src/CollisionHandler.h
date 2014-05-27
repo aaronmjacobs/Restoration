@@ -33,8 +33,8 @@ public:
    virtual ~CollisionHandler();
 
    void handleCollision(PhysicalObject &first, PhysicalObject &second);
-   void handleCollision(Player &player, Magus &magus);
-   void handleCollision(Player &player, Corona &corona);
+   //void handleCollision(Player &player, Magus &magus);
+   void handleCollision(Player &player, Enemy &enemy);
    void handleCollision(Enemy &enemy1, Enemy &enemy2);
    void handleCollision(Character &character, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Character, Scenery)
@@ -44,6 +44,13 @@ public:
    COLLISION_REVERSE_DECLARATION(Vis, Scenery)
    void handleCollision(Corona &corona, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Corona, Scenery)
+
+   void handleCollision(Justitia &justitia, Enemy &enemy);
+   COLLISION_REVERSE_DECLARATION(Justitia, Enemy)
+   void handleCollision(Aegrum &aegrum, Player &player);
+   COLLISION_REVERSE_DECLARATION(Aegrum, Player)
+   
+
 };
 
 #endif

@@ -17,15 +17,20 @@ void CollisionHandler::handleCollision(PhysicalObject &first, PhysicalObject &se
    // Default handler, does nothing
 }
 
-void CollisionHandler::handleCollision(Player &player, Magus &magus) {
-    //player.setHealth(player.getHealth() - magus.getAttackPower());
+void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
+   printf("!health: %d\n", player.getHealth());
+   player.setHealth(player.getHealth() - enemy.getAttackPower());
+   if (player.getInvFrames() <= 0.0f) {
+      player.setInvFrames(2.0f);
+   }
+
 }
 
-void CollisionHandler::handleCollision(Player &player, Corona &corona) {
+/*void CollisionHandler::handleCollision(Player &player, Corona &corona) {
     //player.setHealth(player.getHealth() - corona.getAttackPower());
     //corona.reverseMovement();
     //Add enemy logic for backing off after hurting you
-}
+}*/
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
    //Reverse direction
@@ -87,10 +92,55 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
 COLLISION_REVERSE_FUNCTION(Character, Scenery)
 
 void CollisionHandler::handleCollision(Obex &obex, Scenery &scenery) {
-   if (obex.getAttackTime() > 0.0) {
-      obex.resetAttackTime();
-      obex.reverseMovement();
+   BoundingBox collision = BoundingBox(obex.getBounds(), scenery.getBounds());
+   float collisionWidth = collision.width();
+   float collisionHeight = collision.height();
+   glm::vec3 obexPos = obex.getPosition();
+   glm::vec3 sceneryPos = scenery.getPosition();
+   glm::vec3 obexVel = obex.getVelocity();
+   glm::vec3 obexMove(0.0f);
+
+   obex.setStoppedStatus(true);
+   obex.setSavedVel(-obexVel);
+   obex.resetAttackTime();
+   if (collisionWidth <= collisionHeight) {
+      // Avoid getting stuck on edges
+      if (collisionHeight < 0.1f) {
+         return;
+      }
+
+      // Treat the collision in x
+      if (obexPos.x >= sceneryPos.x) {
+         // Character is to the right
+         obexMove.x = collisionWidth;
+         if (obexVel.x < 0.0f) {
+            obexVel.x = 0.0f;
+         }
+      } else {
+         // obex is to the left
+         obexMove.x = -collisionWidth;
+         if (obexVel.x > 0.0f) {
+            obexVel.x = 0.0f;
+         }
+      }
+   } else {
+      // Treat the collision in y
+      if (obexPos.y >= sceneryPos.y) {
+         // Character is above
+         obexMove.y = collisionHeight;
+         if (obexVel.y < 0.0f) {
+            obexVel.y = 0.0f;
+            //obex.setOnGround();
+         }
+      } else {
+         // Character is below
+         obexMove.y = -collisionHeight;
+         if (obexVel.y > 0.0f) {
+            obexVel.y = 0.0f;
+         }
+      }
    }
+   
    Character& obexCharacter = obex;
    handleCollision(obexCharacter, scenery);
 }
@@ -139,4 +189,14 @@ void CollisionHandler::handleCollision(Corona &corona, Scenery &scenery) {
 }
 
 COLLISION_REVERSE_FUNCTION(Corona, Scenery)
+
+void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
+   enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
+}
+COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
+
+void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
+   player.setHealth(player.getHealth() - aegrum.getAttackPower());
+}
+COLLISION_REVERSE_FUNCTION(Aegrum, Player)
 

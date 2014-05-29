@@ -9,6 +9,7 @@ GLint maxTextureUnits;
 void reset() {
    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
    ASSERT(maxTextureUnits > 0, "Max texture units is 0");
+   textureUnit = 0;
 }
 
 GLenum get() {

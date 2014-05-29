@@ -22,4 +22,4 @@ void release() {
    --textureUnit;
 }
 
-}
+} // namespace TextureUnitManager

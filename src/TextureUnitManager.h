@@ -9,6 +9,6 @@ void reset();
 GLenum get();
 void release();
 
-};
+} // namespace TextureUnitManager
 
 #endif

@@ -3,6 +3,7 @@
 #include "Mesh.h"
 #include "RenderState.h"
 #include "TextureMaterial.h"
+#include "TextureUnitManager.h"
 
 const std::string TextureMaterial::CLASS_NAME = "TextureMaterial";
 
@@ -78,9 +79,10 @@ void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    PhongMaterial::apply(renderData, mesh);
 
    /* Texture Shading */
-   glActiveTexture(GL_TEXTURE0 + textureID);
+   GLenum textureUnit = TextureUnitManager::get();
+   glActiveTexture(GL_TEXTURE0 + textureUnit);
    glBindTexture(GL_TEXTURE_2D, textureID);
-   glUniform1i(uTexture, textureID);
+   glUniform1i(uTexture, textureUnit);
    glEnableVertexAttribArray(aTexCoord);
    glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -90,6 +92,8 @@ void TextureMaterial::disable(){
    glDisableVertexAttribArray(shaderProgram->getAttribute("aPosition"));
    glDisableVertexAttribArray(shaderProgram->getAttribute("aNormal"));
    glDisableVertexAttribArray(shaderProgram->getAttribute("aTexCoord"));
+
+   TextureUnitManager::release();
 
    PhongMaterial::disable();
 }

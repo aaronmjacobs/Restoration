@@ -1,6 +1,7 @@
 #include "IOUtils.h"
 #include "PhongMaterial.h"
 #include "RenderState.h"
+#include "TextureUnitManager.h"
 
 const std::string PhongMaterial::CLASS_NAME = "PhongMaterial";
 
@@ -71,20 +72,24 @@ void PhongMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    glUniform3fv(uEmission, 1, glm::value_ptr(emission + selectHighlight));
    glUniform1f(uShininess, shininess);
 
+   GLenum ambientMapTextureUnit = TextureUnitManager::get();
+   GLenum ambientGlobalTextureUnit = TextureUnitManager::get();
    if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {
       GLuint ambientMapID = renderData.getGLuint("ambientMapID");
       GLuint ambientGlobalID = renderData.getGLuint("ambientGlobalID");
 
-      glActiveTexture(GL_TEXTURE0 + ambientMapID);
+      glActiveTexture(GL_TEXTURE0 + ambientMapTextureUnit);
       glBindTexture(GL_TEXTURE_CUBE_MAP, ambientMapID);
-      glUniform1i(uAmbientMap, ambientMapID);
+      glUniform1i(uAmbientMap, ambientMapTextureUnit);
 
-      glActiveTexture(GL_TEXTURE0 + ambientGlobalID);
+      glActiveTexture(GL_TEXTURE0 + ambientGlobalTextureUnit);
       glBindTexture(GL_TEXTURE_2D, ambientGlobalID);
-      glUniform1i(uAmbientGlobal, ambientGlobalID);
+      glUniform1i(uAmbientGlobal, ambientGlobalTextureUnit);
    }
 }
 
 void PhongMaterial::disable() {
+   TextureUnitManager::release();
+   TextureUnitManager::release();
    shaderProgram->disable();
 }

@@ -2,6 +2,7 @@
 #include "FBOTextureMaterial.h"
 #include "lib/stb_image.h"
 #include "Mesh.h"
+#include "TextureUnitManager.h"
 
 const std::string FBOTextureMaterial::CLASS_NAME = "FBOTextureMaterial";
 
@@ -32,10 +33,11 @@ void FBOTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    shaderProgram->use();
 
    /* Texture Shading */
-   glActiveTexture(GL_TEXTURE0 + texture_id);
+   GLenum textureUnit = TextureUnitManager::get();
+   glActiveTexture(GL_TEXTURE0 + textureUnit);
    glBindTexture(GL_TEXTURE_2D, texture_id);
 
-   glUniform1i(uTexture, texture_id);
+   glUniform1i(uTexture, textureUnit);
 
    glEnableVertexAttribArray(aTexCoord);
    glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
@@ -44,5 +46,6 @@ void FBOTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
 
 void FBOTextureMaterial::disable() {
    glDisableVertexAttribArray(aTexCoord);
+   TextureUnitManager::release();
    shaderProgram->disable();
 }

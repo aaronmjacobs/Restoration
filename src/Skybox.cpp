@@ -6,6 +6,7 @@
 #include "Model.h"
 #include "ShaderProgram.h"
 #include "Skybox.h"
+#include "TextureUnitManager.h"
 
 const std::string Skybox::CLASS_NAME = "Skybox";
 
@@ -57,17 +58,19 @@ void Skybox::renderSkybox(RenderData &renderData) {
    // Enable the skybox shader program
    model->getMaterial()->getShaderProgram()->use();
 
+   GLenum textureUnit = TextureUnitManager::get();
    glDisable(GL_DEPTH_TEST);
    glEnable(GL_TEXTURE_CUBE_MAP);
-   glActiveTexture(GL_TEXTURE0 + skyboxID);
+   glActiveTexture(GL_TEXTURE0 + textureUnit);
    glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxID);
-   glUniform1i(uSkybox, skyboxID);
+   glUniform1i(uSkybox, textureUnit);
 
    model->draw(renderData);
 
    glDisable(GL_TEXTURE_CUBE_MAP);
    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
    glEnable(GL_DEPTH_TEST);
+   TextureUnitManager::release();
 
    // Set the ambient map and global ambient color
    renderData.set("ambientMapID", ambientMapID);

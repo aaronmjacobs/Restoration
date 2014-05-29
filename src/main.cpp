@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Renderer.h"
 #include "Scene.h"
+#include "TextureUnitManager.h"
 #include "Types.h"
 
 #include <iostream>
@@ -107,6 +108,9 @@ void loadLevel(const std::string &name) {
    // Clear the old level
    scene.reset();
    Loader::resetSingleton();
+
+   // Reset the texture unit manager
+   TextureUnitManager::reset();
 
    // Load the new level
    Loader& loader = Loader::getInstance();

@@ -3,6 +3,7 @@
 #include "Loader.h"
 #include "Mesh.h"
 #include "PlainTextureMaterial.h"
+#include "TextureUnitManager.h"
 
 const std::string PlainTextureMaterial::CLASS_NAME = "PlainTextureMaterial";
 
@@ -39,14 +40,16 @@ void PlainTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh)
    shaderProgram->use();
 
    /* Texture Shading */
-   glActiveTexture(GL_TEXTURE0 + texture_id);
+   GLenum textureUnit = TextureUnitManager::get();
+   glActiveTexture(GL_TEXTURE0 + textureUnit);
    glBindTexture(GL_TEXTURE_2D, texture_id);
-   glUniform1i(uTexture, texture_id);
+   glUniform1i(uTexture, textureUnit);
    glEnableVertexAttribArray(aTexCoord);
    glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
    glVertexAttribPointer(aTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
 void PlainTextureMaterial::disable() {
+   TextureUnitManager::release();
    glDisableVertexAttribArray(aTexCoord);
 }

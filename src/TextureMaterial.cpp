@@ -14,8 +14,9 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
                    const glm::vec3 &specular,
                    const glm::vec3 &emission,
                    float shininess,
-                   const std::string &textureFileName)
-   : PhongMaterial(jsonFileName, shaderProgram, ambient, diffuse, specular, emission, shininess), textureFileName(textureFileName) {
+                   const std::string &textureFileName,
+                   const std::string &altTextureFileName)
+   : PhongMaterial(jsonFileName, shaderProgram, ambient, diffuse, specular, emission, shininess), textureFileName(textureFileName), altTextureFileName(altTextureFileName) {
    
    // Generate Texture ID, get the attribute and uniforms for texture.
    uTexture = shaderProgram->getUniform("uTexture");
@@ -23,6 +24,10 @@ TextureMaterial::TextureMaterial(const std::string &jsonFileName,
 
    Loader& loader = Loader::getInstance();
    textureID = loader.loadTexture(textureFileName);
+
+   if (hasAltTexture()) {
+      altTextureID = loader.loadTexture(altTextureFileName);
+   }
 }
 
 TextureMaterial::~TextureMaterial() {
@@ -71,6 +76,8 @@ Json::Value TextureMaterial::serialize() const {
 
    // Texture
    root["texture"] = textureFileName;
+   root["altTexture"] = altTextureFileName;
+
    return root;
 }
 
@@ -80,8 +87,15 @@ void TextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
 
    /* Texture Shading */
    GLenum textureUnit = TextureUnitManager::get();
+   GLint texID;
+   if (hasAltTexture() && renderData.getRenderState() & LIGHTWORLD_STATE) {
+      texID = altTextureID;
+   } else {
+      texID = textureID;
+   }
+
    glActiveTexture(GL_TEXTURE0 + textureUnit);
-   glBindTexture(GL_TEXTURE_2D, textureID);
+   glBindTexture(GL_TEXTURE_2D, texID);
    glUniform1i(uTexture, textureUnit);
    glEnableVertexAttribArray(aTexCoord);
    glBindBuffer(GL_ARRAY_BUFFER, mesh.getTBO());
@@ -96,4 +110,8 @@ void TextureMaterial::disable(){
    TextureUnitManager::release();
 
    PhongMaterial::disable();
+}
+
+bool TextureMaterial::hasAltTexture() {
+   return !altTextureFileName.empty();
 }

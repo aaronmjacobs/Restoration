@@ -6,13 +6,19 @@
 #include "SceneGraph.h"
 #include <random>
 
-SPtr<Model> Particle::particleModel;
+SPtr<Model> Particle::particleModelLight;
+SPtr<Model> Particle::particleModelDark;
 
 void Particle::initialize(SPtr<Scene> scene) {
    Loader &loader = Loader::getInstance();
+
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/particle.obj");
-   SPtr<Material> material = loader.loadMaterial(scene, "particle");
-   particleModel = std::make_shared<Model>(material, mesh);
+   SPtr<Material> material = loader.loadMaterial(scene, "particleLight");
+   particleModelLight = std::make_shared<Model>(material, mesh);
+
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/particle.obj");
+   SPtr<Material> material = loader.loadMaterial(scene, "particleDark");
+   particleModelDark = std::make_shared<Model>(material, mesh);
 }
 
 void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread) {
@@ -43,7 +49,7 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
 const std::string Particle::CLASS_NAME = "Particle";
 
 Particle::Particle(SPtr<Scene> scene, const std::string &name)
-:  Geometry(scene, particleModel, name) {
+: Geometry(scene, particleModelLight, name) { //TODO: Edit this so you can choose light or dark particle
 }
 
 Particle::~Particle() {

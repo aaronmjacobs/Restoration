@@ -193,6 +193,8 @@ void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
    enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
    justitia.markForRemoval();
    justitia.setAttackPower(0);
+   //TODO: Add particle effect
+   //createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread);
 }
 COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
 
@@ -200,6 +202,8 @@ void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
    player.setHealth(player.getHealth() - aegrum.getAttackPower());
    aegrum.markForRemoval();
    aegrum.setAttackPower(0);
+   //TODO: Add particle effect
+   //createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread);
 }
 COLLISION_REVERSE_FUNCTION(Aegrum, Player)
 

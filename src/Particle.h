@@ -5,7 +5,9 @@
 
 class Particle : public Geometry {
 protected:
-   static SPtr<Model> particleModel;
+   static SPtr<Model> particleModelLight;
+   static SPtr<Model> particleModelDark;
+
 
    glm::vec3 velocity, acceleration;
    float duration;

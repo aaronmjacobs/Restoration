@@ -16,9 +16,9 @@ void Particle::initialize(SPtr<Scene> scene) {
    SPtr<Material> material = loader.loadMaterial(scene, "particleLight");
    particleModelLight = std::make_shared<Model>(material, mesh);
 
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/particle.obj");
-   SPtr<Material> material = loader.loadMaterial(scene, "particleDark");
-   particleModelDark = std::make_shared<Model>(material, mesh);
+   SPtr<Mesh> mesh1 = std::make_shared<Mesh>("data/meshes/particle.obj");
+   SPtr<Material> material1 = loader.loadMaterial(scene, "particleDark");
+   particleModelDark = std::make_shared<Model>(material1, mesh1);
 }
 
 void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread) {

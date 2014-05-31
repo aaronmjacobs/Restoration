@@ -14,7 +14,7 @@
       "b" : 0.0,
       "g" : 0.0,
       "r" : 0.0
-   }, 
+   },
    "shaderProgram" : "phong_textured",
    "shininess" : 500.0,
    "specular" : {
@@ -22,6 +22,5 @@
       "g" : 0.2,
       "r" : 0.2
    },
-   "texture" : "data/textures/box_inside.png",
-   "altTexture" : "data/textures/water.png"
+   "texture" : "data/textures/tree.png"
 }

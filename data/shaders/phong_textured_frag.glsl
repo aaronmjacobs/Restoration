@@ -62,7 +62,7 @@ void main() {
                   * falloff * uLights[i].color;
    }
 
-   finalColor += surfaceColor * ((ambient + ambientGlobal) * 0.5) * 0.5;
+   finalColor += surfaceColor * ((ambient + ambientGlobal) * 0.5) * 0.7;
    finalColor += uMaterial.emission;
 
    gl_FragColor = vec4(finalColor.rgb, 1);

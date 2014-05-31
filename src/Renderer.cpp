@@ -129,66 +129,11 @@ void updatePlanes(glm::mat4 viewProj, bool normalize) {
       planes[i].b = matrix[coord(4,2)] + sign * matrix[coord(t, 2)];
       planes[i].c = matrix[coord(4,3)] + sign * matrix[coord(t, 3)];
       planes[i].d = matrix[coord(4,4)] + sign * matrix[coord(t, 4)];
+
       if ((i % 2) == 0 ) {
          sign *= -1;
       }
-
    }
-
-   /*// Left
-   planes[0].a = matrix[coord(4,1)] + matrix[coord(1,1)];
-   planes[0].b = matrix[coord(4,2)] + matrix[coord(1,2)];
-   planes[0].c = matrix[coord(4,3)] + matrix[coord(1,3)];
-   planes[0].d = matrix[coord(4,4)] + matrix[coord(1,4)];
-
-   // Right
-   planes[1].a = matrix[coord(4,1)] - matrix[coord(1,1)];
-   planes[1].b = matrix[coord(4,2)] - matrix[coord(1,2)];
-   planes[1].c = matrix[coord(4,3)] - matrix[coord(1,3)];
-   planes[1].d = matrix[coord(4,4)] - matrix[coord(1,4)];
-
-   // Top
-   planes[2].a = matrix[coord(4,1)] - matrix[coord(2,1)];
-   planes[2].b = matrix[coord(4,2)] - matrix[coord(2,2)];
-   planes[2].c = matrix[coord(4,3)] - matrix[coord(2,3)];
-   planes[2].d = matrix[coord(4,4)] - matrix[coord(2,4)];
-
-   // Bottom
-   planes[3].a = matrix[coord(4,1)] + matrix[coord(2,1)];
-   planes[3].b = matrix[coord(4,2)] + matrix[coord(2,2)];
-   planes[3].c = matrix[coord(4,3)] + matrix[coord(2,3)];
-   planes[3].d = matrix[coord(4,4)] + matrix[coord(2,4)];
-
-   // Near
-   planes[4].a = matrix[coord(4,1)] + matrix[coord(3,1)];
-   planes[4].b = matrix[coord(4,2)] + matrix[coord(3,2)];
-   planes[4].c = matrix[coord(4,3)] + matrix[coord(3,3)];
-   planes[4].d = matrix[coord(4,4)] + matrix[coord(3,4)];
-
-   // Far
-   planes[5].a = matrix[coord(4,1)] - matrix[coord(3,1)];
-   planes[5].b = matrix[coord(4,2)] - matrix[coord(3,2)];
-   planes[5].c = matrix[coord(4,3)] - matrix[coord(3,3)];
-   planes[5].d = matrix[coord(4,4)] - matrix[coord(3,4)];
-   */
-
-   /*
-    t = i/2 + 1;
-    planes[i].a = matrix[coord(4,1)] + matrix[coord(t, 1)];
-    planes[i].b = matrix[coord(4,2)] + matrix[coord(t, 2)];
-    planes[i].c = matrix[coord(4,3)] + matrix[coord(t, 3)];
-    planes[i].d = matrix[coord(4,4)] + matrix[coord(t, 4)];
-    
-    i++;
-
-    planes[i].a = matrix[coord(4,1)] - matrix[coord(t, 1)];
-    planes[i].b = matrix[coord(4,2)] - matrix[coord(t, 2)];
-    planes[i].c = matrix[coord(4,3)] - matrix[coord(t, 3)];
-    planes[i].d = matrix[coord(4,4)] - matrix[coord(t, 4)];
-
-////////////
-
-    */
 
    if (normalize) {
       for (int i = 0; i < 6; i++) {

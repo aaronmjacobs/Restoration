@@ -6,10 +6,11 @@
 
 class TextureMaterial : public PhongMaterial {
 protected:
-   GLuint textureID;
+   GLuint textureID, altTextureID;
    GLint uTexture, aTexCoord;
 
    const std::string textureFileName;
+   const std::string altTextureFileName;
 
 public:
    /**
@@ -27,7 +28,8 @@ public:
                    const glm::vec3 &specular,
                    const glm::vec3 &emission,
                    float shininess,
-                   const std::string &textureFileName);
+                   const std::string &textureFileName,
+                   const std::string &altTextureFileName = "");
 
    /**
     * Delete the texture.
@@ -42,6 +44,8 @@ public:
    virtual void apply(const RenderData &renderData, const Mesh &mesh);
 
    virtual void disable();
+
+   bool hasAltTexture();
 };
 
 #endif

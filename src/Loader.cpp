@@ -1132,8 +1132,9 @@ SPtr<TextureMaterial> Loader::loadTextureMaterial(SPtr<Scene> scene, const std::
    // Texture
    check("TextureMaterial", root, "texture");
    std::string textureFileName = root["texture"].asString();
+   std::string altTextureFileName = root.get("altTexture", "").asString();
 
-   SPtr<TextureMaterial> textureMaterial = std::make_shared<TextureMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess, textureFileName);
+   SPtr<TextureMaterial> textureMaterial = std::make_shared<TextureMaterial>(fileName, data.shaderProgram, data.ambient, data.diffuse, data.specular, data.emission, data.shininess, textureFileName, altTextureFileName);
 
    return textureMaterial;
 }

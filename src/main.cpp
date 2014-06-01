@@ -5,10 +5,10 @@
 #include "FollowCameraController.h"
 #include "GLIncludes.h"
 #include "GLMIncludes.h"
+#include "LifeParticle.h"
 #include "IOUtils.h"
 #include "LevelEditor.h"
 #include "Loader.h"
-#include "Particle.h"
 #include "Player.h"
 #include "Renderer.h"
 #include "Scene.h"
@@ -132,6 +132,7 @@ void loadLevel(const std::string &name) {
 
    // Prepare particle effects
    Particle::initialize(scene);
+   LifeParticle::initialize(scene);
 
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, windowWidth, windowHeight);

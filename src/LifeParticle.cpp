@@ -1,5 +1,9 @@
 #include "AnimHelper.h"
 #include "LifeParticle.h"
+#include "Loader.h"
+#include "Material.h"
+#include "Mesh.h"
+#include "Model.h"
 #include "Player.h"
 #include "Scene.h"
 #include "SceneGraph.h"
@@ -7,6 +11,16 @@
 const std::string LifeParticle::CLASS_NAME = "LifeParticle";
 
 const float LifeParticle::MAX_FOLLOW_SPEED = 200.0f;
+
+SPtr<Model> LifeParticle::lifeParticleModel;
+
+void LifeParticle::initialize(SPtr<Scene> scene) {
+   Loader &loader = Loader::getInstance();
+
+   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/particle.obj");
+   SPtr<Material> material = loader.loadMaterial(scene, "simple");
+   lifeParticleModel = std::make_shared<Model>(material, mesh);
+}
 
 void LifeParticle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, float size, int numParts, float duration, float spread) {
    for (int i = 0; i < numParts; i++) {
@@ -26,7 +40,7 @@ void LifeParticle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3
 }
 
 LifeParticle::LifeParticle(SPtr<Scene> scene, const std::string &name)
-: Particle(scene, name), timeAlive(0.0f) {
+: Particle(scene, lifeParticleModel, name), timeAlive(0.0f) {
 }
 
 LifeParticle::~LifeParticle() {

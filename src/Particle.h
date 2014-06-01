@@ -19,6 +19,7 @@ public:
    static void createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread);
 
    Particle(SPtr<Scene> scene, const std::string &name = "");
+   Particle(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
    virtual ~Particle();
 
    /**

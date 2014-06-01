@@ -41,6 +41,13 @@ Json::Value Player::serialize() const {
    return root;
 }
 
+void Player::draw(const RenderData &renderData) {
+   Character::draw(renderData);
+
+   aura->setScale(glm::vec3(auraRadius));
+   aura->setPosition(position);
+}
+
 void Player::onKeyEvent(int key, int action) {
    if (!isAlive()) {
       wantsToGoLeft = wantsToGoRight = wantsToJump = wantsToAttack = false;

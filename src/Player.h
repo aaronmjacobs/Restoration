@@ -31,6 +31,11 @@ public:
     */
    virtual Json::Value serialize() const;
 
+   /**
+    * Draws the geometry in the scene.
+    */
+   virtual void draw(const RenderData &renderData);
+
    virtual void onKeyEvent(int key, int action);
 
    virtual void onMouseButtonEvent(int button, int action);

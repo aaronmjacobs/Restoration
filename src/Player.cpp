@@ -25,7 +25,6 @@ Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
    SPtr<Model> auraModel = std::make_shared<Model>(auraMaterial, auraMesh);
    aura = std::make_shared<Geometry>(scene, auraModel);
    aura->setRenderState(STENCIL_STATE);
-   scene->getSceneGraph()->add(aura);
 
    auraRadius = 1.0f;
 }
@@ -46,6 +45,7 @@ void Player::draw(const RenderData &renderData) {
 
    aura->setScale(glm::vec3(auraRadius));
    aura->setPosition(position);
+   aura->draw(renderData);
 }
 
 void Player::onKeyEvent(int key, int action) {
@@ -166,9 +166,6 @@ void Player::tick(const float dt) {
    }
 
    Character::tick(dt);
-
-   aura->setScale(glm::vec3(auraRadius));
-   aura->setPosition(position);
 }
 
 float Player::getInvFrames() {

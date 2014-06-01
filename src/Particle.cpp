@@ -7,18 +7,28 @@
 #include "SceneGraph.h"
 
 SPtr<Model> Particle::particleModel;
+SPtr<Model> Particle::stencilParticleModel;
 
 void Particle::initialize(SPtr<Scene> scene) {
    Loader &loader = Loader::getInstance();
 
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/particle.obj");
-   SPtr<Material> material = loader.loadMaterial(scene, "particle");
-   particleModel = std::make_shared<Model>(material, mesh);
+   SPtr<Material> particleMaterial = loader.loadMaterial(scene, "particle");
+   SPtr<Material> simpleMaterial = loader.loadMaterial(scene, "simple");
+
+   particleModel = std::make_shared<Model>(particleMaterial, mesh);
+   stencilParticleModel = std::make_shared<Model>(simpleMaterial, mesh);
 }
 
-void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread) {
+void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread, bool stencil) {
    for (int i = 0; i < numParts; i++) {
-      SPtr<Particle> particle = std::make_shared<Particle>(scene);
+      SPtr<Particle> particle;
+      if (stencil) {
+         particle = std::make_shared<Particle>(scene, stencilParticleModel);
+         particle->setRenderState(STENCIL_STATE);
+      } else {
+         particle = std::make_shared<Particle>(scene, particleModel);
+      }
 
       if (gravityOn) {
          particle->acceleration = glm::vec3(0.0f, -9.8f, 0.0f);
@@ -28,6 +38,7 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
       }
 
       //Spread & Velocity
+      particle->position = position;
       particle->velocity = AnimHelper::randomSpherical(spread) + velocity;
       particle->acceleration += AnimHelper::randomSpherical(spread);
 
@@ -39,10 +50,6 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
 }
 
 const std::string Particle::CLASS_NAME = "Particle";
-
-Particle::Particle(SPtr<Scene> scene, const std::string &name)
-: Geometry(scene, particleModel, name) {
-}
 
 Particle::Particle(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Geometry(scene, model, name) {

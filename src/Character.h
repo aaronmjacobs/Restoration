@@ -5,7 +5,7 @@
 
 class Character : public MovableObject {
 protected:
-   int health;
+   float health;
    bool onGround;
 
 public:
@@ -23,10 +23,10 @@ public:
 
    virtual void tick(const float dt);
 
-   int getHealth();
+   float getHealth();
    bool isOnGround();
    bool isAlive();
-   void setHealth(int health);
+   void setHealth(float health);
    void setOnGround();
 };
 

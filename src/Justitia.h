@@ -7,13 +7,12 @@
 
 class Justitia : public Vis {
 protected:
-   static const int ATTACK_POWER;
    float lifeTime;
 
 public:
    static const std::string CLASS_NAME;
 
-   Justitia(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
+   Justitia(SPtr<Scene> scene, SPtr<Model> model, const float attackPower, const std::string &name = "");
    virtual ~Justitia();
 
    /**

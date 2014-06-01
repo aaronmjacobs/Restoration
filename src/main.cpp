@@ -132,7 +132,6 @@ void loadLevel(const std::string &name) {
 
    // Prepare particle effects
    Particle::initialize(scene);
-   LifeParticle::initialize(scene);
 
    // Send initial window size callback (to let camera build perspecitve matrix)
    windowSizeCallback(NULL, windowWidth, windowHeight);

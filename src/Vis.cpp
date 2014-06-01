@@ -2,7 +2,7 @@
 
 const std::string Vis::CLASS_NAME = "Vis";
 
-Vis::Vis(SPtr<Scene> scene, SPtr<Model> model, int attackPower, const std::string &name)
+Vis::Vis(SPtr<Scene> scene, SPtr<Model> model, const float attackPower, const std::string &name)
 : MovableObject(scene, model, name), attackPower(attackPower), lifeTime(0.0f) {
 }
 
@@ -29,10 +29,10 @@ void Vis::tick(const float dt) {
    MovableObject::tick(dt);
 }
 
-int Vis::getAttackPower() {
+float Vis::getAttackPower() {
    return attackPower;
 }
 
-void Vis::setAttackPower(int attackPower) {
+void Vis::setAttackPower(float attackPower) {
    this->attackPower = attackPower;
 }

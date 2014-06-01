@@ -7,9 +7,12 @@
 
 #include "CollisionsIncludes.h"
 
+const float Player::ATTACK_POWER = 4.0f;
 const std::string Player::CLASS_NAME = "Player";
 
-const int Player::BASE_HEALTH = 10;
+const float Player::BASE_HEALTH = 10.0f;
+const float Player::MAX_HEALTH = 100.0f;
+const float Player::AURA_SCALE = 10.0f;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 520.0f;
 float Player::INVINC_FRAMES = 0.0f;
@@ -25,8 +28,6 @@ Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
    SPtr<Model> auraModel = std::make_shared<Model>(auraMaterial, auraMesh);
    aura = std::make_shared<Geometry>(scene, auraModel);
    aura->setRenderState(STENCIL_STATE);
-
-   auraRadius = 1.0f;
 }
 
 Player::~Player() {
@@ -43,7 +44,7 @@ Json::Value Player::serialize() const {
 void Player::draw(const RenderData &renderData) {
    Character::draw(renderData);
 
-   aura->setScale(glm::vec3(auraRadius));
+   aura->setScale(glm::vec3(getAuraRadius()));
    aura->setPosition(position);
    aura->draw(renderData);
 }
@@ -107,7 +108,7 @@ void Player::onMouseButtonEvent(int button, int action) {
       modelValue["mesh"] = meshValue;
       SPtr<Model> justitiaModel = loader.loadModel(sScene, modelValue);
 
-      SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, justitiaModel);
+      SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, justitiaModel, ATTACK_POWER);
       justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE);
       justitia->setPosition(justitiaPos);
       glm::vec3 justitiaVelocity = velocity;
@@ -176,19 +177,15 @@ void Player::setInvFrames(float time) {
    INVINC_FRAMES = time;
 }
 
-void Player::setHealth(int health) {
+void Player::setHealth(float health) {
    if (INVINC_FRAMES <= 0.0f) {
-      Character::setHealth(health);
-      printf("Health: %d\n", health);
+      float actualHealth = glm::clamp(health, 0.0f, MAX_HEALTH);
+      Character::setHealth(actualHealth);
    }
 }
 
 float Player::getAuraRadius() {
-   return auraRadius;
-}
-
-void Player::growAura(float amount) {
-   auraRadius += amount;
+   return ((float)getHealth() / MAX_HEALTH) * AURA_SCALE;
 }
 
 #define COLLISION_CLASS_NAME Player

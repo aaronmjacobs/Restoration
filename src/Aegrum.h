@@ -7,12 +7,11 @@
 
 class Aegrum : public Vis {
 protected:
-   static const int ATTACK_POWER;
 
 public:
    static const std::string CLASS_NAME;
 
-   Aegrum(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
+   Aegrum(SPtr<Scene> scene, SPtr<Model> model, const float attackPower, const std::string &name = "");
    virtual ~Aegrum();
 
    /**

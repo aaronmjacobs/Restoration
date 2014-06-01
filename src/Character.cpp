@@ -46,7 +46,7 @@ void Character::tick(const float dt) {
    MovableObject::tick(dt);
 }
 
-int Character::getHealth() {
+float Character::getHealth() {
    return health;
 }
 
@@ -58,7 +58,7 @@ bool Character::isAlive() {
    return health > 0;
 }
 
-void Character::setHealth(int health) {
+void Character::setHealth(float health) {
    this->health = health;
 }
 

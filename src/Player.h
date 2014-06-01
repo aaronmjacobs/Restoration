@@ -9,13 +9,15 @@ class Magus;
 
 class Player : public Character, public InputListener {
 protected:
-   static const int BASE_HEALTH;
+   static const float BASE_HEALTH;
+   static const float MAX_HEALTH;
+   static const float AURA_SCALE;
+   static const float ATTACK_POWER;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
    static float INVINC_FRAMES;
 
    SPtr<Geometry> aura;
-   float auraRadius;
 
    bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
    double lastMouseX, lastMouseY;
@@ -48,10 +50,9 @@ public:
 
    virtual void setInvFrames(float time);
 
-   virtual void setHealth(int health);
+   virtual void setHealth(float health);
 
    float getAuraRadius();
-   void growAura(float amount);
 
 #include "CollisionsBoilerplateH.h"
 };

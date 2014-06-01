@@ -1,4 +1,3 @@
-#include "Aegrum.h"
 #include "AniMesh.h"
 #include "AniModel.h"
 #include "Camera.h"
@@ -11,7 +10,6 @@
 #include "GridSceneGraph.h"
 #include "FollowGeometry.h"
 #include "Geometry.h"
-#include "Justitia.h"
 #include "IOUtils.h"
 #include "lib/json/json.h"
 #include "lib/stb_image.h"
@@ -38,7 +36,6 @@
 #include "TextureMaterial.h"
 #include "Turris.h"
 #include "Vagus.h"
-#include "Vis.h"
 
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
@@ -153,18 +150,6 @@ bool Loader::isTurris(const std::string &className) {
 
 bool Loader::isVagus(const std::string &className) {
    return className == Vagus::CLASS_NAME;
-}
-
-bool Loader::isVis(const std::string &className) {
-   return className == Vis::CLASS_NAME || isJustitia(className) || isAegrum(className);
-}
-
-bool Loader::isJustitia(const std::string &className) {
-   return className == Justitia::CLASS_NAME;
-}
-
-bool Loader::isAegrum(const std::string &className) {
-   return className == Aegrum::CLASS_NAME;
 }
 
 bool Loader::isMesh(const std::string &className) {
@@ -389,37 +374,6 @@ GLuint Loader::loadCubemap(const std::string &path) {
    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
    return cubemapID;
-}
-
-SPtr<Aegrum> Loader::loadAegrum(SPtr<Scene> scene, const Json::Value &root) {
-   // SceneObject
-   SceneObjectData data = loadSceneObjectData(root);
-
-   // Geometry
-   check("Aegrum", root, "model");
-   SPtr<Model> model = loadModel(scene, root["model"]);
-
-   // MovableObject
-   check("Aegrum", root, "velocity");
-   glm::vec3 velocity = loadVec3(root["velocity"]);
-
-   check("Aegrum", root, "acceleration");
-   glm::vec3 acceleration = loadVec3(root["acceleration"]);
-
-   // Vis
-   check("Aegrum", root, "attackPower");
-   int attackPower = root["health"].asInt();
-
-   SPtr<Aegrum> aegrum = std::make_shared<Aegrum>(scene, model, data.name);
-   aegrum->setPosition(data.position);
-   aegrum->setOrientation(data.orientation);
-   aegrum->setScale(data.scale);
-   aegrum->setRenderState(data.renderState);
-   aegrum->setVelocity(velocity);
-   aegrum->setAcceleration(acceleration);
-   aegrum->setAttackPower(attackPower);
-
-   return aegrum;
 }
 
 SPtr<AniMesh> Loader::loadAniMesh(const Json::Value &root) {
@@ -710,37 +664,6 @@ SPtr<Geometry> Loader::loadGeometry(SPtr<Scene> scene, const Json::Value &root) 
    geometry->setRenderState(data.renderState);
 
    return geometry;
-}
-
-SPtr<Justitia> Loader::loadJustitia(SPtr<Scene> scene, const Json::Value &root) {
-   // SceneObject
-   SceneObjectData data = loadSceneObjectData(root);
-
-   // Geometry
-   check("Justitia", root, "model");
-   SPtr<Model> model = loadModel(scene, root["model"]);
-
-   // MovableObject
-   check("Justitia", root, "velocity");
-   glm::vec3 velocity = loadVec3(root["velocity"]);
-
-   check("Justitia", root, "acceleration");
-   glm::vec3 acceleration = loadVec3(root["acceleration"]);
-
-   // Vis
-   check("Justitia", root, "attackPower");
-   int attackPower = root["health"].asInt();
-
-   SPtr<Justitia> justitia = std::make_shared<Justitia>(scene, model, data.name);
-   justitia->setPosition(data.position);
-   justitia->setOrientation(data.orientation);
-   justitia->setScale(data.scale);
-   justitia->setRenderState(data.renderState);
-   justitia->setVelocity(velocity);
-   justitia->setAcceleration(acceleration);
-   justitia->setAttackPower(attackPower);
-
-   return justitia;
 }
 
 SPtr<Light> Loader::loadLight(SPtr<Scene> scene, const Json::Value &root) {
@@ -1199,19 +1122,4 @@ SPtr<Vagus> Loader::loadVagus(SPtr<Scene> scene, const Json::Value &root) {
    vagus->setHealth(health);
 
    return vagus;
-}
-
-SPtr<Vis> Loader::loadVis(SPtr<Scene> scene, const Json::Value &root) {
-   check("Vis", root, "@class");
-   std::string className = root["@class"].asString();
-
-   if (isJustitia(className)) {
-      return loadJustitia(scene, root);
-   } else if (isAegrum(className)) {
-      return loadAegrum(scene, root);
-   }
-
-   ASSERT(false, "Invalid class name for Vis: %s", className.c_str());
-
-   return SPtr<Vis>();
 }

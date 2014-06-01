@@ -14,9 +14,9 @@
 
 const std::string Magus::CLASS_NAME = "Magus";
 
-const int Magus::BASE_HEALTH = 7;
+const float Magus::BASE_HEALTH = 7.0f;
 const float Magus::HOVER_SPEED = 4.0f;
-const int Magus::ATTACK_POWER = 1;
+const float Magus::ATTACK_POWER = 10.0f;
 float Magus::ATTACK_TIME = 6.0f;
 
 //Put health in the creation of Magus, and damage
@@ -44,8 +44,6 @@ void Magus::tick(const float dt) {
          glm::vec3 shootVec = glm::normalize(playerPos - position);
          
          if (glm::length(position - playerPos) < 25.0f) {
-
-            
             if (ATTACK_TIME < 2 && ATTACK_TIME > 0) {
                //Chase a bit
                glm::vec3 chaseVec = glm::normalize(playerPos - position);
@@ -69,7 +67,7 @@ void Magus::tick(const float dt) {
                modelValue["mesh"] = meshValue;
                SPtr<Model> aegrumModel = loader.loadModel(sScene, modelValue);
 
-               SPtr<Aegrum> aegrum = std::make_shared<Aegrum>(sScene, aegrumModel);
+               SPtr<Aegrum> aegrum = std::make_shared<Aegrum>(sScene, aegrumModel, ATTACK_POWER);
                aegrum->setRenderState(LIGHTWORLD_STATE | DARKWORLD_STATE);
                aegrum->setPosition(aegrumPos);
                aegrum->setVelocity(shootVec * aegrumSpeed + velocity);

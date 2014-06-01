@@ -2,11 +2,9 @@
 
 const std::string Aegrum::CLASS_NAME = "Aegrum";
 
-const int Aegrum::ATTACK_POWER = 2;
-
 //Put health in the creation of Magus, and damage
-Aegrum::Aegrum(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Vis(scene, model, ATTACK_POWER, name) {
+Aegrum::Aegrum(SPtr<Scene> scene, SPtr<Model> model, const float attackPower, const std::string &name)
+: Vis(scene, model, attackPower, name) {
 }
 
 Aegrum::~Aegrum() {

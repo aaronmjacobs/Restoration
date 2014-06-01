@@ -149,6 +149,10 @@ COLLISION_REVERSE_FUNCTION(Obex, Scenery)
 
 void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
    vis.markForRemoval();
+   SPtr<Scene> scene = vis.getScene().lock();
+   if (scene) {
+      Particle::createEffect(scene, vis.getPosition(), glm::vec3(0.0f), false, 5.0f, 10, 3.0f, 25.0f, true);
+   }
 }
 
 COLLISION_REVERSE_FUNCTION(Vis, Scenery)
@@ -197,10 +201,15 @@ void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
 
    if (!enemy.isAlive()) {
       glm::vec3 particleVelocity = justitia.getVelocity();
-
       SPtr<Scene> scene = justitia.getScene().lock();
       if (scene) {
-         LifeParticle::createEffect(scene, justitia.getPosition(), particleVelocity * 0.75f, 5.0f, 100, 15.0f, 4.0f);
+         // TODO Determine health amount per enemy?
+         LifeParticle::createEffect(scene, justitia.getPosition(), particleVelocity * 0.75f, 5.0f, 100, 15.0f, 4.0f, 5.0f);
+      }
+   } else {
+      SPtr<Scene> scene = justitia.getScene().lock();
+      if (scene) {
+         Particle::createEffect(scene, justitia.getPosition(), glm::vec3(0.0f), false, 5.0f, 10, 3.0f, 25.0f, true);
       }
    }
 }
@@ -210,6 +219,11 @@ void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
    player.setHealth(player.getHealth() - aegrum.getAttackPower());
    aegrum.markForRemoval();
    aegrum.setAttackPower(0);
+
+   SPtr<Scene> scene = player.getScene().lock();
+   if (scene) {
+      Particle::createEffect(scene, player.getPosition(), glm::vec3(0.0f), false, 5.0f, 50, 3.0f, 25.0f, true);
+   }
 }
 COLLISION_REVERSE_FUNCTION(Aegrum, Player)
 

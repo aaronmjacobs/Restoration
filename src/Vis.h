@@ -8,13 +8,13 @@
 class Vis : public MovableObject {
 protected:
    const float LIFE_SECONDS = 2.0f;
-   int attackPower;
+   float attackPower;
    float lifeTime;
 
 public:
    static const std::string CLASS_NAME;
 
-   Vis(SPtr<Scene> scene, SPtr<Model> model, int attackPower, const std::string &name = "");
+   Vis(SPtr<Scene> scene, SPtr<Model> model, const float attackPower, const std::string &name = "");
 
    virtual ~Vis();
 
@@ -29,9 +29,8 @@ public:
 
    virtual void tick(const float dt);
 
-   int getAttackPower();
-
-   void setAttackPower(int attackPower);
+   float getAttackPower();
+   void setAttackPower(float attackPower);
 };
 
 #endif

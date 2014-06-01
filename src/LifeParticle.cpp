@@ -12,19 +12,9 @@ const std::string LifeParticle::CLASS_NAME = "LifeParticle";
 
 const float LifeParticle::MAX_FOLLOW_SPEED = 200.0f;
 
-SPtr<Model> LifeParticle::lifeParticleModel;
-
-void LifeParticle::initialize(SPtr<Scene> scene) {
-   Loader &loader = Loader::getInstance();
-
-   SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/particle.obj");
-   SPtr<Material> material = loader.loadMaterial(scene, "simple");
-   lifeParticleModel = std::make_shared<Model>(material, mesh);
-}
-
-void LifeParticle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, float size, int numParts, float duration, float spread) {
+void LifeParticle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, float size, int numParts, float duration, float spread, float healthAmount) {
    for (int i = 0; i < numParts; i++) {
-      SPtr<LifeParticle> particle = std::make_shared<LifeParticle>(scene);
+      SPtr<LifeParticle> particle = std::make_shared<LifeParticle>(scene, healthAmount / numParts);
       particle->setRenderState(STENCIL_STATE);
 
       //Spread & Velocity
@@ -39,8 +29,8 @@ void LifeParticle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3
    }
 }
 
-LifeParticle::LifeParticle(SPtr<Scene> scene, const std::string &name)
-: Particle(scene, lifeParticleModel, name), timeAlive(0.0f) {
+LifeParticle::LifeParticle(SPtr<Scene> scene, float healthAmount, const std::string &name)
+: Particle(scene, stencilParticleModel, name), timeAlive(0.0f), healthAmount(healthAmount) {
 }
 
 LifeParticle::~LifeParticle() {
@@ -56,8 +46,7 @@ void LifeParticle::tick(const float dt) {
 
          float toPlayerLength = glm::length(toPlayer);
          if (toPlayerLength < player->getAuraRadius()) {
-            // TODO Grow aura?
-            player->growAura(0.001f);
+            player->setHealth(player->getHealth() + healthAmount);
             markForRemoval();
          }
          if (toPlayerLength < 1.0f) {

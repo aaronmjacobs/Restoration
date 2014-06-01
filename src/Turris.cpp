@@ -6,8 +6,8 @@
 
 const std::string Turris::CLASS_NAME = "Turris";
 
-const int Turris::BASE_HEALTH = 14;
-const int Turris::ATTACK_POWER = 4;
+const float Turris::BASE_HEALTH = 14.0f;
+const float Turris::ATTACK_POWER = 4.0f;
 float Turris::ATTACK_TIME = 5.0f;
 
 Turris::Turris(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
@@ -58,7 +58,7 @@ void Turris::tick(const float dt) {
                modelValue["mesh"] = meshValue;
                SPtr<Model> aegrumModel = loader.loadModel(sScene, modelValue);
 
-               SPtr<Aegrum> aegrum = std::make_shared<Aegrum>(sScene, aegrumModel);
+               SPtr<Aegrum> aegrum = std::make_shared<Aegrum>(sScene, aegrumModel, ATTACK_POWER);
                aegrum->setRenderState(LIGHTWORLD_STATE | DARKWORLD_STATE);
                aegrum->setPosition(aegrumPos);
                aegrum->setVelocity(shootVec * aegrumSpeed + velocity);

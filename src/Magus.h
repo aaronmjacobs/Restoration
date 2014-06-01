@@ -13,9 +13,9 @@
 
 class Magus : public Enemy {
 protected:
-   static const int BASE_HEALTH;
+   static const float BASE_HEALTH;
    static const float HOVER_SPEED;
-   static const int ATTACK_POWER;
+   static const float ATTACK_POWER;
    static float ATTACK_TIME;
 
 public:    

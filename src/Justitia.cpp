@@ -5,11 +5,9 @@
 
 const std::string Justitia::CLASS_NAME = "Justitia";
 
-const int Justitia::ATTACK_POWER = 2;
-
 // Put health in the creation of Magus, and damage
-Justitia::Justitia(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Vis(scene, model, ATTACK_POWER, name) {
+Justitia::Justitia(SPtr<Scene> scene, SPtr<Model> model, const float attackPower, const std::string &name)
+: Vis(scene, model, attackPower, name) {
    lifeTime = 0.0f;
 }
 

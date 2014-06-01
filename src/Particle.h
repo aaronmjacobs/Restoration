@@ -6,6 +6,7 @@
 class Particle : public Geometry {
 protected:
    static SPtr<Model> particleModel;
+   static SPtr<Model> stencilParticleModel;
 
    glm::vec3 velocity, acceleration;
    float duration;
@@ -16,9 +17,8 @@ public:
    static void initialize(SPtr<Scene> scene);
 
    /* Creates numParts particles with position, velocity, duration(seconds), spread(random component in all directions), gravity (or not), and size. */
-   static void createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread);
+   static void createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread, bool stencil);
 
-   Particle(SPtr<Scene> scene, const std::string &name = "");
    Particle(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
    virtual ~Particle();
 

@@ -82,8 +82,8 @@ protected:
    }
 
    void place(GridElement<T> &gridElement) {
-      std::vector<size_t> correctNodes = getContainingNodes(gridElement.element);
-      std::vector<size_t> currentNodes = gridElement.nodes;
+      const std::vector<size_t> correctNodes = getContainingNodes(gridElement.element);
+      const std::vector<size_t> currentNodes = gridElement.nodes;
 
       // Remove the element from any nodes it is currently in, but should not be in
       for (size_t currentNode : currentNodes) {

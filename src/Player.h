@@ -14,6 +14,9 @@ protected:
    static const float JUMP_FORCE;
    static float INVINC_FRAMES;
 
+   SPtr<Geometry> aura;
+   float auraRadius;
+
    bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
    double lastMouseX, lastMouseY;
 
@@ -41,6 +44,9 @@ public:
    virtual void setInvFrames(float time);
 
    virtual void setHealth(int health);
+
+   float getAuraRadius();
+   void growAura(float amount);
 
 #include "CollisionsBoilerplateH.h"
 };

@@ -1,5 +1,6 @@
 #include "CollisionHandler.h"
 #include "CollisionsIncludes.h"
+#include "LifeParticle.h"
 
 #define COLLISION_REVERSE_FUNCTION(FIRST_CLASS, SECOND_CLASS) \
 void CollisionHandler::handleCollision(SECOND_CLASS &second, FIRST_CLASS &first) {\
@@ -193,6 +194,15 @@ void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
    enemy.setHealth(enemy.getHealth() - justitia.getAttackPower());
    justitia.markForRemoval();
    justitia.setAttackPower(0);
+
+   if (!enemy.isAlive()) {
+      glm::vec3 particleVelocity = justitia.getVelocity();
+
+      SPtr<Scene> scene = justitia.getScene().lock();
+      if (scene) {
+         LifeParticle::createEffect(scene, justitia.getPosition(), particleVelocity * 0.75f, 5.0f, 100, 15.0f, 4.0f);
+      }
+   }
 }
 COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
 

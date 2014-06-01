@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include "GLIncludes.h"
 #include "Loader.h"
+#include "Mesh.h"
+#include "Model.h"
 #include "SceneGraph.h"
 
 #include "CollisionsIncludes.h"
@@ -13,9 +15,19 @@ const float Player::JUMP_FORCE = 520.0f;
 float Player::INVINC_FRAMES = 0.0f;
 
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-   : Character(scene, model, BASE_HEALTH, name) {
+: Character(scene, model, BASE_HEALTH, name) {
    wantsToGoLeft = wantsToGoRight = wantsToJump = wantsToAttack = false;
    lastMouseX = lastMouseY = 0.0f;
+
+   Loader &loader = Loader::getInstance();
+   SPtr<Material> auraMaterial = loader.loadMaterial(scene, "simple");
+   SPtr<Mesh> auraMesh = std::make_shared<Mesh>("data/meshes/sphere.obj");
+   SPtr<Model> auraModel = std::make_shared<Model>(auraMaterial, auraMesh);
+   aura = std::make_shared<Geometry>(scene, auraModel);
+   aura->setRenderState(STENCIL_STATE);
+   scene->getSceneGraph()->add(aura);
+
+   auraRadius = 1.0f;
 }
 
 Player::~Player() {
@@ -91,7 +103,10 @@ void Player::onMouseButtonEvent(int button, int action) {
       SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, justitiaModel);
       justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE);
       justitia->setPosition(justitiaPos);
-      justitia->setVelocity(playerToMouse * justitiaSpeed + velocity);
+      glm::vec3 justitiaVelocity = velocity;
+      justitiaVelocity.y = 0.0f;
+      justitiaVelocity += playerToMouse * justitiaSpeed;
+      justitia->setVelocity(justitiaVelocity);
 
       glm::vec3 nVel = glm::normalize(justitia->getVelocity());
       float angle = glm::acos(glm::dot(nVel, glm::vec3(1.0f, 0.0f, 0.0f)));
@@ -109,7 +124,6 @@ void Player::onMouseMotionEvent(double xPos, double yPos) {
 }
 
 void Player::tick(const float dt) {
-
    // Kinetic friction
    if (onGround) {
       velocity.x *= 0.85f;
@@ -145,6 +159,9 @@ void Player::tick(const float dt) {
    }
 
    Character::tick(dt);
+
+   aura->setScale(glm::vec3(auraRadius));
+   aura->setPosition(position);
 }
 
 float Player::getInvFrames() {
@@ -160,6 +177,14 @@ void Player::setHealth(int health) {
       Character::setHealth(health);
       printf("Health: %d\n", health);
    }
+}
+
+float Player::getAuraRadius() {
+   return auraRadius;
+}
+
+void Player::growAura(float amount) {
+   auraRadius += amount;
 }
 
 #define COLLISION_CLASS_NAME Player

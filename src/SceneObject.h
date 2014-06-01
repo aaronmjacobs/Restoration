@@ -38,6 +38,10 @@ public:
 
    void setScene(SPtr<Scene> const scene);
 
+   WPtr<Scene> getScene() {
+      return scene;
+   }
+
    const std::string& getName() {
       return name;
    }

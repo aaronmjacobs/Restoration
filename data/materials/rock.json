@@ -14,14 +14,13 @@
       "b" : 0.0,
       "g" : 0.0,
       "r" : 0.0
-   }, 
-   "shaderProgram" : "phong_textured",
-   "shininess" : 5.0,
-   "specular" : {
-      "b" : 0.1,
-      "g" : 0.1,
-      "r" : 0.1
    },
-   "texture" : "data/textures/sandBig.png",
-   "altTexture" : "data/textures/grassBig.png"
+   "shaderProgram" : "phong_textured",
+   "shininess" : 500.0,
+   "specular" : {
+      "b" : 0.2,
+      "g" : 0.2,
+      "r" : 0.2
+   },
+   "texture" : "data/textures/rock1.png"
 }

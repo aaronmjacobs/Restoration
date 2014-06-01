@@ -348,6 +348,238 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
+               "material" : "crate",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/crate.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -93.56745147705078,
+               "y" : 11.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pot",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/pot.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -92.06745147705078,
+               "y" : 11.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "sand",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/groundCenter.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -112.06745147705078,
+               "y" : 10.5,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "sand",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/groundFront1.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -112.06745147705078,
+               "y" : 11.0,
+               "z" : 7.5
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "sand",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/groundBack1.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -112.06745147705078,
+               "y" : 11.0,
+               "z" : -5.5
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "sand",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/groundCenter.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -127.06745147705078,
+               "y" : 10.5,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "sand",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/groundFront2.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -127.06745147705078,
+               "y" : 11.0,
+               "z" : 7.5
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "sand",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/groundBack2.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -127.06745147705078,
+               "y" : 11.0,
+               "z" : -5.5
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
                "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",

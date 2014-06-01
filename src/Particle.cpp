@@ -10,8 +10,9 @@ SPtr<Model> Particle::particleModel;
 
 void Particle::initialize(SPtr<Scene> scene) {
    Loader &loader = Loader::getInstance();
+
    SPtr<Mesh> mesh = std::make_shared<Mesh>("data/meshes/particle.obj");
-   SPtr<Material> material = loader.loadMaterial(scene, "particle");
+   SPtr<Material> material = loader.loadMaterial(scene, "particleLight");
    particleModel = std::make_shared<Model>(material, mesh);
 }
 
@@ -40,7 +41,7 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
 const std::string Particle::CLASS_NAME = "Particle";
 
 Particle::Particle(SPtr<Scene> scene, const std::string &name)
-:  Geometry(scene, particleModel, name) {
+: Geometry(scene, particleModel, name) { //TODO: Edit this so you can choose light or dark particle
 }
 
 Particle::~Particle() {

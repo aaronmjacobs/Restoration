@@ -16,12 +16,12 @@
       "r" : 0.0
    }, 
    "shaderProgram" : "phong_textured",
-   "shininess" : 5.0,
+   "shininess" : 500.0,
    "specular" : {
-      "b" : 0.1,
-      "g" : 0.1,
-      "r" : 0.1
+      "b" : 0.2,
+      "g" : 0.2,
+      "r" : 0.2
    },
-   "texture" : "data/textures/sandBig.png",
-   "altTexture" : "data/textures/grassBig.png"
+   "texture" : "data/textures/pot.png",
+   "altTexture" : "data/textures/potLight.png"
 }

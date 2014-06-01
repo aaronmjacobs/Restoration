@@ -33,7 +33,6 @@ public:
    virtual ~CollisionHandler();
 
    void handleCollision(PhysicalObject &first, PhysicalObject &second);
-   //void handleCollision(Player &player, Magus &magus);
    void handleCollision(Player &player, Enemy &enemy);
    void handleCollision(Enemy &enemy1, Enemy &enemy2);
    void handleCollision(Character &character, Scenery &scenery);

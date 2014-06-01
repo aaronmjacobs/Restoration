@@ -225,36 +225,6 @@
             }
          },
          {
-            "@class" : "FollowGeometry",
-            "model" : {
-               "@class" : "Model",
-               "material" : "simple",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/sphere.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 18.41666030883789,
-               "y" : 13.42848110198975,
-               "z" : 0.0
-            },
-            "renderState" : 1,
-            "scale" : {
-               "x" : 3.0,
-               "y" : 3.0,
-               "z" : 3.0
-            },
-            "target" : "player"
-         },
-         {
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",

@@ -32,6 +32,7 @@ Json::Value FlatSceneGraph::serialize() const {
 void FlatSceneGraph::tick(const float dt) {
    // Tick each object in the scene
    std::vector<SPtr<SceneObject>>::iterator itr = objects.begin();
+
    while (itr != objects.end()) {
       if ((*itr)->shouldBeRemoved()) {
          // If an object should be removed, remove it
@@ -76,11 +77,13 @@ void FlatSceneGraph::tick(const float dt) {
 }
 
 void FlatSceneGraph::add(SPtr<SceneObject> sceneObject) {
+   ASSERT(sceneObject, "Can't add null object");
    SceneGraph::add(sceneObject);
    objects.push_back(sceneObject);
 }
 
 void FlatSceneGraph::addPhys(SPtr<PhysicalObject> physObject) {
+   ASSERT(physObject, "Can't add null phys object");
    SceneGraph::addPhys(physObject);
    physObjects.push_back(physObject);
 

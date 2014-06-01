@@ -5,10 +5,11 @@
 
 class Vagus : public Enemy {
 protected:
-   static const int BASE_HEALTH;
+   static const float BASE_HEALTH;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
-   static const int ATTACK_POWER;
+   static const float HEALTH_REPLACEMENT;
+   static const float ATTACK_POWER;
 
 public:
    static const std::string CLASS_NAME;

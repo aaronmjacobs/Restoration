@@ -2,7 +2,7 @@
 
 const std::string Character::CLASS_NAME = "Character";
 
-Character::Character(SPtr<Scene> scene, SPtr<Model> model, int health, const std::string &name)
+Character::Character(SPtr<Scene> scene, SPtr<Model> model, float health, const std::string &name)
    : MovableObject(scene, model, name), health(health), onGround(false) {
 }
 

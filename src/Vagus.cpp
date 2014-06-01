@@ -4,13 +4,14 @@
 
 const std::string Vagus::CLASS_NAME = "Vagus";
 
-const int Vagus::BASE_HEALTH = 14;
+const float Vagus::BASE_HEALTH = 20.0f;
 const float Vagus::WALK_SPEED = 3.0f;
 const float Vagus::JUMP_FORCE = 300.0f;
-const int Vagus::ATTACK_POWER = 4;
+const float Vagus::HEALTH_REPLACEMENT = 3.0f;
+const float Vagus::ATTACK_POWER = 10.0f;
 
 Vagus::Vagus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+: Enemy(scene, model, BASE_HEALTH, HEALTH_REPLACEMENT, ATTACK_POWER, name) {
 }
 
 Vagus::~Vagus() {
@@ -37,8 +38,6 @@ void Vagus::tick(const float dt) {
          }
       }
    }
-
-
 
    Enemy::tick(dt);
 }

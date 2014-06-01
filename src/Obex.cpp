@@ -4,16 +4,18 @@
 
 const std::string Obex::CLASS_NAME = "Obex";
 
-const int Obex::BASE_HEALTH = 14;
+const float Obex::BASE_HEALTH = 20.0f;
 const float Obex::WALK_SPEED = 2.0f;
 const float Obex::JUMP_FORCE = 300.0f;
-const int Obex::ATTACK_POWER = 4;
+const float Obex::HEALTH_REPLACEMENT = 3.0f;
+const float Obex::ATTACK_POWER = 15.0f;
+
 float Obex::ATTACK_TIME = 0.0f;
 bool Obex::STOPPED = true;
 glm::vec3 Obex::SAVED_VELOCITY = glm::vec3(0.0, 0.0, 0.0);
 
 Obex::Obex(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+: Enemy(scene, model, BASE_HEALTH, HEALTH_REPLACEMENT, ATTACK_POWER, name) {
 
 }
 

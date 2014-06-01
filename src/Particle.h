@@ -10,6 +10,7 @@ protected:
 
    glm::vec3 velocity, acceleration;
    float duration;
+   float size;
 
 public:
    static const std::string CLASS_NAME;
@@ -19,7 +20,7 @@ public:
    /* Creates numParts particles with position, velocity, duration(seconds), spread(random component in all directions), gravity (or not), and size. */
    static void createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, bool gravityOn, float size, int numParts, float duration, float spread, bool stencil);
 
-   Particle(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
+   Particle(SPtr<Scene> scene, SPtr<Model> model, float size, const std::string &name = "");
    virtual ~Particle();
 
    /**

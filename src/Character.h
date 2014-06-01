@@ -11,7 +11,7 @@ protected:
 public:
    static const std::string CLASS_NAME;
 
-   Character(SPtr<Scene> scene, SPtr<Model> model, int health, const std::string &name = "");
+   Character(SPtr<Scene> scene, SPtr<Model> model, float health, const std::string &name = "");
    virtual ~Character();
 
    /**

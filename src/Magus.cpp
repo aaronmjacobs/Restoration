@@ -14,14 +14,15 @@
 
 const std::string Magus::CLASS_NAME = "Magus";
 
-const float Magus::BASE_HEALTH = 7.0f;
+const float Magus::BASE_HEALTH = 50.0f;
 const float Magus::HOVER_SPEED = 4.0f;
-const float Magus::ATTACK_POWER = 10.0f;
+const float Magus::HEALTH_REPLACEMENT = 10.0f;
+const float Magus::ATTACK_POWER = 15.0f;
 float Magus::ATTACK_TIME = 6.0f;
 
 //Put health in the creation of Magus, and damage
 Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+: Enemy(scene, model, BASE_HEALTH, HEALTH_REPLACEMENT, ATTACK_POWER, name) {
 }
 
 Magus::~Magus() {

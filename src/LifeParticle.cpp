@@ -14,7 +14,7 @@ const float LifeParticle::MAX_FOLLOW_SPEED = 200.0f;
 
 void LifeParticle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, float size, int numParts, float duration, float spread, float healthAmount) {
    for (int i = 0; i < numParts; i++) {
-      SPtr<LifeParticle> particle = std::make_shared<LifeParticle>(scene, healthAmount / numParts);
+      SPtr<LifeParticle> particle = std::make_shared<LifeParticle>(scene, size, healthAmount / numParts);
       particle->setRenderState(STENCIL_STATE);
 
       //Spread & Velocity
@@ -22,15 +22,13 @@ void LifeParticle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3
       particle->acceleration = AnimHelper::randomSpherical(spread) * 3.0f;
       particle->position = AnimHelper::randomSpherical(spread / 4.0f) + position;
 
-      particle->scaleBy(glm::vec3(size));
-
       particle->duration = duration;
       scene->getSceneGraph()->add(particle);
    }
 }
 
-LifeParticle::LifeParticle(SPtr<Scene> scene, float healthAmount, const std::string &name)
-: Particle(scene, stencilParticleModel, name), timeAlive(0.0f), healthAmount(healthAmount) {
+LifeParticle::LifeParticle(SPtr<Scene> scene, float size, float healthAmount, const std::string &name)
+: Particle(scene, stencilParticleModel, size, name), timeAlive(0.0f), healthAmount(healthAmount) {
 }
 
 LifeParticle::~LifeParticle() {

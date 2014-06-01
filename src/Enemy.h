@@ -14,8 +14,10 @@
 class Enemy : public Character {
 public:
    static const std::string CLASS_NAME;
+   const float damage;
+   const float healthReplenishment;
 
-   Enemy(SPtr<Scene> scene, SPtr<Model> model, int health, int attackPower, const std::string &name = "");
+   Enemy(SPtr<Scene> scene, SPtr<Model> model, float health, float healthReplenishment, float damage, const std::string &name = "");
     
    virtual ~Enemy();
 
@@ -27,6 +29,9 @@ public:
    virtual void reverseMovement() = 0;
 
    virtual int getAttackPower() = 0;
+
+   float getHealthReplenishment();
+   float getDamage();
 };
 
 #endif /* defined(ENEMY_H) */

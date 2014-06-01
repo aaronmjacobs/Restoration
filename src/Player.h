@@ -15,12 +15,12 @@ protected:
    static const float ATTACK_POWER;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
-   static float INVINC_FRAMES;
 
    SPtr<Geometry> aura;
 
    bool wantsToGoLeft, wantsToGoRight, wantsToJump, wantsToAttack;
    double lastMouseX, lastMouseY;
+   float invincibilityTime;
 
 public:
    static const std::string CLASS_NAME;
@@ -46,13 +46,13 @@ public:
 
    virtual void tick(const float dt);
 
-   virtual float getInvFrames();
-
-   virtual void setInvFrames(float time);
+   virtual void setInvincibilityTime(float time);
 
    virtual void setHealth(float health);
 
    float getAuraRadius();
+
+   bool isInvincible();
 
 #include "CollisionsBoilerplateH.h"
 };

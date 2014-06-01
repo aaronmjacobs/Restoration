@@ -3,24 +3,25 @@
 #include "Loader.h"
 #include "Mesh.h"
 #include "Model.h"
+#include "Particle.h"
 #include "SceneGraph.h"
 
 #include "CollisionsIncludes.h"
 
-const float Player::ATTACK_POWER = 4.0f;
 const std::string Player::CLASS_NAME = "Player";
 
-const float Player::BASE_HEALTH = 10.0f;
+const float Player::ATTACK_POWER = 10.0f;
+const float Player::BASE_HEALTH = 20.0f;
 const float Player::MAX_HEALTH = 100.0f;
 const float Player::AURA_SCALE = 10.0f;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 520.0f;
-float Player::INVINC_FRAMES = 0.0f;
 
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Character(scene, model, BASE_HEALTH, name) {
    wantsToGoLeft = wantsToGoRight = wantsToJump = wantsToAttack = false;
    lastMouseX = lastMouseY = 0.0f;
+   invincibilityTime = 0.0f;
 
    Loader &loader = Loader::getInstance();
    SPtr<Material> auraMaterial = loader.loadMaterial(scene, "simple");
@@ -161,31 +162,29 @@ void Player::tick(const float dt) {
       // TODO Handle attack logic
    }
 
-   //Invincibility frames
-   if (INVINC_FRAMES > 0.0f) {
-      INVINC_FRAMES -= dt;
+   // Invincibility time
+   if (invincibilityTime > 0.0f) {
+      invincibilityTime -= dt;
    }
 
    Character::tick(dt);
 }
 
-float Player::getInvFrames() {
-   return INVINC_FRAMES;
-}
-
-void Player::setInvFrames(float time) {
-   INVINC_FRAMES = time;
+void Player::setInvincibilityTime(float time) {
+   invincibilityTime = time;
 }
 
 void Player::setHealth(float health) {
-   if (INVINC_FRAMES <= 0.0f) {
-      float actualHealth = glm::clamp(health, 0.0f, MAX_HEALTH);
-      Character::setHealth(actualHealth);
-   }
+   float actualHealth = glm::clamp(health, 0.0f, MAX_HEALTH);
+   Character::setHealth(actualHealth);
 }
 
 float Player::getAuraRadius() {
    return ((float)getHealth() / MAX_HEALTH) * AURA_SCALE;
+}
+
+bool Player::isInvincible() {
+   return invincibilityTime > 0.0f;
 }
 
 #define COLLISION_CLASS_NAME Player

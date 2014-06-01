@@ -19,18 +19,39 @@ void CollisionHandler::handleCollision(PhysicalObject &first, PhysicalObject &se
 }
 
 void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
-   player.setHealth(player.getHealth() - enemy.getAttackPower());
-   if (player.getInvFrames() <= 0.0f) {
-      player.setInvFrames(2.0f);
+   if (!player.isInvincible()) {
+      SPtr<Scene> scene = player.getScene().lock();
+      if (scene) {
+         Particle::createEffect(scene,
+                                player.getPosition(),         // Position
+                                glm::vec3(0.0f),              // Velocity
+                                false,                        // Gravity enabled
+                                5.0f,                         // Size
+                                enemy.getAttackPower() * 10,  // Number of particles
+                                5.0f,                         // Duration (seconds)
+                                enemy.getAttackPower(),       // Particle spread
+                                true);                        // Stencil mode
+      }
+
+      player.setHealth(player.getHealth() - enemy.getAttackPower());
+      player.setInvincibilityTime(2.0f);
+
+      if (!player.isAlive()) {
+         SPtr<Scene> sScene = player.getScene().lock();
+         if (sScene) {
+            Particle::createEffect(sScene,
+                                   player.getPosition(), // Position
+                                   glm::vec3(0.0f),   // Velocity
+                                   false,             // Gravity enabled
+                                   5.0f,              // Size
+                                   500,                // Number of particles
+                                   3.0f,              // Duration (seconds)
+                                   40.0f,             // Particle spread
+                                   true);             // Stencil mode
+         }
+      }
    }
-
 }
-
-/*void CollisionHandler::handleCollision(Player &player, Corona &corona) {
-    //player.setHealth(player.getHealth() - corona.getAttackPower());
-    //corona.reverseMovement();
-    //Add enemy logic for backing off after hurting you
-}*/
 
 void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
    //Reverse direction
@@ -149,9 +170,18 @@ COLLISION_REVERSE_FUNCTION(Obex, Scenery)
 
 void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
    vis.markForRemoval();
+
    SPtr<Scene> scene = vis.getScene().lock();
    if (scene) {
-      Particle::createEffect(scene, vis.getPosition(), glm::vec3(0.0f), false, 5.0f, 10, 3.0f, 25.0f, true);
+      Particle::createEffect(scene,
+                             vis.getPosition(), // Position
+                             glm::vec3(0.0f),   // Velocity
+                             false,             // Gravity enabled
+                             5.0f,              // Size
+                             10,                // Number of particles
+                             3.0f,              // Duration (seconds)
+                             25.0f,             // Particle spread
+                             true);             // Stencil mode
    }
 }
 
@@ -203,27 +233,69 @@ void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
       glm::vec3 particleVelocity = justitia.getVelocity();
       SPtr<Scene> scene = justitia.getScene().lock();
       if (scene) {
-         // TODO Determine health amount per enemy?
-         LifeParticle::createEffect(scene, justitia.getPosition(), particleVelocity * 0.75f, 5.0f, 100, 15.0f, 4.0f, 5.0f);
+         LifeParticle::createEffect(scene,
+            justitia.getPosition(),                // Position
+            particleVelocity * 0.75f,              // Velocity
+            5.0f,                                  // Size
+            enemy.getHealthReplenishment() * 10,   // Number of particles
+            15.0f,                                 // Duration (seconds)
+            enemy.getHealthReplenishment(),        // Particle spread
+            enemy.getHealthReplenishment());       // Total health amount
       }
    } else {
       SPtr<Scene> scene = justitia.getScene().lock();
       if (scene) {
-         Particle::createEffect(scene, justitia.getPosition(), glm::vec3(0.0f), false, 5.0f, 10, 3.0f, 25.0f, true);
+         Particle::createEffect(scene,
+                                justitia.getPosition(),  // Position
+                                glm::vec3(0.0f),         // Velocity
+                                false,                   // Gravity enabled
+                                5.0f,                    // Size
+                                10,                      // Number of particles
+                                3.0f,                    // Duration (seconds)
+                                25.0f,                   // Particle spread
+                                true);                   // Stencil mode
       }
    }
 }
+
 COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
 
 void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
-   player.setHealth(player.getHealth() - aegrum.getAttackPower());
+   if (!player.isInvincible()) {
+      SPtr<Scene> scene = player.getScene().lock();
+      if (scene) {
+         Particle::createEffect(scene,
+                                player.getPosition(),           // Position
+                                glm::vec3(0.0f),                // Velocity
+                                false,                          // Gravity enabled
+                                5.0f,                           // Size
+                                aegrum.getAttackPower() * 10,   // Number of particles
+                                5.0f,                           // Duration (seconds)
+                                aegrum.getAttackPower(),        // Particle spread
+                                true);                          // Stencil mode
+      }
+
+      player.setHealth(player.getHealth() - aegrum.getAttackPower());
+      player.setInvincibilityTime(2.0f);
+
+      if (!player.isAlive()) {
+         SPtr<Scene> sScene = player.getScene().lock();
+         if (sScene) {
+            Particle::createEffect(sScene,
+                                   player.getPosition(), // Position
+                                   glm::vec3(0.0f),   // Velocity
+                                   false,             // Gravity enabled
+                                   5.0f,              // Size
+                                   500,                // Number of particles
+                                   3.0f,              // Duration (seconds)
+                                   40.0f,             // Particle spread
+                                   true);             // Stencil mode
+         }
+      }
+   }
+
    aegrum.markForRemoval();
    aegrum.setAttackPower(0);
-
-   SPtr<Scene> scene = player.getScene().lock();
-   if (scene) {
-      Particle::createEffect(scene, player.getPosition(), glm::vec3(0.0f), false, 5.0f, 50, 3.0f, 25.0f, true);
-   }
 }
 COLLISION_REVERSE_FUNCTION(Aegrum, Player)
 

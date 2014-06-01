@@ -12,13 +12,14 @@
 
 const std::string Corona::CLASS_NAME = "Corona";
 
-const int Corona::BASE_HEALTH = 14;
+const float Corona::BASE_HEALTH = 30.0f;
 const float Corona::WALK_SPEED = 2.0f;
 const float Corona::JUMP_FORCE = 300.0f;
-const int Corona::ATTACK_POWER = 4;
+const float Corona::ATTACK_POWER = 7.0f;
+const float Corona::HEALTH_REPLENISHMENT = 5.0f;
 
 Corona::Corona(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+: Enemy(scene, model, BASE_HEALTH, HEALTH_REPLENISHMENT, ATTACK_POWER, name) {
 }
 
 Corona::~Corona() {

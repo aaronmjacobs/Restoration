@@ -24,10 +24,10 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
    for (int i = 0; i < numParts; i++) {
       SPtr<Particle> particle;
       if (stencil) {
-         particle = std::make_shared<Particle>(scene, stencilParticleModel);
+         particle = std::make_shared<Particle>(scene, stencilParticleModel, size);
          particle->setRenderState(STENCIL_STATE);
       } else {
-         particle = std::make_shared<Particle>(scene, particleModel);
+         particle = std::make_shared<Particle>(scene, particleModel, size);
       }
 
       if (gravityOn) {
@@ -41,8 +41,6 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
       particle->position = position;
       particle->velocity = AnimHelper::randomSpherical(spread) + velocity;
       particle->acceleration += AnimHelper::randomSpherical(spread);
-
-      particle->scaleBy(glm::vec3(size));
       
       particle->duration = duration;
       scene->getSceneGraph()->add(particle);
@@ -51,8 +49,9 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
 
 const std::string Particle::CLASS_NAME = "Particle";
 
-Particle::Particle(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Geometry(scene, model, name) {
+Particle::Particle(SPtr<Scene> scene, SPtr<Model> model, float size, const std::string &name)
+: Geometry(scene, model, name), size(size) {
+   scaleBy(glm::vec3(size));
 }
 
 Particle::~Particle() {
@@ -68,6 +67,10 @@ void Particle::tick(const float dt) {
 
    position += velocity * dt + 0.5f * acceleration * dt * dt;
    velocity += acceleration * dt;
+
+   if (duration < 1.0f) {
+      setScale(glm::vec3(size * duration));
+   }
 
    if (duration < 0.0f) {
       markForRemoval();

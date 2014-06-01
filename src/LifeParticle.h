@@ -18,7 +18,7 @@ public:
 
    static void createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 velocity, float size, int numParts, float duration, float spread, float healthAmount);
 
-   LifeParticle(SPtr<Scene> scene, float healthAmount, const std::string &name = "");
+   LifeParticle(SPtr<Scene> scene, float size, float healthAmount, const std::string &name = "");
    virtual ~LifeParticle();
 
    virtual void tick(const float dt);

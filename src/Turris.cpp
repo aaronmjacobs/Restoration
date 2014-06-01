@@ -6,12 +6,13 @@
 
 const std::string Turris::CLASS_NAME = "Turris";
 
-const float Turris::BASE_HEALTH = 14.0f;
-const float Turris::ATTACK_POWER = 4.0f;
+const float Turris::BASE_HEALTH = 30.0f;
 float Turris::ATTACK_TIME = 5.0f;
+const float Turris::HEALTH_REPLACEMENT = 7.0f;
+const float Turris::ATTACK_POWER = 7.0f;
 
 Turris::Turris(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
-: Enemy(scene, model, BASE_HEALTH, ATTACK_POWER, name) {
+: Enemy(scene, model, BASE_HEALTH, HEALTH_REPLACEMENT, ATTACK_POWER, name) {
 }
 
 Turris::~Turris() {

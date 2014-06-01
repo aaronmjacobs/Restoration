@@ -13,10 +13,11 @@
 
 class Corona : public Enemy {
 protected:
-   static const int BASE_HEALTH;
+   static const float BASE_HEALTH;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
-   static const int ATTACK_POWER;
+   static const float ATTACK_POWER;
+   static const float HEALTH_REPLENISHMENT;
 
 public:
    static const std::string CLASS_NAME;

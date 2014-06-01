@@ -16,6 +16,7 @@ protected:
    static const float BASE_HEALTH;
    static const float HOVER_SPEED;
    static const float ATTACK_POWER;
+   static const float HEALTH_REPLACEMENT;
    static float ATTACK_TIME;
 
 public:    

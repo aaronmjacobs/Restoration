@@ -5,10 +5,11 @@
 
 class Obex : public Enemy {
 protected:
-   static const int BASE_HEALTH;
+   static const float BASE_HEALTH;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
-   static const int ATTACK_POWER;
+   static const float ATTACK_POWER;
+   static const float HEALTH_REPLACEMENT;
    static float ATTACK_TIME;
    static glm::vec3 SAVED_VELOCITY;
    static bool STOPPED;

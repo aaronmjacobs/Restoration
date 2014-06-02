@@ -15,6 +15,7 @@ protected:
    static const float ATTACK_POWER;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;
+   static const float JUSTITIA_HEALTH_REMOVAL;
 
    SPtr<Geometry> aura;
 

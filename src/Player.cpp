@@ -16,6 +16,7 @@ const float Player::MAX_HEALTH = 100.0f;
 const float Player::AURA_SCALE = 10.0f;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 520.0f;
+const float Player::JUSTITIA_HEALTH_REMOVAL = 1.0f;
 
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Character(scene, model, BASE_HEALTH, name) {
@@ -124,6 +125,8 @@ void Player::onMouseButtonEvent(int button, int action) {
       }
       justitia->setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f)));
       sScene->getSceneGraph()->addPhys(justitia);
+
+      setHealth(getHealth() - JUSTITIA_HEALTH_REMOVAL);
    }
 }
 

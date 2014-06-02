@@ -235,7 +235,7 @@ void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
       if (scene) {
          LifeParticle::createEffect(scene,
             justitia.getPosition(),                // Position
-            particleVelocity * 0.75f,              // Velocity
+            particleVelocity,              // Velocity
             5.0f,                                  // Size
             enemy.getHealthReplenishment() * 10,   // Number of particles
             15.0f,                                 // Duration (seconds)

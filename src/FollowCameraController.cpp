@@ -25,6 +25,7 @@ void FollowCameraController::tick(const float dt) {
 
    glm::vec3 toObject = objectPos - cameraPos;
    toObject.z = 0.0f; // We don't want the camera to move in z
+   toObject.y += 1.0f;
 
    float toObjectLen = glm::length(toObject);
    if (toObjectLen == 0.0f) {

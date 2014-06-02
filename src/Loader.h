@@ -101,6 +101,8 @@ protected:
    PhongMaterialData loadPhongMaterialData(SPtr<Scene> scene, const Json::Value &root);
    SceneObjectData loadSceneObjectData(const Json::Value &root);
 
+   void prepareGroundPlane(SPtr<Scene> scene, const Json::Value &root);
+
 public:
    static Loader& getInstance();
    static void resetSingleton();

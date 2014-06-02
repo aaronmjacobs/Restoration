@@ -31,4 +31,10 @@ glm::vec3 randomSpherical(float radius) {
                     r * glm::cos(phi));
 }
 
+float random(float min, float max) {
+   ASSERT(max >= min, "Max can not be less than min: [%f, %f]", min, max);
+   std::uniform_real_distribution<float> distribution(min, max);
+   return distribution(generator);
+}
+
 } // namespace AnimHelper

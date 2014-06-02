@@ -1,5 +1,6 @@
 #include "AniMesh.h"
 #include "AniModel.h"
+#include "AnimHelper.h"
 #include "Camera.h"
 #include "Character.h"
 #include "Corona.h"
@@ -258,6 +259,73 @@ SceneObjectData Loader::loadSceneObjectData(const Json::Value &root) {
    data.renderState = root["renderState"].asUInt();
 
    return data;
+}
+
+void Loader::prepareGroundPlane(SPtr<Scene> scene, const Json::Value &root) {
+   // Center (physical platform)
+   check("Ground plane", root, "center");
+
+   // Front geometry (near camera)
+   check("Ground plane", root, "front1");
+   check("Ground plane", root, "front2");
+   check("Ground plane", root, "front3");
+
+   // Back geometry (away from camera)
+   check("Ground plane", root, "back1");
+   check("Ground plane", root, "back2");
+   check("Ground plane", root, "back3");
+
+   // Distance the front and back need to be adjusted, and width of each section
+   check("Ground plane", root, "frontDistance");
+   float frontDistance = root["frontDistance"].asFloat();
+   check("Ground plane", root, "backDistance");
+   float backDistance = root["backDistance"].asFloat();
+   check("Ground plane", root, "width");
+   float width = root["width"].asFloat();
+
+   // The min x, max x, and y values for the ground plane
+   check("Ground plane", root, "minX");
+   float minX = root["minX"].asFloat();
+   check("Ground plane", root, "maxX");
+   float maxX = root["maxX"].asFloat();
+   check("Ground plane", root, "y");
+   float y = root["y"].asFloat();
+
+   SPtr<SceneGraph> sceneGraph = scene->getSceneGraph();
+   for (float x = minX; x < maxX; x += width) {
+      SPtr<Scenery> center = loadScenery(scene, root["center"]);
+      center->translateBy(glm::vec3(x, y - 0.5f, 0.0f));
+      center->shouldBeSerialized(false);
+      sceneGraph->addPhys(center);
+
+      std::string frontName;
+      float random = AnimHelper::random(0.0f, 3.0f);
+      if (random > 2.0f) {
+         frontName = "front1";
+      } else if (random > 1.0f) {
+         frontName = "front2";
+      } else {
+         frontName = "front3";
+      }
+      SPtr<Geometry> front = loadGeometry(scene, root[frontName]);
+      front->translateBy(glm::vec3(x, y, frontDistance));
+      front->shouldBeSerialized(false);
+      sceneGraph->add(front);
+
+      std::string backName;
+      random = AnimHelper::random(0.0f, 3.0f);
+      if (random > 2.0f) {
+         backName = "back1";
+      } else if (random > 1.0f) {
+         backName = "back2";
+      } else {
+         backName = "back3";
+      }
+      SPtr<Geometry> back = loadGeometry(scene, root[backName]);
+      back->translateBy(glm::vec3(x, y, -backDistance));
+      back->shouldBeSerialized(false);
+      sceneGraph->add(back);
+   }
 }
 
 /********************
@@ -883,6 +951,21 @@ SPtr<Scene> Loader::loadScene(const std::string &fileName) {
    // Loads the scene graph, including the camera, any lights, and any shader program
    check("Scene", root, "graph");
    loadSceneGraph(scene, root["graph"]);
+
+   // Load the ground plane
+
+
+
+
+
+   // TODO Make the ground plane objects not serialized
+
+
+
+
+   check("Scene", root, "groundPlane");
+   prepareGroundPlane(scene, root["groundPlane"]);
+   scene->setGroundPlaneInfo(root["groundPlane"]);
 
    // Load the skyboxes
    check("Scene", root, "lightSkybox");

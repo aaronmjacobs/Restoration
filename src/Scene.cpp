@@ -31,6 +31,9 @@ Json::Value Scene::serialize() const {
    root["lightSkybox"] = lightSkybox->serialize();
    root["darkSkybox"] = darkSkybox->serialize();
 
+   // Ground plane
+   root["groundPlane"] = groundPlaneInfo;
+
    // Camera, lights, and shader programs determined on reload
 
    return root;

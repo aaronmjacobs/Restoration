@@ -74,7 +74,7 @@ void Player::onKeyEvent(int key, int action) {
 
 void Player::onMouseButtonEvent(int button, int action) {
    SPtr<Scene> sScene = scene.lock();
-   if (!sScene || sScene->isInEditMode()) {
+   if (!sScene || sScene->isInEditMode() || !isAlive()) {
       return;
    }
 

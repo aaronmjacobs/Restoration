@@ -7,6 +7,7 @@ namespace AnimHelper {
 
 glm::vec3 randomLinear(float min, float max);
 glm::vec3 randomSpherical(float radius);
+float random(float min, float max);
 
 } // namespace AnimHelper
 

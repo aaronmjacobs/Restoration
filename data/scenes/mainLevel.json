@@ -406,6 +406,35 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
+               "material" : "spikes",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/spikes.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -95.06745147705078,
+               "y" : 11.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
                "material" : "sand",
                "mesh" : {
                   "@class" : "Mesh",

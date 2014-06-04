@@ -53,12 +53,6 @@ void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
    }
 }
 
-void CollisionHandler::handleCollision(Enemy &enemy1, Enemy &enemy2) {
-   //Reverse direction
-   enemy1.reverseMovement();
-   enemy2.reverseMovement();
-}
-
 void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
    float collisionWidth = collision.width();
@@ -113,54 +107,7 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
 COLLISION_REVERSE_FUNCTION(Character, Scenery)
 
 void CollisionHandler::handleCollision(Obex &obex, Scenery &scenery) {
-   BoundingBox collision = BoundingBox(obex.getBounds(), scenery.getBounds());
-   float collisionWidth = collision.width();
-   float collisionHeight = collision.height();
-   glm::vec3 obexPos = obex.getPosition();
-   glm::vec3 sceneryPos = scenery.getPosition();
-   glm::vec3 obexVel = obex.getVelocity();
-   glm::vec3 obexMove(0.0f);
-
-   obex.setStoppedStatus(true);
-   obex.setSavedVel(-obexVel);
-   obex.resetAttackTime();
-   if (collisionWidth <= collisionHeight) {
-      // Avoid getting stuck on edges
-      if (collisionHeight < 0.1f) {
-         return;
-      }
-
-      // Treat the collision in x
-      if (obexPos.x >= sceneryPos.x) {
-         // Character is to the right
-         obexMove.x = collisionWidth;
-         if (obexVel.x < 0.0f) {
-            obexVel.x = 0.0f;
-         }
-      } else {
-         // obex is to the left
-         obexMove.x = -collisionWidth;
-         if (obexVel.x > 0.0f) {
-            obexVel.x = 0.0f;
-         }
-      }
-   } else {
-      // Treat the collision in y
-      if (obexPos.y >= sceneryPos.y) {
-         // Character is above
-         obexMove.y = collisionHeight;
-         if (obexVel.y < 0.0f) {
-            obexVel.y = 0.0f;
-            //obex.setOnGround();
-         }
-      } else {
-         // Character is below
-         obexMove.y = -collisionHeight;
-         if (obexVel.y > 0.0f) {
-            obexVel.y = 0.0f;
-         }
-      }
-   }
+   obex.reverseMovement();
    
    Character& obexCharacter = obex;
    handleCollision(obexCharacter, scenery);

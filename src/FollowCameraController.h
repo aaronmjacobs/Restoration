@@ -13,6 +13,7 @@ class SceneObject;
  */
 class FollowCameraController : public CameraController, public TickListener {
 private:
+   static const float MAX_DISTANCE_CHANGE;
    WPtr<SceneObject> objectToFollow;
    float zDist, phi, theta;
 

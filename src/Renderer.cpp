@@ -33,14 +33,17 @@ void Renderer::prepare() {
    // Back face culling
    glCullFace(GL_BACK);
 
-   // Create frame buffer
+   // Create frame buffers
    fb = UPtr<FrameBuffer>(new FrameBuffer);
+   shadow = UPtr<Shadow>(new Shadow);
 
    // Prepare the frame buffer
    fb->setupToTexture2D();
 
    Loader& loader = Loader::getInstance();
    Json::Value root;
+
+   shadowProgram = loader.loadShaderProgram(nullptr, "shadow");
 
    SPtr<ShaderProgram> fboProgram = loader.loadShaderProgram(nullptr, "fbo_blur");
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo_blur", fboProgram, *fb);
@@ -169,7 +172,34 @@ void draw(SceneObject &obj) {
 
 } // namespace
 
+void Renderer::prepareShadowDraw(Scene& scene) {
+   // apply the shadow fbo to be drawn to.
+   shadow->applyFBO();
+
+   for (WPtr<Light> wLight : scene.getLights()) {
+      SPtr<Light> light = wLight.lock();
+      if (!light) {
+         continue;
+      }
+      shadow->setLightMatrix(light->getPosition(), shadowProgram);
+   }
+   renderData.setRenderState(SHADOW_STATE);
+}
+
+/*void Renderer::prepareShadowDraw() {
+   // apply the shadow fbo to be drawn to.
+   shadow->applyFBO();
+   shadow->setLightMatrix(LIGHTDIR,shadowProgram);
+
+   renderData.setRenderState(SHADOW_STATE);
+}*/
+
 void Renderer::prepareStencilDraw() {
+   // disable the shadow fbo
+   shadow->disableFBO();
+   glDrawBuffer(GL_BACK);
+   glReadBuffer(GL_BACK);
+   
    fb->applyFBO();
    glEnable(GL_STENCIL_TEST);
    // disable color and depth buffers
@@ -267,6 +297,14 @@ void Renderer::render(Scene &scene) {
    updatePlanes(camera->getProjectionMatrix() * camera->getViewMatrix(), true);
 
 #ifndef NO_FBO
+
+   // Render items into shadowmap @ light position. Need scene to get access to lights.
+   prepareShadowDraw(scene);
+   setRenderData(renderData);
+   scene.getSceneGraph()->forEach(draw);
+
+   renderData.set("shadowMapID", shadow->getTextureID());
+   renderData.set("uDepthMVP", shadow->getDepthMVPMatrix());
 
    // Render items to the stencil buffer
    prepareStencilDraw();

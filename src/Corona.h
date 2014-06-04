@@ -11,6 +11,8 @@
 
 #include "Enemy.h"
 
+enum CoronaState { PATROLING, CHASING };
+
 class Corona : public Enemy {
 protected:
    static const float BASE_HEALTH;
@@ -18,6 +20,10 @@ protected:
    static const float JUMP_FORCE;
    static const float ATTACK_POWER;
    static const float HEALTH_REPLENISHMENT;
+   static const float MAX_CHASE_DISTANCE;
+   static const float MIN_CHASE_DISTANCE;
+
+   CoronaState state;
 
 public:
    static const std::string CLASS_NAME;

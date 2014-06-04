@@ -2,6 +2,8 @@
 #include "FollowCameraController.h"
 #include "SceneObject.h"
 
+const float FollowCameraController::MAX_DISTANCE_CHANGE = 30.0f;
+
 FollowCameraController::FollowCameraController(SPtr<Camera> camera, SPtr<SceneObject> objectToFollow, float zDist, float phi, float theta)
 : CameraController(camera), objectToFollow(objectToFollow), zDist(zDist), phi(phi), theta(theta) {
 }
@@ -35,9 +37,9 @@ void FollowCameraController::tick(const float dt) {
    glm::vec3 move = glm::normalize(toObject) * moveLen;
 
    glm::vec3 newCameraPos(cameraPos + (move * dt));
-   if (glm::distance(objectPos, newCameraPos) > glm::distance(objectPos, cameraPos)) {
-      // Function will diverge, cap it.
-      newCameraPos = cameraPos + ((glm::normalize(move) * glm::distance(objectPos, cameraPos) * 0.75f) * dt);
+   glm::vec3 toNewCameraPos = newCameraPos - cameraPos;
+   if (glm::length(toNewCameraPos) > MAX_DISTANCE_CHANGE) {
+      newCameraPos = cameraPos + glm::normalize(toNewCameraPos) * MAX_DISTANCE_CHANGE;
    }
    newCameraPos.z = zDist;
 

@@ -12,6 +12,7 @@ protected:
    static const float BASE_HEALTH;
    static const float MAX_HEALTH;
    static const float AURA_SCALE;
+   static const float MIN_AURA_SIZE;
    static const float ATTACK_POWER;
    static const float WALK_SPEED;
    static const float JUMP_FORCE;

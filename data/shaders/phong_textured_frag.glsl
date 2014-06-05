@@ -58,7 +58,7 @@ void main() {
                     + uLights[i].linearFalloff * lightDistance
                     + uLights[i].squareFalloff * lightDistance * lightDistance);
       }
-
+	  
       finalColor += (surfaceColor * diffuseAmount
                   + uMaterial.specular * specularAmount)
                   * falloff * uLights[i].color;
@@ -67,10 +67,14 @@ void main() {
    finalColor += surfaceColor * ((ambient + ambientGlobal) * 0.5) * 0.7;
    finalColor += uMaterial.emission;
    
+   float bias = 0.105;
    float visibility = 1.0;
-   if(texture2D( uShadowMap, vShadowCoord.xy ).z > vShadowCoord.z){
-      visibility = 0.5;
+   if(texture2D( uShadowMap, vTexCoord ).z < vShadowCoord.z - bias){
+	  visibility = 0.5;
    }
-
-   gl_FragColor = vec4(visibility * finalColor.rgb, 1);
+   
+    float z_b = texture2D(uShadowMap, vTexCoord).z;
+    float z_e = 2.0 * 1 / (100 + 1 - z_b * (100 - 1));
+	
+   gl_FragColor = vec4(vec3(z_e), 1.0);
 }

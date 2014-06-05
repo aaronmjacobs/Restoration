@@ -52,6 +52,7 @@ const std::string Particle::CLASS_NAME = "Particle";
 Particle::Particle(SPtr<Scene> scene, SPtr<Model> model, float size, const std::string &name)
 : Geometry(scene, model, name), size(size) {
    scaleBy(glm::vec3(size));
+   shouldBeSerialized(false);
 }
 
 Particle::~Particle() {

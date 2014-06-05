@@ -28,6 +28,7 @@ protected:
    CollisionHandler collisionHandler;
    SPtr<Audio> audio;
    bool editMode;
+   Json::Value groundPlaneInfo;
 
    /**
     * All items listening for user input.
@@ -88,6 +89,10 @@ public:
    SPtr<Audio> getAudio();
 
    void tick(const float dt);
+
+   void setGroundPlaneInfo(Json::Value groundPlaneInfo) {
+      this->groundPlaneInfo = groundPlaneInfo;
+   }
 
    /**
     * Handles keyboard events.

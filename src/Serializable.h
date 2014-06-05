@@ -4,17 +4,25 @@
 #include "lib/json/json.h"
 
 class Serializable {
+protected:
+   bool shouldSerialize;
+
 public:
    const std::string CLASS_NAME = "Serializable";
 
    Serializable() {
+      shouldSerialize = true;
    }
 
    virtual ~Serializable() {
    }
 
    virtual bool shouldBeSerialized() {
-      return true;
+      return shouldSerialize;
+   }
+
+   virtual void shouldBeSerialized(bool serialize) {
+      shouldSerialize = serialize;
    }
 
    /**

@@ -14,6 +14,7 @@ const float Player::ATTACK_POWER = 10.0f;
 const float Player::BASE_HEALTH = 20.0f;
 const float Player::MAX_HEALTH = 100.0f;
 const float Player::AURA_SCALE = 10.0f;
+const float Player::MIN_AURA_SIZE = 0.1f;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 520.0f;
 const float Player::JUSTITIA_HEALTH_REMOVAL = 1.0f;
@@ -74,7 +75,7 @@ void Player::onKeyEvent(int key, int action) {
 
 void Player::onMouseButtonEvent(int button, int action) {
    SPtr<Scene> sScene = scene.lock();
-   if (!sScene || sScene->isInEditMode()) {
+   if (!sScene || sScene->isInEditMode() || !isAlive()) {
       return;
    }
 
@@ -183,7 +184,7 @@ void Player::setHealth(float health) {
 }
 
 float Player::getAuraRadius() {
-   return ((float)getHealth() / MAX_HEALTH) * AURA_SCALE;
+   return glm::max(MIN_AURA_SIZE, ((float)getHealth() / MAX_HEALTH) * AURA_SCALE);
 }
 
 bool Player::isInvincible() {

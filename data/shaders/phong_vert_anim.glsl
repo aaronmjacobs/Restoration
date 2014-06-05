@@ -5,6 +5,7 @@ uniform mat4 uViewMatrix;
 uniform mat4 uModelMatrix;
 uniform mat4 uNormalMatrix;
 uniform mat4 bonesMatrix[64];
+uniform mat4 uDepthMVP;
 
 attribute vec3 aPosition;
 attribute vec3 aNormal;
@@ -13,6 +14,7 @@ attribute vec3 joints;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
+varying vec4 vShadowCoord;
 
 void main() {
   // Animations
@@ -25,6 +27,7 @@ void main() {
   vec4 lPosition = uModelMatrix * animationMatrix * vec4(aPosition, 1);
   vWorldPosition = vec3(lPosition.x, lPosition.y, lPosition.z);
   gl_Position = uProjMatrix * uViewMatrix * lPosition;
+  vShadowCoord = uDepthMVP * vec4(aPosition, 1.0);
 
   // Calculate the relative normal
   vec4 lNormal = vec4(aNormal.x, aNormal.y, aNormal.z, 0);

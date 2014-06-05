@@ -9,7 +9,7 @@ class PhongMaterial : public Material {
 protected:
    glm::vec3 ambient, diffuse, specular, emission;
    float shininess;
-   GLint uAmbient, uDiffuse, uSpecular, uEmission, uShininess, uAmbientMap, uAmbientGlobal;
+   GLint uAmbient, uDiffuse, uSpecular, uEmission, uShininess, uAmbientMap, uAmbientGlobal, uDepthMVP, uShadowMap;
 
 public:
    static const std::string CLASS_NAME;

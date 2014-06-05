@@ -42,6 +42,8 @@ void Renderer::prepare() {
 
    Loader& loader = Loader::getInstance();
    Json::Value root;
+   renderData.set("shadowMapID", shadow->getTextureID());
+   renderData.set("uDepthMVP", shadow->getDepthMVPMatrix());
 
    shadowProgram = loader.loadShaderProgram(nullptr, "shadow");
 
@@ -175,7 +177,7 @@ void draw(SceneObject &obj) {
 void Renderer::prepareShadowDraw(Scene& scene) {
    // apply the shadow fbo to be drawn to.
    shadow->applyFBO();
-
+   glEnable(GL_DEPTH_TEST);
    for (WPtr<Light> wLight : scene.getLights()) {
       SPtr<Light> light = wLight.lock();
       if (!light) {
@@ -300,11 +302,10 @@ void Renderer::render(Scene &scene) {
 
    // Render items into shadowmap @ light position. Need scene to get access to lights.
    prepareShadowDraw(scene);
+   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+   glClear(GL_DEPTH_BUFFER_BIT);
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
-
-   renderData.set("shadowMapID", shadow->getTextureID());
-   renderData.set("uDepthMVP", shadow->getDepthMVPMatrix());
 
    // Render items to the stencil buffer
    prepareStencilDraw();

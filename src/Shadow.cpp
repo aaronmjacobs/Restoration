@@ -6,18 +6,14 @@ Shadow::Shadow(){
    glGenFramebuffers(1, &sMapID);
    glBindFramebuffer(GL_FRAMEBUFFER, sMapID);
 
-   GLuint dummyColorID;
-   glGenTextures(1, &dummyColorID);
-   glBindTexture(GL_TEXTURE_2D, dummyColorID);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_INT, NULL);
-   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, dummyColorID, 0);
-   glBindTexture(GL_TEXTURE_2D, 0);
+   GLint viewport[4];
+   glGetIntegerv(GL_VIEWPORT, viewport);
 
    // Create a depth texture (16 bits). We will be sampling from this later so we make it a TEXTURE.
    // Experimenting with the size of the shadowmap.
    glGenTextures(1, &depthTextureID);
    glBindTexture(GL_TEXTURE_2D, depthTextureID);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, viewport[2], viewport[3], 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

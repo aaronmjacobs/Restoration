@@ -15,6 +15,9 @@ PhongMaterial::PhongMaterial(const std::string &jsonFileName, SPtr<ShaderProgram
 
    uAmbientMap = shaderProgram->getUniform("uAmbientMap");
    uAmbientGlobal = shaderProgram->getUniform("uAmbientGlobal");
+   
+   uShadowMap = shaderProgram->getUniform("uShadowMap");
+   uDepthMVP = shaderProgram->getUniform("uDepthMVP");
 }
 
 PhongMaterial::~PhongMaterial() {
@@ -74,9 +77,12 @@ void PhongMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
 
    GLenum ambientMapTextureUnit = TextureUnitManager::get();
    GLenum ambientGlobalTextureUnit = TextureUnitManager::get();
+   GLenum shadowMapTextureUnit = TextureUnitManager::get();
    if (renderData.getRenderState() & LIGHTWORLD_STATE || renderData.getRenderState() & DARKWORLD_STATE) {
       GLuint ambientMapID = renderData.getGLuint("ambientMapID");
       GLuint ambientGlobalID = renderData.getGLuint("ambientGlobalID");
+      GLuint shadowMapID = renderData.getGLuint("shadowMapID");
+      glm::mat4 dMVPMatrix = renderData.getMat("uDepthMVP");
 
       glActiveTexture(GL_TEXTURE0 + ambientMapTextureUnit);
       glBindTexture(GL_TEXTURE_CUBE_MAP, ambientMapID);
@@ -85,10 +91,17 @@ void PhongMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
       glActiveTexture(GL_TEXTURE0 + ambientGlobalTextureUnit);
       glBindTexture(GL_TEXTURE_2D, ambientGlobalID);
       glUniform1i(uAmbientGlobal, ambientGlobalTextureUnit);
+
+      glActiveTexture(GL_TEXTURE0 + shadowMapTextureUnit);
+      glBindTexture(GL_TEXTURE_2D, shadowMapID);
+      glUniform1i(uShadowMap, shadowMapTextureUnit);
+
+      glUniformMatrix4fv(uDepthMVP, 1, GL_FALSE, glm::value_ptr(dMVPMatrix));
    }
 }
 
 void PhongMaterial::disable() {
+   TextureUnitManager::release();
    TextureUnitManager::release();
    TextureUnitManager::release();
    shaderProgram->disable();

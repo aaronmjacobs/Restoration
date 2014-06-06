@@ -22,5 +22,6 @@
       "g" : 0.2,
       "r" : 0.2
    },
-   "texture" : "data/textures/aquaduct.png"
+   "texture" : "data/textures/aquaduct.png",
+   "altTexture" : "data/textures/aquaductLight.png"
 }

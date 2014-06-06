@@ -278,7 +278,7 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-               "material" : "block",
+               "material" : "aquaduct",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"
@@ -307,7 +307,7 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-               "material" : "block",
+               "material" : "aquaduct",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"

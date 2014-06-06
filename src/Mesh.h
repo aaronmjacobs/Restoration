@@ -60,6 +60,12 @@ public:
    virtual void updateAnimation() {
    }
 
+   virtual void hardApplyAnimation(const std::string &aniName) {
+   }
+
+   virtual void softApplyAnimation(const std::string &aniName) {
+   }
+
    /**
     * Gets the vertex buffer object handle.
     */

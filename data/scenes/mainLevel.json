@@ -77,11 +77,28 @@
             },
             "health" : 20,
             "model" : {
-               "@class" : "Model",
-               "material" : "block",
+               "@class" : "AniModel",
+               "material" : "animMaterial",
                "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/cube.obj"
+                  "@class" : "AniMesh",
+                  "animations" : [
+                     {
+                        "default" : true,
+                        "file" : "data/meshes/finalIdle1.dae",
+                        "name" : "Idle"
+                     },
+                     {
+                        "default" : false,
+                        "file" : "data/meshes/finalJump1.dae",
+                        "name" : "Jump"
+                     },
+                     {
+                        "default" : false,
+                        "file" : "data/meshes/finalRunning.dae",
+                        "name" : "Run"
+                     }
+                  ],
+                  "fileName" : "data/meshes/finalIdle1.dae"
                }
             },
             "name" : "player",
@@ -99,7 +116,7 @@
             "renderState" : 6,
             "scale" : {
                "x" : 1.0,
-               "y" : 2.0,
+               "y" : 1.0,
                "z" : 1.0
             },
             "velocity" : {
@@ -118,11 +135,11 @@
                   "animations" : [
                      {
                         "default" : true,
-                        "file" : "data/meshes/seraCrystal.dae",
+                        "file" : "data/meshes/finalIdle1.dae",
                         "name" : "button"
                      }
                   ],
-                  "fileName" : "data/meshes/seraCrystal.dae"
+                  "fileName" : "data/meshes/finalIdle1.dae"
                }
             },
             "name" : "",

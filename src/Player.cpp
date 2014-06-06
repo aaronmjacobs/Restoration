@@ -1,3 +1,4 @@
+#include "AniMesh.h"
 #include "Camera.h"
 #include "GLIncludes.h"
 #include "Loader.h"
@@ -140,6 +141,7 @@ void Player::tick(const float dt) {
    // Kinetic friction
    if (onGround) {
       velocity.x *= 0.85f;
+      this->model->getMesh()->softApplyAnimation("Idle");
    }
 
    // Air resistance
@@ -152,14 +154,21 @@ void Player::tick(const float dt) {
 
    if (wantsToGoLeft && velocity.x > -WALK_SPEED) {
       velocity.x = -WALK_SPEED;
+      if (onGround) {
+         this->model->getMesh()->softApplyAnimation("Run");
+      }
    }
    if (wantsToGoRight && velocity.x < WALK_SPEED) {
       velocity.x = WALK_SPEED;
+      if (onGround) {
+         this->model->getMesh()->softApplyAnimation("Run");
+      }
    }
 
    if (wantsToJump && onGround) {
       onGround = false;
       velocity += glm::vec3(0.0f, JUMP_FORCE, 0.0f) * dt;
+      this->model->getMesh()->hardApplyAnimation("Jump");
    }
 
    if (wantsToAttack) {

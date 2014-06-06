@@ -9918,7 +9918,7 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-               "material" : "otherMaterial",
+               "material" : "temple",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/structure_temple.obj"

@@ -26,7 +26,7 @@ LevelEditor::LevelEditor(SPtr<Scene> scene)
 	objFiles1[2] = "data/meshes/archGem_goal.obj";
 	objFiles1[3] = "data/meshes/back_inside.obj";
 	objFiles1[4] = "data/meshes/back_insideEnd.obj";
-	objFiles1[5] = "data/meshes/back_insideEnd.obj";
+	objFiles1[5] = "data/meshes/block_long.obj";
 	objFiles1[6] = "data/meshes/pillar.obj";
 	objFiles1[7] = "data/meshes/sand_background.obj";
 	objFiles1[8] = "data/meshes/structure_temple.obj";
@@ -41,6 +41,16 @@ LevelEditor::LevelEditor(SPtr<Scene> scene)
 	objFiles2[7] = "data/meshes/backPath3.obj";
 	objFiles2[8] = "data/meshes/sand_background.obj";
 	objFiles2[9] = "data/meshes/sand_background.obj";
+	objFiles3[0] = "data/meshes/seraCrystal.obj";
+	objFiles3[1] = "data/meshes/crate.obj";
+	objFiles3[2] = "data/meshes/Pot.obj";
+	objFiles3[3] = "data/meshes/spikes.obj";
+	objFiles3[4] = "data/meshes/rock_1.obj";
+	objFiles3[5] = "data/meshes/rock_2.obj";
+	objFiles3[6] = "data/meshes/rock_3.obj";
+	objFiles3[7] = "data/meshes/rock_4.obj";
+	objFiles3[8] = "data/meshes/tree_dark.obj";
+	objFiles3[9] = "data/meshes/block_long.obj";
 }
 
 /*
@@ -319,10 +329,18 @@ void LevelEditor::onKeyEvent(int key, int action) {
 		else if (key == GLFW_KEY_9)
 			curObjFile = curFileList[9];
 		else if (key == GLFW_KEY_EQUAL) {
-			if (list1)
+			if (listNum == 1) {
 				curFileList = objFiles2;
-			else
+				listNum++;
+			}
+			else if (listNum == 2) {
+				curFileList = objFiles3;
+				listNum++;
+			}
+			else if (listNum == 3) {
 				curFileList = objFiles1;
+				listNum = 1;
+			}
 		}
 	}
 	else if (action == GLFW_RELEASE) {

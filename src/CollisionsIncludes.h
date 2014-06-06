@@ -4,6 +4,7 @@
 #include "Scene.h"
 
 #include "Aegrum.h"
+#include "Boss.h"
 #include "Character.h"
 #include "Corona.h"
 #include "Enemy.h"

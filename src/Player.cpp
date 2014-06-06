@@ -143,6 +143,9 @@ void Player::tick(const float dt) {
       velocity.x *= 0.85f;
       this->model->getMesh()->softApplyAnimation("Idle");
    }
+   else {
+      this->model->getMesh()->hardApplyAnimation("Jump");
+   }
 
    // Air resistance
    velocity.x *= 0.95f;
@@ -168,7 +171,6 @@ void Player::tick(const float dt) {
    if (wantsToJump && onGround) {
       onGround = false;
       velocity += glm::vec3(0.0f, JUMP_FORCE, 0.0f) * dt;
-      this->model->getMesh()->hardApplyAnimation("Jump");
    }
 
    if (wantsToAttack) {

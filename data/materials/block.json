@@ -23,5 +23,5 @@
       "r" : 0.2
    },
    "texture" : "data/textures/box_inside.png",
-   "altTexture" : "data/textures/water.png"
+   "altTexture" : "data/textures/box_insideLight.png"
 }

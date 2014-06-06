@@ -11,6 +11,7 @@
 #include "SceneGraph.h"
 
 #include "CollisionsIncludes.h"
+#include "Particle.h"
 
 const std::string Magus::CLASS_NAME = "Magus";
 
@@ -84,6 +85,18 @@ void Magus::tick(const float dt) {
 
                //Move around
                evasiveManuevers(playerPos - position);
+
+               if (sScene) {
+                  Particle::createEffect(sScene,
+                                         getPosition(), // Position
+                                         glm::vec3(0.0f),   // Velocity
+                                         false,             // Gravity enabled
+                                         5.0f,              // Size
+                                         5,                // Number of particles
+                                         3.0f,              // Duration (seconds)
+                                         25.0f,             // Particle spread
+                                         false);             // Stencil mode
+               }
 
             }
             attackTime -= dt;

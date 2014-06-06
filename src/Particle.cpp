@@ -27,8 +27,8 @@ void Particle::createEffect(SPtr<Scene> scene, glm::vec3 position, glm::vec3 vel
          particle = std::make_shared<Particle>(scene, stencilParticleModel, size);
          particle->setRenderState(STENCIL_STATE);
       } else {
-         particle->setRenderState(LIGHTWORLD_STATE | DARKWORLD_STATE | SHADOW_STATE);
          particle = std::make_shared<Particle>(scene, particleModel, size);
+         particle->setRenderState(LIGHTWORLD_STATE | DARKWORLD_STATE | SHADOW_STATE);
       }
 
       if (gravityOn) {

@@ -25,8 +25,6 @@ public:
       return false;
    }
 
-   virtual void tick(const float dt);
-
    float getAttackPower();
    void setAttackPower(float attackPower);
 };

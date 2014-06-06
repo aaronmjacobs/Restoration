@@ -120,13 +120,13 @@ void CollisionHandler::handleCollision(Obex &obex, Scenery &scenery) {
 
 COLLISION_REVERSE_FUNCTION(Obex, Scenery)
 
-void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
-   vis.markForRemoval();
+void CollisionHandler::handleCollision(Justitia &justitia, Scenery &scenery) {
+   justitia.markForRemoval();
 
-   SPtr<Scene> scene = vis.getScene().lock();
+   SPtr<Scene> scene = justitia.getScene().lock();
    if (scene) {
       Particle::createEffect(scene,
-                             vis.getPosition(), // Position
+                             justitia.getPosition(), // Position
                              glm::vec3(0.0f),   // Velocity
                              false,             // Gravity enabled
                              5.0f,              // Size
@@ -137,7 +137,58 @@ void CollisionHandler::handleCollision(Vis &vis, Scenery &scenery) {
    }
 }
 
-COLLISION_REVERSE_FUNCTION(Vis, Scenery)
+COLLISION_REVERSE_FUNCTION(Justitia, Scenery)
+
+void CollisionHandler::handleCollision(Aegrum &aegrum, Scenery &scenery) {
+   aegrum.markForRemoval();
+
+   SPtr<Scene> scene = aegrum.getScene().lock();
+   if (scene) {
+      Particle::createEffect(scene,
+                             aegrum.getPosition(), // Position
+                             glm::vec3(0.0f),   // Velocity
+                             false,             // Gravity enabled
+                             5.0f,              // Size
+                             10,                // Number of particles
+                             3.0f,              // Duration (seconds)
+                             25.0f,             // Particle spread
+                             false);             // Stencil mode
+   }
+}
+
+COLLISION_REVERSE_FUNCTION(Aegrum, Scenery)
+
+void CollisionHandler::handleCollision(Justitia &justitia, Aegrum &aegrum) {
+   justitia.markForRemoval();
+   aegrum.markForRemoval();
+
+   SPtr<Scene> scene = aegrum.getScene().lock();
+   if (scene) {
+      Particle::createEffect(scene,
+                             aegrum.getPosition(), // Position
+                             glm::vec3(0.0f),   // Velocity
+                             false,             // Gravity enabled
+                             5.0f,              // Size
+                             10,                // Number of particles
+                             3.0f,              // Duration (seconds)
+                             25.0f,             // Particle spread
+                             false);             // Stencil mode
+
+      Particle::createEffect(scene,
+                             aegrum.getPosition(), // Position
+                             glm::vec3(0.0f),   // Velocity
+                             false,             // Gravity enabled
+                             5.0f,              // Size
+                             10,                // Number of particles
+                             3.0f,              // Duration (seconds)
+                             25.0f,             // Particle spread
+                             true);             // Stencil mode
+
+      // TODO Cool sound effect?
+   }
+}
+
+COLLISION_REVERSE_FUNCTION(Justitia, Aegrum)
 
 void CollisionHandler::handleCollision(Corona &corona, Scenery &scenery) {
    BoundingBox collision = BoundingBox(corona.getBounds(), scenery.getBounds());
@@ -213,8 +264,20 @@ void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
 COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
 
 void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
+   SPtr<Scene> scene = player.getScene().lock();
+   if (scene) {
+      Particle::createEffect(scene,
+                             aegrum.getPosition(), // Position
+                             glm::vec3(0.0f),   // Velocity
+                             false,             // Gravity enabled
+                             5.0f,              // Size
+                             10,                // Number of particles
+                             3.0f,              // Duration (seconds)
+                             25.0f,             // Particle spread
+                             false);             // Stencil mode
+   }
+
    if (!player.isInvincible()) {
-      SPtr<Scene> scene = player.getScene().lock();
       if (scene) {
          Particle::createEffect(scene,
                                 player.getPosition(),           // Position

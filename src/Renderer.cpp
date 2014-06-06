@@ -85,7 +85,7 @@ enum Halfspace {
 
 Plane planes[6];
 
-const int CULLING_SPAN = 5; // 0 = right off screen
+const int CULLING_SPAN = 10; // 0 = right off screen
 
 //Returns which halfspace a point is on in reference to a plane
 Halfspace classifyPoint(const Plane & plane, const glm::vec3 &point) {

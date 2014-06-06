@@ -32,16 +32,17 @@ float CalcShadowFactor(vec4 LightSpacePos) {
     vec2 UVCoords;
     UVCoords.x = 0.5 * ProjCoords.x + 0.5;
     UVCoords.y = 0.5 * ProjCoords.y + 0.5;
+    float z = 0.5 * ProjCoords.z + 0.5;
     vec4 depthMap = texture2D(uShadowMap, UVCoords);
-    float Depth = depthMap.z / depthMap.w;
+    float Depth = depthMap.z;
     float z_e = 2.0 * 1 / (100 + 1 - Depth * (100 - 1));
 
-    return LightSpacePos.x;
+    return Depth;
 
-    if (Depth < (ProjCoords.z + 0.00001))
-        return Depth;
-    else
-        return Depth;
+    //if (Depth < (ProjCoords.z + 0.3))
+    //    return Depth;
+    //else
+    //    return Depth;
 }
 
 void main() {
@@ -88,5 +89,5 @@ void main() {
    float bias = 0.105;
    float visibility = CalcShadowFactor(vShadowCoord);
 
-   gl_FragColor = vec4(vec3(visibility), 1.0);
+   gl_FragColor = vec4(visibility * finalColor, 1.0);
 }

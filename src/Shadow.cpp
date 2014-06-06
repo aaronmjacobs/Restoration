@@ -13,11 +13,11 @@ Shadow::Shadow(){
    // Experimenting with the size of the shadowmap.
    glGenTextures(1, &depthTextureID);
    glBindTexture(GL_TEXTURE_2D, depthTextureID);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, viewport[2], viewport[3], 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, viewport[2], viewport[3], 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    
    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureID, 0);
    
@@ -65,6 +65,6 @@ void Shadow::setLightMatrix(glm::vec3 lightInvDir, SPtr<ShaderProgram> program)
    glm::mat4 depthProjectionMatrix = glm::ortho<float>(0, 100, 0, 100, 0, 100);
    glm::mat4 depthViewMatrix = glm::lookAt(lightInvDir, glm::vec3(-80, 20, 10), glm::vec3(0, 1, 0));
 
-   dBiasMVP = depthProjectionMatrix * depthViewMatrix;
+   dBiasMVP = bias * depthProjectionMatrix * depthViewMatrix;
    glUniformMatrix4fv(uDepthMVP, 1, GL_FALSE, glm::value_ptr(dBiasMVP));
 }

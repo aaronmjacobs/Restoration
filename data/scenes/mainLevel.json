@@ -78,7 +78,7 @@
             "health" : 20,
             "model" : {
                "@class" : "AniModel",
-               "material" : "animMaterial",
+               "material" : "Player",
                "mesh" : {
                   "@class" : "AniMesh",
                   "animations" : [

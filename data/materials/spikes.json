@@ -23,5 +23,5 @@
       "r" : 0.2
    },
    "texture" : "data/textures/spikes.png",
-   "altTexture" : "data/textures/spikes.png"
+   "altTexture" : "data/textures/spikesLight.png"
 }

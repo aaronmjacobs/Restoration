@@ -69,12 +69,6 @@
             "squareFalloff" : 0.0
          },
          {
-<<<<<<< HEAD
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "AniModel",
-               "material" : "animMaterial",
-=======
             "@class" : "Player",
             "acceleration" : {
                "x" : 0.0,
@@ -85,31 +79,11 @@
             "model" : {
                "@class" : "AniModel",
                "material" : "Player",
->>>>>>> 70f29278b8e2a9f4535e5a2280fed79137fc368a
                "mesh" : {
                   "@class" : "AniMesh",
                   "animations" : [
                      {
                         "default" : true,
-<<<<<<< HEAD
-                        "file" : "data/meshes/seraCrystal.dae",
-                        "name" : "button"
-                     }
-                  ],
-                  "fileName" : "data/meshes/seraCrystal.dae"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : -85.0,
-               "y" : 6.0,
-=======
                         "file" : "data/meshes/finalIdle1.dae",
                         "name" : "Idle"
                      },
@@ -137,7 +111,6 @@
             "position" : {
                "x" : -100.0,
                "y" : 20.0,
->>>>>>> 70f29278b8e2a9f4535e5a2280fed79137fc368a
                "z" : 0.0
             },
             "renderState" : 6,
@@ -145,14 +118,11 @@
                "x" : 1.0,
                "y" : 1.0,
                "z" : 1.0
-<<<<<<< HEAD
-=======
             },
             "velocity" : {
                "x" : 0.0,
                "y" : 0.0,
                "z" : 0.0
->>>>>>> 70f29278b8e2a9f4535e5a2280fed79137fc368a
             }
          },
          {
@@ -395,9 +365,7 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-<<<<<<< HEAD
                "material" : "block",
-=======
                "material" : "boss",
                "mesh" : {
                   "@class" : "Mesh",
@@ -457,7 +425,6 @@
             "model" : {
                "@class" : "Model",
                "material" : "spikes",
->>>>>>> 70f29278b8e2a9f4535e5a2280fed79137fc368a
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"

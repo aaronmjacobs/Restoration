@@ -2,6 +2,7 @@
 #define COLLISIONS_DECLARATIONS_H
 
 class Aegrum;
+class Boss;
 class Character;
 class Corona;
 class Enemy;

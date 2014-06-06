@@ -126,42 +126,6 @@
             }
          },
          {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "AniModel",
-               "material" : "animMaterial",
-               "mesh" : {
-                  "@class" : "AniMesh",
-                  "animations" : [
-                     {
-                        "default" : true,
-                        "file" : "data/meshes/finalIdle1.dae",
-                        "name" : "button"
-                     }
-                  ],
-                  "fileName" : "data/meshes/finalIdle1.dae"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : -85.0,
-               "y" : 6.0,
-               "z" : 0.0
-            },
-            "renderState" : 6,
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            }
-         },
-         {
             "@class" : "Magus",
             "acceleration" : {
                "x" : 0.0,
@@ -410,6 +374,64 @@
             "position" : {
                "x" : -92.06745147705078,
                "y" : 11.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "boss",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/Boss.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -127.06745147705078,
+               "y" : 14.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "sword",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/sword.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -122.06745147705078,
+               "y" : 14.0,
                "z" : 0.0
             },
             "renderState" : 6,

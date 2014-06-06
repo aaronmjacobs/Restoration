@@ -144,7 +144,7 @@ void Player::tick(const float dt) {
       this->model->getMesh()->softApplyAnimation("Idle");
    }
    else {
-      this->model->getMesh()->hardApplyAnimation("Jump");
+      this->model->getMesh()->softApplyAnimation("Jump");
    }
 
    // Air resistance

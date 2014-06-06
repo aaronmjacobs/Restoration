@@ -1,4 +1,5 @@
 #include "CollisionsIncludes.h"
+#include "Particle.h"
 
 const std::string Vis::CLASS_NAME = "Vis";
 
@@ -21,6 +22,18 @@ Json::Value Vis::serialize() const {
 
 void Vis::tick(const float dt) {
    if (lifeTime > LIFE_SECONDS) {
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         Particle::createEffect(sScene,
+                                getPosition(),     // Position
+                                glm::vec3(0.0f),   // Velocity
+                                false,             // Gravity enabled
+                                5.0f,              // Size
+                                10,                // Number of particles
+                                3.0f,              // Duration (seconds)
+                                25.0f,             // Particle spread
+                                true);             // Stencil mode
+      }
       markForRemoval();
       return;
    }

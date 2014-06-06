@@ -5,6 +5,7 @@
 #include "GLMIncludes.h"
 #include "MatrixStack.h"
 #include "RenderData.h"
+#include "Shadow.h"
 
 class Scene;
 class Skybox;
@@ -23,6 +24,13 @@ protected:
 
    UPtr<FrameBuffer> fb;
    UPtr<Model> plane;
+   UPtr<Shadow> shadow;
+   SPtr<ShaderProgram> shadowProgram;
+
+   /**
+   * Setup the shadoow buffer to draw to, and draw to it.
+   */
+   void prepareShadowDraw(Scene &scene);
 
    /**
     * Setup the stencil buffer to generate the stencil

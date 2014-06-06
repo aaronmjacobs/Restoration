@@ -5,6 +5,7 @@ uniform mat4 uViewMatrix;
 uniform mat4 uModelMatrix;
 uniform mat4 uNormalMatrix;
 uniform mat4 bonesMatrix[64];
+uniform mat4 uDepthMVP;
 
 attribute vec3 aPosition;
 attribute vec3 aNormal;
@@ -15,6 +16,7 @@ attribute vec3 joints;
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
+varying vec4 vShadowCoord;
 
 void main() {
   // Animations
@@ -32,6 +34,8 @@ void main() {
   vec4 lNormal = vec4(aNormal.x, aNormal.y, aNormal.z, 0);
   lNormal = uNormalMatrix * lNormal;
   vNormal = vec3(lNormal.x, lNormal.y, lNormal.z);
+
+  vShadowCoord = uDepthMVP * lPosition;
   
   //Texturing
    vTexCoord = aTexCoord;

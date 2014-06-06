@@ -5,6 +5,7 @@ const std::string Aegrum::CLASS_NAME = "Aegrum";
 //Put health in the creation of Magus, and damage
 Aegrum::Aegrum(SPtr<Scene> scene, SPtr<Model> model, const float attackPower, const std::string &name)
 : Vis(scene, model, attackPower, name) {
+   renderState |= SHADOW_STATE;
 }
 
 Aegrum::~Aegrum() {

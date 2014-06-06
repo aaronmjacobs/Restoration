@@ -113,7 +113,7 @@ void Player::onMouseButtonEvent(int button, int action) {
       SPtr<Model> justitiaModel = loader.loadModel(sScene, modelValue);
 
       SPtr<Justitia> justitia = std::make_shared<Justitia>(sScene, justitiaModel, ATTACK_POWER);
-      justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE);
+      justitia->setRenderState(STENCIL_STATE | LIGHTWORLD_STATE | DARKWORLD_STATE | SHADOW_STATE);
       justitia->setPosition(justitiaPos);
       glm::vec3 justitiaVelocity = velocity;
       justitiaVelocity.y = 0.0f;

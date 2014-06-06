@@ -19,17 +19,35 @@ uniform vec3 uCameraPos;
 uniform sampler2D uTexture;
 uniform samplerCube uAmbientMap;
 uniform sampler2D uAmbientGlobal;
+uniform sampler2D uShadowMap;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
+varying vec4 vShadowCoord;
+
+float CalcShadowFactor(vec4 LightSpacePos) {
+    vec3 ProjCoords = LightSpacePos.xyz / LightSpacePos.w;
+
+    vec2 UVCoords;
+    UVCoords.x = 0.5 * ProjCoords.x + 0.5;
+    UVCoords.y = 0.5 * ProjCoords.y + 0.5;
+    float z = 0.5 * ProjCoords.z + 0.5;
+    vec4 depthMap = texture2D(uShadowMap, UVCoords);
+    float Depth = depthMap.z;
+
+    if (Depth < (z - 0.00001))
+        return 0.5;
+    else
+        return 1.0;
+}
 
 void main() {
    vec3 lNormal = normalize(vNormal);
    vec3 ambient = textureCube(uAmbientMap, lNormal).rgb;
    vec3 ambientGlobal = texture2D(uAmbientGlobal, vec2(0,0)).rgb;
    vec3 surfaceColor = texture2D(uTexture, vTexCoord).rgb;
-
+   
    vec3 finalColor = vec3(0.0, 0.0, 0.0);
    for (int i = 0; i < uNumLights; ++i) {
       // Diffuse light
@@ -64,6 +82,9 @@ void main() {
 
    finalColor += surfaceColor * ((ambient + ambientGlobal) * 0.5) * 0.7;
    finalColor += uMaterial.emission;
+   
+   float bias = 0.105;
+   float visibility = CalcShadowFactor(vShadowCoord);
 
-   gl_FragColor = vec4(finalColor.rgb, 1);
+   gl_FragColor = vec4(visibility * finalColor, 1.0);
 }

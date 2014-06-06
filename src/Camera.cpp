@@ -6,6 +6,7 @@ Camera::Camera(SPtr<Scene> const scene, float fov, const std::string &name)
    : SceneObject(scene, name), fov(fov) {
    phi = 0.0f;
    theta = -glm::half_pi<float>();
+   shadowMode = false;
    updateFront();
 }
 
@@ -13,6 +14,10 @@ Camera::~Camera() {
 }
 
 glm::mat4 Camera::getProjectionMatrix() {
+   if (shadowMode) {
+      return shadowOrthoMatrix;
+   }
+
    return projectionMatrix;
 }
 
@@ -41,6 +46,22 @@ Json::Value Camera::serialize() const {
    root["fov"] = fov;
 
    return root;
+}
+
+void Camera::enableShadowMode(glm::vec3 position) {
+   const glm::mat4 bias = {
+      0.5, 0.0, 0.0, 0.0,
+      0.0, 0.5, 0.0, 0.0,
+      0.0, 0.0, 0.5, 0.0,
+      0.5, 0.5, 0.5, 1.0 };
+
+   lightPos = position;
+   shadowOrthoMatrix = bias * glm::ortho<float>(0, 35, 0, 15, 50, 100);
+   shadowMode = true;
+}
+
+void Camera::disableShadowMode() {
+   shadowMode = false;
 }
 
 void Camera::updateFront() {
@@ -92,6 +113,10 @@ void Camera::setRotation(float phi, float theta) {
 }
 
 glm::mat4 Camera::getViewMatrix() {
+   if (shadowMode) {
+      return glm::lookAt(lightPos + glm::vec3(-3.0f, 40.0f, 15.0f), lightPos, glm::vec3(0, 1, 0));
+   }
+
   return glm::lookAt(position, // Camera position
                      position + front, // What we're looking at
                      glm::vec3(0.0, 1.0, 0.0)); // Up vector

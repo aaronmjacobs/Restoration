@@ -38,6 +38,10 @@ protected:
     */
    glm::mat4 projectionMatrix;
 
+   glm::mat4 shadowOrthoMatrix;
+   glm::vec3 lightPos;
+   bool shadowMode;
+
 public:
    static const std::string CLASS_NAME;
 
@@ -58,6 +62,9 @@ public:
     * Serializes the object to JSON.
     */
    virtual Json::Value serialize() const;
+
+   void enableShadowMode(glm::vec3 position);
+   void disableShadowMode();
 
    /**
     * Flys the camera by |amount| along the current front vector.

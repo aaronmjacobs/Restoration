@@ -22,6 +22,11 @@ GLuint RenderData::getGLuint(const std::string &name) const {
    return uintMap.at(name);
 }
 
+glm::mat4 RenderData::getMat(const std::string &name) const {
+   ASSERT(matMap.count(name), "Mat not available : %s", name.c_str());
+   return matMap.at(name);
+}
+
 void RenderData::setRenderState(unsigned int state) {
    this->state = state;
 }
@@ -32,4 +37,8 @@ void RenderData::set(const std::string &name, GLint value) {
 
 void RenderData::set(const std::string &name, GLuint value) {
    uintMap[name] = value;
+}
+
+void RenderData::set(const std::string &name, glm::mat4 value) {
+   matMap[name] = value;
 }

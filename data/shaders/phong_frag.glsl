@@ -18,14 +18,18 @@ uniform Material uMaterial;
 uniform vec3 uCameraPos;
 uniform samplerCube uAmbientMap;
 uniform sampler2D uAmbientGlobal;
+uniform sampler2D uShadowMap;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
+varying vec4 vShadowCoord;
+varying vec2 vTexCoord;
 
 void main() {
    vec3 lNormal = normalize(vNormal);
    vec3 ambient = textureCube(uAmbientMap, lNormal).rgb;
    vec3 ambientGlobal = texture2D(uAmbientGlobal, vec2(0,0)).rgb;
+   vec3 shadowMap = texture2D(uShadowMap, vec2(0,0)).rgb;
 
    vec3 finalColor = vec3(0.0, 0.0, 0.0);
    for (int i = 0; i < uNumLights; ++i) {

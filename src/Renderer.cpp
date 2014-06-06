@@ -14,6 +14,7 @@
 #include "ShaderProgram.h"
 #include "Skybox.h"
 #include "SkyboxMaterial.h"
+#include "Player.h"
 
 Renderer::Renderer() {
 }
@@ -33,14 +34,18 @@ void Renderer::prepare() {
    // Back face culling
    glCullFace(GL_BACK);
 
-   // Create frame buffer
+   // Create frame buffers
    fb = UPtr<FrameBuffer>(new FrameBuffer);
+   shadow = UPtr<Shadow>(new Shadow);
 
    // Prepare the frame buffer
    fb->setupToTexture2D();
+   shadow->initialize();
 
    Loader& loader = Loader::getInstance();
    Json::Value root;
+
+   shadowProgram = loader.loadShaderProgram(nullptr, "shadow");
 
    SPtr<ShaderProgram> fboProgram = loader.loadShaderProgram(nullptr, "fbo_blur");
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo_blur", fboProgram, *fb);
@@ -52,11 +57,17 @@ void Renderer::onWindowSizeChange(int width, int height) {
    if (fb) {
       fb->setupToTexture2D();
    }
+   if (shadow) {
+      shadow->initialize();
+   }
 }
 
 void Renderer::onMonitorChange() {
    if (fb) {
       fb->setupToTexture2D();
+   }
+   if (shadow) {
+      shadow->initialize();
    }
 }
 
@@ -74,12 +85,14 @@ enum Halfspace {
 
 Plane planes[6];
 
+const int CULLING_SPAN = 10; // 0 = right off screen
+
 //Returns which halfspace a point is on in reference to a plane
 Halfspace classifyPoint(const Plane & plane, const glm::vec3 &point) {
    float side = plane.a * point.x + plane.b * point.y + plane.c * point.z + plane.d;
-   if (side < 0)
+   if (side < -CULLING_SPAN)
       return NEGATIVE;
-   else if (side > 0)
+   else if (side > CULLING_SPAN)
       return POSITIVE;
    else
       return ON_PLANE;
@@ -169,7 +182,34 @@ void draw(SceneObject &obj) {
 
 } // namespace
 
+void Renderer::prepareShadowDraw(Scene& scene) {
+   static glm::vec3 playerPos = glm::vec3(0.0f);
+
+   // apply the shadow fbo to be drawn to.
+   shadow->applyFBO();
+   glEnable(GL_DEPTH_TEST);
+   SPtr<Camera> camera = scene.getCamera().lock();
+   if (camera) {
+      SPtr<Player> player = scene.getPlayer().lock();
+      if (player) {
+         playerPos = player->getPosition();
+      }
+
+      camera->enableShadowMode(playerPos);
+   }
+
+   renderData.setRenderState(SHADOW_STATE);
+}
+
 void Renderer::prepareStencilDraw() {
+   // disable the shadow fbo
+   shadow->disableFBO();
+
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+   glDrawBuffer(GL_BACK);
+   glReadBuffer(GL_BACK);
+   
    fb->applyFBO();
    glEnable(GL_STENCIL_TEST);
    // disable color and depth buffers
@@ -217,9 +257,6 @@ void Renderer::render(Scene &scene) {
       return;
    }
 
-   // Grab the view matrix
-   glm::mat4 viewMatrix = camera->getViewMatrix();
-
    // Set up the matrices and lights
    const unsigned int numLights = (unsigned int)scene.getLights().size();
    glm::vec3 cameraPos = camera->getPosition();
@@ -238,7 +275,7 @@ void Renderer::render(Scene &scene) {
 
       // View matrix
       GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");
-      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
 
       if (shaderProgram->hasUniform("uNumLights")) {
          // Number of lights
@@ -267,6 +304,53 @@ void Renderer::render(Scene &scene) {
    updatePlanes(camera->getProjectionMatrix() * camera->getViewMatrix(), true);
 
 #ifndef NO_FBO
+
+   // Render items into shadowmap @ light position. Need scene to get access to lights.
+   prepareShadowDraw(scene);
+
+   for (WPtr<ShaderProgram> wShaderProgram : scene.getShaderPrograms()) {
+      SPtr<ShaderProgram> shaderProgram = wShaderProgram.lock();
+      if (!shaderProgram) {
+         continue;
+      }
+
+      shaderProgram->use();
+
+      // Projection matrix
+      GLint uProjMatrix = shaderProgram->getUniform("uProjMatrix");
+      glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(camera->getProjectionMatrix()));
+
+      // View matrix
+      GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");
+      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
+   }
+
+   renderData.set("uDepthMVP", camera->getProjectionMatrix() * camera->getViewMatrix());
+   renderData.set("shadowMapID", shadow->getTextureID());
+
+   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   setRenderData(renderData);
+   scene.getSceneGraph()->forEach(draw);
+
+   camera->disableShadowMode();
+
+   for (WPtr<ShaderProgram> wShaderProgram : scene.getShaderPrograms()) {
+      SPtr<ShaderProgram> shaderProgram = wShaderProgram.lock();
+      if (!shaderProgram) {
+         continue;
+      }
+
+      shaderProgram->use();
+
+      // Projection matrix
+      GLint uProjMatrix = shaderProgram->getUniform("uProjMatrix");
+      glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(camera->getProjectionMatrix()));
+
+      // View matrix
+      GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");
+      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
+   }
 
    // Render items to the stencil buffer
    prepareStencilDraw();
@@ -309,6 +393,7 @@ void Renderer::render(Scene &scene) {
    glUniform1i(uViewportWidth, fb->getWidth());
    glUniform1i(uViewportHeight, fb->getHeight());
 
+   renderData.set("sh", shadow->getTextureID());
    plane->draw(renderData);
 
 #endif

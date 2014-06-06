@@ -37,7 +37,7 @@ float CalcShadowFactor(vec4 LightSpacePos) {
     float Depth = depthMap.z;
     float z_e = 2.0 * 1 / (100 + 1 - Depth * (100 - 1));
 
-    if (Depth < (z - 0.001))
+    if (Depth < (z - 0.00001))
         return 0.5;
     else
         return 1.0;

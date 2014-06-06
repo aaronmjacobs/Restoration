@@ -1,10 +1,28 @@
 #include "Shadow.h"
 #include "FancyAssert.h"
 
-Shadow::Shadow(){
+Shadow::Shadow() {
+   initialized = false;
+
+}
+
+Shadow::~Shadow(){
+   if (initialized) {
+      glDeleteFramebuffers(1, &sMapID);
+      glDeleteTextures(1, &depthTextureID);
+   }
+}
+
+void Shadow::initialize() {
+   if (initialized) {
+      glDeleteFramebuffers(1, &sMapID);
+      glDeleteTextures(1, &depthTextureID);
+   }
+
    // create a framebuffer object
    glGenFramebuffers(1, &sMapID);
    glBindFramebuffer(GL_FRAMEBUFFER, sMapID);
+   initialized = true;
 
    GLint viewport[4];
    glGetIntegerv(GL_VIEWPORT, viewport);
@@ -18,20 +36,15 @@ Shadow::Shadow(){
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   
+
    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureID, 0);
-   
+
    // Instruct openGL that we won't bind a color texture with the currently bound FBO
    glDrawBuffer(GL_NONE);
    glReadBuffer(GL_NONE);
 
    checkFBOStatus();
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-Shadow::~Shadow(){
-   glDeleteFramebuffers(1, &sMapID);
-   glDeleteTextures(1, &depthTextureID);
 }
 
 void Shadow::checkFBOStatus() {
@@ -47,24 +60,4 @@ void Shadow::applyFBO(){
 
 void Shadow::disableFBO(){
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-void Shadow::setLightMatrix(glm::vec3 lightInvDir, SPtr<ShaderProgram> program)
-{
-   // Moving from unit cube [-1,1] to [0,1]  
-   const glm::mat4 bias = {
-      0.5, 0.0, 0.0, 0.0,
-      0.0, 0.5, 0.0, 0.0,
-      0.0, 0.0, 0.5, 0.0,
-      0.5, 0.5, 0.5, 1.0 };
-
-   // Depth Bias MVP matrix
-   uDepthMVP = program->getUniform("uDepthMVP");
-
-   // Compute the MVP matrix from the light's point of view
-   glm::mat4 depthProjectionMatrix = glm::ortho<float>(-30, -15, 0, 15, 0, 100);
-   glm::mat4 depthViewMatrix = glm::lookAt(lightInvDir, glm::vec3(-100, 0, 0), glm::vec3(0, 1, 0));
-
-   dBiasMVP = bias * depthProjectionMatrix * depthViewMatrix;
-   glUniformMatrix4fv(uDepthMVP, 1, GL_FALSE, glm::value_ptr(dBiasMVP));
 }

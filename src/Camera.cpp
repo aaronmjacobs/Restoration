@@ -56,7 +56,7 @@ void Camera::enableShadowMode(glm::vec3 position) {
       0.5, 0.5, 0.5, 1.0 };
 
    lightPos = position;
-   shadowOrthoMatrix = bias * glm::ortho<float>(-30, -15, 0, 15, 0, 100);
+   shadowOrthoMatrix = bias * glm::ortho<float>(0, 35, 0, 15, 50, 100);
    shadowMode = true;
 }
 
@@ -114,7 +114,7 @@ void Camera::setRotation(float phi, float theta) {
 
 glm::mat4 Camera::getViewMatrix() {
    if (shadowMode) {
-      return glm::lookAt(lightPos, glm::vec3(-100, 0, 0), glm::vec3(0, 1, 0));
+      return glm::lookAt(lightPos + glm::vec3(-3.0f, 40.0f, 15.0f), lightPos, glm::vec3(0, 1, 0));
    }
 
   return glm::lookAt(position, // Camera position

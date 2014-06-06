@@ -16,11 +16,7 @@ protected:
    /* Depth texture ID*/
    GLuint depthTextureID;
 
-   /* Depth Bias MVP glint for light */
-   GLint uDepthMVP;
-
-   /* Depth bias mvp for light */
-   glm::mat4 dBiasMVP;
+   bool initialized;
 
 public:
    /**
@@ -33,7 +29,7 @@ public:
    */
    ~Shadow();
 
-   void setLightMatrix(glm::vec3 lightInvDir, SPtr<ShaderProgram> program);
+   void initialize();
 
    void applyFBO();
 
@@ -43,14 +39,6 @@ public:
 
    GLuint getTextureID(){
       return depthTextureID;
-   }
-
-   GLint getDepthMVPID(){
-      return uDepthMVP;
-   }
-
-   glm::mat4 getDepthMVPMatrix(){
-      return dBiasMVP;
    }
 };
 

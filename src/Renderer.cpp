@@ -14,6 +14,7 @@
 #include "ShaderProgram.h"
 #include "Skybox.h"
 #include "SkyboxMaterial.h"
+#include "Player.h"
 
 Renderer::Renderer() {
 }
@@ -39,10 +40,10 @@ void Renderer::prepare() {
 
    // Prepare the frame buffer
    fb->setupToTexture2D();
+   shadow->initialize();
 
    Loader& loader = Loader::getInstance();
    Json::Value root;
-   renderData.set("shadowMapID", shadow->getTextureID());
 
    shadowProgram = loader.loadShaderProgram(nullptr, "shadow");
 
@@ -56,11 +57,17 @@ void Renderer::onWindowSizeChange(int width, int height) {
    if (fb) {
       fb->setupToTexture2D();
    }
+   if (shadow) {
+      shadow->initialize();
+   }
 }
 
 void Renderer::onMonitorChange() {
    if (fb) {
       fb->setupToTexture2D();
+   }
+   if (shadow) {
+      shadow->initialize();
    }
 }
 
@@ -182,22 +189,17 @@ void Renderer::prepareShadowDraw(Scene& scene) {
       if (!light) {
          continue;
       }
-      shadow->setLightMatrix(light->getPosition(), shadowProgram);
       SPtr<Camera> camera = scene.getCamera().lock();
       if (camera) {
-         camera->enableShadowMode(light->getPosition());
+         SPtr<Player> player = scene.getPlayer().lock();
+         if (player) {
+            camera->enableShadowMode(player->getPosition());
+         }
+
       }
    }
    renderData.setRenderState(SHADOW_STATE);
 }
-
-/*void Renderer::prepareShadowDraw() {
-   // apply the shadow fbo to be drawn to.
-   shadow->applyFBO();
-   shadow->setLightMatrix(LIGHTDIR,shadowProgram);
-
-   renderData.setRenderState(SHADOW_STATE);
-}*/
 
 void Renderer::prepareStencilDraw() {
    // disable the shadow fbo
@@ -323,7 +325,9 @@ void Renderer::render(Scene &scene) {
       glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
    }
 
-   renderData.set("uDepthMVP", shadow->getDepthMVPMatrix());
+   renderData.set("uDepthMVP", camera->getProjectionMatrix() * camera->getViewMatrix());
+   renderData.set("shadowMapID", shadow->getTextureID());
+
    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    setRenderData(renderData);

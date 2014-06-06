@@ -183,23 +183,21 @@ void draw(SceneObject &obj) {
 } // namespace
 
 void Renderer::prepareShadowDraw(Scene& scene) {
+   static glm::vec3 playerPos = glm::vec3(0.0f);
+
    // apply the shadow fbo to be drawn to.
    shadow->applyFBO();
    glEnable(GL_DEPTH_TEST);
-   for (WPtr<Light> wLight : scene.getLights()) {
-      SPtr<Light> light = wLight.lock();
-      if (!light) {
-         continue;
+   SPtr<Camera> camera = scene.getCamera().lock();
+   if (camera) {
+      SPtr<Player> player = scene.getPlayer().lock();
+      if (player) {
+         playerPos = player->getPosition();
       }
-      SPtr<Camera> camera = scene.getCamera().lock();
-      if (camera) {
-         SPtr<Player> player = scene.getPlayer().lock();
-         if (player) {
-            camera->enableShadowMode(player->getPosition());
-         }
 
-      }
+      camera->enableShadowMode(playerPos);
    }
+
    renderData.setRenderState(SHADOW_STATE);
 }
 

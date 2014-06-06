@@ -126,6 +126,126 @@
             }
          },
          {
+            "@class" : "Magus",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.800000190734863,
+               "z" : 0.0
+            },
+            "health" : 50.0,
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemySmall",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_small.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 0.7071067690849304,
+               "x" : 0.0,
+               "y" : 0.7071067690849304,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -59.96235275268555,
+               "y" : 0.6875320076942444,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
+            "@class" : "Turris",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.800000190734863,
+               "z" : 0.0
+            },
+            "health" : 30.0,
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -56.64300918579102,
+               "y" : 1.027109980583191,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
+            "@class" : "Obex",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "health" : 20.0,
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : -89.20749664306641,
+               "y" : 4.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
             "@class" : "Corona",
             "acceleration" : {
                "x" : 0.0,

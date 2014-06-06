@@ -56,9 +56,9 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : -300.0,
-               "y" : 4000.0,
-               "z" : 1500.0
+               "x" : 0.0,
+               "y" : 3000.0,
+               "z" : 3000.0
             },
             "renderState" : 0,
             "scale" : {
@@ -206,46 +206,6 @@
             }
          },
          {
-            "@class" : "Vagus",
-            "acceleration" : {
-               "x" : 0.0,
-               "y" : -9.800000190734863,
-               "z" : 0.0
-            },
-            "health" : 20,
-            "model" : {
-               "@class" : "Model",
-               "material" : "enemyWanderer",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/enemy_wanderer.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 0.7071067690849304,
-               "x" : 0.0,
-               "y" : 0.7071067690849304,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : -70.74122619628906,
-               "y" : 0.7391774654388428,
-               "z" : 0.0
-            },
-            "renderState" : 14,
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            },
-            "velocity" : {
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            }
-         },
-         {
             "@class" : "Obex",
             "acceleration" : {
                "x" : 0.0,
@@ -271,46 +231,6 @@
             "position" : {
                "x" : -89.20749664306641,
                "y" : 4.0,
-               "z" : 0.0
-            },
-            "renderState" : 14,
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            },
-            "velocity" : {
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            }
-         },
-         {
-            "@class" : "Corona",
-            "acceleration" : {
-               "x" : 0.0,
-               "y" : -9.800000190734863,
-               "z" : 0.0
-            },
-            "health" : 30,
-            "model" : {
-               "@class" : "Model",
-               "material" : "enemyBig",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/enemy_big.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 0.7071067690849304,
-               "x" : 0.0,
-               "y" : 0.7071067690849304,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : -84.91361999511719,
-               "y" : 0.6665347814559937,
                "z" : 0.0
             },
             "renderState" : 14,
@@ -359,35 +279,6 @@
             "model" : {
                "@class" : "Model",
                "material" : "aquaduct",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/pot.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : -92.06745147705078,
-               "y" : 11.0,
-               "z" : 0.0
-            },
-            "renderState" : 14,
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
-               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/aquaduct.obj"

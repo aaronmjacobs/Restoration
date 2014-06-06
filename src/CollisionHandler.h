@@ -38,8 +38,12 @@ public:
    COLLISION_REVERSE_DECLARATION(Character, Scenery)
    void handleCollision(Obex &obex, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Obex, Scenery)
-   void handleCollision(Vis &vis, Scenery &scenery);
-   COLLISION_REVERSE_DECLARATION(Vis, Scenery)
+   void handleCollision(Justitia &justitia, Scenery &scenery);
+   COLLISION_REVERSE_DECLARATION(Justitia, Scenery)
+   void handleCollision(Aegrum &aegrum, Scenery &scenery);
+   COLLISION_REVERSE_DECLARATION(Aegrum, Scenery)
+   void handleCollision(Justitia &justitia, Aegrum &aegrum);
+   COLLISION_REVERSE_DECLARATION(Justitia, Aegrum)
    void handleCollision(Corona &corona, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Corona, Scenery)
 

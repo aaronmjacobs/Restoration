@@ -1,5 +1,6 @@
 #include "GLIncludes.h"
 #include "Loader.h"
+#include "Particle.h"
 #include "SceneGraph.h"
 
 #include "CollisionsIncludes.h"
@@ -72,8 +73,19 @@ void Turris::tick(const float dt) {
                }
                aegrum->setOrientation(glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f)));
                sScene->getSceneGraph()->addPhys(aegrum);
-            }
 
+               if (sScene) {
+                  Particle::createEffect(sScene,
+                                         getPosition(), // Position
+                                         glm::vec3(0.0f),   // Velocity
+                                         false,             // Gravity enabled
+                                         5.0f,              // Size
+                                         5,                // Number of particles
+                                         3.0f,              // Duration (seconds)
+                                         25.0f,             // Particle spread
+                                         false);             // Stencil mode
+               }
+            }
          }
       }
    }

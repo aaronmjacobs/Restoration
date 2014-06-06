@@ -20,28 +20,6 @@ Json::Value Vis::serialize() const {
    return root;
 }
 
-void Vis::tick(const float dt) {
-   if (lifeTime > LIFE_SECONDS) {
-      SPtr<Scene> sScene = scene.lock();
-      if (sScene) {
-         Particle::createEffect(sScene,
-                                getPosition(),     // Position
-                                glm::vec3(0.0f),   // Velocity
-                                false,             // Gravity enabled
-                                5.0f,              // Size
-                                10,                // Number of particles
-                                3.0f,              // Duration (seconds)
-                                25.0f,             // Particle spread
-                                true);             // Stencil mode
-      }
-      markForRemoval();
-      return;
-   }
-   lifeTime += dt;
-
-   MovableObject::tick(dt);
-}
-
 float Vis::getAttackPower() {
    return attackPower;
 }

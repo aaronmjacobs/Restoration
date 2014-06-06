@@ -1,5 +1,6 @@
 #include "AnimHelper.h"
 #include "GLIncludes.h"
+#include "Particle.h"
 
 #include "CollisionsIncludes.h"
 
@@ -23,8 +24,26 @@ Json::Value Justitia::serialize() const {
 }
 
 void Justitia::tick(const float dt) {
-   lifeTime += dt;
    scale = glm::vec3(0.3f);
+
+   if (lifeTime > LIFE_SECONDS) {
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         Particle::createEffect(sScene,
+                                getPosition(),     // Position
+                                glm::vec3(0.0f),   // Velocity
+                                false,             // Gravity enabled
+                                5.0f,              // Size
+                                10,                // Number of particles
+                                3.0f,              // Duration (seconds)
+                                25.0f,             // Particle spread
+                                true);             // Stencil mode
+      }
+      markForRemoval();
+      return;
+   }
+   lifeTime += dt;
+
    Vis::tick(dt);
 }
 

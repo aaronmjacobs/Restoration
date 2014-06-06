@@ -34,8 +34,10 @@ private:
 	double prevPoint[2];
 	double rotate = 0.0;
 
+	int listNum = 1;
 	std::string objFiles1[10];
 	std::string objFiles2[10];
+	std::string objFiles3[10];
 	std::string *curFileList = objFiles1;
 	std::string curObjFile = "data/meshes/block.obj";
 	glm::vec3 curTransformVec = glm::vec3(0.0, 0.0, 0.0);

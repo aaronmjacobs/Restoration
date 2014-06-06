@@ -34,6 +34,7 @@
 #include "SimpleMaterial.h"
 #include "Skybox.h"
 #include "SkyboxMaterial.h"
+#include "Spike.h"
 #include "TextureMaterial.h"
 #include "Turris.h"
 #include "Vagus.h"
@@ -114,7 +115,11 @@ bool Loader::isPhysicalObject(const std::string &className) {
 }
 
 bool Loader::isScenery(const std::string &className) {
-   return className == Scenery::CLASS_NAME;
+   return className == Scenery::CLASS_NAME || isSpike(className);
+}
+
+bool Loader::isSpike(const std::string &className) {
+   return className == Spike::CLASS_NAME;
 }
 
 bool Loader::isMovableObject(const std::string &className) {
@@ -1012,6 +1017,13 @@ SPtr<SceneObject> Loader::loadSceneObject(SPtr<Scene> scene, const Json::Value &
 }
 
 SPtr<Scenery> Loader::loadScenery(SPtr<Scene> scene, const Json::Value &root) {
+   check("Scenery", root, "@class");
+   std::string className = root["@class"].asString();
+
+   if (className == Spike::CLASS_NAME) {
+      return loadSpike(scene, root);
+   }
+
    // SceneObject
    SceneObjectData data = loadSceneObjectData(root);
 
@@ -1026,6 +1038,23 @@ SPtr<Scenery> Loader::loadScenery(SPtr<Scene> scene, const Json::Value &root) {
    scenery->setRenderState(data.renderState);
 
    return scenery;
+}
+
+SPtr<Spike> Loader::loadSpike(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Spike", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   SPtr<Spike> spike = std::make_shared<Spike>(scene, model, data.name);
+   spike->setPosition(data.position);
+   spike->setOrientation(data.orientation);
+   spike->setScale(data.scale);
+   spike->setRenderState(data.renderState);
+
+   return spike;
 }
 
 SPtr<Shader> Loader::loadShader(const Json::Value &root) {

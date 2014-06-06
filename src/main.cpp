@@ -187,7 +187,14 @@ int main(int argc, char *argv[]) {
    // Load the audio system
    audio = std::make_shared<Audio>();
    audio->systemInit();
-   //audio->loadSound("Restoration_5_4.ogg", true);
+   audio->loadSound("Restoration_5_4.ogg", true);
+
+   audio->loadSound("jumpGrunt1.wav", false);
+   audio->loadSound("jumpGrunt2.wav", false);
+   audio->loadSound("jumpGrunt3.wav", false);
+   audio->loadSound("shooting2.ogg", false);
+   audio->loadSound("win.wav", false);
+   audio->loadSound("damage2.ogg", false);
 
    // Prepare for rendering (sets up OpenGL stuff)
    renderer.prepare();

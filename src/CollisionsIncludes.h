@@ -14,6 +14,7 @@
 #include "Obex.h"
 #include "Player.h"
 #include "Scenery.h"
+#include "Spike.h"
 #include "Turris.h"
 #include "Vagus.h"
 #include "Vis.h"

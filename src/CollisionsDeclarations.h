@@ -12,6 +12,7 @@ class MovableObject;
 class Obex;
 class Player;
 class Scenery;
+class Spike;
 class Turris;
 class Vagus;
 class Vis;

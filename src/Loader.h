@@ -39,6 +39,7 @@ class ShaderProgram;
 class SimpleMaterial;
 class Skybox;
 class SkyboxMaterial;
+class Spike;
 class TextureMaterial;
 class Turris;
 class Vagus;
@@ -80,6 +81,7 @@ protected:
    bool isFollowGeometry(const std::string &className);
    bool isPhysicalObject(const std::string &className);
    bool isScenery(const std::string &className);
+   bool isSpike(const std::string &className);
    bool isMovableObject(const std::string &className);
    bool isCharacter(const std::string &className);
    bool isPlayer(const std::string &className);
@@ -140,6 +142,7 @@ public:
    void loadSceneGraph(SPtr<Scene> scene, const Json::Value &root);
    SPtr<SceneObject> loadSceneObject(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Scenery> loadScenery(SPtr<Scene> scene, const Json::Value &root);
+   SPtr<Spike> loadSpike(SPtr<Scene> scene, const Json::Value &root);
    SPtr<Shader> loadShader(const Json::Value &root);
    SPtr<ShaderProgram> loadShaderProgram(SPtr<Scene> scene, const std::string &fileName);
    SPtr<SimpleMaterial> loadSimpleMaterial(SPtr<Scene> scene, const std::string &fileName);

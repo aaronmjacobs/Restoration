@@ -133,6 +133,10 @@ void Player::onMouseButtonEvent(int button, int action) {
       } else {
          setHealth(getHealth() - JUSTITIA_HEALTH_REMOVAL);
       }
+
+      if (sScene) {
+         sScene->getAudio()->signalSound("shooting2.ogg");
+      }
    }
 }
 
@@ -172,9 +176,25 @@ void Player::tick(const float dt) {
       }
    }
 
+   static int jumpIndex = 0;
    if (wantsToJump && onGround) {
       onGround = false;
       velocity += glm::vec3(0.0f, JUMP_FORCE, 0.0f) * dt;
+
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         SPtr<Audio> audio = sScene->getAudio();
+
+         if (jumpIndex == 0) {
+            audio->signalSound("jumpGrunt1.wav");
+         } else if (jumpIndex == 1) {
+            audio->signalSound("jumpGrunt2.wav");
+         } else if (jumpIndex == 2) {
+            audio->signalSound("jumpGrunt3.wav");
+         }
+
+         jumpIndex = (jumpIndex + 1) % 3;
+      }
    }
 
    if (wantsToAttack) {

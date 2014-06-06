@@ -36,6 +36,10 @@ void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
       player.setHealth(player.getHealth() - enemy.getAttackPower());
       player.setInvincibilityTime(2.0f);
 
+      if (scene) {
+         scene->getAudio()->signalSound("damage2.ogg");
+      }
+
       if (!player.isAlive()) {
          SPtr<Scene> sScene = player.getScene().lock();
          if (sScene) {
@@ -52,6 +56,35 @@ void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
       }
    }
 }
+
+void CollisionHandler::handleCollision(Player &player, Spike &spike) {
+   SPtr<Scene> scene = player.getScene().lock();
+   if (!player.isInvincible()) {
+      if (scene) {
+         Particle::createEffect(scene,
+                                player.getPosition(),           // Position
+                                glm::vec3(0.0f),                // Velocity
+                                false,                          // Gravity enabled
+                                5.0f,                           // Size
+                                Spike::ATTACK_POWER * 10,   // Number of particles
+                                5.0f,                           // Duration (seconds)
+                                Spike::ATTACK_POWER,        // Particle spread
+                                true);                          // Stencil mode
+      }
+
+      if (scene) {
+         scene->getAudio()->signalSound("damage2.ogg");
+      }
+
+      player.setHealth(player.getHealth() - Spike::ATTACK_POWER);
+      player.setInvincibilityTime(2.0f);
+   }
+
+   Scenery &scenery = spike;
+   handleCollision(player, scenery);
+}
+
+COLLISION_REVERSE_FUNCTION(Player, Spike)
 
 void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
@@ -154,6 +187,10 @@ void CollisionHandler::handleCollision(Aegrum &aegrum, Scenery &scenery) {
                              25.0f,             // Particle spread
                              false);             // Stencil mode
    }
+
+   if (scene) {
+      scene->getAudio()->signalSound("damage2.ogg");
+   }
 }
 
 COLLISION_REVERSE_FUNCTION(Aegrum, Scenery)
@@ -185,6 +222,10 @@ void CollisionHandler::handleCollision(Justitia &justitia, Aegrum &aegrum) {
                              true);             // Stencil mode
 
       // TODO Cool sound effect?
+   }
+
+   if (scene) {
+      scene->getAudio()->signalSound("damage2.ogg");
    }
 }
 
@@ -259,6 +300,11 @@ void CollisionHandler::handleCollision(Justitia &justitia, Enemy &enemy) {
                                 true);                   // Stencil mode
       }
    }
+
+   SPtr<Scene> scene = enemy.getScene().lock();
+   if (scene) {
+      scene->getAudio()->signalSound("damage2.ogg");
+   }
 }
 
 COLLISION_REVERSE_FUNCTION(Justitia, Enemy)
@@ -307,6 +353,10 @@ void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
                                    true);             // Stencil mode
          }
       }
+   }
+
+   if (scene) {
+      scene->getAudio()->signalSound("damage2.ogg");
    }
 
    aegrum.markForRemoval();

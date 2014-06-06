@@ -34,6 +34,8 @@ public:
 
    void handleCollision(PhysicalObject &first, PhysicalObject &second);
    void handleCollision(Player &player, Enemy &enemy);
+   void handleCollision(Player &player, Spike &spike);
+   COLLISION_REVERSE_DECLARATION(Player, Spike)
    void handleCollision(Character &character, Scenery &scenery);
    COLLISION_REVERSE_DECLARATION(Character, Scenery)
    void handleCollision(Obex &obex, Scenery &scenery);

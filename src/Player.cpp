@@ -18,7 +18,7 @@ const float Player::AURA_SCALE = 8.0f;
 const float Player::MIN_AURA_SIZE = 0.3f;
 const float Player::WALK_SPEED = 5.0f;
 const float Player::JUMP_FORCE = 520.0f;
-const float Player::JUSTITIA_HEALTH_REMOVAL = 1.0f;
+const float Player::JUSTITIA_HEALTH_REMOVAL = 1.5f;
 
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Character(scene, model, BASE_HEALTH, name) {

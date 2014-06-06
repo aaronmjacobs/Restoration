@@ -10,6 +10,7 @@ protected:
    static const float JUMP_FORCE;
    static const float HEALTH_REPLACEMENT;
    static const float ATTACK_POWER;
+   float chaseTime;
 
 public:
    static const std::string CLASS_NAME;

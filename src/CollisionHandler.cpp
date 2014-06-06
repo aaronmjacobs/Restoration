@@ -55,6 +55,11 @@ void CollisionHandler::handleCollision(Player &player, Enemy &enemy) {
 
 void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
+   // TODO Handle win state
+   if (character.getName() == "player" && scenery.getName() == "temple") {
+      printf("Win :D\n");
+   }
+
    float collisionWidth = collision.width();
    float collisionHeight = collision.height();
    glm::vec3 characterPos = character.getPosition();

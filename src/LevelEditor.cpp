@@ -92,7 +92,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
             return;
          }
       }
-		else if (key == GLFW_KEY_Q) {
+		/*else if (key == GLFW_KEY_ESCAPE) {
 			if (saved) {
 				enabled = false;
 			}
@@ -105,7 +105,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 					yes = 'n';
 				}
 			}
-		}
+		}*/
 		else if (key == GLFW_KEY_UP) {
 			transUp = true;
 			//keepTransforming++;
@@ -258,7 +258,7 @@ void LevelEditor::onKeyEvent(int key, int action) {
 				big = false;
 		}
 		else if (key == GLFW_KEY_H) {
-			printf("hey\n");
+			//printf("hey\n");
 			for (int i = 0; i < numObjs; i++) {
 				currentObjs[i]->scaleBy(glm::vec3(-1.0, 1.0, 1.0));
 			}
@@ -387,7 +387,7 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 	else if (action == GLFW_PRESS) {
 		SPtr<Scene> s = scene.lock();
 		if (!s) {
-			printf("bad scene\n");
+			//printf("bad scene\n");
 			return;
 		}
 		SPtr<Camera> camera = s->getCamera().lock();
@@ -528,7 +528,7 @@ void LevelEditor::transform(glm::vec3 trans) {
 		return;
 	}
 	else if (numObjs == 0) {
-		printf("no current object selected\n");
+		//printf("no current object selected\n");
 	}
 	else {
 		saved = false;

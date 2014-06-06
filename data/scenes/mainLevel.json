@@ -9924,7 +9924,7 @@
                   "fileName" : "data/meshes/structure_temple.obj"
                }
             },
-            "name" : "",
+            "name" : "temple",
             "orientation" : {
                "w" : 1.0,
                "x" : 0.0,

@@ -406,7 +406,6 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-<<<<<<< HEAD
                "material" : "spikes",
                "mesh" : {
                   "@class" : "Mesh",
@@ -610,8 +609,6 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-=======
->>>>>>> ebd8ddf039a0f822c3da78573584c9e2ee7b9644
                "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",

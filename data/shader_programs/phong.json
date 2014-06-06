@@ -76,6 +76,8 @@
       "uProjMatrix",
       "uViewMatrix",
       "uAmbientMap",
-      "uAmbientGlobal"
+      "uAmbientGlobal",
+	  "uShadowMap",
+	  "uDepthMVP"
    ]
 }

@@ -35,7 +35,7 @@ void FBOTextureMaterial::apply(const RenderData &renderData, const Mesh &mesh) {
    /* Texture Shading */
    GLenum textureUnit = TextureUnitManager::get();
    glActiveTexture(GL_TEXTURE0 + textureUnit);
-   glBindTexture(GL_TEXTURE_2D, texture_id);
+   glBindTexture(GL_TEXTURE_2D, texture_id); // renderData.getGLuint("sh")
 
    glUniform1i(uTexture, textureUnit);
 

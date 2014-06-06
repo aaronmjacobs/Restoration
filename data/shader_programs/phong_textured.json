@@ -77,6 +77,8 @@
       "uViewMatrix",
       "uTexture",
       "uAmbientMap",
-      "uAmbientGlobal"
+      "uAmbientGlobal",
+	  "uShadowMap",
+	  "uDepthMVP"
    ]
 }

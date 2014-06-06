@@ -6,9 +6,11 @@
 class Turris : public Enemy {
 protected:
    static const float BASE_HEALTH;
-   static float ATTACK_TIME;
    static const float HEALTH_REPLACEMENT;
    static const float ATTACK_POWER;
+   static const float ATTACK_DELAY;
+
+   float attackTime;
 
 public:
    static const std::string CLASS_NAME;

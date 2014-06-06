@@ -18,11 +18,11 @@ const float Magus::BASE_HEALTH = 50.0f;
 const float Magus::HOVER_SPEED = 4.0f;
 const float Magus::HEALTH_REPLACEMENT = 10.0f;
 const float Magus::ATTACK_POWER = 15.0f;
-float Magus::ATTACK_TIME = 6.0f;
 
 //Put health in the creation of Magus, and damage
 Magus::Magus(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, HEALTH_REPLACEMENT, ATTACK_POWER, name) {
+   attackTime = 5.0f;
 }
 
 Magus::~Magus() {
@@ -44,15 +44,15 @@ void Magus::tick(const float dt) {
          glm::vec3 playerPos = player->getPosition();
          glm::vec3 shootVec = glm::normalize(playerPos - position);
          
-         if (glm::length(position - playerPos) < 25.0f) {
-            if (ATTACK_TIME < 2 && ATTACK_TIME > 0) {
+         if (glm::length(position - playerPos) < 30.0f) {
+            if (attackTime < 2 && attackTime > 0) {
                //Chase a bit
                glm::vec3 chaseVec = glm::normalize(playerPos - position);
                setVelocity(chaseVec + chaseVec + chaseVec + chaseVec);
-            } else if(ATTACK_TIME > 0) {
+            } else if(attackTime > 0) {
                //Continue attacking
             } else {
-               ATTACK_TIME = 6.0f;
+               attackTime = 5.0f;
 
                float aegrumCreationDistance = 0.5f;
                float aegrumSpeed = 7.0f;
@@ -86,14 +86,9 @@ void Magus::tick(const float dt) {
                evasiveManuevers(playerPos - position);
 
             }
-
-
-            ATTACK_TIME -= dt;
+            attackTime -= dt;
          }
-
-         
       }
-
    }
 
     

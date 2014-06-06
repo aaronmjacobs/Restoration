@@ -43,7 +43,6 @@ void Renderer::prepare() {
    Loader& loader = Loader::getInstance();
    Json::Value root;
    renderData.set("shadowMapID", shadow->getTextureID());
-   renderData.set("uDepthMVP", shadow->getDepthMVPMatrix());
 
    shadowProgram = loader.loadShaderProgram(nullptr, "shadow");
 
@@ -184,6 +183,10 @@ void Renderer::prepareShadowDraw(Scene& scene) {
          continue;
       }
       shadow->setLightMatrix(light->getPosition(), shadowProgram);
+      SPtr<Camera> camera = scene.getCamera().lock();
+      if (camera) {
+         camera->enableShadowMode(light->getPosition());
+      }
    }
    renderData.setRenderState(SHADOW_STATE);
 }
@@ -199,6 +202,9 @@ void Renderer::prepareShadowDraw(Scene& scene) {
 void Renderer::prepareStencilDraw() {
    // disable the shadow fbo
    shadow->disableFBO();
+
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
    glDrawBuffer(GL_BACK);
    glReadBuffer(GL_BACK);
    
@@ -249,9 +255,6 @@ void Renderer::render(Scene &scene) {
       return;
    }
 
-   // Grab the view matrix
-   glm::mat4 viewMatrix = camera->getViewMatrix();
-
    // Set up the matrices and lights
    const unsigned int numLights = (unsigned int)scene.getLights().size();
    glm::vec3 cameraPos = camera->getPosition();
@@ -270,7 +273,7 @@ void Renderer::render(Scene &scene) {
 
       // View matrix
       GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");
-      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
 
       if (shaderProgram->hasUniform("uNumLights")) {
          // Number of lights
@@ -302,10 +305,48 @@ void Renderer::render(Scene &scene) {
 
    // Render items into shadowmap @ light position. Need scene to get access to lights.
    prepareShadowDraw(scene);
+
+   for (WPtr<ShaderProgram> wShaderProgram : scene.getShaderPrograms()) {
+      SPtr<ShaderProgram> shaderProgram = wShaderProgram.lock();
+      if (!shaderProgram) {
+         continue;
+      }
+
+      shaderProgram->use();
+
+      // Projection matrix
+      GLint uProjMatrix = shaderProgram->getUniform("uProjMatrix");
+      glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(camera->getProjectionMatrix()));
+
+      // View matrix
+      GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");
+      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
+   }
+
+   renderData.set("uDepthMVP", shadow->getDepthMVPMatrix());
    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    setRenderData(renderData);
    scene.getSceneGraph()->forEach(draw);
+
+   camera->disableShadowMode();
+
+   for (WPtr<ShaderProgram> wShaderProgram : scene.getShaderPrograms()) {
+      SPtr<ShaderProgram> shaderProgram = wShaderProgram.lock();
+      if (!shaderProgram) {
+         continue;
+      }
+
+      shaderProgram->use();
+
+      // Projection matrix
+      GLint uProjMatrix = shaderProgram->getUniform("uProjMatrix");
+      glUniformMatrix4fv(uProjMatrix, 1, GL_FALSE, glm::value_ptr(camera->getProjectionMatrix()));
+
+      // View matrix
+      GLint uViewMatrix = shaderProgram->getUniform("uViewMatrix");
+      glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
+   }
 
    // Render items to the stencil buffer
    prepareStencilDraw();
@@ -348,6 +389,7 @@ void Renderer::render(Scene &scene) {
    glUniform1i(uViewportWidth, fb->getWidth());
    glUniform1i(uViewportHeight, fb->getHeight());
 
+   renderData.set("sh", shadow->getTextureID());
    plane->draw(renderData);
 
 #endif

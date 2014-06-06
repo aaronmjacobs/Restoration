@@ -43,5 +43,5 @@ void main() {
    sum *= EXPOSURE;
 
    // Multiply the pixel by its blurred value
-   gl_FragColor = textureColor * sum;
+   gl_FragColor = texture2D(uTexture, vTexCoord);
 }

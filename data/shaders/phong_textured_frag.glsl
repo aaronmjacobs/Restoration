@@ -26,6 +26,24 @@ varying vec3 vNormal;
 varying vec2 vTexCoord;
 varying vec4 vShadowCoord;
 
+float CalcShadowFactor(vec4 LightSpacePos) {
+    vec3 ProjCoords = LightSpacePos.xyz / LightSpacePos.w;
+    //ProjCoords = ProjCoords * 0.5 + vec3(0.5);
+    vec2 UVCoords;
+    UVCoords.x = 0.5 * ProjCoords.x + 0.5;
+    UVCoords.y = 0.5 * ProjCoords.y + 0.5;
+    vec4 depthMap = texture2D(uShadowMap, UVCoords);
+    float Depth = depthMap.z / depthMap.w;
+    float z_e = 2.0 * 1 / (100 + 1 - Depth * (100 - 1));
+
+    return LightSpacePos.x;
+
+    if (Depth < (ProjCoords.z + 0.00001))
+        return Depth;
+    else
+        return Depth;
+}
+
 void main() {
    vec3 lNormal = normalize(vNormal);
    vec3 ambient = textureCube(uAmbientMap, lNormal).rgb;
@@ -58,7 +76,7 @@ void main() {
                     + uLights[i].linearFalloff * lightDistance
                     + uLights[i].squareFalloff * lightDistance * lightDistance);
       }
-	  
+
       finalColor += (surfaceColor * diffuseAmount
                   + uMaterial.specular * specularAmount)
                   * falloff * uLights[i].color;
@@ -68,13 +86,7 @@ void main() {
    finalColor += uMaterial.emission;
    
    float bias = 0.105;
-   float visibility = 1.0;
-   if(texture2D( uShadowMap, vTexCoord ).z < vShadowCoord.z - bias){
-	  visibility = 0.5;
-   }
-   
-    float z_b = texture2D(uShadowMap, vTexCoord).z;
-    float z_e = 2.0 * 1 / (100 + 1 - z_b * (100 - 1));
-	
-   gl_FragColor = vec4(vec3(z_e), 1.0);
+   float visibility = CalcShadowFactor(vShadowCoord);
+
+   gl_FragColor = vec4(vec3(visibility), 1.0);
 }

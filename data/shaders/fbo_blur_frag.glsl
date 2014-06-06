@@ -7,7 +7,7 @@ uniform int uViewportHeight;
 varying vec2 vTexCoord;
 
 const float BLUR = 2.0;
-const int SPAN = 2;
+const int SPAN = 4;
 const float SATURATION = 1.0;
 const float EXPOSURE = 2.3;
 

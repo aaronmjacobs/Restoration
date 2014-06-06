@@ -22,6 +22,8 @@ uniform sampler2D uShadowMap;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
+varying vec4 vShadowCoord;
+varying vec2 vTexCoord;
 
 void main() {
    vec3 lNormal = normalize(vNormal);

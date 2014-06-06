@@ -15,6 +15,7 @@ attribute vec3 joints;
 
 varying vec3 vWorldPosition;
 varying vec3 vNormal;
+varying vec2 vTexCoord;
 varying vec4 vShadowCoord;
 
 void main() {

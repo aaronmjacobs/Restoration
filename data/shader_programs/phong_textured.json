@@ -78,7 +78,7 @@
       "uTexture",
       "uAmbientMap",
       "uAmbientGlobal",
-	  "uShadowMap",
-	  "uDepthMVP"
+      "uShadowMap",
+      "uDepthMVP"
    ]
 }

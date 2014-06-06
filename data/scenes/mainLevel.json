@@ -25,10 +25,10 @@
                "y" : 0.0,
                "z" : 0.0
             },
-            "phi" : -0.2150000035762787,
+            "phi" : -0.2000000029802322,
             "position" : {
-               "x" : 431.0857849121094,
-               "y" : 7.292330741882324,
+               "x" : -94.72954559326172,
+               "y" : 11.93423175811768,
                "z" : 10.0
             },
             "renderState" : 0,
@@ -37,7 +37,7 @@
                "y" : 1.0,
                "z" : 1.0
             },
-            "theta" : -1.470000028610230
+            "theta" : -1.450000047683716
          },
          {
             "@class" : "Light",
@@ -75,7 +75,7 @@
                "y" : -9.800000190734863,
                "z" : 0.0
             },
-            "health" : 46.99978256225586,
+            "health" : 46.0,
             "model" : {
                "@class" : "AniModel",
                "material" : "Player",
@@ -109,8 +109,8 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : 431.6259155273438,
-               "y" : 5.952798843383789,
+               "x" : -94.51258087158203,
+               "y" : 10.88520717620850,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -149,7 +149,7 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : -59.96235275268555,
+               "x" : 5.537565231323242,
                "y" : 0.6875320076942444,
                "z" : 0.0
             },
@@ -189,8 +189,8 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : -56.64300918579102,
-               "y" : 1.027109980583191,
+               "x" : -26.04312515258789,
+               "y" : 8.204030036926270,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -229,7 +229,7 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : -89.20749664306641,
+               "x" : 177.1838073730469,
                "y" : 4.0,
                "z" : 0.0
             },
@@ -263,14 +263,14 @@
             },
             "name" : "",
             "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
+               "w" : 0.7071067690849304,
+               "x" : -0.0,
+               "y" : -0.7071067690849304,
+               "z" : -0.0
             },
             "position" : {
-               "x" : -89.20749664306641,
-               "y" : 1.5,
+               "x" : -66.40843200683594,
+               "y" : 3.099998474121094,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -280,7 +280,7 @@
                "z" : 1.0
             },
             "velocity" : {
-               "x" : 0.0,
+               "x" : -3.0,
                "y" : 0.0,
                "z" : 0.0
             }
@@ -309,8 +309,8 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : -85.20749664306641,
-               "y" : 1.5,
+               "x" : 121.3928451538086,
+               "y" : 10.45001125335693,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -459,8 +459,8 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : -127.0674514770508,
-               "y" : 14.0,
+               "x" : 635.4325561523438,
+               "y" : 24.50,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -488,8 +488,8 @@
                "z" : 0.0
             },
             "position" : {
-               "x" : -122.0674514770508,
-               "y" : 14.0,
+               "x" : 640.4325561523438,
+               "y" : 24.50,
                "z" : 0.0
             },
             "renderState" : 6,
@@ -503,7 +503,7 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-               "material" : "spikes",
+               "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/block.obj"
@@ -7747,6 +7747,1746 @@
                "x" : 1.551327705383301,
                "y" : 1.551327705383301,
                "z" : 1.269907712936401
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 89.90220642089844,
+               "y" : 10.33131027221680,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 91.57208251953125,
+               "y" : 12.69223594665527,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 229.0206146240234,
+               "y" : 6.499364852905273,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 234.8462219238281,
+               "y" : 8.729660987854004,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 240.7817077636719,
+               "y" : 11.46940040588379,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 385.5524902343750,
+               "y" : 12.9006347656250,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 396.1924743652344,
+               "y" : 21.19612121582031,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 444.6273193359375,
+               "y" : 9.441964149475098,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 456.8617858886719,
+               "y" : 9.483777999877930,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 49.91342163085938,
+               "y" : 3.568559408187866,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 249.8873443603516,
+               "y" : 1.353984117507935,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 319.2471008300781,
+               "y" : 3.621196746826172,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 328.3646545410156,
+               "y" : 3.606906890869141,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 372.7213745117188,
+               "y" : 6.216986656188965,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 486.0985717773438,
+               "y" : 1.711102962493897,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 492.3612670898438,
+               "y" : 1.561103105545044,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemySmall",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_small.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 217.4778594970703,
+               "y" : 1.184895277023315,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemySmall",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_small.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 489.2777709960938,
+               "y" : 11.93094062805176,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemySmall",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_small.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 498.7199096679688,
+               "y" : 11.98094081878662,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 129.0946960449219,
+               "y" : 10.47429752349854,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 136.7402954101563,
+               "y" : 10.47429752349854,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 404.3354797363281,
+               "y" : 25.00470924377441,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 410.6927185058594,
+               "y" : 24.55471611022949,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 209.1664733886719,
+               "y" : 5.526292324066162,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 205.7662658691406,
+               "y" : 6.576296329498291,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 212.4166717529297,
+               "y" : 2.876287698745728,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 203.5744018554688,
+               "y" : 1.492954492568970,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 195.703613281250,
+               "y" : 8.562955856323242,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 170.7014770507813,
+               "y" : 8.923444747924805,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 246.2466125488281,
+               "y" : 14.42257785797119,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemySmall",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_small.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 265.7377014160156,
+               "y" : 13.34188556671143,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 270.2395629882813,
+               "y" : 13.84288692474365,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 275.8436584472656,
+               "y" : 13.79288673400879,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 325.0504455566406,
+               "y" : 10.93697929382324,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 179.6537475585938,
+               "y" : 11.12385272979736,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 30.44410514831543,
+               "y" : 3.622084140777588,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 256.3047180175781,
+               "y" : 7.714757919311523,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 262.4309387207031,
+               "y" : 4.264744758605957,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 268.2073059082031,
+               "y" : 1.514746189117432,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 313.8735961914063,
+               "y" : 8.771299362182617,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 308.6309509277344,
+               "y" : 3.891452550888062,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 333.577636718750,
+               "y" : 8.213393211364746,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 373.9511108398438,
+               "y" : 20.33798599243164,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "turretEnemy",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/turretEnemy.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 428.4393005371094,
+               "y" : 15.37271404266357,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 477.4261169433594,
+               "y" : 6.442822933197022,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 489.6860656738281,
+               "y" : 1.942815780639648,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 498.6758728027344,
+               "y" : 4.492815494537354,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 535.2811889648438,
+               "y" : 12.96737575531006,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 536.3809204101563,
+               "y" : 10.56736660003662,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 537.6306152343750,
+               "y" : 8.267357826232910,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/obex.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 538.8303222656250,
+               "y" : 5.867348670959473,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 465.741699218750,
+               "y" : 1.603554725646973,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyBig",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_big.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 471.9254455566406,
+               "y" : 1.403554916381836,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 290.7764282226563,
+               "y" : 14.36118412017822,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 298.2041931152344,
+               "y" : 10.81117057800293,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/structure_temple.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 667.4069824218750,
+               "y" : 5.006904602050781,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemySmall",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_small.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 406.7379455566406,
+               "y" : 1.547986507415772,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 401.9891052246094,
+               "y" : 5.611191272735596,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 406.9545593261719,
+               "y" : 9.361205101013184,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "enemyWanderer",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/enemy_wanderer.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 410.8536071777344,
+               "y" : 5.711191654205322,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
             }
          }
       ]

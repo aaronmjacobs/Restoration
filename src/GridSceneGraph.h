@@ -16,6 +16,9 @@ private:
    UniformGrid<SPtr<PhysicalObject>> movablePhysObjects;
    bool staticObjectsNeedUpdate;
 
+   std::vector<SPtr<SceneObject>> objectsToAdd;
+   std::vector<SPtr<PhysicalObject>> physObjectsToAdd;
+
 public:
    static const std::string CLASS_NAME;
 

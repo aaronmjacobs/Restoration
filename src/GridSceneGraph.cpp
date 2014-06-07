@@ -34,6 +34,27 @@ Json::Value GridSceneGraph::serialize() const {
 }
 
 void GridSceneGraph::tick(const float dt) {
+   // Add any pending objects to the scene
+   std::vector<SPtr<SceneObject>>::iterator pendingItr = objectsToAdd.begin();
+   while (pendingItr != objectsToAdd.end()) {
+      SceneGraph::add(*pendingItr);
+      objects.push_back(*pendingItr);
+
+      pendingItr = objectsToAdd.erase(pendingItr);
+   }
+
+   std::vector<SPtr<PhysicalObject>>::iterator pendingPhysItr = physObjectsToAdd.begin();
+   while (pendingPhysItr != physObjectsToAdd.end()) {
+      SceneGraph::addPhys(*pendingPhysItr);
+      if ((*pendingPhysItr)->canMove()) {
+         movablePhysObjects.insert(*pendingPhysItr);
+      } else {
+         staticPhysObjects.insert(*pendingPhysItr);
+      }
+
+      pendingPhysItr = physObjectsToAdd.erase(pendingPhysItr);
+   }
+
    // Tick each object in the scene
    std::vector<SPtr<SceneObject>>::iterator itr = objects.begin();
    while (itr != objects.end()) {
@@ -87,17 +108,13 @@ void GridSceneGraph::tick(const float dt) {
 }
 
 void GridSceneGraph::add(SPtr<SceneObject> sceneObject) {
-   SceneGraph::add(sceneObject);
-   objects.push_back(sceneObject);
+   ASSERT(sceneObject, "Can't add null object");
+   objectsToAdd.push_back(sceneObject);
 }
 
 void GridSceneGraph::addPhys(SPtr<PhysicalObject> physObject) {
-   SceneGraph::addPhys(physObject);
-   if (physObject->canMove()) {
-      movablePhysObjects.insert(physObject);
-   } else {
-      staticPhysObjects.insert(physObject);
-   }
+   ASSERT(physObject, "Can't add null phys object");
+   physObjectsToAdd.push_back(physObject);
 
    // Add to the list of all scene objects
    add(physObject);

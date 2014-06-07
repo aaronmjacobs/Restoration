@@ -12,6 +12,8 @@ class FlatSceneGraph : public SceneGraph {
 private:
    std::vector<SPtr<SceneObject>> objects;
    std::vector<SPtr<PhysicalObject>> physObjects;
+   std::vector<SPtr<SceneObject>> objectsToAdd;
+   std::vector<SPtr<PhysicalObject>> physObjectsToAdd;
 
 public:
    static const std::string CLASS_NAME;

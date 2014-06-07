@@ -30,6 +30,23 @@ Json::Value FlatSceneGraph::serialize() const {
 }
 
 void FlatSceneGraph::tick(const float dt) {
+   // Add any pending objects to the scene
+   std::vector<SPtr<SceneObject>>::iterator pendingItr = objectsToAdd.begin();
+   while (pendingItr != objectsToAdd.end()) {
+      SceneGraph::add(*pendingItr);
+      objects.push_back(*pendingItr);
+
+      pendingItr = objectsToAdd.erase(pendingItr);
+   }
+
+   std::vector<SPtr<PhysicalObject>>::iterator pendingPhysItr = physObjectsToAdd.begin();
+   while (pendingPhysItr != physObjectsToAdd.end()) {
+      SceneGraph::addPhys(*pendingPhysItr);
+      physObjects.push_back(*pendingPhysItr);
+
+      pendingPhysItr = physObjectsToAdd.erase(pendingPhysItr);
+   }
+
    // Tick each object in the scene
    std::vector<SPtr<SceneObject>>::iterator itr = objects.begin();
 
@@ -78,14 +95,12 @@ void FlatSceneGraph::tick(const float dt) {
 
 void FlatSceneGraph::add(SPtr<SceneObject> sceneObject) {
    ASSERT(sceneObject, "Can't add null object");
-   SceneGraph::add(sceneObject);
-   objects.push_back(sceneObject);
+   objectsToAdd.push_back(sceneObject);
 }
 
 void FlatSceneGraph::addPhys(SPtr<PhysicalObject> physObject) {
    ASSERT(physObject, "Can't add null phys object");
-   SceneGraph::addPhys(physObject);
-   physObjects.push_back(physObject);
+   physObjectsToAdd.push_back(physObject);
 
    // Add to the list of all scene objects
    add(physObject);

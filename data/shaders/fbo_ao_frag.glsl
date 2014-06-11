@@ -8,8 +8,6 @@ varying vec2 vTexCoord;
 
 const float BLUR = 2.0;
 const int SPAN = 5;
-const float SATURATION = 1.0;
-const float EXPOSURE = 2.3;
 const float THRESHOLD = 0.0065;
 
 void main() {

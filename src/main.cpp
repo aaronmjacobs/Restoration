@@ -58,6 +58,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
    if (action == GLFW_PRESS && key == GLFW_KEY_GRAVE_ACCENT) {
       fpCameraController->setEnabled(scene->isInEditMode());
       followCameraController->setEnabled(!scene->isInEditMode());
+      catmulRomCameraController->setEnabled(false);
    }
 }
 
@@ -129,20 +130,27 @@ void loadLevel(const std::string &name) {
    scene->addInputListener(fpCameraController);
    scene->addTickListener(fpCameraController);
 
+   SPtr<Player> player = scene->getPlayer().lock();
+   glm::vec3 finalPos(0.0f), finalLookAt(0.0f);
+   if (player) {
+      finalPos = player->getPosition() + glm::vec3(0.0f, 1.0f, 10.0f);
+      finalLookAt = player->getPosition() + glm::vec3(0.0f, 1.0f, 0.0f); // TODO Canted angle?
+   }
    std::vector<glm::vec3> cameraPoints, lookAtPoints;
-   cameraPoints.push_back(glm::vec3(0.0f, 10.0f, 10.0f));
-   cameraPoints.push_back(glm::vec3(0.0f, 10.0f, 10.0f));
-   cameraPoints.push_back(glm::vec3(-50.0f, 10.0f, 10.0f));
-   cameraPoints.push_back(glm::vec3(-100.0f, 10.0f, 10.0f));
-   cameraPoints.push_back(glm::vec3(-100.0f, 10.0f, 10.0f));
-   lookAtPoints.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-   lookAtPoints.push_back(glm::vec3(-50.0f, 0.0f, 0.0f));
-   lookAtPoints.push_back(glm::vec3(-100.0f, 10.0f, 0.0f));
-   lookAtPoints.push_back(glm::vec3(-100.0f, 10.0f, 0.0f));
+
+   // Camera points
+   cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
+   cameraPoints.push_back(glm::vec3(-50.0f, 20.0f, 5.0f));
+   cameraPoints.push_back(finalPos);
+
+   // Look at points
+   lookAtPoints.push_back(glm::vec3(-20.0f, 20.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(-40.0f, 0.0f, 0.0f));
+   lookAtPoints.push_back(finalLookAt);
+
    catmulRomCameraController = std::make_shared<CatmulRomCameraController>(scene->getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
-   //catmulRomCameraController->setEnabled(true);
-   followCameraController->setEnabled(true);
-   //scene->addTickListener(catmulRomCameraController);
+   catmulRomCameraController->setEnabled(true);
+   scene->addTickListener(catmulRomCameraController);
 
    // Attach the audio system
    scene->setAudio(audio);
@@ -238,6 +246,12 @@ int main(int argc, char *argv[]) {
          scene->tick(dt);
          levelEdit->tick(dt);
          accumulator -= dt;
+      }
+
+      // Camera control
+      if (catmulRomCameraController->isEnabled() && catmulRomCameraController->doneAnimating()) {
+         catmulRomCameraController->setEnabled(false);
+         followCameraController->setEnabled(true);
       }
 
       // Render the scene

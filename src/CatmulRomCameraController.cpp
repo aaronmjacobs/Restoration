@@ -15,8 +15,19 @@ void CatmulRomCameraController::reset() {
    animTime = 0.0f;
 }
 
+bool CatmulRomCameraController::doneAnimating() {
+   return animTime > animLength;
+}
+
 void CatmulRomCameraController::tick(const float dt) {
+   if (!enabled) {
+      return;
+   }
+
    float time = glm::min(1.0f, animTime / animLength);
+   float x = time - 1.0f;
+   time = (glm::cos(glm::pi<float>() * x) + 1.0f) / 2.0f;
+
    glm::vec3 location = AnimHelper::catmulRom(cameraPoints, time);
    glm::vec3 lookAt = AnimHelper::catmulRom(lookAtPoints, time);
 

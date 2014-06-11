@@ -21,6 +21,8 @@ public:
 
    void reset();
 
+   bool doneAnimating();
+
    /**
     * Steps |dt| seconds through time.
     */

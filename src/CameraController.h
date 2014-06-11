@@ -15,6 +15,7 @@ public:
    virtual ~CameraController();
 
    void setEnabled(bool enabled);
+   bool isEnabled();
 };
 
 #endif

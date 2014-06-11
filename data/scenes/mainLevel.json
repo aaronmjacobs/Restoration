@@ -14178,7 +14178,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "crate",
@@ -14207,7 +14207,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "crate",
@@ -14236,7 +14236,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "crate",

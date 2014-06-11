@@ -252,6 +252,36 @@
                "z" : 1.0
             }
          },
+                   {
+                   "@class" : "Checkpoint",
+                   "model" : {
+                   "@class" : "Model",
+                   "material" : "checkpoint",
+                   "mesh" : {
+                   "@class" : "Mesh",
+                   "fileName" : "data/meshes/checkpoint.obj"
+                   }
+                   },
+                   "name" : "checkpoint3",
+                   "orientation" : {
+                   "w" : 0.0,
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "position" : {
+                   "x" : 565.0,
+                   "y" : 25.88520717620850,
+                   "z" : -0.0
+                   },
+                   "renderState" : 14,
+                   "scale" : {
+                   "x" : 1.0,
+                   "y" : 1.0,
+                   "z" : 1.0
+                   }
+                   },
+
          {
             "@class" : "Obex",
             "acceleration" : {

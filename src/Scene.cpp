@@ -86,7 +86,7 @@ void Scene::postLoad() {
    storyLookAtPoints.push_back(glm::vec3(900.0f, 15.5f, 0.0f));
    storyLookAtPoints.push_back(glm::vec3(900.0f, -15.5f, 0.0f));
 
-   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, storyCameraPoints, storyLookAtPoints);
+   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 90.0f, storyCameraPoints, storyLookAtPoints);
 
    setCameraController(storyIntroCameraController);
 
@@ -234,6 +234,15 @@ void Scene::setCameraController(SPtr<CameraController> cam) {
 }
 
 void Scene::onKeyEvent(int key, int action) {
+   if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+      if (cameraController == storyIntroCameraController) {
+         setCameraController(cinematicCameraController);
+      } else if (cameraController == cinematicCameraController) {
+         setCameraController(followCameraController);
+      }
+      return;
+   }
+
    SPtr<Player> sPlayer = player;
    if (sPlayer) {
       sPlayer->onKeyEvent(key, action);

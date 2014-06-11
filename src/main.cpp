@@ -167,23 +167,22 @@ int main(int argc, char *argv[]) {
 
    double start = glfwGetTime();
 
+   // Prepare for rendering (sets up OpenGL stuff)
+   renderer.prepare();
+
+   // Load the scene
+   loadLevel("mainlevel");
+
    // Load the audio system
    audio = std::make_shared<Audio>();
    audio->systemInit();
    audio->loadSound("Restoration.ogg", true);
-
    audio->loadSound("jumpGrunt1.wav", false);
    audio->loadSound("jumpGrunt2.wav", false);
    audio->loadSound("jumpGrunt3.wav", false);
    audio->loadSound("shooting2.ogg", false);
    audio->loadSound("win.wav", false);
    audio->loadSound("damage2.ogg", false);
-
-   // Prepare for rendering (sets up OpenGL stuff)
-   renderer.prepare();
-
-   // Load the scene
-   loadLevel("mainlevel");
 
    std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 

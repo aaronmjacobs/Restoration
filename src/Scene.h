@@ -3,6 +3,7 @@
 
 #include "audio/Audio.h"
 #include "CollisionHandler.h"
+#include "GLMIncludes.h"
 #include "InputListener.h"
 #include "Saveable.h"
 #include "TickListener.h"
@@ -21,11 +22,13 @@ class Skybox;
 
 class Scene : public Saveable, public TickListener {
 protected:
+   const float DEATH_TIME = 3.0f;
+
    SPtr<SceneGraph> sceneGraph;
    SPtr<Skybox> lightSkybox;
    SPtr<Skybox> darkSkybox;
    WPtr<Camera> camera;
-   WPtr<Player> player;
+   SPtr<Player> player;
    std::list<WPtr<Light>> lights;
    std::list<WPtr<ShaderProgram>> shaderPrograms;
    CollisionHandler collisionHandler;
@@ -36,6 +39,9 @@ protected:
    SPtr<FirstPersonCameraController> fpCameraController;
    SPtr<FollowCameraController> followCameraController;
    SPtr<CatmulRomCameraController> cinematicCameraController;
+
+   float playerDeathTime;
+   glm::vec3 lastCheckpointPos;
 
    /**
     * All items listening for user input.
@@ -103,6 +109,10 @@ public:
 
    void setGroundPlaneInfo(Json::Value groundPlaneInfo) {
       this->groundPlaneInfo = groundPlaneInfo;
+   }
+
+   void setCheckpoint(glm::vec3 checkpoint) {
+      this->lastCheckpointPos = checkpoint;
    }
 
    /**

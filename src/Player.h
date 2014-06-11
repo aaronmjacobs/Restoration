@@ -9,7 +9,6 @@ class Magus;
 
 class Player : public Character, public InputListener {
 protected:
-   static const float BASE_HEALTH;
    static const float MAX_HEALTH;
    static const float AURA_SCALE;
    static const float MIN_AURA_SIZE;
@@ -25,6 +24,7 @@ protected:
    float invincibilityTime;
 
 public:
+   static const float BASE_HEALTH;
    static const std::string CLASS_NAME;
 
    Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name = "");
@@ -55,6 +55,8 @@ public:
    float getAuraRadius();
 
    bool isInvincible();
+
+   void unmarkForRemoval();
 
 #include "CollisionsBoilerplateH.h"
 };

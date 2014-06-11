@@ -58,7 +58,7 @@ void GridSceneGraph::tick(const float dt) {
    // Tick each object in the scene
    std::vector<SPtr<SceneObject>>::iterator itr = objects.begin();
    while (itr != objects.end()) {
-      if (!*itr || (*itr)->shouldBeRemoved()) {
+      if ((*itr)->shouldBeRemoved()) {
          // If an object should be removed, remove it
          SceneGraph::remove(*itr);
          itr = objects.erase(itr);

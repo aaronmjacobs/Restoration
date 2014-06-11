@@ -15,6 +15,8 @@ const std::string Scene::FOLDER_NAME = "scenes";
 
 Scene::Scene(const std::string &jsonFileName)
    : Saveable(jsonFileName), collisionHandler(*this), editMode(false) {
+   playerDeathTime = 0.0f;
+   lastCheckpointPos = glm::vec3(0.0f);
 }
 
 Scene::~Scene() {
@@ -72,6 +74,10 @@ void Scene::postLoad() {
    cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
    cinematicCameraController->setEnabled(true);
    addTickListener(cinematicCameraController);
+
+   if (player) {
+      lastCheckpointPos = player->getPosition();
+   }
 }
 
 void Scene::setEditMode(bool editMode) {
@@ -142,11 +148,15 @@ void Scene::setCamera(SPtr<Camera> camera) {
 }
 
 WPtr<Player> Scene::getPlayer() {
+   if (!player || !player->isAlive()) {
+      return WPtr<Player>();
+   }
+
    return player;
 }
 
 void Scene::setPlayer(SPtr<Player> player) {
-   this->player = WPtr<Player>(player);
+   this->player = player;
 }
 
 const std::list<WPtr<Light>>& Scene::getLights() {
@@ -170,6 +180,21 @@ SPtr<Audio> Scene::getAudio() {
 }
 
 void Scene::tick(const float dt) {
+   if (!player->isAlive()) {
+      playerDeathTime += dt;
+
+      if (playerDeathTime > DEATH_TIME) {
+         playerDeathTime = 0.0f;
+         player->unmarkForRemoval();
+         player->setHealth(Player::BASE_HEALTH);
+         // TODO Set position to last checkpoint
+         player->setPosition(lastCheckpointPos);
+         player->setVelocity(glm::vec3(0.0f));
+
+         sceneGraph->addPhys(player);
+      }
+   }
+
    if (cinematicCameraController->isEnabled() && isInEditMode()) {
       cinematicCameraController->setEnabled(false);
    }
@@ -190,7 +215,7 @@ void Scene::tick(const float dt) {
 }
 
 void Scene::onKeyEvent(int key, int action) {
-   SPtr<Player> sPlayer = player.lock();
+   SPtr<Player> sPlayer = player;
    if (sPlayer) {
       sPlayer->onKeyEvent(key, action);
    }
@@ -201,7 +226,7 @@ void Scene::onKeyEvent(int key, int action) {
 }
 
 void Scene::onMouseButtonEvent(int button, int action) {
-   SPtr<Player> sPlayer = player.lock();
+   SPtr<Player> sPlayer = player;
    if (sPlayer) {
       sPlayer->onMouseButtonEvent(button, action);
    }
@@ -212,7 +237,7 @@ void Scene::onMouseButtonEvent(int button, int action) {
 }
 
 void Scene::onMouseMotionEvent(double xPos, double yPos) {
-   SPtr<Player> sPlayer = player.lock();
+   SPtr<Player> sPlayer = player;
    if (sPlayer) {
       sPlayer->onMouseMotionEvent(xPos, yPos);
    }

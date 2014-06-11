@@ -244,5 +244,9 @@ bool Player::isInvincible() {
    return invincibilityTime > 0.0f;
 }
 
+void Player::unmarkForRemoval() {
+   markedForRemoval = false;
+}
+
 #define COLLISION_CLASS_NAME Player
 #include "CollisionsBoilerplateCpp.h"

@@ -3,7 +3,6 @@
 
 #include "CameraController.h"
 #include "GLIncludes.h"
-#include "InputListener.h"
 #include "TickListener.h"
 #include "Types.h"
 
@@ -12,7 +11,7 @@ class Camera;
 /**
  * Controls a camera (to be a first person perspective) from user input events.
  */
-class FirstPersonCameraController : public CameraController, public InputListener, public TickListener {
+class FirstPersonCameraController : public CameraController {
 private:
    const static float MOUSE_SCALE;
    const static float MOVEMENT_SCALE;
@@ -23,6 +22,10 @@ private:
 public:
    FirstPersonCameraController(SPtr<Camera> camera);
    virtual ~FirstPersonCameraController();
+
+   virtual void reset() {
+      //
+   }
 
    /**
     * Called on keyboard events.

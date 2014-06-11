@@ -12,6 +12,7 @@
 #include <list>
 
 class Camera;
+class CameraController;
 class CatmulRomCameraController;
 class FirstPersonCameraController;
 class FollowCameraController;
@@ -38,7 +39,10 @@ protected:
 
    SPtr<FirstPersonCameraController> fpCameraController;
    SPtr<FollowCameraController> followCameraController;
+   SPtr<CatmulRomCameraController> storyIntroCameraController;
    SPtr<CatmulRomCameraController> cinematicCameraController;
+
+   SPtr<CameraController> cameraController;
 
    float playerDeathTime;
    glm::vec3 lastCheckpointPos;
@@ -52,6 +56,8 @@ protected:
     * All items listening for ticks (not explicitly in the scene graph).
     */
    std::list<SPtr<TickListener>> tickListeners;
+
+   void setCameraController(SPtr<CameraController> cam);
 
 public:
    static const std::string CLASS_NAME;

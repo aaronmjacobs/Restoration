@@ -9,7 +9,7 @@
 
 class Camera;
 
-class CatmulRomCameraController : public CameraController, public TickListener {
+class CatmulRomCameraController : public CameraController {
 private:
    const float animLength;
    const std::vector<glm::vec3> cameraPoints, lookAtPoints;
@@ -19,7 +19,7 @@ public:
    CatmulRomCameraController(SPtr<Camera> camera, const float animLength, const std::vector<glm::vec3> cameraPoints, const std::vector<glm::vec3> lookAtPoints);
    virtual ~CatmulRomCameraController();
 
-   void reset();
+   virtual void reset();
 
    bool doneAnimating();
 

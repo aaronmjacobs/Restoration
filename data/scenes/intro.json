@@ -1,0 +1,365 @@
+{
+   "@class" : "Scene",
+   "darkSkybox" : {
+      "@class" : "Skybox",
+      "model" : {
+         "@class" : "Model",
+         "material" : "skybox",
+         "mesh" : {
+            "@class" : "Mesh",
+            "fileName" : "data/meshes/cube.obj"
+         }
+      },
+      "name" : "arrakis"
+   },
+   "graph" : {
+      "@class" : "GridSceneGraph",
+      "objects" : [
+         {
+            "@class" : "Camera",
+            "fov" : 1.399999976158142,
+            "name" : "camera",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "phi" : -0.2000000029802322,
+            "position" : {
+               "x" : 18.10123062133789,
+               "y" : 13.42826175689697,
+               "z" : 10.0
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "theta" : -1.450000047683716
+         },
+         {
+            "@class" : "Light",
+            "color" : {
+               "b" : 0.3000000119209290,
+               "g" : 0.3000000119209290,
+               "r" : 0.3000000119209290
+            },
+            "constFalloff" : 0.001000000047497451,
+            "linearFalloff" : 0.001000000047497451,
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 20.0,
+               "z" : 20.0
+            },
+            "renderState" : 0,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "squareFalloff" : 0.0007999999797903001
+         },
+         {
+            "@class" : "Player",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.800000190734863,
+               "z" : 0.0
+            },
+            "health" : 10,
+            "model" : {
+               "@class" : "Model",
+               "material" : "otherMaterial",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/cube.obj"
+               }
+            },
+            "name" : "player",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            },
+            "velocity" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            }
+         },
+         {
+            "@class" : "Geometry",
+            "model" : {
+               "@class" : "Model",
+               "material" : "intro",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/plane.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 0.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 8.0,
+               "y" : -20.0,
+               "z" : 1.0
+            }
+         }
+      ]
+   },
+   "groundPlane" : {
+      "center" : {
+         "@class" : "Scenery",
+         "model" : {
+            "@class" : "Model",
+            "material" : "sand",
+            "mesh" : {
+               "@class" : "Mesh",
+               "fileName" : "data/meshes/groundCenter.obj"
+            }
+         },
+         "name" : "",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "renderState" : 6,
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      "front1" : {
+         "@class" : "Geometry",
+         "model" : {
+            "@class" : "Model",
+            "material" : "sand",
+            "mesh" : {
+               "@class" : "Mesh",
+               "fileName" : "data/meshes/groundFront1.obj"
+            }
+         },
+         "name" : "",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "renderState" : 6,
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      "front2" : {
+         "@class" : "Geometry",
+         "model" : {
+            "@class" : "Model",
+            "material" : "sand",
+            "mesh" : {
+               "@class" : "Mesh",
+               "fileName" : "data/meshes/groundFront2.obj"
+            }
+         },
+         "name" : "",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "renderState" : 6,
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      "front3" : {
+         "@class" : "Geometry",
+         "model" : {
+            "@class" : "Model",
+            "material" : "sand",
+            "mesh" : {
+               "@class" : "Mesh",
+               "fileName" : "data/meshes/groundFront3.obj"
+            }
+         },
+         "name" : "",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "renderState" : 6,
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      "back1" : {
+         "@class" : "Geometry",
+         "model" : {
+            "@class" : "Model",
+            "material" : "sand",
+            "mesh" : {
+               "@class" : "Mesh",
+               "fileName" : "data/meshes/groundBack1.obj"
+            }
+         },
+         "name" : "",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "renderState" : 6,
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      "back2" : {
+         "@class" : "Geometry",
+         "model" : {
+            "@class" : "Model",
+            "material" : "sand",
+            "mesh" : {
+               "@class" : "Mesh",
+               "fileName" : "data/meshes/groundBack2.obj"
+            }
+         },
+         "name" : "",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "renderState" : 6,
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      "back3" : {
+         "@class" : "Geometry",
+         "model" : {
+            "@class" : "Model",
+            "material" : "sand",
+            "mesh" : {
+               "@class" : "Mesh",
+               "fileName" : "data/meshes/groundBack3.obj"
+            }
+         },
+         "name" : "",
+         "orientation" : {
+            "w" : 1.0,
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "position" : {
+            "x" : 0.0,
+            "y" : 0.0,
+            "z" : 0.0
+         },
+         "renderState" : 6,
+         "scale" : {
+            "x" : 1.0,
+            "y" : 1.0,
+            "z" : 1.0
+         }
+      },
+      "frontDistance" : 7.5,
+      "backDistance" : 5.5,
+      "width" : 15.0,
+      "minX" : 0.0,
+      "maxX" : 0.0,
+      "y" : 0.0
+   },
+   "lightSkybox" : {
+      "@class" : "Skybox",
+      "model" : {
+         "@class" : "Model",
+         "material" : "skybox",
+         "mesh" : {
+            "@class" : "Mesh",
+            "fileName" : "data/meshes/cube.obj"
+         }
+      },
+      "name" : "crater"
+   }
+}

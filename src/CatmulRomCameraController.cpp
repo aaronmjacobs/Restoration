@@ -20,10 +20,6 @@ bool CatmulRomCameraController::doneAnimating() {
 }
 
 void CatmulRomCameraController::tick(const float dt) {
-   if (!enabled) {
-      return;
-   }
-
    float time = glm::min(1.0f, animTime / animLength);
    float x = time - 1.0f;
    time = (glm::cos(glm::pi<float>() * x) + 1.0f) / 2.0f;

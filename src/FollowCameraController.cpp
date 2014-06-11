@@ -12,10 +12,6 @@ FollowCameraController::~FollowCameraController() {
 }
 
 void FollowCameraController::tick(const float dt) {
-   if (!enabled) {
-      return;
-   }
-
    SPtr<Camera> sCamera = camera.lock();
    SPtr<SceneObject> sObjectToFollow = objectToFollow.lock();
    if (!sCamera || !sObjectToFollow) {

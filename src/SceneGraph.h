@@ -31,6 +31,8 @@ public:
    SceneGraph(SPtr<Scene> scene);
    virtual ~SceneGraph();
 
+   virtual void updateAddedItems() = 0;
+
    virtual void staticObjectsModified();
    virtual void add(SPtr<SceneObject> sceneObject);
    virtual void addPhys(SPtr<PhysicalObject> physObject);

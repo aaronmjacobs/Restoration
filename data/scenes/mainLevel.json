@@ -125,7 +125,35 @@
                "z" : 0.0
             }
          },
-                   
+         {
+            "@class" : "Geometry",
+            "model" : {
+               "@class" : "Model",
+               "material" : "intro",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/plane.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 0.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 900.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "renderState" : 6,
+            "scale" : {
+               "x" : 8.0,
+               "y" : -20.0,
+               "z" : 1.0
+            }
+         },
          {
             "@class" : "Magus",
             "acceleration" : {

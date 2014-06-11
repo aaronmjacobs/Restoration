@@ -34,26 +34,7 @@ Json::Value GridSceneGraph::serialize() const {
 }
 
 void GridSceneGraph::tick(const float dt) {
-   // Add any pending objects to the scene
-   std::vector<SPtr<SceneObject>>::iterator pendingItr = objectsToAdd.begin();
-   while (pendingItr != objectsToAdd.end()) {
-      SceneGraph::add(*pendingItr);
-      objects.push_back(*pendingItr);
-
-      pendingItr = objectsToAdd.erase(pendingItr);
-   }
-
-   std::vector<SPtr<PhysicalObject>>::iterator pendingPhysItr = physObjectsToAdd.begin();
-   while (pendingPhysItr != physObjectsToAdd.end()) {
-      SceneGraph::addPhys(*pendingPhysItr);
-      if ((*pendingPhysItr)->canMove()) {
-         movablePhysObjects.insert(*pendingPhysItr);
-      } else {
-         staticPhysObjects.insert(*pendingPhysItr);
-      }
-
-      pendingPhysItr = physObjectsToAdd.erase(pendingPhysItr);
-   }
+   updateAddedItems();
 
    // Tick each object in the scene
    std::vector<SPtr<SceneObject>>::iterator itr = objects.begin();
@@ -133,6 +114,29 @@ void GridSceneGraph::forEachPhys(void (*function)(PhysicalObject &obj)) {
 
    for (GridElement<SPtr<PhysicalObject>> physObjectElement : movablePhysObjects.getElements()) {
       function(*physObjectElement.element);
+   }
+}
+
+void GridSceneGraph::updateAddedItems() {
+   // Add any pending objects to the scene
+   std::vector<SPtr<SceneObject>>::iterator pendingItr = objectsToAdd.begin();
+   while (pendingItr != objectsToAdd.end()) {
+      SceneGraph::add(*pendingItr);
+      objects.push_back(*pendingItr);
+
+      pendingItr = objectsToAdd.erase(pendingItr);
+   }
+
+   std::vector<SPtr<PhysicalObject>>::iterator pendingPhysItr = physObjectsToAdd.begin();
+   while (pendingPhysItr != physObjectsToAdd.end()) {
+      SceneGraph::addPhys(*pendingPhysItr);
+      if ((*pendingPhysItr)->canMove()) {
+         movablePhysObjects.insert(*pendingPhysItr);
+      } else {
+         staticPhysObjects.insert(*pendingPhysItr);
+      }
+
+      pendingPhysItr = physObjectsToAdd.erase(pendingPhysItr);
    }
 }
 

@@ -48,11 +48,7 @@ void Scene::postLoad() {
    // Create the camera controllers
    SPtr<Player> player = getPlayer().lock();
    followCameraController = std::make_shared<FollowCameraController>(getCamera().lock(), player, 10.0f, -0.2f, -1.45f);
-   //followCameraController->setEnabled(true);
-   addTickListener(followCameraController);
    fpCameraController = std::make_shared<FirstPersonCameraController>(getCamera().lock());
-   addInputListener(fpCameraController);
-   addTickListener(fpCameraController);
 
    glm::vec3 finalPos(0.0f), finalLookAt(0.0f);
    if (player) {
@@ -62,18 +58,37 @@ void Scene::postLoad() {
    std::vector<glm::vec3> cameraPoints, lookAtPoints;
 
    // Camera points
+
+   cameraPoints.push_back(glm::vec3(190.0f, 0.0f, 0.0f));
+   cameraPoints.push_back(glm::vec3(150.0f, 10.0f, 0.0f));
+   cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 10.0f));
    cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
    cameraPoints.push_back(glm::vec3(-50.0f, 20.0f, 5.0f));
    cameraPoints.push_back(finalPos);
 
    // Look at points
+   lookAtPoints.push_back(glm::vec3(100.0f, 2.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(-10.0f, 2.0f, 0.0f));
    lookAtPoints.push_back(glm::vec3(-20.0f, 20.0f, 0.0f));
    lookAtPoints.push_back(glm::vec3(-40.0f, 0.0f, 0.0f));
    lookAtPoints.push_back(finalLookAt);
 
-   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
-   cinematicCameraController->setEnabled(true);
-   addTickListener(cinematicCameraController);
+   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 30.0f, cameraPoints, lookAtPoints);
+
+   std::vector<glm::vec3> storyCameraPoints, storyLookAtPoints;
+
+   // Camera points
+   storyCameraPoints.push_back(glm::vec3(900.0f, 15.5f, 5.25f));
+   storyCameraPoints.push_back(glm::vec3(900.0f, -15.5f, 5.25f));
+
+   // Look at points
+   storyLookAtPoints.push_back(glm::vec3(900.0f, 15.5f, 0.0f));
+   storyLookAtPoints.push_back(glm::vec3(900.0f, -15.5f, 0.0f));
+
+   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, storyCameraPoints, storyLookAtPoints);
+
+   setCameraController(storyIntroCameraController);
 
    if (player) {
       lastCheckpointPos = player->getPosition();
@@ -84,9 +99,11 @@ void Scene::setEditMode(bool editMode) {
    this->editMode = editMode;
    sceneGraph->staticObjectsModified();
 
-   // TODO
-   fpCameraController->setEnabled(editMode);
-   followCameraController->setEnabled(!editMode);
+   if (editMode) {
+      setCameraController(fpCameraController);
+   } else {
+      setCameraController(followCameraController);
+   }
 }
 
 void Scene::onWin() {
@@ -109,10 +126,6 @@ void Scene::onWin() {
    lookAtPoints.push_back(finalLookAt);
 
    cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
-   addTickListener(cinematicCameraController);
-   cinematicCameraController->setEnabled(true);
-   fpCameraController->setEnabled(false);
-   followCameraController->setEnabled(false);
 }
 
 SPtr<Skybox> Scene::getLightSkybox() {
@@ -195,14 +208,15 @@ void Scene::tick(const float dt) {
       }
    }
 
-   if (cinematicCameraController->isEnabled() && isInEditMode()) {
-      cinematicCameraController->setEnabled(false);
+   // Camera control
+   if (cameraController) {
+      cameraController->tick(dt);
    }
 
-   // Camera control
-   if (cinematicCameraController->isEnabled() && cinematicCameraController->doneAnimating()) {
-      cinematicCameraController->setEnabled(false);
-      followCameraController->setEnabled(true);
+   if (cameraController == storyIntroCameraController && storyIntroCameraController->doneAnimating()) {
+      setCameraController(cinematicCameraController);
+   } else if (cameraController == cinematicCameraController && cinematicCameraController->doneAnimating()) {
+      setCameraController(followCameraController);
    }
 
    for (SPtr<TickListener> listener : tickListeners) {
@@ -214,10 +228,19 @@ void Scene::tick(const float dt) {
    }
 }
 
+void Scene::setCameraController(SPtr<CameraController> cam) {
+   cameraController = cam;
+   cameraController->reset();
+}
+
 void Scene::onKeyEvent(int key, int action) {
    SPtr<Player> sPlayer = player;
    if (sPlayer) {
       sPlayer->onKeyEvent(key, action);
+   }
+
+   if (cameraController) {
+      cameraController->onKeyEvent(key, action);
    }
 
    for (SPtr<InputListener> listener : inputListeners) {
@@ -231,6 +254,10 @@ void Scene::onMouseButtonEvent(int button, int action) {
       sPlayer->onMouseButtonEvent(button, action);
    }
 
+   if (cameraController) {
+      cameraController->onMouseButtonEvent(button, action);
+   }
+
    for (SPtr<InputListener> listener : inputListeners) {
       listener->onMouseButtonEvent(button, action);
    }
@@ -240,6 +267,10 @@ void Scene::onMouseMotionEvent(double xPos, double yPos) {
    SPtr<Player> sPlayer = player;
    if (sPlayer) {
       sPlayer->onMouseMotionEvent(xPos, yPos);
+   }
+
+   if (cameraController) {
+      cameraController->onMouseMotionEvent(xPos, yPos);
    }
 
    for (SPtr<InputListener> listener : inputListeners) {

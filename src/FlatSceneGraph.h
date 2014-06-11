@@ -36,6 +36,8 @@ public:
    virtual void forEach(void (*function)(SceneObject &obj));
    virtual void forEachPhys(void (*function)(PhysicalObject &obj));
 
+   virtual void updateAddedItems();
+
    /**
     * Goes through each phys object and finds the first thing the mouse collides with
 	*/

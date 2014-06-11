@@ -1,16 +1,24 @@
 #include "CameraController.h"
 
 CameraController::CameraController(SPtr<Camera> camera)
-: camera(camera), enabled(false) {
+: camera(camera) {
 }
 
 CameraController::~CameraController() {
 }
 
-void CameraController::setEnabled(bool enabled) {
-   this->enabled = enabled;
+void CameraController::tick(const float dt) {
+   //
 }
 
-bool CameraController::isEnabled() {
-   return enabled;
+void CameraController::onKeyEvent(int key, int action) {
+   //
+}
+
+void CameraController::onMouseButtonEvent(int button, int action) {
+   //
+}
+
+void CameraController::onMouseMotionEvent(double xPos, double yPos) {
+   //
 }

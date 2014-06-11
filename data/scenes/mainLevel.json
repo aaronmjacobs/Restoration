@@ -195,7 +195,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Checkpoint",
             "model" : {
                "@class" : "Model",
                "material" : "checkpoint",
@@ -224,7 +224,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Checkpoint",
             "model" : {
                "@class" : "Model",
                "material" : "checkpoint",
@@ -252,6 +252,36 @@
                "z" : 1.0
             }
          },
+                   {
+                   "@class" : "Checkpoint",
+                   "model" : {
+                   "@class" : "Model",
+                   "material" : "checkpoint",
+                   "mesh" : {
+                   "@class" : "Mesh",
+                   "fileName" : "data/meshes/checkpoint.obj"
+                   }
+                   },
+                   "name" : "checkpoint3",
+                   "orientation" : {
+                   "w" : 0.0,
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "position" : {
+                   "x" : 565.0,
+                   "y" : 25.88520717620850,
+                   "z" : -0.0
+                   },
+                   "renderState" : 14,
+                   "scale" : {
+                   "x" : 1.0,
+                   "y" : 1.0,
+                   "z" : 1.0
+                   }
+                   },
+
          {
             "@class" : "Obex",
             "acceleration" : {
@@ -8257,7 +8287,7 @@
                "y" : -9.800000190734863,
                "z" : 0.0
             },
-            "health" : 100.0,
+            "health" : 250.0,
             "model" : {
                "@class" : "Model",
                "material" : "boss",
@@ -8266,7 +8296,7 @@
                   "fileName" : "data/meshes/Boss.obj"
                }
             },
-            "name" : "",
+            "name" : "boss",
             "orientation" : {
                "w" : 0.7071067690849304,
                "x" : -0.0,
@@ -14148,7 +14178,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "crate",
@@ -14177,7 +14207,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "crate",
@@ -14206,7 +14236,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
                "material" : "crate",

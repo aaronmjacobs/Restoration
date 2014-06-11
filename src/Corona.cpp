@@ -23,6 +23,7 @@ const float Corona::MIN_CHASE_DISTANCE = 0.5f;
 Corona::Corona(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Enemy(scene, model, BASE_HEALTH, HEALTH_REPLENISHMENT, ATTACK_POWER, name) {
    state = PATROLING;
+   timer = 0.0f;
 }
 
 Corona::~Corona() {
@@ -50,18 +51,36 @@ void Corona::tick(const float dt) {
          }
       }
    }
+   if (name == "boss") {
+      timer += dt;
+   }
+
+   float walkSpeed = WALK_SPEED;
+   if (name == "boss") {
+      walkSpeed *= 1.2f;
+   }
 
    if (state == CHASING && player) {
       if (position.x < player->getPosition().x - MIN_CHASE_DISTANCE) {
-         velocity.x = WALK_SPEED;
+         velocity.x = walkSpeed;
       } else if (position.x > player->getPosition().x + MIN_CHASE_DISTANCE) {
-         velocity.x = -WALK_SPEED;
+         velocity.x = -walkSpeed;
       } else {
          velocity.x = 0.0f;
       }
+      if (name == "boss") {
+         if (timer >= 4.0f) {
+            if (position.x >= player->getPosition().x) {
+               position.x = player->getPosition().x - 5.0f;
+            } else {
+               position.x = player->getPosition().x + 5.0f;
+            }
+            timer = 0.0f;
+         }
+      }
    } else { // state == PATROLING
       if (velocity.x == 0.0f) {
-         velocity.x = WALK_SPEED;
+         velocity.x = walkSpeed;
       }
    }
 

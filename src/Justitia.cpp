@@ -41,6 +41,21 @@ void Justitia::tick(const float dt) {
       }
       markForRemoval();
       return;
+   } else {
+
+      SPtr<Scene> sScene = scene.lock();
+      if (sScene) {
+         Particle::createEffect(sScene,
+                                    getPosition(),                // Position
+                                    -getVelocity(),              // Velocity
+                                    false,
+                                    5.0f,                                  // Size
+                                    1,   // Number of particles
+                                    0.5f,                                 // Duration (seconds)
+                                    10.0f,        // Particle spread
+                                    true);       // Stencil mode
+      }
+
    }
    lifeTime += dt;
 

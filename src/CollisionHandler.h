@@ -54,6 +54,9 @@ public:
    COLLISION_REVERSE_DECLARATION(Justitia, Enemy)
    void handleCollision(Aegrum &aegrum, Player &player);
    COLLISION_REVERSE_DECLARATION(Aegrum, Player)
+
+   void handleCollision(Player &player, Checkpoint &checkpoint);
+   COLLISION_REVERSE_DECLARATION(Player, Checkpoint)
 };
 
 #endif

@@ -11,6 +11,9 @@
 #include <list>
 
 class Camera;
+class CatmulRomCameraController;
+class FirstPersonCameraController;
+class FollowCameraController;
 class Light;
 class SceneGraph;
 class ShaderProgram;
@@ -29,6 +32,10 @@ protected:
    SPtr<Audio> audio;
    bool editMode;
    Json::Value groundPlaneInfo;
+
+   SPtr<FirstPersonCameraController> fpCameraController;
+   SPtr<FollowCameraController> followCameraController;
+   SPtr<CatmulRomCameraController> cinematicCameraController;
 
    /**
     * All items listening for user input.
@@ -51,6 +58,10 @@ public:
     * Serializes the object to JSON.
     */
    virtual Json::Value serialize() const;
+
+   void postLoad();
+
+   void onWin();
 
    void setEditMode(bool editMode);
 

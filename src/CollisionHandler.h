@@ -27,6 +27,7 @@ void handleCollision(SECOND_CLASS &second, FIRST_CLASS &first);
 class CollisionHandler {
 protected:
    Scene &scene;
+   bool playerWon;
 
 public:
    CollisionHandler(Scene &scene);
@@ -53,8 +54,6 @@ public:
    COLLISION_REVERSE_DECLARATION(Justitia, Enemy)
    void handleCollision(Aegrum &aegrum, Player &player);
    COLLISION_REVERSE_DECLARATION(Aegrum, Player)
-   
-
 };
 
 #endif

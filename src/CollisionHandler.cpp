@@ -9,6 +9,7 @@ void CollisionHandler::handleCollision(SECOND_CLASS &second, FIRST_CLASS &first)
 
 CollisionHandler::CollisionHandler(Scene &scene)
    : scene(scene) {
+   playerWon = false;
 }
 
 CollisionHandler::~CollisionHandler() {
@@ -90,7 +91,11 @@ void CollisionHandler::handleCollision(Character &character, Scenery &scenery) {
    BoundingBox collision = BoundingBox(character.getBounds(), scenery.getBounds());
    // TODO Handle win state
    if (character.getName() == "player" && scenery.getName() == "temple") {
-      printf("Win :D\n");
+      if (!playerWon) {
+         playerWon = true;
+         scene.onWin();
+         return;
+      }
    }
 
    float collisionWidth = collision.width();

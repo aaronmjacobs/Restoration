@@ -1,5 +1,8 @@
 #include "Camera.h"
+#include "CatmulRomCameraController.h"
 #include "FancyAssert.h"
+#include "FirstPersonCameraController.h"
+#include "FollowCameraController.h"
 #include "Light.h"
 #include "Player.h"
 #include "Scene.h"
@@ -39,9 +42,71 @@ Json::Value Scene::serialize() const {
    return root;
 }
 
+void Scene::postLoad() {
+   // Create the camera controllers
+   SPtr<Player> player = getPlayer().lock();
+   followCameraController = std::make_shared<FollowCameraController>(getCamera().lock(), player, 10.0f, -0.2f, -1.45f);
+   //followCameraController->setEnabled(true);
+   addTickListener(followCameraController);
+   fpCameraController = std::make_shared<FirstPersonCameraController>(getCamera().lock());
+   addInputListener(fpCameraController);
+   addTickListener(fpCameraController);
+
+   glm::vec3 finalPos(0.0f), finalLookAt(0.0f);
+   if (player) {
+      finalPos = player->getPosition() + glm::vec3(0.0f, 1.0f, 10.0f);
+      finalLookAt = player->getPosition() + glm::vec3(0.0f, 1.0f, 0.0f); // TODO Canted angle?
+   }
+   std::vector<glm::vec3> cameraPoints, lookAtPoints;
+
+   // Camera points
+   cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
+   cameraPoints.push_back(glm::vec3(-50.0f, 20.0f, 5.0f));
+   cameraPoints.push_back(finalPos);
+
+   // Look at points
+   lookAtPoints.push_back(glm::vec3(-20.0f, 20.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(-40.0f, 0.0f, 0.0f));
+   lookAtPoints.push_back(finalLookAt);
+
+   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
+   cinematicCameraController->setEnabled(true);
+   addTickListener(cinematicCameraController);
+}
+
 void Scene::setEditMode(bool editMode) {
    this->editMode = editMode;
    sceneGraph->staticObjectsModified();
+
+   // TODO
+   fpCameraController->setEnabled(editMode);
+   followCameraController->setEnabled(!editMode);
+}
+
+void Scene::onWin() {
+   SPtr<Player> player = getPlayer().lock();
+   glm::vec3 finalPos(0.0f), finalLookAt(0.0f);
+   if (player) {
+      finalPos = player->getPosition() + glm::vec3(0.0f, 1.0f, 10.0f);
+      finalLookAt = player->getPosition() + glm::vec3(0.0f, 1.0f, 0.0f); // TODO Canted angle?
+   }
+   std::vector<glm::vec3> cameraPoints, lookAtPoints;
+
+   // Camera points
+   cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
+   cameraPoints.push_back(glm::vec3(-50.0f, 20.0f, 5.0f));
+   cameraPoints.push_back(finalPos);
+
+   // Look at points
+   lookAtPoints.push_back(glm::vec3(-20.0f, 20.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(-40.0f, 0.0f, 0.0f));
+   lookAtPoints.push_back(finalLookAt);
+
+   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
+   addTickListener(cinematicCameraController);
+   cinematicCameraController->setEnabled(true);
+   fpCameraController->setEnabled(false);
+   followCameraController->setEnabled(false);
 }
 
 SPtr<Skybox> Scene::getLightSkybox() {
@@ -105,6 +170,16 @@ SPtr<Audio> Scene::getAudio() {
 }
 
 void Scene::tick(const float dt) {
+   if (cinematicCameraController->isEnabled() && isInEditMode()) {
+      cinematicCameraController->setEnabled(false);
+   }
+
+   // Camera control
+   if (cinematicCameraController->isEnabled() && cinematicCameraController->doneAnimating()) {
+      cinematicCameraController->setEnabled(false);
+      followCameraController->setEnabled(true);
+   }
+
    for (SPtr<TickListener> listener : tickListeners) {
       listener->tick(dt);
    }

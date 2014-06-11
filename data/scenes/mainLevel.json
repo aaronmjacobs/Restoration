@@ -540,35 +540,6 @@
             "@class" : "Scenery",
             "model" : {
                "@class" : "Model",
-               "material" : "sword",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/sword.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 640.4325561523438,
-               "y" : 24.50,
-               "z" : 0.0
-            },
-            "renderState" : 14,
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
                "material" : "block",
                "mesh" : {
                   "@class" : "Mesh",
@@ -16414,35 +16385,6 @@
             "@class" : "Geometry",
             "model" : {
                "@class" : "Model",
-               "material" : "rock",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/rock_3.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 322.0777587890625,
-               "y" : -8.285599708557129,
-               "z" : -5.350002288818359
-            },
-            "renderState" : 14,
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
-               "z" : 1.0
-            }
-         },
-         {
-            "@class" : "Geometry",
-            "model" : {
-               "@class" : "Model",
                "material" : "pot",
                "mesh" : {
                   "@class" : "Mesh",
@@ -21715,7 +21657,7 @@
          }
       },
       "frontDistance" : 7.50,
-      "maxX" : 700.0,
+      "maxX" : 800.0,
       "minX" : -200.0,
       "width" : 15.0,
       "y" : 0.0

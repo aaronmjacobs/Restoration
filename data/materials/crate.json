@@ -22,6 +22,6 @@
       "g" : 0.2,
       "r" : 0.2
    },
-   "texture" : "data/textures/crate.png",
+   "texture" : "data/textures/crateDark.png",
    "altTexture" : "data/textures/crateLight.png"
 }

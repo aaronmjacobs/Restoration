@@ -1,0 +1,21 @@
+{
+   "@class" : "ShaderProgram",
+   "attributes" : [ "aPosition", "aTexCoord" ],
+   "shaders" : [
+      {
+         "@class" : "Shader",
+         "fileName" : "data/shaders/fbo_vert.glsl",
+         "type" : "vertex"
+      },
+      {
+         "@class" : "Shader",
+         "fileName" : "data/shaders/fbo_ao_frag.glsl",
+         "type" : "fragment"
+      }
+   ],
+   "uniforms" : [
+      "uTexture",
+      "uViewportWidth",
+      "uViewportHeight"
+   ]
+}

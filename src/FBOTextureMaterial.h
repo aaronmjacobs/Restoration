@@ -4,6 +4,7 @@
 #include "FrameBuffer.h"
 #include "GLIncludes.h"
 #include "Material.h"
+#include "Shadow.h"
 
 class FBOTextureMaterial : public Material {
 protected:
@@ -15,6 +16,9 @@ public:
 
    FBOTextureMaterial(const std::string &jsonFileName,
       SPtr<ShaderProgram> shaderProgram, FrameBuffer &fb);
+
+   FBOTextureMaterial(const std::string &jsonFileName,
+      SPtr<ShaderProgram> shaderProgram, Shadow &fb);
 
    virtual ~FBOTextureMaterial();
 

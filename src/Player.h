@@ -52,6 +52,12 @@ public:
 
    virtual void setHealth(float health);
 
+   void resetInputState() {
+      wantsToGoLeft = wantsToGoRight = wantsToJump = wantsToAttack = false;
+   }
+
+   void forceSetHealth(float health);
+
    float getAuraRadius();
 
    bool isInvincible();

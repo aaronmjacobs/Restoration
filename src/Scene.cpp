@@ -3,6 +3,7 @@
 #include "FancyAssert.h"
 #include "FirstPersonCameraController.h"
 #include "FollowCameraController.h"
+#include "LifeParticle.h"
 #include "Light.h"
 #include "Player.h"
 #include "Scene.h"
@@ -107,25 +108,43 @@ void Scene::setEditMode(bool editMode) {
 }
 
 void Scene::onWin() {
-   SPtr<Player> player = getPlayer().lock();
-   glm::vec3 finalPos(0.0f), finalLookAt(0.0f);
-   if (player) {
-      finalPos = player->getPosition() + glm::vec3(0.0f, 1.0f, 10.0f);
-      finalLookAt = player->getPosition() + glm::vec3(0.0f, 1.0f, 0.0f); // TODO Canted angle?
-   }
    std::vector<glm::vec3> cameraPoints, lookAtPoints;
 
    // Camera points
-   cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
-   cameraPoints.push_back(glm::vec3(-50.0f, 20.0f, 5.0f));
-   cameraPoints.push_back(finalPos);
+   glm::vec3 playerPos = player->getPosition();
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 10.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(10.0f, 1.0f, 0.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, -10.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(-10.0f, 1.0f, 0.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 10.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 10.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 10.0f, 10.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 50.0f, 10.0f));
 
    // Look at points
-   lookAtPoints.push_back(glm::vec3(-20.0f, 20.0f, 0.0f));
-   lookAtPoints.push_back(glm::vec3(-40.0f, 0.0f, 0.0f));
-   lookAtPoints.push_back(finalLookAt);
+   lookAtPoints.push_back(playerPos);
+   lookAtPoints.push_back(playerPos);
+   lookAtPoints.push_back(playerPos);
+   lookAtPoints.push_back(playerPos);
+   lookAtPoints.push_back(playerPos);
+   lookAtPoints.push_back(playerPos);
+   lookAtPoints.push_back(playerPos + glm::vec3(0.0f, 30.0f, 0.0f));
+   lookAtPoints.push_back(playerPos + glm::vec3(0.0f, 500.0f, 0.0f));
 
-   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
+   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 10.0f, cameraPoints, lookAtPoints);
+   setCameraController(cinematicCameraController);
+
+   player->resetInputState();
+
+   LifeParticle::createEffect(player->getScene().lock(),
+                              player->getPosition() + glm::vec3(0.0f, 5.0f, 0.0f),                // Position
+                              glm::vec3(0.0f, 20.0f, 0.0f),              // Velocity
+                              5.0f,                                  // Size
+                              500.0f,   // Number of particles
+                              15.0f,                                 // Duration (seconds)
+                              5.0f,        // Particle spread
+                              500.0f,       // Total health amount
+                              true);        // Force health
 }
 
 SPtr<Skybox> Scene::getLightSkybox() {
@@ -200,7 +219,6 @@ void Scene::tick(const float dt) {
          playerDeathTime = 0.0f;
          player->unmarkForRemoval();
          player->setHealth(Player::BASE_HEALTH);
-         // TODO Set position to last checkpoint
          player->setPosition(lastCheckpointPos);
          player->setVelocity(glm::vec3(0.0f));
 
@@ -243,15 +261,13 @@ void Scene::onKeyEvent(int key, int action) {
    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
       if (cameraController == storyIntroCameraController) {
          setCameraController(cinematicCameraController);
-         return;
       } else if (cameraController == cinematicCameraController) {
          setCameraController(followCameraController);
-         return;
       }
    }
 
    SPtr<Player> sPlayer = player;
-   if (sPlayer) {
+   if (sPlayer && cameraController == followCameraController) {
       sPlayer->onKeyEvent(key, action);
    }
 
@@ -266,7 +282,7 @@ void Scene::onKeyEvent(int key, int action) {
 
 void Scene::onMouseButtonEvent(int button, int action) {
    SPtr<Player> sPlayer = player;
-   if (sPlayer) {
+   if (sPlayer && cameraController == followCameraController) {
       sPlayer->onMouseButtonEvent(button, action);
    }
 
@@ -281,7 +297,7 @@ void Scene::onMouseButtonEvent(int button, int action) {
 
 void Scene::onMouseMotionEvent(double xPos, double yPos) {
    SPtr<Player> sPlayer = player;
-   if (sPlayer) {
+   if (sPlayer && cameraController == followCameraController) {
       sPlayer->onMouseMotionEvent(xPos, yPos);
    }
 

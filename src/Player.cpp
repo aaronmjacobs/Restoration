@@ -23,7 +23,7 @@ const float Player::JUSTITIA_HEALTH_REMOVAL = 1.5f;
 
 Player::Player(SPtr<Scene> scene, SPtr<Model> model, const std::string &name)
 : Character(scene, model, BASE_HEALTH, name) {
-   wantsToGoLeft = wantsToGoRight = wantsToJump = wantsToAttack = false;
+   resetInputState();
    lastMouseX = lastMouseY = 0.0f;
    invincibilityTime = 0.0f;
 
@@ -234,6 +234,10 @@ void Player::setInvincibilityTime(float time) {
 void Player::setHealth(float health) {
    float actualHealth = glm::clamp(health, 0.0f, MAX_HEALTH);
    Character::setHealth(actualHealth);
+}
+
+void Player::forceSetHealth(float health) {
+   Character::setHealth(health);
 }
 
 float Player::getAuraRadius() {

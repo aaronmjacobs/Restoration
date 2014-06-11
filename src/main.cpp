@@ -1,5 +1,6 @@
 #include "audio/Audio.h"
 #include "Camera.h"
+#include "CatmulRomCameraController.h"
 #include "FancyAssert.h"
 #include "FirstPersonCameraController.h"
 #include "FollowCameraController.h"
@@ -31,6 +32,7 @@ SPtr<LevelEditor> levelEdit;
 
 SPtr<FirstPersonCameraController> fpCameraController;
 SPtr<FollowCameraController> followCameraController;
+SPtr<CatmulRomCameraController> catmulRomCameraController;
 
 void loadLevel(const std::string &name);
 
@@ -121,11 +123,26 @@ void loadLevel(const std::string &name) {
 
    // Create the camera controllers
    followCameraController = std::make_shared<FollowCameraController>(scene->getCamera().lock(), scene->getPlayer().lock(), 10.0f, -0.2f, -1.45f);
-   followCameraController->setEnabled(true);
+   //followCameraController->setEnabled(true);
    scene->addTickListener(followCameraController);
    fpCameraController = std::make_shared<FirstPersonCameraController>(scene->getCamera().lock());
    scene->addInputListener(fpCameraController);
    scene->addTickListener(fpCameraController);
+
+   std::vector<glm::vec3> cameraPoints, lookAtPoints;
+   cameraPoints.push_back(glm::vec3(0.0f, 10.0f, 10.0f));
+   cameraPoints.push_back(glm::vec3(0.0f, 10.0f, 10.0f));
+   cameraPoints.push_back(glm::vec3(-50.0f, 10.0f, 10.0f));
+   cameraPoints.push_back(glm::vec3(-100.0f, 10.0f, 10.0f));
+   cameraPoints.push_back(glm::vec3(-100.0f, 10.0f, 10.0f));
+   lookAtPoints.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(-50.0f, 0.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(-100.0f, 10.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(-100.0f, 10.0f, 0.0f));
+   catmulRomCameraController = std::make_shared<CatmulRomCameraController>(scene->getCamera().lock(), 5.0f, cameraPoints, lookAtPoints);
+   //catmulRomCameraController->setEnabled(true);
+   followCameraController->setEnabled(true);
+   //scene->addTickListener(catmulRomCameraController);
 
    // Attach the audio system
    scene->setAudio(audio);

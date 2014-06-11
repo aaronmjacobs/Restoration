@@ -6,7 +6,9 @@ Camera::Camera(SPtr<Scene> const scene, float fov, const std::string &name)
    : SceneObject(scene, name), fov(fov) {
    phi = 0.0f;
    theta = -glm::half_pi<float>();
+   lookAt = glm::vec3(0.0f);
    shadowMode = false;
+   controlMode = ANGLES;
    updateFront();
 }
 
@@ -65,9 +67,13 @@ void Camera::disableShadowMode() {
 }
 
 void Camera::updateFront() {
-   front = glm::normalize(glm::vec3(glm::cos(phi) * glm::cos(theta),
-                                    glm::sin(phi),
-                                    glm::cos(phi) * glm::cos(glm::half_pi<float>() - theta)));
+   if (controlMode == ANGLES) {
+      front = glm::normalize(glm::vec3(glm::cos(phi) * glm::cos(theta),
+                                       glm::sin(phi),
+                                       glm::cos(phi) * glm::cos(glm::half_pi<float>() - theta)));
+   } else if (controlMode == LOOKAT) {
+      front = glm::normalize(lookAt - position);
+   }
 }
 
 void Camera::fly(float amount) {
@@ -108,6 +114,14 @@ void Camera::rotateBy(float phi, float theta) {
 void Camera::setRotation(float phi, float theta) {
    this->phi = phi;
    this->theta = theta;
+   this->controlMode = ANGLES;
+
+   updateFront();
+}
+
+void Camera::setLookAt(glm::vec3 lookAt) {
+   this->lookAt = lookAt;
+   this->controlMode = LOOKAT;
 
    updateFront();
 }

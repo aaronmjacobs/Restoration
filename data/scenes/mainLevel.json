@@ -125,6 +125,7 @@
                "z" : 0.0
             }
          },
+                   
          {
             "@class" : "Magus",
             "acceleration" : {
@@ -165,6 +166,87 @@
                "z" : 0.0
             }
          },
+                   {
+                   "@class" : "Geometry",
+                   "acceleration" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "health" : 20.0,
+                   "model" : {
+                   "@class" : "Model",
+                   "material" : "checkpoint",
+                   "mesh" : {
+                        "@class" : "Mesh",
+                        "fileName" : "data/meshes/checkpoint.obj"
+                    }
+                   },
+                   "name" : "checkpoint1",
+                   "orientation" : {
+                   "w" : 0.0,
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "position" : {
+                   "x" : 145,
+                   "y" : 10.88520717620850,
+                   "z" : -0.0
+                   },
+                   "renderState" : 14,
+                   "scale" : {
+                   "x" : 1.0,
+                   "y" : 1.0,
+                   "z" : 1.0
+                   },
+                   "velocity" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   }
+                   },
+                   {
+                   "@class" : "Geometry",
+                   "acceleration" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "health" : 20.0,
+                   "model" : {
+                   "@class" : "Model",
+                   "material" : "checkpoint",
+                   "mesh" : {
+                   "@class" : "Mesh",
+                   "fileName" : "data/meshes/checkpoint.obj"
+                   }
+                   },
+                   "name" : "checkpoint2",
+                   "orientation" : {
+                   "w" : 0.0,
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "position" : {
+                   "x" : 340,
+                   "y" : 10.88520717620850,
+                   "z" : -0.0
+                   },
+                   "renderState" : 14,
+                   "scale" : {
+                   "x" : 1.0,
+                   "y" : 1.0,
+                   "z" : 1.0
+                   },
+                   "velocity" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   }
+                   },
+
          {
             "@class" : "Turris",
             "acceleration" : {
@@ -443,35 +525,6 @@
             "scale" : {
                "x" : 5.924004554748535,
                "y" : 2.403259277343750,
-               "z" : 1.0
-            }
-         },
-         {
-            "@class" : "Scenery",
-            "model" : {
-               "@class" : "Model",
-               "material" : "boss",
-               "mesh" : {
-                  "@class" : "Mesh",
-                  "fileName" : "data/meshes/Boss.obj"
-               }
-            },
-            "name" : "",
-            "orientation" : {
-               "w" : 1.0,
-               "x" : 0.0,
-               "y" : 0.0,
-               "z" : 0.0
-            },
-            "position" : {
-               "x" : 635.4325561523438,
-               "y" : 24.50,
-               "z" : 0.0
-            },
-            "renderState" : 14,
-            "scale" : {
-               "x" : 1.0,
-               "y" : 1.0,
                "z" : 1.0
             }
          },
@@ -3687,7 +3740,36 @@
                "y" : 5.696290969848633,
                "z" : -4.899999618530273
             },
-            "renderState" : 14,
+            "renderState" : 10,
+            "scale" : {
+               "x" : 0.8340890407562256,
+               "y" : 0.6364176869392395,
+               "z" : 0.4744300246238709
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/brokenPillar.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 17.95257949829102,
+               "y" : 5.696290969848633,
+               "z" : -4.899999618530273
+            },
+            "renderState" : 12,
             "scale" : {
                "x" : 0.8340890407562256,
                "y" : 0.6364176869392395,
@@ -3861,7 +3943,36 @@
                "y" : 4.424026489257813,
                "z" : -3.150002002716065
             },
-            "renderState" : 14,
+            "renderState" : 10,
+            "scale" : {
+               "x" : 0.4876748621463776,
+               "y" : 0.5262335538864136,
+               "z" : 0.4621329605579376
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/brokenPillar.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 278.2164001464844,
+               "y" : 4.424026489257813,
+               "z" : -3.150002002716065
+            },
+            "renderState" : 12,
             "scale" : {
                "x" : 0.4876748621463776,
                "y" : 0.5262335538864136,
@@ -3919,7 +4030,36 @@
                "y" : 4.424026489257813,
                "z" : -3.150002002716065
             },
-            "renderState" : 14,
+            "renderState" : 10,
+            "scale" : {
+               "x" : 0.4876748621463776,
+               "y" : 0.5262335538864136,
+               "z" : 0.4621329605579376
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/brokenPillar.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 265.3470458984375,
+               "y" : 4.424026489257813,
+               "z" : -3.150002002716065
+            },
+            "renderState" : 12,
             "scale" : {
                "x" : 0.4876748621463776,
                "y" : 0.5262335538864136,
@@ -4006,7 +4146,36 @@
                "y" : 3.953050851821899,
                "z" : -3.150002002716065
             },
-            "renderState" : 14,
+            "renderState" : 10,
+            "scale" : {
+               "x" : 0.4876748621463776,
+               "y" : 0.4071894586086273,
+               "z" : 0.4621329605579376
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/brokenPillar.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 477.0591125488281,
+               "y" : 3.953050851821899,
+               "z" : -3.150002002716065
+            },
+            "renderState" : 12,
             "scale" : {
                "x" : 0.4876748621463776,
                "y" : 0.4071894586086273,
@@ -4093,7 +4262,36 @@
                "y" : 3.953050851821899,
                "z" : -3.150002002716065
             },
-            "renderState" : 14,
+            "renderState" : 10,
+            "scale" : {
+               "x" : 0.4876748621463776,
+               "y" : 0.4071894586086273,
+               "z" : 0.4621329605579376
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/brokenPillar.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 483.0671691894531,
+               "y" : 3.953050851821899,
+               "z" : -3.150002002716065
+            },
+            "renderState" : 12,
             "scale" : {
                "x" : 0.4876748621463776,
                "y" : 0.4071894586086273,
@@ -4267,7 +4465,36 @@
                "y" : 3.953050851821899,
                "z" : -3.150002002716065
             },
-            "renderState" : 14,
+            "renderState" : 10,
+            "scale" : {
+               "x" : 0.4876748621463776,
+               "y" : 0.4071894586086273,
+               "z" : 0.4621329605579376
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/brokenPillar.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 502.0303649902344,
+               "y" : 3.953050851821899,
+               "z" : -3.150002002716065
+            },
+            "renderState" : 12,
             "scale" : {
                "x" : 0.4876748621463776,
                "y" : 0.4071894586086273,
@@ -4412,7 +4639,36 @@
                "y" : 3.304336547851563,
                "z" : -3.150002002716065
             },
-            "renderState" : 14,
+            "renderState" : 10,
+            "scale" : {
+               "x" : 0.4876748621463776,
+               "y" : 0.3674884736537933,
+               "z" : 0.4621329605579376
+            }
+         },
+         {
+            "@class" : "Scenery",
+            "model" : {
+               "@class" : "Model",
+               "material" : "pillar",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/brokenPillar.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 282.1965942382813,
+               "y" : 3.304336547851563,
+               "z" : -3.150002002716065
+            },
+            "renderState" : 12,
             "scale" : {
                "x" : 0.4876748621463776,
                "y" : 0.3674884736537933,
@@ -8065,6 +8321,46 @@
             "position" : {
                "x" : 456.8617858886719,
                "y" : 9.483777999877930,
+               "z" : 0.0
+            },
+            "renderState" : 14,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Corona",
+            "acceleration" : {
+               "x" : 0.0,
+               "y" : -9.8,
+               "z" : 0.0
+            },
+            "health" : 100.0,
+            "model" : {
+               "@class" : "Model",
+               "material" : "boss",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/Boss.obj"
+               }
+            },
+            "velocity" : {
+               "x" : -3.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 1.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 635.4325561523438,
+               "y" : 24.50,
                "z" : 0.0
             },
             "renderState" : 14,

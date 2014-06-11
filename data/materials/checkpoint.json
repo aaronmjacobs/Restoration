@@ -18,10 +18,10 @@
    "shaderProgram" : "phong_textured",
    "shininess" : 500.0,
    "specular" : {
-      "b" : 0.2,
-      "g" : 0.2,
-      "r" : 0.2
+      "b" : 0.1,
+      "g" : 0.1,
+      "r" : 0.1
    },
-   "texture" : "data/textures/crateDark.png",
-   "altTexture" : "data/textures/crateLight.png"
+   "texture" : "data/textures/checkpoint.png",
+   "altTexture" : "data/textures/checkpointDark.png"
 }

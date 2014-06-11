@@ -125,6 +125,7 @@
                "z" : 0.0
             }
          },
+                   
          {
             "@class" : "Magus",
             "acceleration" : {
@@ -165,6 +166,87 @@
                "z" : 0.0
             }
          },
+                   {
+                   "@class" : "Geometry",
+                   "acceleration" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "health" : 20.0,
+                   "model" : {
+                   "@class" : "Model",
+                   "material" : "checkpoint",
+                   "mesh" : {
+                        "@class" : "Mesh",
+                        "fileName" : "data/meshes/checkpoint.obj"
+                    }
+                   },
+                   "name" : "checkpoint1",
+                   "orientation" : {
+                   "w" : 0.0,
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "position" : {
+                   "x" : 145,
+                   "y" : 10.88520717620850,
+                   "z" : -0.0
+                   },
+                   "renderState" : 14,
+                   "scale" : {
+                   "x" : 1.0,
+                   "y" : 1.0,
+                   "z" : 1.0
+                   },
+                   "velocity" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   }
+                   },
+                   {
+                   "@class" : "Geometry",
+                   "acceleration" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "health" : 20.0,
+                   "model" : {
+                   "@class" : "Model",
+                   "material" : "checkpoint",
+                   "mesh" : {
+                   "@class" : "Mesh",
+                   "fileName" : "data/meshes/checkpoint.obj"
+                   }
+                   },
+                   "name" : "checkpoint2",
+                   "orientation" : {
+                   "w" : 0.0,
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   },
+                   "position" : {
+                   "x" : 340,
+                   "y" : 10.88520717620850,
+                   "z" : -0.0
+                   },
+                   "renderState" : 14,
+                   "scale" : {
+                   "x" : 1.0,
+                   "y" : 1.0,
+                   "z" : 1.0
+                   },
+                   "velocity" : {
+                   "x" : 0.0,
+                   "y" : 0.0,
+                   "z" : 0.0
+                   }
+                   },
+
          {
             "@class" : "Turris",
             "acceleration" : {

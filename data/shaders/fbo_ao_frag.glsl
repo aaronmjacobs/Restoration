@@ -66,4 +66,5 @@ void main() {
    }
    
    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0f - depthCol);
+   //gl_FragColor = vec4(depthCol, depthCol,depthCol, 1.0f);
 }

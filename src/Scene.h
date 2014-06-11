@@ -46,6 +46,7 @@ protected:
 
    float playerDeathTime;
    glm::vec3 lastCheckpointPos;
+   int numPlayerDeaths;
 
    /**
     * All items listening for user input.

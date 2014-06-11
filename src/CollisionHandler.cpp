@@ -369,3 +369,12 @@ void CollisionHandler::handleCollision(Aegrum &aegrum, Player &player) {
 }
 COLLISION_REVERSE_FUNCTION(Aegrum, Player)
 
+
+void CollisionHandler::handleCollision(Player &player, Checkpoint &checkpoint) {
+   SPtr<Scene> sScene = player.getScene().lock();
+   if (sScene) {
+      sScene->setCheckpoint(checkpoint.getPosition());
+   }
+   checkpoint.trigger();
+}
+COLLISION_REVERSE_FUNCTION(Player, Checkpoint)

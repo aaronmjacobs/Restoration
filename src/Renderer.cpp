@@ -37,10 +37,12 @@ void Renderer::prepare() {
    // Create frame buffers
    fb = UPtr<FrameBuffer>(new FrameBuffer);
    shadow = UPtr<Shadow>(new Shadow);
+   aoShadow = UPtr<Shadow>(new Shadow);
 
    // Prepare the frame buffer
    fb->setupToTexture2D();
    shadow->initialize();
+   aoShadow->initialize();
 
    Loader& loader = Loader::getInstance();
    Json::Value root;
@@ -51,6 +53,11 @@ void Renderer::prepare() {
    SPtr<FBOTextureMaterial> fboMaterial = std::make_shared<FBOTextureMaterial>("fbo_blur", fboProgram, *fb);
    SPtr<Mesh> planeMesh = std::make_shared<Mesh>("data/meshes/plane.obj");
    plane = UPtr<Model>(new Model(fboMaterial, planeMesh));
+
+   SPtr<ShaderProgram> fboProgram2 = loader.loadShaderProgram(nullptr, "fbo_blur_ao");
+   SPtr<FBOTextureMaterial> fboMaterial2 = std::make_shared<FBOTextureMaterial>("fbo_blur_ao", fboProgram2, *aoShadow);
+   SPtr<Mesh> planeMesh2 = std::make_shared<Mesh>("data/meshes/plane.obj");
+   plane2 = UPtr<Model>(new Model(fboMaterial2, planeMesh2));
 }
 
 void Renderer::onWindowSizeChange(int width, int height) {
@@ -60,6 +67,9 @@ void Renderer::onWindowSizeChange(int width, int height) {
    if (shadow) {
       shadow->initialize();
    }
+   if (aoShadow) {
+      aoShadow->initialize();
+   }
 }
 
 void Renderer::onMonitorChange() {
@@ -68,6 +78,9 @@ void Renderer::onMonitorChange() {
    }
    if (shadow) {
       shadow->initialize();
+   }
+   if (aoShadow) {
+      aoShadow->initialize();
    }
 }
 
@@ -197,6 +210,14 @@ void Renderer::prepareShadowDraw(Scene& scene) {
 
       camera->enableShadowMode(playerPos);
    }
+
+   renderData.setRenderState(SHADOW_STATE);
+}
+
+void Renderer::prepareAODraw() {
+   // apply the ao fbo to be drawn to.
+   aoShadow->applyFBO();
+   glEnable(GL_DEPTH_TEST);
 
    renderData.setRenderState(SHADOW_STATE);
 }
@@ -352,6 +373,16 @@ void Renderer::render(Scene &scene) {
       glUniformMatrix4fv(uViewMatrix, 1, GL_FALSE, glm::value_ptr(camera->getViewMatrix()));
    }
 
+   if (AO) {
+      //Render to AO texture
+      prepareAODraw();
+
+      glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      setRenderData(renderData);
+      scene.getSceneGraph()->forEach(draw);
+   }
+
    // Render items to the stencil buffer
    prepareStencilDraw();
    setRenderData(renderData);
@@ -395,6 +426,19 @@ void Renderer::render(Scene &scene) {
 
    renderData.set("sh", shadow->getTextureID());
    plane->draw(renderData);
+
+   if (AO) {
+      SPtr<ShaderProgram> program2 = plane2->getMaterial()->getShaderProgram();
+      program2->use();
+
+      // Set the width and height of the viewport (for blurring)
+      uViewportWidth = program2->getUniform("uViewportWidth");
+      uViewportHeight = program2->getUniform("uViewportHeight");
+      glUniform1i(uViewportWidth, fb->getWidth());
+      glUniform1i(uViewportHeight, fb->getHeight());
+
+      plane2->draw(renderData);
+   }
 
 #endif
 

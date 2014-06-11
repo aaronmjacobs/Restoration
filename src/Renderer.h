@@ -24,13 +24,20 @@ protected:
 
    UPtr<FrameBuffer> fb;
    UPtr<Model> plane;
+   UPtr<Model> plane2;
    UPtr<Shadow> shadow;
+   UPtr<Shadow> aoShadow;
    SPtr<ShaderProgram> shadowProgram;
 
    /**
    * Setup the shadoow buffer to draw to, and draw to it.
    */
    void prepareShadowDraw(Scene &scene);
+
+   /**
+   * Setup a version of the shadow buffer for AO.
+   */
+   void prepareAODraw();
 
    /**
     * Setup the stencil buffer to generate the stencil
@@ -48,6 +55,9 @@ protected:
    void prepareDarkDraw();
 
 public:
+
+   bool AO = true;
+
    /**
     * Constructs a renderer for a window with the given width and height.
     */
@@ -74,6 +84,7 @@ public:
     * Renders the given scene.
     */
    void render(Scene &scene);
+
 };
 
 #endif

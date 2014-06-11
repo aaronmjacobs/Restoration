@@ -14,6 +14,14 @@ FBOTextureMaterial::FBOTextureMaterial(const std::string &jsonFileName,
    aTexCoord = shaderProgram->getAttribute("aTexCoord");
 }
 
+FBOTextureMaterial::FBOTextureMaterial(const std::string &jsonFileName,
+   SPtr<ShaderProgram> shaderProgram, Shadow &fb) : Material(jsonFileName, shaderProgram) {
+
+   texture_id = fb.getTextureID();
+   uTexture = shaderProgram->getUniform("uTexture");
+   aTexCoord = shaderProgram->getAttribute("aTexCoord");
+}
+
 FBOTextureMaterial::~FBOTextureMaterial() {
 }
 

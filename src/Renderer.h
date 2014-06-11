@@ -54,9 +54,9 @@ protected:
     */
    void prepareDarkDraw();
 
-public:
-
    bool AO = false;
+
+public:
 
    /**
     * Constructs a renderer for a window with the given width and height.

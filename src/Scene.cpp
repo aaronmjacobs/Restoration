@@ -18,6 +18,7 @@ Scene::Scene(const std::string &jsonFileName)
    : Saveable(jsonFileName), collisionHandler(*this), editMode(false) {
    playerDeathTime = 0.0f;
    lastCheckpointPos = glm::vec3(0.0f);
+      numPlayerDeaths = 0;
 }
 
 Scene::~Scene() {
@@ -216,6 +217,7 @@ void Scene::tick(const float dt) {
       playerDeathTime += dt;
 
       if (playerDeathTime > DEATH_TIME) {
+         numPlayerDeaths++;
          playerDeathTime = 0.0f;
          player->unmarkForRemoval();
          player->setHealth(Player::BASE_HEALTH);
@@ -223,6 +225,18 @@ void Scene::tick(const float dt) {
          player->setVelocity(glm::vec3(0.0f));
 
          sceneGraph->addPhys(player);
+         SPtr<Scene> scene = player->getScene().lock();
+         if (scene) {
+            LifeParticle::createEffect(scene,
+                                       lastCheckpointPos + glm::vec3(0.0f, 10.0f, 0.0f),                // Position
+                                       glm::vec3(0.0f),              // Velocity
+                                       5.0f,                                  // Size
+                                       100,   // Number of particles
+                                       15.0f,                                 // Duration (seconds)
+                                       5.0f,        // Particle spread
+                                       numPlayerDeaths * 5.0f);       // Total health amount
+         }
+
       }
    }
 
@@ -249,6 +263,15 @@ void Scene::tick(const float dt) {
 void Scene::setCheckpoint(glm::vec3 checkpoint) {
    if (checkpoint.x > lastCheckpointPos.x) {
       lastCheckpointPos = checkpoint;
+      Particle::createEffect(player->getScene().lock(),
+                             lastCheckpointPos,  // Position
+                             glm::vec3(0.0f),         // Velocity
+                             false,                   // Gravity enabled
+                             5.0f,                    // Size
+                             50,                      // Number of particles
+                             4.0f,                    // Duration (seconds)
+                             25.0f,                   // Particle spread
+                             true);                   // Stencil mode
    }
 }
 

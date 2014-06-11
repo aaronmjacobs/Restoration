@@ -24,6 +24,7 @@ protected:
    static const float MIN_CHASE_DISTANCE;
 
    CoronaState state;
+   float timer;
 
 public:
    static const std::string CLASS_NAME;

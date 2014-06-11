@@ -195,7 +195,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Checkpoint",
             "model" : {
                "@class" : "Model",
                "material" : "checkpoint",
@@ -224,7 +224,7 @@
             }
          },
          {
-            "@class" : "Geometry",
+            "@class" : "Checkpoint",
             "model" : {
                "@class" : "Model",
                "material" : "checkpoint",
@@ -8257,7 +8257,7 @@
                "y" : -9.800000190734863,
                "z" : 0.0
             },
-            "health" : 100.0,
+            "health" : 250.0,
             "model" : {
                "@class" : "Model",
                "material" : "boss",
@@ -8266,7 +8266,7 @@
                   "fileName" : "data/meshes/Boss.obj"
                }
             },
-            "name" : "",
+            "name" : "boss",
             "orientation" : {
                "w" : 0.7071067690849304,
                "x" : -0.0,

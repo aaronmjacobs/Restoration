@@ -4,6 +4,9 @@
 #include "PhysicalObject.h"
 
 class Checkpoint : public PhysicalObject {
+protected:
+   bool passed;
+
 public:
    static const std::string CLASS_NAME;
 
@@ -19,6 +22,11 @@ public:
     * Steps |dt| seconds through time.
     */
    virtual void tick(const float dt);
+
+   //Passed
+   void trigger();
+   
+   virtual void draw(const RenderData &renderData);
 
 #include "CollisionsBoilerplateH.h"
 };

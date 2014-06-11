@@ -10,3 +10,7 @@ CameraController::~CameraController() {
 void CameraController::setEnabled(bool enabled) {
    this->enabled = enabled;
 }
+
+bool CameraController::isEnabled() {
+   return enabled;
+}

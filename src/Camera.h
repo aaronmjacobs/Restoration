@@ -3,6 +3,8 @@
 
 #include "SceneObject.h"
 
+enum ControlMode { ANGLES, LOOKAT };
+
 class Camera : public SceneObject {
 protected:
    /**
@@ -28,6 +30,8 @@ protected:
     */
    float phi, theta;
 
+   glm::vec3 lookAt;
+
    /**
     * Updates the front facing vector based off of the phi and theta angles.
     */
@@ -41,6 +45,8 @@ protected:
    glm::mat4 shadowOrthoMatrix;
    glm::vec3 lightPos;
    bool shadowMode;
+
+   ControlMode controlMode;
 
 public:
    static const std::string CLASS_NAME;
@@ -90,6 +96,8 @@ public:
    void rotateBy(float phi, float theta);
 
    void setRotation(float phi, float theta);
+
+   void setLookAt(glm::vec3 lookAt);
 
    /**
     * Gets the current front-facing vector of the camera.

@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "GLIncludes.h"
 #include "Loader.h"
+#include "Material.h"
 #include "Mesh.h"
 #include "Model.h"
 #include "Particle.h"
@@ -46,6 +47,9 @@ Json::Value Player::serialize() const {
 }
 
 void Player::draw(const RenderData &renderData) {
+   SPtr<Material> material = model->getMaterial();
+   material->setSelected(isInvincible());
+
    Character::draw(renderData);
 
    aura->setScale(glm::vec3(getAuraRadius()));

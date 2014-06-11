@@ -46,6 +46,7 @@ protected:
 
    float playerDeathTime;
    glm::vec3 lastCheckpointPos;
+   int numPlayerDeaths;
    float fade;
    bool won;
    float timeSinceWin;

@@ -21,6 +21,7 @@ Scene::Scene(const std::string &jsonFileName)
    fade = 1.0f;
    won = false;
    timeSinceWin = 0.0f;
+   numPlayerDeaths = 0;
 }
 
 Scene::~Scene() {

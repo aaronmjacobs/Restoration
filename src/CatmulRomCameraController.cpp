@@ -6,6 +6,7 @@ CatmulRomCameraController::CatmulRomCameraController(SPtr<Camera> camera, const 
 : CameraController(camera), animLength(animLength), cameraPoints(cameraPoints), lookAtPoints(lookAtPoints), animTime(0.0f) {
    ASSERT(!cameraPoints.empty(), "Must have at least 1 camera point");
    ASSERT(!lookAtPoints.empty(), "Must have at least 1 look at point");
+   fadeStart = fadeEnd = false;
 }
 
 CatmulRomCameraController::~CatmulRomCameraController() {
@@ -23,6 +24,14 @@ void CatmulRomCameraController::tick(const float dt) {
    float time = glm::min(1.0f, animTime / animLength);
    float x = time - 1.0f;
    time = (glm::cos(glm::pi<float>() * x) + 1.0f) / 2.0f;
+
+   if (fadeStart && animTime < fadeTime) {
+      fade = animTime / fadeTime;
+   } else if (fadeEnd && animTime > animLength - fadeTime) {
+      fade = (animLength - animTime) / fadeTime;
+   } else {
+      fade = 1.0f;
+   }
 
    glm::vec3 location = AnimHelper::catmulRom(cameraPoints, time);
    glm::vec3 lookAt = AnimHelper::catmulRom(lookAtPoints, time);

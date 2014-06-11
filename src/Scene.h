@@ -46,6 +46,7 @@ protected:
 
    float playerDeathTime;
    glm::vec3 lastCheckpointPos;
+   float fade;
 
    /**
     * All items listening for user input.
@@ -112,6 +113,14 @@ public:
    SPtr<Audio> getAudio();
 
    void tick(const float dt);
+
+   float getFade() {
+      return fade;
+   }
+
+   void setFade(float fade) {
+      this->fade = fade;
+   }
 
    void setGroundPlaneInfo(Json::Value groundPlaneInfo) {
       this->groundPlaneInfo = groundPlaneInfo;

@@ -10,12 +10,17 @@ class Camera;
 class CameraController : public TickListener, public InputListener {
 protected:
    WPtr<Camera> camera;
+   float fade;
 
 public:
    CameraController(SPtr<Camera> camera);
    virtual ~CameraController();
 
    virtual void reset() = 0;
+
+   float getFade() {
+      return fade;
+   }
 
    /**
     * Steps |dt| seconds through time.

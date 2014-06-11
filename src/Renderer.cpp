@@ -421,8 +421,10 @@ void Renderer::render(Scene &scene) {
    // Set the width and height of the viewport (for blurring)
    GLint uViewportWidth = program->getUniform("uViewportWidth");
    GLint uViewportHeight = program->getUniform("uViewportHeight");
+   GLint uFade = program->getUniform("uFade");
    glUniform1i(uViewportWidth, fb->getWidth());
    glUniform1i(uViewportHeight, fb->getHeight());
+   glUniform1f(uFade, scene.getFade());
 
    renderData.set("sh", shadow->getTextureID());
    plane->draw(renderData);

@@ -2,6 +2,7 @@
 
 CameraController::CameraController(SPtr<Camera> camera)
 : camera(camera) {
+   fade = 1.0f;
 }
 
 CameraController::~CameraController() {

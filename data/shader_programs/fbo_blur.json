@@ -16,6 +16,7 @@
    "uniforms" : [
       "uTexture",
       "uViewportWidth",
-      "uViewportHeight"
+      "uViewportHeight",
+      "uFade"
    ]
 }

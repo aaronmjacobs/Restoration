@@ -18,6 +18,7 @@ Scene::Scene(const std::string &jsonFileName)
    : Saveable(jsonFileName), collisionHandler(*this), editMode(false) {
    playerDeathTime = 0.0f;
    lastCheckpointPos = glm::vec3(0.0f);
+   fade = 1.0f;
 }
 
 Scene::~Scene() {
@@ -76,6 +77,7 @@ void Scene::postLoad() {
    lookAtPoints.push_back(finalLookAt);
 
    cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 30.0f, cameraPoints, lookAtPoints);
+   cinematicCameraController->setFadeStart(true);
 
    std::vector<glm::vec3> storyCameraPoints, storyLookAtPoints;
 
@@ -87,7 +89,9 @@ void Scene::postLoad() {
    storyLookAtPoints.push_back(glm::vec3(900.0f, 15.5f, 0.0f));
    storyLookAtPoints.push_back(glm::vec3(900.0f, -15.5f, 0.0f));
 
-   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 90.0f, storyCameraPoints, storyLookAtPoints);
+   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 10.0f, storyCameraPoints, storyLookAtPoints);
+   storyIntroCameraController->setFadeStart(true);
+   storyIntroCameraController->setFadeEnd(true);
 
    setCameraController(storyIntroCameraController);
 
@@ -132,6 +136,7 @@ void Scene::onWin() {
    lookAtPoints.push_back(playerPos + glm::vec3(0.0f, 500.0f, 0.0f));
 
    cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 10.0f, cameraPoints, lookAtPoints);
+   cinematicCameraController->setFadeEnd(true);
    setCameraController(cinematicCameraController);
 
    player->resetInputState();
@@ -229,6 +234,7 @@ void Scene::tick(const float dt) {
    // Camera control
    if (cameraController) {
       cameraController->tick(dt);
+      setFade(cameraController->getFade());
    }
 
    if (cameraController == storyIntroCameraController && storyIntroCameraController->doneAnimating()) {

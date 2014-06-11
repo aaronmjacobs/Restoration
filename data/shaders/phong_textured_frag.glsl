@@ -83,7 +83,6 @@ void main() {
    finalColor += surfaceColor * ((ambient + ambientGlobal) * 0.5) * 0.7;
    finalColor += uMaterial.emission;
    
-   float bias = 0.105;
    float visibility = CalcShadowFactor(vShadowCoord);
 
    gl_FragColor = vec4(visibility * finalColor, 1.0);

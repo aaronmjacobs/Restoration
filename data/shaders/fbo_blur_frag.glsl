@@ -3,6 +3,7 @@
 uniform sampler2D uTexture;
 uniform int uViewportWidth;
 uniform int uViewportHeight;
+uniform float uFade;
 
 varying vec2 vTexCoord;
 
@@ -20,6 +21,10 @@ void main() {
    // Don't post process any invisible pixels (waste of time)
    vec4 textureColor = texture2D(uTexture, vTexCoord);
    if (textureColor.a == 0.0) {
+      if (uFade < 1.0) {
+         gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0 - uFade);
+         return;
+      }
       discard;
    }
 
@@ -44,4 +49,5 @@ void main() {
 
    // Multiply the pixel by its blurred value
    gl_FragColor = textureColor * sum;
+   gl_FragColor = vec4(gl_FragColor.rgb * uFade, gl_FragColor.a);
 }

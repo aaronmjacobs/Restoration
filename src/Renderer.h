@@ -56,7 +56,7 @@ protected:
 
 public:
 
-   bool AO = true;
+   bool AO = false;
 
    /**
     * Constructs a renderer for a window with the given width and height.

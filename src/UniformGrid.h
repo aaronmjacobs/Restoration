@@ -87,7 +87,7 @@ protected:
 
       // Remove the element from any nodes it is currently in, but should not be in
       for (size_t currentNode : currentNodes) {
-         if (std::find(correctNodes.begin(), correctNodes.end(), currentNode) == currentNodes.end()) {
+         if (std::find(correctNodes.begin(), correctNodes.end(), currentNode) == correctNodes.end()) {
             removeFromNode(gridElement, currentNode);
          }
       }

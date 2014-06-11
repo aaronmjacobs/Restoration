@@ -107,6 +107,7 @@ void Camera::rotateBy(float phi, float theta) {
       this->phi += phi;
    }
    this->theta += theta;
+   this->controlMode = ANGLES;
 
    updateFront();
 }

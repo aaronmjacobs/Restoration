@@ -60,23 +60,22 @@ void Scene::postLoad() {
    std::vector<glm::vec3> cameraPoints, lookAtPoints;
 
    // Camera points
-
-   cameraPoints.push_back(glm::vec3(190.0f, 0.0f, 0.0f));
-   cameraPoints.push_back(glm::vec3(150.0f, 10.0f, 0.0f));
-   cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 10.0f));
-   cameraPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
-   cameraPoints.push_back(glm::vec3(-50.0f, 20.0f, 5.0f));
+   cameraPoints.push_back(glm::vec3(625.0f, 2.0f, 0.0f));
+   cameraPoints.push_back(glm::vec3(550.0f, 3.0f, 20.0f));
+   cameraPoints.push_back(glm::vec3(300.0f, 15.0f, -20.0f));
+   cameraPoints.push_back(glm::vec3(100.0f, 15.0f, 0.0f));
+   cameraPoints.push_back(glm::vec3(0.0f, 5.0f, 30.0f));
    cameraPoints.push_back(finalPos);
 
    // Look at points
-   lookAtPoints.push_back(glm::vec3(100.0f, 2.0f, 0.0f));
-   lookAtPoints.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(500.0f, 2.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(510.0f, 0.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(200.0f, 10.0f, 0.0f));
+   lookAtPoints.push_back(glm::vec3(70.0f, 5.0f, 0.0f));
    lookAtPoints.push_back(glm::vec3(-10.0f, 2.0f, 0.0f));
-   lookAtPoints.push_back(glm::vec3(-20.0f, 20.0f, 0.0f));
-   lookAtPoints.push_back(glm::vec3(-40.0f, 0.0f, 0.0f));
    lookAtPoints.push_back(finalLookAt);
 
-   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 30.0f, cameraPoints, lookAtPoints);
+   cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 45.0f, cameraPoints, lookAtPoints);
    cinematicCameraController->setFadeStart(true);
 
    std::vector<glm::vec3> storyCameraPoints, storyLookAtPoints;
@@ -89,7 +88,7 @@ void Scene::postLoad() {
    storyLookAtPoints.push_back(glm::vec3(900.0f, 15.5f, 0.0f));
    storyLookAtPoints.push_back(glm::vec3(900.0f, -15.5f, 0.0f));
 
-   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 10.0f, storyCameraPoints, storyLookAtPoints);
+   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 90.0f, storyCameraPoints, storyLookAtPoints);
    storyIntroCameraController->setFadeStart(true);
    storyIntroCameraController->setFadeEnd(true);
 

@@ -431,7 +431,7 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 			newObj->setPosition(pos);
 			//newObj->rotateBy(glm::vec3(rotate, 0.0, 0.0));
 			s->getSceneGraph()->addPhys(newObj);
-
+			s->getSceneGraph()->updateAddedItems();
 			//numObjs = 0;
 			if (numObjs < MAXOBJS) {
 				currentObjs[numObjs] = newObj;
@@ -459,6 +459,7 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 											  (copyObjPos[i].y - copyAvg.y) + camera->getPosition().y, copyObjPos[i].z));
 				newObj->setScale(currentObjs[i]->getScale());
 				s->getSceneGraph()->addPhys(newObj);
+				s->getSceneGraph()->updateAddedItems();
 				currentObjs[i] = newObj;
 			}
 			editState = TRANSLATE;

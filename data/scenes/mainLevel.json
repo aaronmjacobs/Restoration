@@ -215,7 +215,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -8844,7 +8844,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9164,7 +9164,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9204,7 +9204,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9244,7 +9244,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9484,7 +9484,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9524,7 +9524,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9564,7 +9564,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9604,7 +9604,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9644,7 +9644,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9684,7 +9684,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"
@@ -9724,7 +9724,7 @@
             "health" : 20.0,
             "model" : {
                "@class" : "Model",
-               "material" : "pillar",
+               "material" : "obex",
                "mesh" : {
                   "@class" : "Mesh",
                   "fileName" : "data/meshes/obex.obj"

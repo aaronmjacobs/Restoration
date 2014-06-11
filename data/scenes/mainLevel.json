@@ -281,6 +281,64 @@
                    "z" : 1.0
                    }
                    },
+         {
+            "@class" : "Checkpoint",
+            "model" : {
+               "@class" : "Model",
+               "material" : "checkpoint",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/checkpoint.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 0.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 255.0,
+               "y" : 18.88520717620850,
+               "z" : -0.0
+            },
+            "renderState" : 14,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
+         {
+            "@class" : "Checkpoint",
+            "model" : {
+               "@class" : "Model",
+               "material" : "checkpoint",
+               "mesh" : {
+                  "@class" : "Mesh",
+                  "fileName" : "data/meshes/checkpoint.obj"
+               }
+            },
+            "name" : "",
+            "orientation" : {
+               "w" : 0.0,
+               "x" : 0.0,
+               "y" : 0.0,
+               "z" : 0.0
+            },
+            "position" : {
+               "x" : 395.0,
+               "y" : 5.88520717620850,
+               "z" : -0.0
+            },
+            "renderState" : 14,
+            "scale" : {
+               "x" : 1.0,
+               "y" : 1.0,
+               "z" : 1.0
+            }
+         },
 
          {
             "@class" : "Obex",
@@ -7892,7 +7950,7 @@
             },
             "position" : {
                "x" : 383.3616027832031,
-               "y" : 11.03090858459473,
+               "y" : 11.2,
                "z" : 0.05000000074505806
             },
             "renderState" : 14,

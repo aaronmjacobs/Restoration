@@ -91,7 +91,7 @@ void Scene::postLoad() {
    storyLookAtPoints.push_back(glm::vec3(900.0f, 15.5f, 0.0f));
    storyLookAtPoints.push_back(glm::vec3(900.0f, -15.5f, 0.0f));
 
-   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 90.0f, storyCameraPoints, storyLookAtPoints);
+   storyIntroCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 120.0f, storyCameraPoints, storyLookAtPoints);
    storyIntroCameraController->setFadeStart(true);
    storyIntroCameraController->setFadeEnd(true);
 
@@ -309,7 +309,7 @@ void Scene::onKeyEvent(int key, int action) {
    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
       if (cameraController == storyIntroCameraController) {
          setCameraController(cinematicCameraController);
-      } else if (cameraController == cinematicCameraController) {
+      } else if (cameraController == cinematicCameraController && !won) {
          setCameraController(followCameraController);
       }
    }

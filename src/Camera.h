@@ -47,6 +47,7 @@ protected:
    bool shadowMode;
 
    ControlMode controlMode;
+   bool won;
 
 public:
    static const std::string CLASS_NAME;
@@ -55,6 +56,10 @@ public:
    virtual ~Camera();
    
    glm::mat4 getProjectionMatrix();
+
+   void setWon() {
+      won = true;
+   }
    
    /**
     * Handles window size changes.

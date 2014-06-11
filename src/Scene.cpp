@@ -19,6 +19,8 @@ Scene::Scene(const std::string &jsonFileName)
    playerDeathTime = 0.0f;
    lastCheckpointPos = glm::vec3(0.0f);
    fade = 1.0f;
+   won = false;
+   timeSinceWin = 0.0f;
 }
 
 Scene::~Scene() {
@@ -116,13 +118,13 @@ void Scene::onWin() {
    // Camera points
    glm::vec3 playerPos = player->getPosition();
    cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 10.0f));
-   cameraPoints.push_back(playerPos + glm::vec3(10.0f, 1.0f, 0.0f));
-   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, -10.0f));
-   cameraPoints.push_back(playerPos + glm::vec3(-10.0f, 1.0f, 0.0f));
-   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 10.0f));
-   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 10.0f));
-   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 10.0f, 10.0f));
-   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 50.0f, 10.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(15.0f, 1.0f, 0.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, -20.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(-30.0f, 1.0f, 0.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 40.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 1.0f, 50.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 10.0f, 60.0f));
+   cameraPoints.push_back(playerPos + glm::vec3(0.0f, 50.0f, 70.0f));
 
    // Look at points
    lookAtPoints.push_back(playerPos);
@@ -140,13 +142,16 @@ void Scene::onWin() {
 
    player->resetInputState();
 
+   won = true;
+   timeSinceWin = 0.0f;
+
    LifeParticle::createEffect(player->getScene().lock(),
                               player->getPosition() + glm::vec3(0.0f, 5.0f, 0.0f),                // Position
                               glm::vec3(0.0f, 20.0f, 0.0f),              // Velocity
                               5.0f,                                  // Size
                               500.0f,   // Number of particles
                               15.0f,                                 // Duration (seconds)
-                              5.0f,        // Particle spread
+                              20.0f,        // Particle spread
                               500.0f,       // Total health amount
                               true);        // Force health
 }
@@ -230,6 +235,17 @@ void Scene::tick(const float dt) {
       }
    }
 
+   if (won) {
+      timeSinceWin += dt;
+
+      if (timeSinceWin > 5.0f) {
+         SPtr<Camera> cam = camera.lock();
+         if (cam) {
+            cam->setWon();
+         }
+      }
+   }
+
    // Camera control
    if (cameraController) {
       cameraController->tick(dt);
@@ -239,7 +255,11 @@ void Scene::tick(const float dt) {
    if (cameraController == storyIntroCameraController && storyIntroCameraController->doneAnimating()) {
       setCameraController(cinematicCameraController);
    } else if (cameraController == cinematicCameraController && cinematicCameraController->doneAnimating()) {
-      setCameraController(followCameraController);
+      if (won) {
+         exit(0);
+      } else {
+         setCameraController(followCameraController);
+      }
    }
 
    for (SPtr<TickListener> listener : tickListeners) {

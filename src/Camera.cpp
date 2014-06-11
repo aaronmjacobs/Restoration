@@ -1,4 +1,9 @@
 #include "Camera.h"
+#include "Geometry.h"
+#include "Loader.h"
+#include "Mesh.h"
+#include "Model.h"
+#include "Material.h"
 
 const std::string Camera::CLASS_NAME = "Camera";
 
@@ -10,6 +15,7 @@ Camera::Camera(SPtr<Scene> const scene, float fov, const std::string &name)
    shadowMode = false;
    controlMode = ANGLES;
    updateFront();
+   won = false;
 }
 
 Camera::~Camera() {
@@ -138,6 +144,21 @@ glm::mat4 Camera::getViewMatrix() {
 }
 
 void Camera::draw(const RenderData &renderData) {
+   static SPtr<Geometry> sphere;
+   if (won) {
+      if (!sphere) {
+         Loader &loader = Loader::getInstance();
+         SPtr<Material> auraMaterial = loader.loadMaterial(getScene().lock(), "simple");
+         SPtr<Mesh> auraMesh = std::make_shared<Mesh>("data/meshes/sphere.obj");
+         SPtr<Model> auraModel = std::make_shared<Model>(auraMaterial, auraMesh);
+         sphere = std::make_shared<Geometry>(getScene().lock(), auraModel);
+         sphere->setRenderState(STENCIL_STATE);
+         sphere->setScale(glm::vec3(10.0f));
+      }
+
+      sphere->setPosition(position);
+      sphere->draw(renderData);
+   }
 }
 
 void Camera::tick(const float dt) {

@@ -228,6 +228,12 @@ void Scene::tick(const float dt) {
    }
 }
 
+void Scene::setCheckpoint(glm::vec3 checkpoint) {
+   if (checkpoint.x > lastCheckpointPos.x) {
+      lastCheckpointPos = checkpoint;
+   }
+}
+
 void Scene::setCameraController(SPtr<CameraController> cam) {
    cameraController = cam;
    cameraController->reset();
@@ -237,10 +243,11 @@ void Scene::onKeyEvent(int key, int action) {
    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
       if (cameraController == storyIntroCameraController) {
          setCameraController(cinematicCameraController);
+         return;
       } else if (cameraController == cinematicCameraController) {
          setCameraController(followCameraController);
+         return;
       }
-      return;
    }
 
    SPtr<Player> sPlayer = player;

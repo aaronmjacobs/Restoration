@@ -3,6 +3,7 @@
 #include "AnimHelper.h"
 #include "Camera.h"
 #include "Character.h"
+#include "Checkpoint.h"
 #include "Corona.h"
 #include "Enemy.h"
 #include "FancyAssert.h"
@@ -111,11 +112,15 @@ bool Loader::isFollowGeometry(const std::string &className) {
 }
 
 bool Loader::isPhysicalObject(const std::string &className) {
-   return className == PhysicalObject::CLASS_NAME || isScenery(className) || isMovableObject(className);
+   return className == PhysicalObject::CLASS_NAME || isScenery(className) || isMovableObject(className) || isCheckpoint(className);
 }
 
 bool Loader::isScenery(const std::string &className) {
    return className == Scenery::CLASS_NAME || isSpike(className);
+}
+
+bool Loader::isCheckpoint(const std::string &className) {
+   return className == Checkpoint::CLASS_NAME;
 }
 
 bool Loader::isSpike(const std::string &className) {
@@ -907,6 +912,8 @@ SPtr<PhysicalObject> Loader::loadPhysicalObject(SPtr<Scene> scene, const Json::V
       return loadMovableObject(scene, root);
    } else if (isScenery(className)) {
       return loadScenery(scene, root);
+   } else if (className == Checkpoint::CLASS_NAME) {
+      return loadCheckpoint(scene, root);
    }
 
    ASSERT(false, "Invalid class name for PhysicalObject: %s", className.c_str());
@@ -1038,6 +1045,23 @@ SPtr<Scenery> Loader::loadScenery(SPtr<Scene> scene, const Json::Value &root) {
    scenery->setRenderState(data.renderState);
 
    return scenery;
+}
+
+SPtr<Checkpoint> Loader::loadCheckpoint(SPtr<Scene> scene, const Json::Value &root) {
+   // SceneObject
+   SceneObjectData data = loadSceneObjectData(root);
+
+   // Geometry
+   check("Checkpoint", root, "model");
+   SPtr<Model> model = loadModel(scene, root["model"]);
+
+   SPtr<Checkpoint> checkpoint = std::make_shared<Checkpoint>(scene, model, data.name);
+   checkpoint->setPosition(data.position);
+   checkpoint->setOrientation(data.orientation);
+   checkpoint->setScale(data.scale);
+   checkpoint->setRenderState(data.renderState);
+
+   return checkpoint;
 }
 
 SPtr<Spike> Loader::loadSpike(SPtr<Scene> scene, const Json::Value &root) {

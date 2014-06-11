@@ -4,6 +4,7 @@
 class Aegrum;
 class Boss;
 class Character;
+class Checkpoint;
 class Corona;
 class Enemy;
 class Justitia;

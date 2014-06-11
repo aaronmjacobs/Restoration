@@ -35,7 +35,7 @@ void SceneGraph::addPhys(SPtr<PhysicalObject> physObject) {
    // If the object has a name, make sure it doesn't match anything
    // already in the graph
    if (objectName.length() > 0) {
-      PhysObjectMap::iterator it = physObjectMap.find(objectName);
+      //PhysObjectMap::iterator it = physObjectMap.find(objectName);
       //ASSERT(it == physObjectMap.end(), "Scene already has phys object with name: %s", objectName.c_str());
    }
 

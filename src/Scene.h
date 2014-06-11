@@ -117,9 +117,7 @@ public:
       this->groundPlaneInfo = groundPlaneInfo;
    }
 
-   void setCheckpoint(glm::vec3 checkpoint) {
-      this->lastCheckpointPos = checkpoint;
-   }
+   void setCheckpoint(glm::vec3 checkpoint);
 
    /**
     * Handles keyboard events.

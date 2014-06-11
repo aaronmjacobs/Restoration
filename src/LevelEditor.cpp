@@ -71,7 +71,7 @@ LevelEditor::~LevelEditor() {
  * arrow keys to quick switch objects
  */
 void LevelEditor::onKeyEvent(int key, int action) {
-	char yes = 'n';
+	//char yes = 'n';
 	if (action == GLFW_PRESS) {
       if (key == GLFW_KEY_GRAVE_ACCENT) {
          enabled = !enabled;

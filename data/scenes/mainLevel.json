@@ -195,7 +195,7 @@
             }
          },
                    {
-                   "@class" : "Geometry",
+                   "@class" : "Checkpoint",
                    "acceleration" : {
                    "x" : 0.0,
                    "y" : 0.0,
@@ -235,7 +235,7 @@
                    }
                    },
                    {
-                   "@class" : "Geometry",
+                   "@class" : "Checkpoint",
                    "acceleration" : {
                    "x" : 0.0,
                    "y" : 0.0,

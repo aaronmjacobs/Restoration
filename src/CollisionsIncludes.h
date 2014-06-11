@@ -6,6 +6,7 @@
 #include "Aegrum.h"
 #include "Boss.h"
 #include "Character.h"
+#include "Checkpoint.h"
 #include "Corona.h"
 #include "Enemy.h"
 #include "Justitia.h"

@@ -193,7 +193,7 @@ int main(int argc, char *argv[]) {
    const double dt = 1.0 / 60.0;
    double accumulator = dt;
    // Game loop
-   while (!glfwWindowShouldClose(window)) {
+   while (!glfwWindowShouldClose(window) && !scene->isGameOver()) {
       // Calculate the frame time
       double now = glfwGetTime();
       double frameTime = glm::min(now - lastTime, 0.25); // Cap the frame time to .25 seconds to prevent spiraling

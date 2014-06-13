@@ -51,6 +51,8 @@ protected:
    bool won;
    float timeSinceWin;
 
+   bool gameOver = false;
+
    /**
     * All items listening for user input.
     */
@@ -83,6 +85,10 @@ public:
 
    bool isInEditMode() {
       return editMode;
+   }
+
+   bool isGameOver() {
+      return gameOver;
    }
 
    SPtr<Skybox> getLightSkybox();

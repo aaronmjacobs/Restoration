@@ -133,9 +133,7 @@ void Scene::onWin() {
    lookAtPoints.push_back(playerPos);
    lookAtPoints.push_back(playerPos);
    lookAtPoints.push_back(playerPos);
-   lookAtPoints.push_back(playerPos);
-   lookAtPoints.push_back(playerPos + glm::vec3(0.0f, 30.0f, 0.0f));
-   lookAtPoints.push_back(playerPos + glm::vec3(0.0f, 500.0f, 0.0f));
+   lookAtPoints.push_back(playerPos + glm::vec3(0.0f, 200.0f, 0.0f));
 
    cinematicCameraController = std::make_shared<CatmulRomCameraController>(getCamera().lock(), 10.0f, cameraPoints, lookAtPoints);
    cinematicCameraController->setFadeEnd(true);
@@ -145,16 +143,6 @@ void Scene::onWin() {
 
    won = true;
    timeSinceWin = 0.0f;
-
-   LifeParticle::createEffect(player->getScene().lock(),
-                              player->getPosition() + glm::vec3(0.0f, 5.0f, 0.0f),                // Position
-                              glm::vec3(0.0f, 20.0f, 0.0f),              // Velocity
-                              5.0f,                                  // Size
-                              500.0f,   // Number of particles
-                              15.0f,                                 // Duration (seconds)
-                              20.0f,        // Particle spread
-                              500.0f,       // Total health amount
-                              true);        // Force health
 }
 
 SPtr<Skybox> Scene::getLightSkybox() {
@@ -257,6 +245,17 @@ void Scene::tick(const float dt) {
          if (cam) {
             cam->setWon();
          }
+      } else {
+         float height = player->getHealth() / 10.0f + 3.0f;
+         LifeParticle::createEffect(player->getScene().lock(),
+                                    player->getPosition() + glm::vec3(0.0f, height, 0.0f),                // Position
+                                    glm::vec3(0.0f, 20.0f, 0.0f),              // Velocity
+                                    5.0f,                                  // Size
+                                    10.0f,   // Number of particles
+                                    15.0f,                                 // Duration (seconds)
+                                    10.0f,        // Particle spread
+                                    1.4f,       // Total health amount
+                                    true);        // Force health
       }
    }
 
@@ -270,7 +269,9 @@ void Scene::tick(const float dt) {
       setCameraController(cinematicCameraController);
    } else if (cameraController == cinematicCameraController && cinematicCameraController->doneAnimating()) {
       if (won) {
-         exit(0);
+         if (timeSinceWin > 11.0f) {
+            gameOver = true;
+         }
       } else {
          setCameraController(followCameraController);
       }

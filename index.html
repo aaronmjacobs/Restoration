@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Restoration : Game project for CSC 476" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Restoration</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/aaronmjacobs/Restoration">View on GitHub</a>
+
+          <h1 id="project_title">Restoration</h1>
+          <h2 id="project_tagline">Game project for CSC 476</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/aaronmjacobs/Restoration/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/aaronmjacobs/Restoration/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="restoration" class="anchor" href="#restoration"><span class="octicon octicon-link"></span></a>Restoration</h1>
+
+<p>Game project for CSC 476</p>
+
+<h3>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h3>
+
+<ul>
+<li>Aaron Jacobs</li>
+<li>Aargon Gragg</li>
+<li>Cody Thompson</li>
+<li>Thomas Sanford</li>
+<li>Nathan Farnum</li>
+<li>Cameron Nouri</li>
+</ul><h3>
+<a name="overview--synopsis" class="anchor" href="#overview--synopsis"><span class="octicon octicon-link"></span></a>Overview / Synopsis</h3>
+
+<p>The world has become desolate. Everyone I knew and loved... My family, my friends... Have been taken by the Umbran. They ravaged the land… But I will stop them. I will traverse across this ruinous landscape using the sacred Keys of Wasd, leaping and bounding using the Bar of Space over all obstacles in my way. I have been chosen by destiny, it seems, for I have been given the power to vanquish them. By using my Vis - my life energy - I can purify those monsters and add their life to my own. My Vis already purifies the world around me, giving me a tangible, visible hope. By channeling my Vis, I can fire a Justitia blast in whatever direction the Arrow of Guidance chooses. This is the only weapon that can stop the many kinds of Umbrans that I will face. The Corona, the rank-and-file pawns, just walk back and forth; showing that they’re tactics are as empty as their hearts. The Obex, the automated traps, hinder my advancing. Their spikes are strong, but their paths are easy to follow and overcome. The Turris, the steadfast towers, aim to shoot me down while maintaining their ground. They too can channel their Vis, firing Aegrum wherever I go. Luckily, my Justitia can block their Aegrum. The Vagus, the dive-bombing fiends, lie in wait for my arrival. They don’t seem to be alive until I come close, and then they relentlessly pursue. The Magus, the , is the most tenacious of all. His Aegrum are lethal, and his movements misleading and sudden. I must take him down quickly, before he gets the chance to fight back. The Judex, the fallen Judge, awaits me at the end of my quest. I must conquer him if I am to save this world. I must not fail in my endeavor… I shall not fail! This world has waited too long for its Restoration.</p>
+
+<h3>
+<a name="video" class="anchor" href="#video"><span class="octicon octicon-link"></span></a>Video</h3>
+
+<p><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=aMnsdX101LY%0A" target="_blank"><img src="http://img.youtube.com/vi/aMnsdX101LY/0.jpg" alt="Restoration" width="640" height="360" border="10"></a></p>
+
+<h3>
+<a name="controls" class="anchor" href="#controls"><span class="octicon octicon-link"></span></a>Controls</h3>
+
+<ul>
+<li>Mouse movement: Specifies direction of player attack</li>
+<li>Mouse click: Shoots Justitia</li>
+<li>
+<code>a</code> key: Moves left</li>
+<li>
+<code>d</code> key: Moves right</li>
+<li>
+<code>space</code> key: Jump</li>
+<li>
+<code>esc</code> key: Quits the game</li>
+<li>
+<code>~</code> key: Toggels level edit mode</li>
+<li>
+<code>z</code> key: The Zoë effect. For when there just aren't enough particles for all your particle needs.</li>
+</ul><h3>
+<a name="technologies" class="anchor" href="#technologies"><span class="octicon octicon-link"></span></a>Technologies</h3>
+
+<p><strong>Shadow Mapping</strong></p>
+
+<p>Point light with high resolution shadows by having the projection be a constant bias away from the character at all times. The orthographic projection only encompasses the visibile scene.</p>
+
+<p><strong>Animation</strong></p>
+
+<p>The system supports skeletal animation as well as switching between animations with a single call. All animation transformations are applied on the GPU with a list of bones and weights computed on the CPU.</p>
+
+<p><strong>Animated Character</strong></p>
+
+<p>The main character, Leoht, has idle, running, and jump skeletal-based animations, fully textured in Maya.</p>
+
+<p><strong>Aura</strong></p>
+
+<p>Using a stencil buffer, we specified what should be drawn in multiple render passes. Then, after all framebuffers are set up, alpha blending is applied to the scene to merge the scenes together.</p>
+
+<p><strong>Ambient Lighting</strong></p>
+
+<p>Ambient light color is determined by looking up a value from a heavily blurred version of the active skybox, and averaging it with a global scene color. The end result is that objects appear to 'fit' better in the scene, and their colors change between the light and dark render passes.</p>
+
+<p><strong>Ambient Occlusion</strong></p>
+
+<p>We have toggleable screen space ambient occlusion. This is achieved by bluring the depth buffer with the application of a threshold, and then subtracting the original depth buffer. The values are then scaled and contained between 0 and 1. The inverse of this value is applied to the alpha of the pixels of a black plane infront of the camera to get a basic ambient occlusion effect.</p>
+
+<p><strong>Particle Effects</strong></p>
+
+<p>The particle effects include a versatile particle effect function that creates a variable number of particles with velocity, acceleration, spread, size, and duration.</p>
+
+<p><strong>Audio</strong></p>
+
+<p>Using FMod, a seperate class was packaged with the functionality to switch tracks, play tracks, and loop tracks.</p>
+
+<p><strong>Level Editor</strong></p>
+
+<p>The level editor started with a mouse trace from a 2D plane into a 3D world to easily select objects. After we added abilities to use it more efficiently like copying and pasting objects.</p>
+
+<p><strong>View Frustum Culling</strong></p>
+
+<p>Each object in the scene is checked against the view frustum. If the object, based on its bounding box, is outside of the 6 planes of the view frustum, it is not drawn, saving effort by the GPU. The 6 planes are updated each draw call, based on the view-projection matrix.</p>
+
+<h3>
+<a name="references" class="anchor" href="#references"><span class="octicon octicon-link"></span></a>References</h3>
+
+<ul>
+<li>Skybox - <a href="http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html">http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html</a>
+</li>
+<li>Animations - <a href="http://ephenationopengl.blogspot.com/2012/06/doing-animations-in-opengl.html">http://ephenationopengl.blogspot.com/2012/06/doing-animations-in-opengl.html</a>
+</li>
+<li>Ambient lighting - <a href="http://blog.wolfire.com/2010/03/Image-based-ambient-lighting">http://blog.wolfire.com/2010/03/Image-based-ambient-lighting</a>
+</li>
+<li>Shadow mapping - <a href="http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/">http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Restoration maintained by <a href="https://github.com/aaronmjacobs">aaronmjacobs</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

@@ -34,28 +34,43 @@ Point light with high resolution shadows by having the projection be a constant 
 
 **Animation**
 
-**Animation**
+The system supports skeletal animation as well as switching between animations with a single call. All animation transformations are applied on the GPU with a list of bones and weights computed on the CPU.
 
+**Animated Character**
 
-### Welcome to GitHub Pages.
-This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:
+The main character, Leoht, has idle, running, and jump skeletal-based animations, fully textured in Maya.
 
-```
-$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-```
+**Aura**
 
-If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.
+Using a stencil buffer, we specified what should be drawn in multiple render passes. Then, after all framebuffers are set up, alpha blending is applied to the scene to merge the scenes together.
 
-### Designer Templates
-We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.
+**Ambient Lighting**
 
-### Rather Drive Stick?
-If you prefer to not use the automatic generator, push a branch named `gh-pages` to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.
+Ambient light color is determined by looking up a value from a heavily blurred version of the active skybox, and averaging it with a global scene color. The end result is that objects appear to 'fit' better in the scene, and their colors change between the light and dark render passes.
 
-### Authors and Contributors
-You can @mention a GitHub username to generate a link to their profile. The resulting `<a>` element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (@defunkt), PJ Hyett (@pjhyett), and Tom Preston-Werner (@mojombo) founded GitHub.
+**Ambient Occlusion**
 
-### Support or Contact
-Having trouble with Pages? Check out the documentation at http://help.github.com/pages or contact support@github.com and we’ll help you sort it out.
+We have toggleable screen space ambient occlusion. This is achieved by bluring the depth buffer with the application of a threshold, and then subtracting the original depth buffer. The values are then scaled and contained between 0 and 1. The inverse of this value is applied to the alpha of the pixels of a black plane infront of the camera to get a basic ambient occlusion effect.
+
+**Particle Effects**
+
+The particle effects include a versatile particle effect function that creates a variable number of particles with velocity, acceleration, spread, size, and duration.
+
+**Audio**
+
+Using FMod, a seperate class was packaged with the functionality to switch tracks, play tracks, and loop tracks.
+
+**Level Editor**
+
+The level editor started with a mouse trace from a 2D plane into a 3D world to easily select objects. After we added abilities to use it more efficiently like copying and pasting objects.
+
+**View Frustum Culling**
+
+Each object in the scene is checked against the view frustum. If the object, based on its bounding box, is outside of the 6 planes of the view frustum, it is not drawn, saving effort by the GPU. The 6 planes are updated each draw call, based on the view-projection matrix.
+
+### References
+
+* Skybox - http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html
+* Animations - http://ephenationopengl.blogspot.com/2012/06/doing-animations-in-opengl.html
+* Ambient lighting - http://blog.wolfire.com/2010/03/Image-based-ambient-lighting
+* Shadow mapping - http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/

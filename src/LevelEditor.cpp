@@ -92,20 +92,6 @@ void LevelEditor::onKeyEvent(int key, int action) {
             return;
          }
       }
-		/*else if (key == GLFW_KEY_ESCAPE) {
-			if (saved) {
-				enabled = false;
-			}
-			else {
-				// Ask before doing
-				printf("Quit without saving? (y/n) ");
-				scanf("%c", &yes);
-				if (yes == 'y') {
-					enabled = false;
-					yes = 'n';
-				}
-			}
-		}*/
 		else if (key == GLFW_KEY_UP) {
 			transUp = true;
 			//keepTransforming++;
@@ -236,8 +222,6 @@ void LevelEditor::onKeyEvent(int key, int action) {
 					copyAvg /= copyObjs;
 					copyAvg.z = 0.0;
 				}
-				else
-					std::cout << "no objects to be copied" << std::endl;
 			}
 			else
 				editState = CREATE;
@@ -258,15 +242,9 @@ void LevelEditor::onKeyEvent(int key, int action) {
 				big = false;
 		}
 		else if (key == GLFW_KEY_H) {
-			//printf("hey\n");
 			for (int i = 0; i < numObjs; i++) {
 				currentObjs[i]->scaleBy(glm::vec3(-1.0, 1.0, 1.0));
 			}
-			/*if (currentObj && editState == SCALE) {
-				printf("hi\n");
-				currentObj->scaleBy(glm::vec3(-1.0, 1.0, 1.0));
-				printVec(currentObj->getScale());
-			}*/
 		}
 		/*else if (key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT) {
 			quickSwitch(key);
@@ -387,7 +365,6 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 	else if (action == GLFW_PRESS) {
 		SPtr<Scene> s = scene.lock();
 		if (!s) {
-			//printf("bad scene\n");
 			return;
 		}
 		SPtr<Camera> camera = s->getCamera().lock();
@@ -414,15 +391,12 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 		if (editState == CREATE) {
 			saved = false;
 			//place current object type specified with #0-9
-			std::cout << "Creating new object" << std::endl;
 
 			SPtr<Mesh> mesh = std::make_shared<Mesh>(curObjFile);
 			Loader& loader = Loader::getInstance();
-			//printf("a\n");
+
 			SPtr<Material> material2 = loader.loadMaterial(s, "otherMaterial");
-			//printf("b\n");
 			SPtr<Model> model = std::make_shared<Model>(material2, mesh);
-			//printf("c\n");
 
 			newObj = std::make_shared<Scenery>(s, model);
 
@@ -437,15 +411,9 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 				currentObjs[numObjs] = newObj;
 				currentObjs[numObjs++]->getModel()->getMaterial()->setSelected(true);
 			}
-			else
-				std::cout << "Too many objects in buffer" << std::endl;
 
 			if (!ctrlDown)
 				editState = TRANSLATE;
-			//}
-			//else {
-			//	printf("no specified object to place");
-			//}
 		}
 		//MAKES A DIRECT COPY OF THE OBJECT(S), IF YOU
 		//CHANGE MODEL OR MATERIAL OF ONE, IT CHANGES
@@ -491,10 +459,7 @@ void LevelEditor::onMouseButtonEvent(int button, int action) {
 					currentObjs[numObjs] = tempObj;
 					currentObjs[numObjs++]->getModel()->getMaterial()->setSelected(true);
 				}
-				else
-					std::cout << "Too many objects in buffer" << std::endl;
 			}
-			//printf("%f %f\n", prevPoint[0], prevPoint[1]);
 		}
 	}
 }
@@ -529,7 +494,6 @@ void LevelEditor::transform(glm::vec3 trans) {
 		return;
 	}
 	else if (numObjs == 0) {
-		//printf("no current object selected\n");
 	}
 	else {
 		saved = false;
@@ -570,9 +534,7 @@ SPtr<PhysicalObject> LevelEditor::getCurObj() {
 
 void LevelEditor::tick(const float dt) {
 	glm::vec3 v = curTransformVec;
-	//printf("v: (x) %f.2 (y) %f.2 (z) %f.2", v.x, v.y, v.z);
 	if ((v.x == 1.0 && v.y == 1.0) || (v.x == 0.0 && v.y == 0.0)) {
-		//printf("hello?\n");
 		if ((((editState == TRANSLATE && v.z > 0.0 && v.x == 0.0 && v.y == 0.0) || (editState == SCALE && v.z > 1.0)) && transFront) ||
 			(((editState == TRANSLATE && v.z < 0.0) || (editState == SCALE && v.z < 1.0)) && transBack)) {
 			transform(v);
@@ -610,7 +572,4 @@ void LevelEditor::tick(const float dt) {
 				transDown = false;
 		}
 	}
-}
-void LevelEditor::printVec(glm::vec3 ray) {
-	std::cout << "x : " << ray.x << " y: " << ray.y << " z: " << ray.z << std::endl;
 }

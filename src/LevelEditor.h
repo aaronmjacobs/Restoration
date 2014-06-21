@@ -74,8 +74,6 @@ public:
 	* Steps |dt| seconds through time.
 	*/
 	virtual void tick(const float dt);
-
-	virtual void printVec(glm::vec3 ray);
 };
 
 #endif

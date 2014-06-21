@@ -165,8 +165,6 @@ int main(int argc, char *argv[]) {
    // Enable vsync
    glfwSwapInterval(1);
 
-   double start = glfwGetTime();
-
    // Load the audio system
    audio = std::make_shared<Audio>();
    audio->systemInit();
@@ -185,8 +183,6 @@ int main(int argc, char *argv[]) {
    audio->loadSound("shooting2.ogg", false);
    audio->loadSound("win.wav", false);
    audio->loadSound("damage2.ogg", false);
-
-   std::cout << "Loading time: " << (glfwGetTime() - start) << std::endl;
 
    // Timing values
    double lastTime = glfwGetTime();

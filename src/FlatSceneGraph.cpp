@@ -165,7 +165,3 @@ SPtr<PhysicalObject> FlatSceneGraph::mouseCollides(double xPos, double yPos) {
 	}
 	return obj;
 }
-
-void FlatSceneGraph::printVec(glm::vec3 ray) {
-	std::cout << "x : " << ray.x << " y: " << ray.y << " z: " << ray.z << std::endl;
-}

@@ -37,7 +37,7 @@ all: $(BUILD)
 build_folders:
 	mkdir -p $(BUILD_FOLDERS)
 
-$(EXECUTABLE): $(OBJECTS) 
+$(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LINK_FLAGS) $(OBJECTS) -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp

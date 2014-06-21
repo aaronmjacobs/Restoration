@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
 #endif*/
 
    // Enable anti-aliasing
-   //glfwWindowHint(GLFW_SAMPLES, 4);
+   glfwWindowHint(GLFW_SAMPLES, 2);
 
    // Create the window
    window = glfwCreateWindow(WIDTH, HEIGHT, "Restoration", NULL, NULL);

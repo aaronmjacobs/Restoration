@@ -130,7 +130,8 @@ void loadLevel(const std::string &name) {
 int main(int argc, char *argv[]) {
    // Initialize GLFW
    glfwSetErrorCallback(errorCallback);
-   ASSERT(glfwInit(), "Unable to init glfw");
+   int glfwInitRes = glfwInit();
+   ASSERT(glfwInitRes, "Unable to init glfw");
 
 /*#ifdef __APPLE__
    // Set hints to use OpenGL 3.3
@@ -159,7 +160,8 @@ int main(int argc, char *argv[]) {
 #ifdef _WIN32
    // Initialize GLEW
    glewExperimental = true;
-   ASSERT(glewInit() == GLEW_OK, "Unable to init glew");
+   int glewInitRes = glewInit();
+   ASSERT(glewInitRes == GLEW_OK, "Unable to init glew");
 #endif
 
    // Enable vsync

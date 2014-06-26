@@ -13,7 +13,7 @@ Game project for CSC 476
 
 ### Overview / Synopsis
 
-The world has become desolate. Everyone I knew and loved... My family, my friends... Have been taken by the Umbran. They ravaged the land… But I will stop them. I will traverse across this ruinous landscape using the sacred Keys of Wasd, leaping and bounding using the Bar of Space over all obstacles in my way. I have been chosen by destiny, it seems, for I have been given the power to vanquish them. By using my Vis - my life energy - I can purify those monsters and add their life to my own. My Vis already purifies the world around me, giving me a tangible, visible hope. By channeling my Vis, I can fire a Justitia blast in whatever direction the Arrow of Guidance chooses. This is the only weapon that can stop the many kinds of Umbrans that I will face. The Corona, the rank-and-file pawns, just walk back and forth; showing that they’re tactics are as empty as their hearts. The Obex, the automated traps, hinder my advancing. Their spikes are strong, but their paths are easy to follow and overcome. The Turris, the steadfast towers, aim to shoot me down while maintaining their ground. They too can channel their Vis, firing Aegrum wherever I go. Luckily, my Justitia can block their Aegrum. The Vagus, the dive-bombing fiends, lie in wait for my arrival. They don’t seem to be alive until I come close, and then they relentlessly pursue. The Magus, the , is the most tenacious of all. His Aegrum are lethal, and his movements misleading and sudden. I must take him down quickly, before he gets the chance to fight back. The Judex, the fallen Judge, awaits me at the end of my quest. I must conquer him if I am to save this world. I must not fail in my endeavor… I shall not fail! This world has waited too long for its Restoration.
+The world has become desolate. Everyone I knew and loved... My family, my friends... Have been taken by the Umbran. They ravaged the land... But I will stop them. I will traverse across this ruinous landscape using the sacred Keys of Wasd, leaping and bounding using the Bar of Space over all obstacles in my way. I have been chosen by destiny, it seems, for I have been given the power to vanquish them. By using my Vis - my life energy - I can purify those monsters and add their life to my own. My Vis already purifies the world around me, giving me a tangible, visible hope. By channeling my Vis, I can fire a Justitia blast in whatever direction the Arrow of Guidance chooses. This is the only weapon that can stop the many kinds of Umbrans that I will face. The Corona, the rank-and-file pawns, just walk back and forth; showing that they’re tactics are as empty as their hearts. The Obex, the automated traps, hinder my advancing. Their spikes are strong, but their paths are easy to follow and overcome. The Turris, the steadfast towers, aim to shoot me down while maintaining their ground. They too can channel their Vis, firing Aegrum wherever I go. Luckily, my Justitia can block their Aegrum. The Vagus, the dive-bombing fiends, lie in wait for my arrival. They don’t seem to be alive until I come close, and then they relentlessly pursue. The Magus, the , is the most tenacious of all. His Aegrum are lethal, and his movements misleading and sudden. I must take him down quickly, before he gets the chance to fight back. The Judex, the fallen Judge, awaits me at the end of my quest. I must conquer him if I am to save this world. I must not fail in my endeavor... I shall not fail! This world has waited too long for its Restoration.
 
 ### Controls
 
@@ -68,8 +68,16 @@ The level editor started with a mouse trace from a 2D plane into a 3D world to e
 
 Each object in the scene is checked against the view frustum. If the object, based on its bounding box, is outside of the 6 planes of the view frustum, it is not drawn, saving effort by the GPU. The 6 planes are updated each draw call, based on the view-projection matrix.
 
+### Build Requirements
+
+Restoration relies on a few external libraries. In order to build it, you'll need:
+* [fmod](http://www.fmod.org/)
+* [assimp](http://assimp.sourceforge.net/)
+* [glfw](http://www.glfw.org/)
+
 ### References
 
+* Skybox textures - http://www.custommapmakers.org/skyboxes.php
 * Skybox - http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html
 * Animations - http://ephenationopengl.blogspot.com/2012/06/doing-animations-in-opengl.html
 * Ambient lighting - http://blog.wolfire.com/2010/03/Image-based-ambient-lighting

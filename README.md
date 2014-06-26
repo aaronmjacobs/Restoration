@@ -77,6 +77,7 @@ Restoration relies on a few external libraries. In order to build it, you'll nee
 
 ### References
 
+* Skybox textures - http://www.custommapmakers.org/skyboxes.php
 * Skybox - http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html
 * Animations - http://ephenationopengl.blogspot.com/2012/06/doing-animations-in-opengl.html
 * Ambient lighting - http://blog.wolfire.com/2010/03/Image-based-ambient-lighting

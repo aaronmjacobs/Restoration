@@ -124,9 +124,20 @@
 <p>Each object in the scene is checked against the view frustum. If the object, based on its bounding box, is outside of the 6 planes of the view frustum, it is not drawn, saving effort by the GPU. The 6 planes are updated each draw call, based on the view-projection matrix.</p>
 
 <h3>
+<a name="build-requirements" class="anchor" href="#build-requirements"><span class="octicon octicon-link"></span></a>Build Requirements</h3>
+
+<p>Restoration relies on a few external libraries. In order to build it, you'll need:</p>
+
+<ul>
+<li><a href="http://www.fmod.org/">fmod</a></li>
+<li><a href="http://assimp.sourceforge.net/">assimp</a></li>
+<li><a href="http://www.glfw.org/">glfw</a></li>
+</ul><h3>
 <a name="references" class="anchor" href="#references"><span class="octicon octicon-link"></span></a>References</h3>
 
 <ul>
+<li>Skybox textures - <a href="http://www.custommapmakers.org/skyboxes.php">http://www.custommapmakers.org/skyboxes.php</a>
+</li>
 <li>Skybox - <a href="http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html">http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html</a>
 </li>
 <li>Animations - <a href="http://ephenationopengl.blogspot.com/2012/06/doing-animations-in-opengl.html">http://ephenationopengl.blogspot.com/2012/06/doing-animations-in-opengl.html</a>

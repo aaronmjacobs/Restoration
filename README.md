@@ -68,6 +68,13 @@ The level editor started with a mouse trace from a 2D plane into a 3D world to e
 
 Each object in the scene is checked against the view frustum. If the object, based on its bounding box, is outside of the 6 planes of the view frustum, it is not drawn, saving effort by the GPU. The 6 planes are updated each draw call, based on the view-projection matrix.
 
+### Build Requirements
+
+Restoration relies on a few external libraries. In order to build it, you'll need:
+* [fmod](http://www.fmod.org/)
+* [assimp](http://assimp.sourceforge.net/)
+* [glfw](http://www.glfw.org/)
+
 ### References
 
 * Skybox - http://ogldev.atspace.co.uk/www/tutorial25/tutorial25.html
